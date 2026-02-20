@@ -1,0 +1,219 @@
+@prefix : <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/> .
+@prefix m4s: <https://example.org/map4scrutiny/core#> .
+@prefix ocd: <https://dati.camera.it/ocd/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/> .
+
+<http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase> rdf:type owl:Ontology ;
+                                                                                dcterms:creator "João Miguel da Silva Lourenço" ;
+                                                                                dcterms:description """Data-Driven Ontology representing the Portuguese Parliament's information.
+This module models the information of the \"InformaçãoBase\" dataset.""" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#during
+:during rdf:type owl:ObjectProperty ;
+        rdfs:domain :LegislativeSession ;
+        rdfs:range :Legislature .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#duty
+:duty rdf:type owl:ObjectProperty ;
+      rdfs:domain :Mandate ;
+      rdfs:range :Duty .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#dutyType
+:dutyType rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Duty ;
+          rdfs:range skos:Concept .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#electoralCircle
+:electoralCircle rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain :Mandate ;
+                 rdfs:range :ElectoralCircle .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#legislature
+:legislature rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :Mandate ;
+             rdfs:range :Legislature .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#mandate
+:mandate rdf:type owl:ObjectProperty ;
+         rdfs:domain :MoP ;
+         rdfs:range :Mandate .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#membership
+:membership rdf:type owl:ObjectProperty ;
+            rdfs:domain :Mandate ;
+            rdfs:range :Membership .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#parliamentaryGroup
+:parliamentaryGroup rdf:type owl:ObjectProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain :Membership ;
+                    rdfs:range :ParliamentaryGroup .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#situation
+:situation rdf:type owl:ObjectProperty ;
+           rdfs:domain :Mandate ;
+           rdfs:range :Situation .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#situationType
+:situationType rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Situation ;
+               rdfs:range skos:Concept .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#video
+:video rdf:type owl:ObjectProperty ;
+       rdfs:domain :Mandate ;
+       rdfs:range :Video .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#Duty
+:Duty rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#Mandate
+:Mandate rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#Membership
+:Membership rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/ElectoralCircle
+:ElectoralCircle rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/LegislativeSession
+:LegislativeSession rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/Legislature
+:Legislature rdf:type owl:Class ;
+             owl:equivalentClass ocd:Legislatura .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/MoP
+:MoP rdf:type owl:Class ;
+     owl:equivalentClass ocd:Deputato ,
+                         m4s:Parlamentarian ;
+     rdfs:subClassOf schema:Person .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/ParliamentaryGroup
+:ParliamentaryGroup rdf:type owl:Class ;
+                    owl:equivalentClass ocd:gruppoParlamentare .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/Situation
+:Situation rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/Video
+:Video rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+skos:Concept rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+skos:ConceptScheme rdf:type owl:Class .
+
+
+###  https://dati.camera.it/ocd/Deputato
+ocd:Deputato rdf:type owl:Class ;
+             owl:equivalentClass m4s:Parlamentarian ;
+             rdfs:subClassOf schema:Person .
+
+
+###  https://dati.camera.it/ocd/Legislatura
+ocd:Legislatura rdf:type owl:Class .
+
+
+###  https://dati.camera.it/ocd/gruppoParlamentare
+ocd:gruppoParlamentare rdf:type owl:Class .
+
+
+###  https://example.org/map4scrutiny/core#Parlamentarian
+m4s:Parlamentarian rdf:type owl:Class ;
+                   rdfs:subClassOf schema:Person .
+
+
+###  https://schema.org/Person
+schema:Person rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#DutyTypeScheme
+:DutyTypeScheme rdf:type owl:NamedIndividual ,
+                         skos:ConceptScheme ;
+                skos:prefLabel "Tipos de cargo exercidos pelos Membros do Parlamento (Deputados)"@pt ,
+                               "Types of Duty exercised Members of Parliament"@en .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#Ninsc
+:Ninsc rdf:type owl:NamedIndividual ,
+                :ParliamentaryGroup ;
+       skos:altLabel "Ninsc"@pt ;
+       skos:prefLabel "Não Inscritos"@pt .
+
+
+###  http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase#SituationTypeScheme
+:SituationTypeScheme rdf:type owl:NamedIndividual ,
+                              skos:ConceptScheme ;
+                     skos:prefLabel "Tipos de situações dos Membros do Parlamento (Deputados)"@pt ,
+                                    "Types of Situation of Members of Parliament"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
