@@ -33,6 +33,67 @@
   <component name="http://lnkd.tech/editor#GlobalGraphsAssignments">
     <option name="assignments">
       <map>
+        <entry key="https://lov.linkeddata.es/dataset/lov/">
+          <value>
+            <map>
+              <entry key="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/F4DEB512B1935120581B864E0B115B6AFF5ED765177C79DC5C22873B0E5D8172" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="http://www.w3.org/2002/07/owl">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/B8F3B0D9E7256D2A10462355B48DCEB45FE2D4DDEEF44942C614B8BD0DABA128" />
+                  </set>
+                </value>
+              </entry>
+            </map>
+          </value>
+        </entry>
+        <entry key="urn:tag:lnslr.eu,2018:id_tag:dereference_catalog">
+          <value>
+            <map>
+              <entry key="http://purl.org/dc/terms/">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/13DF401072DD7015BF9D75162F3E41C8138075304B7B9CC1AA1E9C16DB976797" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="http://semweb.mmlab.be/ns/rml#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/3E4669BBAAEF129C7BADCC6466CAAAE46EA7A9C659803305239BA5BB78AFC66E" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="http://www.w3.org/2000/01/rdf-schema#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/ECEE3A011B7C13EA2A7E40B0A208BFE6BE53D69FDD53EE035E09E9F9E5108AD6" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="http://www.w3.org/2004/02/skos/core#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/34621EB1243BE4C8BF7DDF8ED6F435F9B098C2795A5BD515DE3789AE90C9F88A" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="http://www.w3.org/ns/r2rml#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/4D92F60DC9D2DE605F3CCBC8E2CE3F33D6526289C8E396D18405DCDCDAF40F2F" />
+                  </set>
+                </value>
+              </entry>
+            </map>
+          </value>
+        </entry>
         <entry key="urn:tag:lnslr.eu,2018:java:eu.lunisolar.lava.rdfvocab.get.lava.LavaCatalog">
           <value>
             <map>
