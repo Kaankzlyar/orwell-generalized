@@ -1,3 +1,5 @@
+import lombok.Getter;
+import lombok.Setter;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Document;
@@ -15,9 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.xml.sax.InputSource;
 
+@Getter
+@Setter
 public class XMLObject {
-    private final Element element;
-    private final String string;
+    private Element element;
+    private String string;
 
     public XMLObject(Element element, String string) {
         this.element = element;
@@ -32,6 +36,11 @@ public class XMLObject {
     public XMLObject(String string) {
         this.element = toTreeElement(string);
         this.string = string;
+    }
+
+    public XMLObject(String string, boolean removeBom){
+        this.string = removeBom ? removeBom(string) : string;
+        this.element = toTreeElement(this.string);
     }
 
     private static Element toTreeElement(String xmlString) {
@@ -64,6 +73,9 @@ public class XMLObject {
         if (xmlString == null || xmlString.length() < 3) {
             return xmlString;
         }
+        if (xmlString.charAt(0) == '\uFEFF') {
+            return xmlString.substring(1);
+        }
         return xmlString.substring(3);
     }
 
@@ -79,6 +91,11 @@ public class XMLObject {
         } catch (Exception e) {
             return el.getTextContent();
         }
+    }
+
+    public void removeBom(){
+        this.string = removeBom(this.element.toString());
+        this.element = toTreeElement(this.string);
     }
 
     public void printElement() {

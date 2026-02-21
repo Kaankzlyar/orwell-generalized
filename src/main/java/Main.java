@@ -15,12 +15,8 @@ public class Main {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        String data = response.body();
-
-        XMLObject object = new XMLObject(data);
+        XMLObject object = new XMLObject(response.body(), true);
 
         object.printElement();
-
-        System.out.println(response.body());
     }
 }
