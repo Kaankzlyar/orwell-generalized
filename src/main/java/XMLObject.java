@@ -102,6 +102,30 @@ public class XMLObject {
         printElement(this.element);
     }
 
+    public void printElementValues() {
+        printElementValues(this.element);
+    }
+
+    private static void printElementValues(Element element) {
+        if (element == null) {
+            return;
+        }
+        String text = element.getTextContent();
+        if (text != null) {
+            String trimmed = text.trim();
+            if (!trimmed.isEmpty()) {
+                System.out.println(trimmed);
+            }
+        }
+        NodeList children = element.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            Node node = children.item(i);
+            if (node instanceof Element) {
+                printElementValues((Element) node);
+            }
+        }
+    }
+
     public String elementToString() {
         return elementToString(this.element);
     }

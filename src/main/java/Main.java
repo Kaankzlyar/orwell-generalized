@@ -17,6 +17,6 @@ public class Main {
 
         XMLObject object = new XMLObject(response.body(), true);
 
-        object.printElement();
+        object.printElementValues();
     }
 }
