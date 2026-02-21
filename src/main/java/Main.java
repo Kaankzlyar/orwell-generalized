@@ -2,7 +2,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -13,10 +18,103 @@ public class Main {
                 .GET()
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        // Keep remote fetch code for later use:
+        // HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        XMLObject object = new XMLObject(response.body(), true);
+        Path dataRootDir = Path.of("data");
+        Path mappingsDir = Path.of("mappings");
+        Path outputDir = Path.of("output");
+        Path tempMappingsDir = outputDir.resolve("tmp-mappings");
 
-        object.printElementValues();
+        if (!Files.isDirectory(dataRootDir)) {
+            throw new IllegalStateException("Data directory does not exist: " + dataRootDir);
+        }
+        if (!Files.isDirectory(mappingsDir)) {
+            throw new IllegalStateException("Mappings directory does not exist: " + mappingsDir);
+        }
+
+        Files.createDirectories(outputDir);
+        Files.createDirectories(tempMappingsDir);
+
+        List<Path> mappingFiles = new ArrayList<>();
+        try (Stream<Path> files = Files.list(mappingsDir)) {
+            files
+                .filter(Files::isRegularFile)
+                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(".ttl"))
+                .sorted(Comparator.comparing(path -> path.getFileName().toString()))
+                .forEach(mappingFiles::add);
+        }
+
+        if (mappingFiles.isEmpty()) {
+            throw new IllegalStateException("No mapping files found in: " + mappingsDir);
+        }
+
+        List<Path> failedFiles = new ArrayList<>();
+        for (Path mappingFile : mappingFiles) {
+            String mappingName = mappingFile.getFileName().toString().replaceFirst("\\.[^.]+$", "");
+            Path mappingDataDir = dataRootDir.resolve(mappingName);
+            if (!Files.isDirectory(mappingDataDir)) {
+                System.out.println("Skipping mapping " + mappingName + ": no data directory at " + mappingDataDir);
+                continue;
+            }
+
+            String mappingTemplate = Files.readString(mappingFile);
+            List<Path> xmlFiles = new ArrayList<>();
+            try (Stream<Path> files = Files.list(mappingDataDir)) {
+                files
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().toLowerCase().endsWith(".xml"))
+                    .sorted(Comparator.comparing(path -> path.getFileName().toString()))
+                    .forEach(xmlFiles::add);
+            }
+
+            if (xmlFiles.isEmpty()) {
+                System.out.println("Skipping mapping " + mappingName + ": no XML files in " + mappingDataDir);
+                continue;
+            }
+
+            Path tempMappingSubDir = tempMappingsDir.resolve(mappingName);
+            Path outputSubDir = outputDir.resolve(mappingName);
+            Files.createDirectories(tempMappingSubDir);
+            Files.createDirectories(outputSubDir);
+
+            for (Path xmlPath : xmlFiles) {
+                String xmlFileName = xmlPath.getFileName().toString();
+                String baseName = xmlFileName.replaceFirst("\\.[^.]+$", "");
+
+                String xmlSource = xmlPath.toString().replace("\\", "/");
+                String mappingContent = mappingTemplate.replaceFirst(
+                    "rml:source\\s+\"[^\"]*\"\\s*;",
+                    "rml:source \"" + xmlSource + "\" ;"
+                );
+
+                Path tempMappingPath = tempMappingSubDir.resolve(baseName + ".ttl");
+                Files.writeString(tempMappingPath, mappingContent);
+
+                Path outputPath = outputSubDir.resolve(baseName + ".ttl");
+                RDFMapper mapper = new RDFMapper(tempMappingPath, outputPath);
+
+                try {
+                    mapper.map();
+                    System.out.println("Mapped [" + mappingName + "]: " + xmlFileName + " -> " + outputPath);
+                } catch (IOException | InterruptedException e) {
+                    failedFiles.add(xmlPath);
+                    System.err.println("Failed mapping [" + mappingName + "] " + xmlFileName + ": " + e.getMessage());
+                    if (e instanceof InterruptedException) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!failedFiles.isEmpty()) {
+            throw new IllegalStateException("Mapping failed for " + failedFiles.size() + " file(s). See errors above.");
+        }
+
+        // Guardar XML files todos em data folder
+        // Processar todos ao mesmo tempo com:
+        // java -jar rmlmapper.jar -m mappings/ -o output/output.ttl
+        // rml:source tem que ser folder com XML -> data/
     }
 }

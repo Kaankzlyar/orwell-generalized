@@ -13,20 +13,23 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.xml.sax.InputSource;
+import java.io.IOException;
 
 @Getter
 @Setter
 public class XMLObject {
+
+    private Path defaultSavePath = Path.of("data/"); 
+    private String fileName; // fileName must not include file extension
+
     private Element element;
     private String string;
-
-    public XMLObject(Element element, String string) {
-        this.element = element;
-        this.string = string;
-    }
 
     public XMLObject(Element element) {
         this.element = element;
@@ -50,8 +53,7 @@ public class XMLObject {
             Document document = builder.parse(new InputSource(new StringReader(xmlString)));
             return document.getDocumentElement();
         } catch (Exception e) {
-            System.err.println("Error parsing XML: " + e.getMessage());
-            return null;
+            throw new IllegalArgumentException("Error parsing XML", e);
         }
     }
 
@@ -124,6 +126,33 @@ public class XMLObject {
                 printElementValues((Element) node);
             }
         }
+    }
+
+    public void saveToFile() throws IOException {
+        this.saveToFile(defaultSavePath);
+    }
+
+    public void saveToFile(Path savePath) throws IOException {
+        if (savePath == null) {
+            throw new IllegalStateException("Cannot save XML: savePath is not set.");
+        }
+
+        String content = this.string != null ? this.string : elementToString();
+        if (content == null || content.isBlank()) {
+            throw new IllegalStateException("Cannot save XML: XML content is empty.");
+        }
+
+        String resolvedFileName = (this.fileName == null || this.fileName.isBlank())
+            ? UUID.randomUUID() + ".xml"
+            : this.fileName + ".xml";
+
+        if (Files.exists(savePath) && !Files.isDirectory(savePath)) {
+            throw new IllegalArgumentException("savePath must be a directory path (for example, data/).");
+        }
+
+        Files.createDirectories(savePath);
+        Path targetPath = savePath.resolve(resolvedFileName);
+        Files.writeString(targetPath, content, StandardCharsets.UTF_8);
     }
 
     public String elementToString() {

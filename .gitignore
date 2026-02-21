@@ -43,4 +43,7 @@ bin/
 .DS_Store
 
 # RMLMapper Dependency
-lib/rmlmapper-8.1.0-r380-all.jar
+lib/rmlmapper.jar
+
+# Local Data
+data/
