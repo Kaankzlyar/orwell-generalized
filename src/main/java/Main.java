@@ -14,6 +14,13 @@ public class Main {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        String data = response.body();
+
+        XMLObject object = new XMLObject(data);
+
+        object.printElement();
+
         System.out.println(response.body());
     }
 }
