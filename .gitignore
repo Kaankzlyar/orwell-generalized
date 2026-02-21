@@ -47,3 +47,6 @@ lib/rmlmapper.jar
 
 # Local Data
 data/
+
+# Output
+output/
