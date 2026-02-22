@@ -20,7 +20,7 @@ public class RDFMapper {
     
     private Path mappingsDir;
     private Path outputPath;
-    private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-rc380-all.jar");    
+    private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-r380-all.jar");    
     private static final String OUTPUT_FORMAT = "turtle";
 
     public void map() throws IOException, InterruptedException {
