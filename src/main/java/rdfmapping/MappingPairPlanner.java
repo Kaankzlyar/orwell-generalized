@@ -25,19 +25,24 @@ public class MappingPairPlanner {
         this.tempMappingsDir = outputDir.resolve("tmp-mappings");
     }
 
-    public void createMappingPairs() throws IOException {
+    public List<Path> createMappingPairs() throws IOException {
         validateDirectories();
         Files.createDirectories(outputDir);
         Files.createDirectories(tempMappingsDir);
 
+        List<Path> createdMappings = new ArrayList<>();
         List<Path> mappingFiles = listFilesWithExtension(mappingsDir, TTL_EXTENSION);
         if (mappingFiles.isEmpty()) {
             throw new IllegalStateException("No mapping files found in: " + mappingsDir);
         }
 
         for (Path mappingFile : mappingFiles) {
-            createPairsForMapping(mappingFile);
+            createdMappings.addAll(createPairsForMapping(mappingFile));
         }
+        if (createdMappings.isEmpty()) {
+            throw new IllegalStateException("No temporary mapping files were created in: " + tempMappingsDir);
+        }
+        return createdMappings;
     }
 
     private void validateDirectories() {
@@ -49,18 +54,19 @@ public class MappingPairPlanner {
         }
     }
 
-    private void createPairsForMapping(Path mappingFile) throws IOException {
+    private List<Path> createPairsForMapping(Path mappingFile) throws IOException {
+        List<Path> createdMappings = new ArrayList<>();
         String mappingName = stripExtension(mappingFile.getFileName().toString());
         Path mappingDataDir = dataRootDir.resolve(mappingName);
         if (!Files.isDirectory(mappingDataDir)) {
             System.out.println("Skipping mapping " + mappingName + ": no data directory at " + mappingDataDir);
-            return;
+            return createdMappings;
         }
 
         List<Path> xmlFiles = listFilesWithExtension(mappingDataDir, XML_EXTENSION);
         if (xmlFiles.isEmpty()) {
             System.out.println("Skipping mapping " + mappingName + ": no XML files in " + mappingDataDir);
-            return;
+            return createdMappings;
         }
 
         String mappingTemplate = Files.readString(mappingFile);
@@ -68,11 +74,13 @@ public class MappingPairPlanner {
         Files.createDirectories(tempMappingSubDir);
 
         for (Path xmlPath : xmlFiles) {
-            createMappingFile(mappingName, mappingTemplate, xmlPath, tempMappingSubDir);
+            Path createdMapping = createMappingFile(mappingName, mappingTemplate, xmlPath, tempMappingSubDir);
+            createdMappings.add(createdMapping);
         }
+        return createdMappings;
     }
 
-    private void createMappingFile(
+    private Path createMappingFile(
         String mappingName,
         String mappingTemplate,
         Path xmlPath,
@@ -90,6 +98,7 @@ public class MappingPairPlanner {
 
         Path tempMappingPath = tempMappingSubDir.resolve(baseName + TTL_EXTENSION);
         Files.writeString(tempMappingPath, mappingContent);
+        return tempMappingPath;
     }
 
     // This is needed due to passing multiple mapping files to RMLMapper.
