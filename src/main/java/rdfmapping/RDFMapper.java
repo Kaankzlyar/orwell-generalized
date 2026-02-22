@@ -20,7 +20,8 @@ public class RDFMapper {
     
     private Path mappingsDir;
     private Path outputPath;
-
+    private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-rc380-all.jar");    
+    private static final String OUTPUT_FORMAT = "turtle";
 
     public void map() throws IOException, InterruptedException {
         if (mappingsDir == null || outputPath == null) {
@@ -42,13 +43,13 @@ public class RDFMapper {
 
         List<String> command = new ArrayList<>();
         command.add("java");
-        command.add("-jar"); command.add("lib/rmlmapper.jar");
+        command.add("-jar"); command.add(MAPPER_ENGINE_PATH.toString());
         for (Path mappingFile : mappingFiles) {
             command.add("-m");
             command.add(mappingFile.toString());
         }
         command.add("-o");   command.add(outputPath.toString());
-        command.add("-s");   command.add("turtle");
+        command.add("-s");   command.add(OUTPUT_FORMAT);
 
         ProcessBuilder rmlmapper = new ProcessBuilder(command);
         rmlmapper.inheritIO();
