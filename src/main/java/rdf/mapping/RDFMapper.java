@@ -1,4 +1,4 @@
-package rdfmapping;
+package rdf.mapping;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

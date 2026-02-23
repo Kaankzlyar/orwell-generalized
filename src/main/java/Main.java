@@ -1,11 +1,10 @@
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import rdfmapping.MappingPairPlanner;
-import rdfmapping.RDFMapper;
+import rdf.mapping.MappingPairPlanner;
+import rdf.mapping.RDFMapper;
 
 public class Main {
 
@@ -24,9 +23,19 @@ public class Main {
         mapper.map();
 
         // Clean up the tmp directory
-        Files.walk(TMP_DIR)
-            .map(Path::toFile)
-            .forEach(File::delete);
+        if (Files.exists(TMP_DIR)) {
+            try (var paths = Files.walk(TMP_DIR)) {
+                paths
+                    .sorted((left, right) -> right.compareTo(left))
+                    .forEach(path -> {
+                        try {
+                            Files.deleteIfExists(path);
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to delete: " + path, e);
+                        }
+                    });
+            }
+        }
 
         // SHACL Validation
 
