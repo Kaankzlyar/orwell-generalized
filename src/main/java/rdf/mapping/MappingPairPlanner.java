@@ -78,6 +78,7 @@ public class MappingPairPlanner {
         for (Path xmlPath : xmlFiles) {
             Path createdMapping = createMappingFile(mappingName, mappingTemplate, xmlPath, tempMappingSubDir);
             createdMappings.add(createdMapping);
+            System.out.println("Created mapping file: " + createdMapping);
         }
         return createdMappings;
     }

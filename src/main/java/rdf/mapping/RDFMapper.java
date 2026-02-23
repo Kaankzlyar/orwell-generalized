@@ -48,9 +48,12 @@ public class RDFMapper {
         rmlmapper.inheritIO();
         Process p = rmlmapper.start();
         int exitCode = p.waitFor();
+
         if (exitCode != 0) {
             throw new IOException("RMLMapper finished with non-zero exit code: " + exitCode);
         }
+
+        System.out.println("RMLMapper finished successfully. Output graph: " + OUTPUT_PATH);
 
         return OUTPUT_PATH;
     }

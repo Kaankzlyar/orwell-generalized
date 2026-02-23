@@ -38,7 +38,10 @@ public class ShaclValidation {
             paths
                 .filter(path -> path.getFileName().toString().toLowerCase().endsWith(SHACL_FILE_EXTENSION))
                 .sorted()
-                .forEach(path -> RDFDataMgr.read(shapes, path.toString()));
+                .forEach(path -> {
+                    System.out.println("Reading SHACL shapes from: " + path);
+                    RDFDataMgr.read(shapes, path.toString());
+                });
         } catch (IOException e) {
             throw new RuntimeException("Failed to read SHACL shapes from: " + SHACL_DIR, e);
         }
