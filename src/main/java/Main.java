@@ -5,6 +5,7 @@ import java.util.List;
 
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
+import rdf.validation.ShaclValidation;
 
 public class Main {
 
@@ -20,8 +21,14 @@ public class Main {
         
         // Map the data to RDF using the generated mapping files
         RDFMapper mapper = new RDFMapper(mappingFiles);
-        mapper.map();
+        Path graph = mapper.map();
 
+        // SHACL Validation
+        ShaclValidation validator = new ShaclValidation();
+        validator.validate(graph);
+        
+        // Link the RDF graph to external datasets
+        
         // Clean up the tmp directory
         if (Files.exists(TMP_DIR)) {
             try (var paths = Files.walk(TMP_DIR)) {
@@ -36,9 +43,5 @@ public class Main {
                     });
             }
         }
-
-        // SHACL Validation
-
-        // Link the RDF graph to external datasets
     }
 }

@@ -21,7 +21,7 @@ public class RDFMapper {
     private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-r380-all.jar");    
     private static final String OUTPUT_FORMAT = "turtle";
 
-    public void map() throws IOException, InterruptedException {
+    public Path map() throws IOException, InterruptedException {
         if (mappingFiles == null || OUTPUT_FORMAT == null) {
             throw new IllegalStateException("Mapping files and output path must be set before running the mapper.");
         }
@@ -51,6 +51,8 @@ public class RDFMapper {
         if (exitCode != 0) {
             throw new IOException("RMLMapper finished with non-zero exit code: " + exitCode);
         }
+
+        return OUTPUT_PATH;
     }
 
 }
