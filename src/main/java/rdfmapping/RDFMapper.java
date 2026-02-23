@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,12 @@ import java.util.List;
 public class RDFMapper {
     
     private List<Path> mappingFiles;
-    private Path outputPath;
+    private static final Path OUTPUT_PATH = Path.of("output", "graph.ttl");
     private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-r380-all.jar");    
     private static final String OUTPUT_FORMAT = "turtle";
 
     public void map() throws IOException, InterruptedException {
-        if (mappingFiles == null || outputPath == null) {
+        if (mappingFiles == null || OUTPUT_FORMAT == null) {
             throw new IllegalStateException("Mapping files and output path must be set before running the mapper.");
         }
 
@@ -29,8 +30,8 @@ public class RDFMapper {
             throw new IllegalStateException("No mapping files provided to RDFMapper.");
         }
 
-        if (outputPath.getParent() != null) {
-            java.nio.file.Files.createDirectories(outputPath.getParent());
+        if (OUTPUT_PATH.getParent() != null) {
+            Files.createDirectories(OUTPUT_PATH.getParent());
         }
 
         List<String> command = new ArrayList<>();
@@ -40,7 +41,7 @@ public class RDFMapper {
             command.add("-m");
             command.add(mappingFile.toString());
         }
-        command.add("-o");   command.add(outputPath.toString());
+        command.add("-o");   command.add(OUTPUT_PATH.toString());
         command.add("-s");   command.add(OUTPUT_FORMAT);
 
         ProcessBuilder rmlmapper = new ProcessBuilder(command);

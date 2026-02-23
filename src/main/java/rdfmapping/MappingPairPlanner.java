@@ -7,57 +7,59 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class MappingPairPlanner {
 
     private static final String XML_EXTENSION = ".xml";
     private static final String TTL_EXTENSION = ".ttl";
     private static final String SOURCE_PATTERN = "rml:source\\s+\"[^\"]*\"\\s*;";
+    
+    private static final Path DATA_DIR = Path.of("data");
+    private static final Path MAPPINGS_DIR = Path.of("mappings");
+    private final Path TMP_DIR;
 
-    private final Path dataRootDir;
-    private final Path mappingsDir;
-    private final Path outputDir;
-    private final Path tempMappingsDir;
-
-    public MappingPairPlanner(Path dataRootDir, Path mappingsDir, Path outputDir) {
-        this.dataRootDir = dataRootDir;
-        this.mappingsDir = mappingsDir;
-        this.outputDir = outputDir;
-        this.tempMappingsDir = outputDir.resolve("tmp-mappings");
+    public MappingPairPlanner(Path tmpDir) {
+        this.TMP_DIR = tmpDir;
     }
 
     public List<Path> createMappingPairs() throws IOException {
         validateDirectories();
-        Files.createDirectories(outputDir);
-        Files.createDirectories(tempMappingsDir);
+        Files.createDirectories(TMP_DIR);
+        Path tmpMappingsDir = Files.createDirectories(TMP_DIR.resolve(MAPPINGS_DIR));
 
         List<Path> createdMappings = new ArrayList<>();
-        List<Path> mappingFiles = listFilesWithExtension(mappingsDir, TTL_EXTENSION);
+        List<Path> mappingFiles = listFilesWithExtension(MAPPINGS_DIR, TTL_EXTENSION);
         if (mappingFiles.isEmpty()) {
-            throw new IllegalStateException("No mapping files found in: " + mappingsDir);
+            throw new IllegalStateException("No mapping files found in: " + MAPPINGS_DIR);
         }
 
         for (Path mappingFile : mappingFiles) {
-            createdMappings.addAll(createPairsForMapping(mappingFile));
+            createdMappings.addAll(createPairsForMapping(mappingFile, tmpMappingsDir));
         }
         if (createdMappings.isEmpty()) {
-            throw new IllegalStateException("No temporary mapping files were created in: " + tempMappingsDir);
+            throw new IllegalStateException("No temporary mapping files were created in: " + tmpMappingsDir);
         }
         return createdMappings;
     }
 
     private void validateDirectories() {
-        if (!Files.isDirectory(dataRootDir)) {
-            throw new IllegalStateException("Data directory does not exist: " + dataRootDir);
+        if (!Files.isDirectory(DATA_DIR)) {
+            throw new IllegalStateException("Data directory does not exist: " + DATA_DIR);
         }
-        if (!Files.isDirectory(mappingsDir)) {
-            throw new IllegalStateException("Mappings directory does not exist: " + mappingsDir);
+        if (!Files.isDirectory(MAPPINGS_DIR)) {
+            throw new IllegalStateException("Mappings directory does not exist: " + MAPPINGS_DIR);
         }
     }
 
-    private List<Path> createPairsForMapping(Path mappingFile) throws IOException {
+    private List<Path> createPairsForMapping(Path mappingFile, Path tmpMappingsDir) throws IOException {
         List<Path> createdMappings = new ArrayList<>();
         String mappingName = stripExtension(mappingFile.getFileName().toString());
-        Path mappingDataDir = dataRootDir.resolve(mappingName);
+        Path mappingDataDir = DATA_DIR.resolve(mappingName);
+
         if (!Files.isDirectory(mappingDataDir)) {
             System.out.println("Skipping mapping " + mappingName + ": no data directory at " + mappingDataDir);
             return createdMappings;
@@ -70,7 +72,7 @@ public class MappingPairPlanner {
         }
 
         String mappingTemplate = Files.readString(mappingFile);
-        Path tempMappingSubDir = tempMappingsDir.resolve(mappingName);
+        Path tempMappingSubDir = tmpMappingsDir.resolve(mappingName);
         Files.createDirectories(tempMappingSubDir);
 
         for (Path xmlPath : xmlFiles) {
