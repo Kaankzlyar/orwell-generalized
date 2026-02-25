@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // Extract the data from the source and store it in a temporary directory
+        // Add flag to decide if downloaded data should be deleted or not
 
         // Generate the tmp mapping files
         MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR);
@@ -28,8 +29,6 @@ public class Main {
         // SHACL Validation
         ShaclValidation validator = new ShaclValidation();
         validator.validate(graph);
-        
-        // Link the RDF graph to external datasets
         
         // Clean up the tmp directory
         if (Files.exists(TMP_DIR)) {
