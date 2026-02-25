@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.stream.Stream;
 
 import lombok.Getter;
@@ -93,9 +94,9 @@ public class MappingPairPlanner {
         String baseName = stripExtension(xmlFileName);
 
         String xmlSource = xmlPath.toString().replace("\\", "/");
-        String mappingContent = mappingTemplate.replaceFirst(
+        String mappingContent = mappingTemplate.replaceAll(
             SOURCE_PATTERN,
-            "rml:source \"" + xmlSource + "\" ;"
+            Matcher.quoteReplacement("rml:source \"" + xmlSource + "\" ;")
         );
         mappingContent = applyUniqueBase(mappingContent, mappingName, baseName);
 

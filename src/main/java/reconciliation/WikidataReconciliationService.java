@@ -11,13 +11,12 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
-public class WikidataReconciliationService implements IReconciliationService{
+public class WikidataReconciliationService{
     
     private static final String WIKIDATA_ENDPOINT = "https://wikidata.reconci.link/en/api";
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
 
-    @Override
-    public String reconciliate(String entityCandidate){
+    public static String reconciliate(String entityCandidate){
         if (entityCandidate == null) {
             return null;
         }
@@ -35,7 +34,7 @@ public class WikidataReconciliationService implements IReconciliationService{
         return BASE_URI + id;
     }
 
-    private String fetchEntity(String query) {
+    private static String fetchEntity(String query) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpClient httpClient = HttpClient.newBuilder()

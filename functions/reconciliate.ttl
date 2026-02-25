@@ -6,24 +6,28 @@
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 ex:reconciliate a fno:Function ;
+fno:name "reconciliate" ;
 fno:expects ( ex:queryParam ) ;
 fno:returns ( ex:wikidataIriOut ) .
 
 ex:queryParam a fno:Parameter ;
 fno:predicate ex:query ;
+fno:name "query" ;
+fno:description "Entity label to reconcile against Wikidata." ;
 fno:type xsd:string ;
 fno:required "true"^^xsd:boolean .
 
 ex:wikidataIriOut a fno:Output ;
 fno:predicate ex:output ;
+fno:name "wikidataIri" ;
+fno:description "Best-match Wikidata entity URI." ;
 fno:type xsd:string .
 
-# TODO: mudar isto
 ex:reconciliationService a fnoi:JavaClass ;
 doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
 fnoi:class-name "reconciliation.WikidataReconciliationService" .
 
-ex:reconciliateMapping a fnoi:Mapping ;
+ex:reconciliateMapping a fno:Mapping ;
 fno:function ex:reconciliate ;
 fno:implementation ex:reconciliationService ;
 fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "reconciliate" ]

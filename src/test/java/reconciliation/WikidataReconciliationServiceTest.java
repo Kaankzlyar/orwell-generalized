@@ -10,9 +10,7 @@ class WikidataReconciliationServiceTest {
 
     @Test
     void reconciliatePortoReturnsExpectedWikidataEntity() {
-        WikidataReconciliationService service = new WikidataReconciliationService();
-
-        String actual = service.reconciliate("porto");
+        String actual = WikidataReconciliationService.reconciliate("porto");
 
         assertEquals(BASE_URI + "Q36433", actual);
     }
