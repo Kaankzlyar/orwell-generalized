@@ -2,8 +2,6 @@ package reconciliation;
 
 import org.junit.jupiter.api.Test;
 
-import java.net.URI;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WikidataReconciliationServiceTest {
@@ -14,8 +12,8 @@ class WikidataReconciliationServiceTest {
     void reconciliatePortoReturnsExpectedWikidataEntity() {
         WikidataReconciliationService service = new WikidataReconciliationService();
 
-        URI actual = service.reconciliate("porto");
+        String actual = service.reconciliate("porto");
 
-        assertEquals(URI.create(BASE_URI + "Q36433"), actual);
+        assertEquals(BASE_URI + "Q36433", actual);
     }
 }

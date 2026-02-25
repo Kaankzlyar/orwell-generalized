@@ -17,7 +17,7 @@ public class WikidataReconciliationService implements IReconciliationService{
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
 
     @Override
-    public URI reconciliate(String entityCandidate){
+    public String reconciliate(String entityCandidate){
         if (entityCandidate == null) {
             return null;
         }
@@ -27,6 +27,15 @@ public class WikidataReconciliationService implements IReconciliationService{
             return null;
         }
 
+        String id = fetchEntity(query);
+        if (id == null || id.isBlank()) {
+            return null;
+        }
+
+        return BASE_URI + id;
+    }
+
+    private String fetchEntity(String query) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpClient httpClient = HttpClient.newBuilder()
@@ -61,14 +70,7 @@ public class WikidataReconciliationService implements IReconciliationService{
             }
 
             String id = resultNode.get(0).path("id").asText("");
-            if (id.isBlank()) {
-                return null;
-            }
-
-            if (id.startsWith("http://") || id.startsWith("https://")) {
-                return URI.create(id);
-            }
-            return URI.create(BASE_URI + id);
+            return id.isBlank() ? null : id;
         } catch (Exception e) {
             System.err.println("Wikidata reconciliation call failed: " + e.getMessage());
             return null;

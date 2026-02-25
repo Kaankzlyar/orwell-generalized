@@ -1,7 +1,5 @@
 package reconciliation;
 
-import java.net.URI;
-
 public interface IReconciliationService {
-    public URI reconciliate(String entityCandidate);
+    public String reconciliate(String entityCandidate);
 }
