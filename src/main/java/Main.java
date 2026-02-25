@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 
 import rdf.mapping.MappingPairPlanner;
@@ -32,13 +34,12 @@ public class Main {
         // Clean up the tmp directory
         if (Files.exists(TMP_DIR)) {
             try (var paths = Files.walk(TMP_DIR)) {
-                paths
-                    .sorted((left, right) -> right.compareTo(left))
+                paths.sorted(Comparator.reverseOrder())
                     .forEach(path -> {
                         try {
-                            Files.deleteIfExists(path);
+                            Files.delete(path);
                         } catch (IOException e) {
-                            throw new RuntimeException("Failed to delete: " + path, e);
+                            throw new UncheckedIOException(e);
                         }
                     });
             }
