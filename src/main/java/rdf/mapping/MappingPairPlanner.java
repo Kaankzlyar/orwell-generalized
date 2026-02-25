@@ -104,6 +104,7 @@ public class MappingPairPlanner {
         return tempMappingPath;
     }
 
+    // TODO: I think rmlmapper has a CLI argument "-b" that sets the base IRI. Maybe solves this?
     // This is needed due to passing multiple mapping files to RMLMapper.
     private String applyUniqueBase(String mappingContent, String mappingName, String baseName) {
         String uniqueBase = "http://example.org/mappings/" + mappingName + "/" + baseName + "/";

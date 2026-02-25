@@ -1,0 +1,30 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix ex:   <http://example.org/fn/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+ex:reconciliate a fno:Function ;
+fno:expects ( ex:queryParam ) ;
+fno:returns ( ex:wikidataIriOut ) .
+
+ex:queryParam a fno:Parameter ;
+fno:predicate ex:query ;
+fno:type xsd:string ;
+fno:required "true"^^xsd:boolean .
+
+ex:wikidataIriOut a fno:Output ;
+fno:predicate ex:output ;
+fno:type xsd:string .
+
+# TODO: mudar isto
+ex:reconciliationService a fnoi:JavaClass ;
+doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+fnoi:class-name "your.package.ReconciliationService" .
+
+ex:reconciliateMapping a fnoi:Mapping ;
+fno:function ex:reconciliate ;
+fno:implementation ex:reconciliationService ;
+fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "reconciliate" ]
+.

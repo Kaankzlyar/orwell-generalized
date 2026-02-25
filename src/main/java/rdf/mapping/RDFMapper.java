@@ -43,6 +43,7 @@ public class RDFMapper {
         }
         command.add("-o");   command.add(OUTPUT_PATH.toString());
         command.add("-s");   command.add(OUTPUT_FORMAT);
+        command.add("-f");   command.add("mappings/functions/reconciliate.ttl");
 
         ProcessBuilder rmlmapper = new ProcessBuilder(command);
         rmlmapper.inheritIO();
