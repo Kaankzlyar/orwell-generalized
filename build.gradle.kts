@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation("org.apache.jena:jena-shacl:5.6.0")
     implementation("org.apache.jena:jena-arq:5.6.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.16")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))

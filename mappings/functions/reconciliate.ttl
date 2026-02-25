@@ -21,7 +21,7 @@ fno:type xsd:string .
 # TODO: mudar isto
 ex:reconciliationService a fnoi:JavaClass ;
 doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-fnoi:class-name "your.package.ReconciliationService" .
+fnoi:class-name "reconciliation.WikidataReconciliationService" .
 
 ex:reconciliateMapping a fnoi:Mapping ;
 fno:function ex:reconciliate ;
