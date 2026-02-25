@@ -20,7 +20,7 @@
   ] ;
 
   rr:subjectMap [
-    rr:template "http://example.org/legislature/{id}" ; #URI
+    rr:template "http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/{sigla}";
     rr:class :Legislature
   ] ;
 
@@ -58,7 +58,7 @@
   ] ;
 
   rr:subjectMap [
-    rr:template "http://example.org/electoralCircle/{cpId}" ;
+    rr:template "http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/{cpDes}" ;
     rr:class :ElectoralCircle
   ] ;
 
