@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.stream.Stream;
 
 import lombok.Getter;
@@ -93,9 +94,9 @@ public class MappingPairPlanner {
         String baseName = stripExtension(xmlFileName);
 
         String xmlSource = xmlPath.toString().replace("\\", "/");
-        String mappingContent = mappingTemplate.replaceFirst(
+        String mappingContent = mappingTemplate.replaceAll(
             SOURCE_PATTERN,
-            "rml:source \"" + xmlSource + "\" ;"
+            Matcher.quoteReplacement("rml:source \"" + xmlSource + "\" ;")
         );
         mappingContent = applyUniqueBase(mappingContent, mappingName, baseName);
 
@@ -104,6 +105,7 @@ public class MappingPairPlanner {
         return tempMappingPath;
     }
 
+    // TODO: I think rmlmapper has a CLI argument "-b" that sets the base IRI. Maybe solves this?
     // This is needed due to passing multiple mapping files to RMLMapper.
     private String applyUniqueBase(String mappingContent, String mappingName, String baseName) {
         String uniqueBase = "http://example.org/mappings/" + mappingName + "/" + baseName + "/";

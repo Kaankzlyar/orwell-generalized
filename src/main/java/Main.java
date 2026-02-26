@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 
 import rdf.mapping.MappingPairPlanner;
@@ -14,6 +16,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // Extract the data from the source and store it in a temporary directory
+        // Add flag to decide if downloaded data should be deleted or not
 
         // Generate the tmp mapping files
         MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR);
@@ -27,18 +30,15 @@ public class Main {
         ShaclValidation validator = new ShaclValidation();
         validator.validate(graph);
         
-        // Link the RDF graph to external datasets
-        
         // Clean up the tmp directory
         if (Files.exists(TMP_DIR)) {
             try (var paths = Files.walk(TMP_DIR)) {
-                paths
-                    .sorted((left, right) -> right.compareTo(left))
+                paths.sorted(Comparator.reverseOrder())
                     .forEach(path -> {
                         try {
-                            Files.deleteIfExists(path);
+                            Files.delete(path);
                         } catch (IOException e) {
-                            throw new RuntimeException("Failed to delete: " + path, e);
+                            throw new UncheckedIOException(e);
                         }
                     });
             }
