@@ -17,6 +17,7 @@ COPY src/ src/
 COPY data/ data/
 COPY mappings/ mappings/
 COPY ontology/ ontology/
+COPY functions/ functions/
 
 # Fetch RMLMapper 8.1 and place it in lib/
 RUN mkdir -p lib/ && curl -fsSL -o lib/rmlmapper-8.1.0-r380-all.jar \
