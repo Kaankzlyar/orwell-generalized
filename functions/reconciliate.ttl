@@ -8,7 +8,7 @@
 # TODO: Mudar ex para outra coisa?
 ex:reconciliate a fno:Function ;
 fno:name "reconciliate" ;
-fno:expects ( ex:queryParam ) ;
+fno:expects ( ex:queryParam ex:typeParam ex:limitParam ) ;
 fno:returns ( ex:wikidataIriOut ) .
 
 ex:queryParam a fno:Parameter ;
@@ -17,6 +17,20 @@ fno:name "query" ;
 fno:description "Entity label to reconcile against Wikidata." ;
 fno:type xsd:string ;
 fno:required "true"^^xsd:boolean .
+
+ex:typeParam a fno:Parameter ;
+fno:predicate ex:type ;
+fno:name "type" ;
+fno:description "Optional Wikidata QID type constraint used by reconciliation to help disambiguate entities." ;
+fno:type xsd:string ;
+fno:required "false"^^xsd:boolean .
+
+ex:limitParam a fno:Parameter ;
+fno:predicate ex:limit ;
+fno:name "limit" ;
+fno:description "Optional max number of candidates to retrieve (default: 1)." ;
+fno:type xsd:string ;
+fno:required "false"^^xsd:boolean .
 
 ex:wikidataIriOut a fno:Output ;
 fno:predicate ex:output ;

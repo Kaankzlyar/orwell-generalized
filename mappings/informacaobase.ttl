@@ -73,7 +73,19 @@
         ] ;
         rr:predicateObjectMap [
           rr:predicate ex:query ;
-          rr:objectMap [ rml:reference "cpDes" ]
+          rr:objectMap [
+            rr:template "Círculo {cpDes}" ;
+            rr:termType rr:Literal ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate ex:type ;
+          rr:objectMap [ rr:constant "Q59576414" ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate ex:limit ;
+          rr:objectMap [ rr:constant "5"]
         ]
       ]
     ]

@@ -15,18 +15,30 @@ public class WikidataReconciliationService{
     
     private static final String WIKIDATA_ENDPOINT = "https://wikidata.reconci.link/en/api";
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
+    private static final int DEFAULT_LIMIT = 1;
 
-    public static String reconciliate(String entityCandidate){
+    public static String reconciliate(String entityCandidate, String entityType){
+        return reconciliate(entityCandidate, entityType, null);
+    }
+
+    public static String reconciliate(String entityCandidate, String entityType, String entityLimit){
+
+        System.out.println("Reconciliating:" + entityCandidate);
+
         if (entityCandidate == null) {
             return null;
         }
+
+        // Q35120 represents anything in Wikidata
+        String type = entityType == null ? "Q35120" : entityType;
+        int limit = parseLimit(entityLimit);
 
         String query = entityCandidate.trim();
         if (query.isEmpty()) {
             return null;
         }
 
-        String id = fetchEntity(query);
+        String id = fetchEntity(query, type, limit);
         if (id == null || id.isBlank()) {
             return null;
         }
@@ -34,7 +46,20 @@ public class WikidataReconciliationService{
         return BASE_URI + id;
     }
 
-    private static String fetchEntity(String query) {
+    private static int parseLimit(String entityLimit) {
+        if (entityLimit == null || entityLimit.isBlank()) {
+            return DEFAULT_LIMIT;
+        }
+
+        try {
+            int parsed = Integer.parseInt(entityLimit.trim());
+            return parsed > 0 ? parsed : DEFAULT_LIMIT;
+        } catch (NumberFormatException e) {
+            return DEFAULT_LIMIT;
+        }
+    }
+
+    private static String fetchEntity(String query, String type, int limit) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpClient httpClient = HttpClient.newBuilder()
@@ -43,7 +68,8 @@ public class WikidataReconciliationService{
 
             JsonNode queryNode = objectMapper.createObjectNode()
                     .put("query", query)
-                    .put("limit", 1);
+                    .put("type", type)
+                    .put("limit", limit);
             JsonNode queriesNode = objectMapper.createObjectNode()
                     .set("q0", queryNode);
             String queriesJson = objectMapper.writeValueAsString(queriesNode);
