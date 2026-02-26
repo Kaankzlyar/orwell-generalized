@@ -31,6 +31,10 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.named("run") {
+    dependsOn("jar")
+}
+
 application {
     mainClass.set("Main")
 }

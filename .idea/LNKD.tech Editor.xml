@@ -63,10 +63,24 @@
                   </set>
                 </value>
               </entry>
+              <entry key="http://semweb.mmlab.be/ns/fnml#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/72115983408D60E6645A739EC9B1BF77798FEB7107EADD969AA1476F35FAADDA" />
+                  </set>
+                </value>
+              </entry>
               <entry key="http://semweb.mmlab.be/ns/rml#">
                 <value>
                   <set>
                     <option value="urn:tag:lnkd.tech,2023:digest:sha-256/3E4669BBAAEF129C7BADCC6466CAAAE46EA7A9C659803305239BA5BB78AFC66E" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="http://w3id.org/rml/">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/5B07C97E2F3E38F7DD5C63FCF88D4AA2F0BF668E75F1E26D42E5EC76C276D3D9" />
                   </set>
                 </value>
               </entry>
@@ -88,6 +102,13 @@
                 <value>
                   <set>
                     <option value="urn:tag:lnkd.tech,2023:digest:sha-256/4D92F60DC9D2DE605F3CCBC8E2CE3F33D6526289C8E396D18405DCDCDAF40F2F" />
+                  </set>
+                </value>
+              </entry>
+              <entry key="https://w3id.org/function/ontology#">
+                <value>
+                  <set>
+                    <option value="urn:tag:lnkd.tech,2023:digest:sha-256/BA4509D7E274E109A1617B97B1B855ABBD7D211123176901E99888FDA6F60F39" />
                   </set>
                 </value>
               </entry>

@@ -51,3 +51,4 @@ data/
 # Output
 output/
 tmp/
+log.txt
