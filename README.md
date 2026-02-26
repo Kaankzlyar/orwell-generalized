@@ -36,6 +36,12 @@ Run:
 ./gradlew run
 ```
 
+Run without reconciliation HTTP calls:
+
+```sh
+./gradlew run --args="--disable-reconciliation"
+```
+
 Generated artifacts:
 - RDF graph: `output/graph.ttl`
 - Temporary generated mappings: `tmp/` (cleaned up at the end of a successful run)

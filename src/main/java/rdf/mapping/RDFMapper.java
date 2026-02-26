@@ -17,6 +17,7 @@ import java.util.List;
 public class RDFMapper {
     
     private List<Path> mappingFiles;
+    private boolean reconciliationEnabled = true;
     private static final Path OUTPUT_PATH = Path.of("output", "graph.ttl");
     private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-r380-all.jar");    
     private static final String OUTPUT_FORMAT = "turtle";
@@ -43,7 +44,10 @@ public class RDFMapper {
         }
         command.add("-o");   command.add(OUTPUT_PATH.toString());
         command.add("-s");   command.add(OUTPUT_FORMAT);
-        command.add("-f");   command.add("functions/reconciliate.ttl");
+        if (reconciliationEnabled) {
+            command.add("-f");
+            command.add("functions/reconciliate.ttl");
+        }
 
         ProcessBuilder rmlmapper = new ProcessBuilder(command);
         rmlmapper.inheritIO();

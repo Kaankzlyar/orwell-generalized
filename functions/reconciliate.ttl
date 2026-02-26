@@ -5,6 +5,7 @@
 @prefix ex:   <http://example.org/fn/> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
+# TODO: Mudar ex para outra coisa?
 ex:reconciliate a fno:Function ;
 fno:name "reconciliate" ;
 fno:expects ( ex:queryParam ) ;
