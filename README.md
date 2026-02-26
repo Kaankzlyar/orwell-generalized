@@ -46,6 +46,36 @@ Generated artifacts:
 - RDF graph: `output/graph.ttl`
 - Temporary generated mappings: `tmp/` (cleaned up at the end of a successful run)
 
+## Mapping
+
+Mappings are authored in Turtle under `mappings/` and may use dynamic reconciliation through FnML/FnO.
+
+When passing the reconciliation `query` argument, use one of these patterns:
+
+1. Raw value from XML (`rml:reference`)
+
+```ttl
+rr:predicateObjectMap [
+  rr:predicate ex:query ;
+  rr:objectMap [ rml:reference "cpDes" ]
+] ;
+```
+
+2. Composed query string (`rr:template`)
+
+```ttl
+rr:predicateObjectMap [
+  rr:predicate ex:query ;
+  rr:objectMap [
+    rr:template "Círculo {cpDes}" ;
+    rr:termType rr:Literal ;
+    rr:datatype xsd:string
+  ]
+] ;
+```
+
+Use `rml:reference` when the source value is already suitable. Use `rr:template` when you need disambiguation/context in the final query string.
+
 ## Build and run (Docker)
 
 Build image:
