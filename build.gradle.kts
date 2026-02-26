@@ -29,10 +29,20 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("orwell.reconciliation.log.enabled", "false")
+    onlyIf {
+        gradle.startParameter.taskNames.any { taskName ->
+            taskName == "test" || taskName.startsWith("test")
+        }
+    }
 }
 
 tasks.named("run") {
     dependsOn("jar")
+}
+
+tasks.named("clean") {
+    delete("log.txt")
 }
 
 application {

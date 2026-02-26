@@ -23,6 +23,8 @@ public class WikidataReconciliationService{
     private static final int DEFAULT_LIMIT = 1;
     private static final Path LOG_PATH = Path.of("log.txt");
     private static final Object LOG_LOCK = new Object();
+    private static final boolean LOG_ENABLED =
+            Boolean.parseBoolean(System.getProperty("orwell.reconciliation.log.enabled", "true"));
 
     public static String reconciliate(String entityCandidate, String entityType){
         return reconciliate(entityCandidate, entityType, null);
@@ -120,10 +122,13 @@ public class WikidataReconciliationService{
     }
 
     private static void logReconciliation(String query, String type, int limit, ReconciliationResult result) {
+        if (!LOG_ENABLED) {
+            return;
+        }
+
         String id = result == null ? "" : safe(result.id());
         String name = result == null ? "" : safe(result.name());
         String score = result == null ? "" : safe(result.score());
-        String matched = result == null ? "" : safe(result.matched());
 
         String line = String.join("\t",
                 Instant.now().toString(),
