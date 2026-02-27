@@ -2,7 +2,6 @@ package rdf.mapping;
 import be.ugent.idlab.knows.functions.agent.Agent;
 import be.ugent.idlab.knows.functions.agent.AgentFactory;
 import be.ugent.rml.Executor;
-import be.ugent.rml.StrictMode;
 import be.ugent.rml.records.RecordsFactory;
 import be.ugent.rml.store.RDF4JStore;
 import be.ugent.rml.store.QuadStore;
