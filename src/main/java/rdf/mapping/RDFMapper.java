@@ -29,9 +29,10 @@ public class RDFMapper {
     private List<Path> mappingFiles;
     private boolean reconciliationEnabled = true;
     private static final Path OUTPUT_PATH = Path.of("output", "graph.ttl");
-    private static final Path MAPPER_ENGINE_PATH = Path.of("lib", "rmlmapper-8.1.0-r380-all.jar");
     private static final Path GENERATED_MAPPINGS_BASE_PATH = Path.of("tmp", "mappings");
     private static final RDFFormat OUTPUT_FORMAT = RDFFormat.TURTLE;
+    private static final String WIKIDATA_PREFIX = "wd";
+    private static final String WIKIDATA_NAMESPACE = "http://www.wikidata.org/entity/";
 
     public Path map() throws IOException, InterruptedException {
         if (mappingFiles == null || OUTPUT_FORMAT == null) {
@@ -44,10 +45,6 @@ public class RDFMapper {
 
         if (OUTPUT_PATH.getParent() != null) {
             Files.createDirectories(OUTPUT_PATH.getParent());
-        }
-
-        if (!Files.exists(MAPPER_ENGINE_PATH)) {
-            throw new IOException("RMLMapper jar not found: " + MAPPER_ENGINE_PATH);
         }
 
         String cwd = System.getProperty("user.dir");
@@ -72,6 +69,9 @@ public class RDFMapper {
             } finally {
                 functionAgent.close();
             }
+
+            outputStore.copyNameSpaces(rmlStore);
+            outputStore.addNameSpace(WIKIDATA_PREFIX, WIKIDATA_NAMESPACE);
 
             try (OutputStream out = Files.newOutputStream(OUTPUT_PATH)) {
                 outputStore.write(out, OUTPUT_FORMAT.getName().toLowerCase());
