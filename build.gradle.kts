@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation(files("lib/rmlmapper-8.1.0-r380-all.jar"))
     implementation("org.apache.jena:jena-shacl:5.6.0")
     implementation("org.apache.jena:jena-arq:5.6.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")

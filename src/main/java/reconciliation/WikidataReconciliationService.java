@@ -17,10 +17,11 @@ import java.time.Instant;
 
 public class WikidataReconciliationService{
     
-    private static final String WIKIDATA_ENDPOINT = "https://wikidata.reconci.link/en/api";
-    private static final String WIKIDATA_ENTITY = "Q35120";
-    private static final String BASE_URI = "http://www.wikidata.org/entity/";
     private static final int DEFAULT_LIMIT = 1;
+    private static final String WIKIDATA_ENTITY = "Q35120"; // Q35120 represents anything in Wikidata
+    private static final String BASE_URI = "http://www.wikidata.org/entity/";
+    private static final String WIKIDATA_ENDPOINT = "https://wikidata.reconci.link/en/api";
+    
     private static final Path LOG_PATH = Path.of("log.txt");
     private static final Object LOG_LOCK = new Object();
     private static final boolean LOG_ENABLED =
@@ -38,7 +39,6 @@ public class WikidataReconciliationService{
             return null;
         }
 
-        // Q35120 represents anything in Wikidata
         String type = entityType == null ? WIKIDATA_ENTITY : entityType;
         int limit = parseLimit(entityLimit);
 

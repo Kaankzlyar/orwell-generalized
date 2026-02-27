@@ -94,7 +94,7 @@ public class MappingPairPlanner {
         String xmlFileName = xmlPath.getFileName().toString();
         String baseName = stripExtension(xmlFileName);
 
-        String xmlSource = xmlPath.toString().replace("\\", "/");
+        String xmlSource = xmlPath.toAbsolutePath().normalize().toString().replace("\\", "/");
         String mappingContent = mappingTemplate.replaceAll(
             SOURCE_PATTERN,
             Matcher.quoteReplacement("rml:source \"" + xmlSource + "\" ;")
