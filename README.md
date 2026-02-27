@@ -7,20 +7,11 @@ Big Brother is watching you.
 ### Run without Docker
 - JDK 21+ installed
 - Internet access on first build (Gradle dependencies)
-- RMLMapper JAR at `lib/rmlmapper-8.1.0-r380-all.jar`
-
-Download RMLMapper 8.1.0:
-
-```sh
-mkdir -p lib
-curl -fsSL -o lib/rmlmapper-8.1.0-r380-all.jar \
-  https://github.com/RMLio/rmlmapper-java/releases/download/v8.1.0/rmlmapper-8.1.0-r380-all.jar
-```
 
 ### Run with Docker
 - Docker installed
 
-No manual RMLMapper setup is required in Docker (the image downloads it).
+No manual RMLMapper setup is required. It is pulled as a Gradle dependency.
 
 ## Build and run (without Docker)
 
