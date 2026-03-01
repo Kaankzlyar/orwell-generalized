@@ -39,8 +39,6 @@ Generated artifacts:
 - RDF graph: `output/graph.ttl`
 - Temporary generated mappings: `tmp/` (cleaned up at the end of a successful run)
 
-## Build
-
 ### Docker
 
 Build image:
