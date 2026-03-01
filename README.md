@@ -13,7 +13,9 @@ Big Brother is watching you.
 
 No manual RMLMapper setup is required. It is pulled as a Gradle dependency.
 
-## Build and run (without Docker)
+## Build
+
+### Manually
 
 Build:
 
@@ -36,6 +38,29 @@ Run without reconciliation HTTP calls:
 Generated artifacts:
 - RDF graph: `output/graph.ttl`
 - Temporary generated mappings: `tmp/` (cleaned up at the end of a successful run)
+
+## Build
+
+### Docker
+
+Build image:
+
+```sh
+docker build -t orwell .
+```
+
+Run container:
+
+```sh
+docker run --rm orwell
+```
+
+To keep the generated output on your host machine:
+
+```sh
+mkdir -p output
+docker run --rm -v "$(pwd)/output:/app/output" orwell
+```
 
 ## Mapping
 
@@ -66,24 +91,3 @@ rr:predicateObjectMap [
 ```
 
 Use `rml:reference` when the source value is already suitable. Use `rr:template` when you need disambiguation/context in the final query string.
-
-## Build and run (Docker)
-
-Build image:
-
-```sh
-docker build -t orwell .
-```
-
-Run container:
-
-```sh
-docker run --rm orwell
-```
-
-To keep the generated output on your host machine:
-
-```sh
-mkdir -p output
-docker run --rm -v "$(pwd)/output:/app/output" orwell
-```
