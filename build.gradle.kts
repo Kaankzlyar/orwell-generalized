@@ -32,11 +32,10 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     systemProperty("orwell.reconciliation.log.enabled", "false")
-    onlyIf {
-        gradle.startParameter.taskNames.any { taskName ->
-            taskName == "test" || taskName.startsWith("test")
-        }
+    val runTests = gradle.startParameter.taskNames.any { taskName ->
+        taskName == "test" || taskName.startsWith("test")
     }
+    enabled = runTests
 }
 
 tasks.named("run") {
