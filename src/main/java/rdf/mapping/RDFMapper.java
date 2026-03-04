@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.rio.RDFFormat;
 
@@ -30,6 +31,7 @@ public class RDFMapper {
     private boolean reconciliationEnabled = true;
     private static final Path OUTPUT_PATH = Path.of("output", "graph.ttl");
     private static final Path GENERATED_MAPPINGS_BASE_PATH = Path.of("tmp", "mappings");
+    private static final Path FUNCTIONS_PATH = Path.of("functions");
     private static final RDFFormat OUTPUT_FORMAT = RDFFormat.TURTLE;
     private static final String WIKIDATA_PREFIX = "wd";
     private static final String WIKIDATA_NAMESPACE = "http://www.wikidata.org/entity/";
@@ -86,18 +88,38 @@ public class RDFMapper {
     }
 
     private Agent createFunctionAgent() throws Exception {
+        List<String> functionFiles = new ArrayList<>();
+        functionFiles.add("fno/functions_idlab.ttl");
+        functionFiles.add("fno/functions_idlab_classes_java_mapping.ttl");
+
         if (reconciliationEnabled) {
-            return AgentFactory.createFromFnO(
-                    "fno/functions_idlab.ttl",
-                    "fno/functions_idlab_classes_java_mapping.ttl",
-                    "functions/reconciliate.ttl"
-            );
+            for (Path functionFile : getFunctionList()) {
+                functionFiles.add(functionFile.toString().replace("\\", "/"));
+            }
         }
 
         return AgentFactory.createFromFnO(
-                "fno/functions_idlab.ttl",
-                "fno/functions_idlab_classes_java_mapping.ttl"
+            functionFiles.toArray(String[]::new)
         );
+    }
+
+    private List<Path> getFunctionList() {
+        List<Path> list = new ArrayList<>();
+
+        if (!Files.isDirectory(FUNCTIONS_PATH)) {
+            return list;
+        }
+
+        try (Stream<Path> stream = Files.list(FUNCTIONS_PATH)) {
+            stream
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().toLowerCase().endsWith(".ttl"))
+                    .forEach(list::add);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read function files from " + FUNCTIONS_PATH, e);
+        }
+
+        return list;
     }
 
 }
