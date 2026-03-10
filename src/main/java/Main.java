@@ -8,6 +8,7 @@ import java.util.List;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import rdf.validation.ShaclValidation;
+import reconciliation.WikidataReconciliationService;
 
 public class Main {
 
@@ -15,6 +16,8 @@ public class Main {
     private static final String DISABLE_RECONCILIATION_FLAG = "--disable-reconciliation";
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        // CLI
         boolean reconciliationEnabled = true;
         for (String arg : args) {
             if (DISABLE_RECONCILIATION_FLAG.equals(arg)) {
@@ -28,31 +31,36 @@ public class Main {
 
         // Extract the data from the source and store it in a temporary directory
         // Add flag to decide if downloaded data should be deleted or not
+        try {
+            // Generate the tmp mapping files
+            MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR);
+            planner.setReconciliationEnabled(reconciliationEnabled);
+            List<Path> mappingFiles = planner.createMappingPairs();
 
-        // Generate the tmp mapping files
-        MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR);
-        planner.setReconciliationEnabled(reconciliationEnabled);
-        List<Path> mappingFiles = planner.createMappingPairs();
-        
-        // Map the data to RDF using the generated mapping files
-        RDFMapper mapper = new RDFMapper(mappingFiles, reconciliationEnabled);
-        Path graph = mapper.map();
+            // Map the data to RDF using the generated mapping files
+            RDFMapper mapper = new RDFMapper(mappingFiles, reconciliationEnabled);
+            Path graph = mapper.map();
 
-        // SHACL Validation
-        ShaclValidation validator = new ShaclValidation();
-        validator.validate(graph);
-        
-        // Clean up the tmp directory
-        if (Files.exists(TMP_DIR)) {
-            try (var paths = Files.walk(TMP_DIR)) {
-                paths.sorted(Comparator.reverseOrder())
-                    .forEach(path -> {
-                        try {
-                            Files.delete(path);
-                        } catch (IOException e) {
-                            throw new UncheckedIOException(e);
-                        }
-                    });
+            // SHACL Validation
+            ShaclValidation validator = new ShaclValidation();
+            validator.validate(graph);
+        } finally {
+            if (reconciliationEnabled) {
+                WikidataReconciliationService.persistCache();
+            }
+
+            // Clean up the tmp directory
+            if (Files.exists(TMP_DIR)) {
+                try (var paths = Files.walk(TMP_DIR)) {
+                    paths.sorted(Comparator.reverseOrder())
+                        .forEach(path -> {
+                            try {
+                                Files.delete(path);
+                            } catch (IOException e) {
+                                throw new UncheckedIOException(e);
+                            }
+                        });
+                }
             }
         }
     }

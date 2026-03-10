@@ -7,11 +7,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class WikidataReconciliationService{
     
@@ -19,10 +22,18 @@ public class WikidataReconciliationService{
     private static final String WIKIDATA_ENTITY = "Q35120"; // Q35120 represents anything in Wikidata
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
     
+    private static final Path CACHE_PATH = Path.of("reconciliation-cache.properties");
+    private static final Object CACHE_LOCK = new Object();
+    private static final Map<String, String> CACHE = new ConcurrentHashMap<>();
+
     private static final Path LOG_PATH = Path.of("log.txt");
     private static final Object LOG_LOCK = new Object();
     private static final boolean LOG_ENABLED =
             Boolean.parseBoolean(System.getProperty("orwell.reconciliation.log.enabled", "true"));
+
+    static {
+        loadCache();
+    }
 
     public static String reconciliate(String entityCandidate, String entityType){
         return reconciliate(entityCandidate, entityType, null);
@@ -44,6 +55,14 @@ public class WikidataReconciliationService{
             return null;
         }
 
+        String cachedId = getCachedId(query);
+        if (cachedId != null) {
+            ReconciliationResult cachedResult = new ReconciliationResult(cachedId, "", "", "");
+            System.out.println("Found result for query in cache: " + query);
+            logReconciliation(query, type, limit, cachedResult);
+            return BASE_URI + cachedId;
+        }
+
         ReconciliationResult result = fetchEntity(query, type, limit);
         logReconciliation(query, type, limit, result);
 
@@ -51,6 +70,7 @@ public class WikidataReconciliationService{
             return null;
         }
 
+        cacheResult(query, result);
         return BASE_URI + result.id();
     }
 
@@ -145,5 +165,67 @@ public class WikidataReconciliationService{
             return "";
         }
         return value.replace("\t", " ").replace("\n", " ").replace("\r", " ");
+    }
+
+    private static String getCachedId(String query) {
+        String cached = CACHE.get(query);
+        if (cached == null || cached.isBlank()) {
+            return null;
+        }
+        return cached;
+    }
+
+    private static void cacheResult(String query, ReconciliationResult result) {
+        if (result == null || result.id() == null || result.id().isBlank()) {
+            return;
+        }
+
+        String id = result.id().trim();
+        String existing = CACHE.get(query);
+        
+        if (!id.equals(existing)) {
+            CACHE.put(query, id);
+        }
+    }
+
+    private static void loadCache() {
+        if (!Files.exists(CACHE_PATH)) {
+            return;
+        }
+
+        synchronized (CACHE_LOCK) {
+            Properties properties = new Properties();
+            try (var reader = Files.newBufferedReader(CACHE_PATH, StandardCharsets.UTF_8)) {
+                properties.load(reader);
+                for (String name : properties.stringPropertyNames()) {
+                    String value = properties.getProperty(name);
+                    if (value != null && !value.isBlank()) {
+                        CACHE.put(name, value);
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to load reconciliation cache: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Saves the cache to disk
+     */
+    public static void persistCache() {
+        synchronized (CACHE_LOCK) {
+            Properties properties = new Properties();
+            properties.putAll(CACHE);
+            try (var writer = Files.newBufferedWriter(
+                    CACHE_PATH,
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING
+            )) {
+                properties.store(writer, "Wikidata reconciliation cache");
+            } catch (Exception e) {
+                System.err.println("Failed to write reconciliation cache: " + e.getMessage());
+            }
+        }
     }
 }

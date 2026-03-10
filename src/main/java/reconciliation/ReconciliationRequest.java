@@ -3,11 +3,14 @@ package reconciliation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AllArgsConstructor;
+
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 
+@AllArgsConstructor
 final class ReconciliationRequest {
 
     private static final String WIKIDATA_ENDPOINT = "https://wikidata.reconci.link/en/api";
@@ -15,12 +18,6 @@ final class ReconciliationRequest {
     private final String query;
     private final String type;
     private final int limit;
-
-    ReconciliationRequest(String query, String type, int limit) {
-        this.query = query;
-        this.type = type;
-        this.limit = limit;
-    }
 
     HttpRequest toHttpRequest(ObjectMapper objectMapper) throws Exception {
         String formBody = "queries=" + URLEncoder.encode(buildQueriesJson(objectMapper), StandardCharsets.UTF_8);
