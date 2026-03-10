@@ -52,3 +52,4 @@ data/
 output/
 tmp/
 log.txt
+reconciliation-cache.properties
