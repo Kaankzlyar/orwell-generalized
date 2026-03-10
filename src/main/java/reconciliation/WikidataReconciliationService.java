@@ -3,8 +3,6 @@ package reconciliation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -20,7 +18,6 @@ public class WikidataReconciliationService{
     private static final int DEFAULT_LIMIT = 1;
     private static final String WIKIDATA_ENTITY = "Q35120"; // Q35120 represents anything in Wikidata
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
-    private static final String WIKIDATA_ENDPOINT = "https://wikidata.reconci.link/en/api";
     
     private static final Path LOG_PATH = Path.of("log.txt");
     private static final Object LOG_LOCK = new Object();
@@ -77,21 +74,8 @@ public class WikidataReconciliationService{
                     .connectTimeout(Duration.ofSeconds(10))
                     .build();
 
-            JsonNode queryNode = objectMapper.createObjectNode()
-                    .put("query", query)
-                    .put("type", type)
-                    .put("limit", limit);
-            JsonNode queriesNode = objectMapper.createObjectNode()
-                    .set("q0", queryNode);
-            String queriesJson = objectMapper.writeValueAsString(queriesNode);
-
-            String formBody = "queries=" + URLEncoder.encode(queriesJson, StandardCharsets.UTF_8);
-            HttpRequest request = HttpRequest.newBuilder(URI.create(WIKIDATA_ENDPOINT))
-                    .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                    .header("Accept", "application/json")
-                    .timeout(Duration.ofSeconds(20))
-                    .POST(HttpRequest.BodyPublishers.ofString(formBody))
-                    .build();
+            ReconciliationRequest reconciliationRequest = new ReconciliationRequest(query, type, limit);
+            HttpRequest request = reconciliationRequest.toHttpRequest(objectMapper);
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
