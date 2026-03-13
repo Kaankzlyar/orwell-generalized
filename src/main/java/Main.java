@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 
+import extraction.DataExtractor;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import rdf.validation.ShaclValidation;
@@ -13,6 +14,7 @@ import reconciliation.WikidataReconciliationService;
 public class Main {
 
     private static final Path TMP_DIR = Path.of("tmp");
+    private static final Path DATA_DIR = Path.of("data");
     private static final String DISABLE_RECONCILIATION_FLAG = "--disable-reconciliation";
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -29,11 +31,14 @@ public class Main {
             }
         }
 
-        // Extract the data from the source and store it in a temporary directory
-        // Add flag to decide if downloaded data should be deleted or not
+        // Extract the data from the source and store it in the data/ directory
+        DataExtractor extractor = new DataExtractor(DATA_DIR);
+        extractor.extract();
+
+        // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
             // Generate the tmp mapping files
-            MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR);
+            MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR, DATA_DIR);
             planner.setReconciliationEnabled(reconciliationEnabled);
             List<Path> mappingFiles = planner.createMappingPairs();
 

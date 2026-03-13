@@ -19,13 +19,14 @@ public class MappingPairPlanner {
     private static final String TTL_EXTENSION = ".ttl";
     private static final String SOURCE_PATTERN = "rml:source\\s+\"[^\"]*\"\\s*;";
     
-    private static final Path DATA_DIR = Path.of("data");
     private static final Path MAPPINGS_DIR = Path.of("mappings");
+    private final Path DATA_DIR;
     private final Path TMP_DIR;
     private boolean reconciliationEnabled = true;
 
-    public MappingPairPlanner(Path tmpDir) {
+    public MappingPairPlanner(Path tmpDir, Path dataDir) {
         this.TMP_DIR = tmpDir;
+        this.DATA_DIR = dataDir;
     }
 
     public List<Path> createMappingPairs() throws IOException {

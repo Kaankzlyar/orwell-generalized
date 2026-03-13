@@ -60,6 +60,36 @@ mkdir -p output
 docker run --rm -v "$(pwd)/output:/app/output" orwell
 ```
 
+## Data Extraction
+
+Orwell expects a JSON as input to decide which information to extract. It should abide by the following structure:
+
+```jsonc
+{
+  // name of the resource on the website
+  "informacaobase": {
+    // list of legislatures
+    "XVII": "https://www.parlamento.pt/.../some.xml",
+    "XVI": "https://www.parlamento.pt/.../some-other.xml"
+  },
+  "iniciativas": {
+    "XVII": "https://www.parlamento.pt/.../another.xml"
+  }
+}
+```
+
+After extraction, the data folder structure is as follows:
+
+```txt
+data/
+|-informacaobase/
+| |-xvii.xml
+| |-xvi.xml
+|
+|-iniciativas/
+  |-xvii.xml
+```
+
 ## Mapping
 
 Mappings are authored in Turtle under `mappings/` and may use dynamic reconciliation through FnML/FnO.

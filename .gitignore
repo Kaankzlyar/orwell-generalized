@@ -47,6 +47,7 @@ lib/
 
 # Local Data
 data/
+sources.json
 
 # Output
 output/
