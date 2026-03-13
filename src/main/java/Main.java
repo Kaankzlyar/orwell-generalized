@@ -15,25 +15,39 @@ public class Main {
 
     private static final Path TMP_DIR = Path.of("tmp");
     private static final Path DATA_DIR = Path.of("data");
-    private static final String DISABLE_RECONCILIATION_FLAG = "--disable-reconciliation";
+    private static final String DISABLE_RECONCILIATION_FLAG = "-dr";
+    private static final String DISABLE_EXTRACTION_FLAG = "-de";
+    private static final String DISABLE_SHACL_FAILURE = "-ds";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // CLI
         boolean reconciliationEnabled = true;
+        boolean extractionEnabled = true;
+        boolean shaclFail = true;
         for (String arg : args) {
-            if (DISABLE_RECONCILIATION_FLAG.equals(arg)) {
-                reconciliationEnabled = false;
-            } else {
-                throw new IllegalArgumentException(
-                        "Unknown argument: " + arg + ". Supported flags: " + DISABLE_RECONCILIATION_FLAG
-                );
+            switch (arg) {
+                case DISABLE_RECONCILIATION_FLAG:
+                    reconciliationEnabled = false;
+                    break;
+                case DISABLE_EXTRACTION_FLAG:
+                    extractionEnabled = false;
+                    break;
+                case DISABLE_SHACL_FAILURE:
+                    shaclFail = false;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            "Unknown argument: " + arg + ". Supported flags: " + DISABLE_RECONCILIATION_FLAG
+                    );
             }
         }
 
         // Extract the data from the source and store it in the data/ directory
-        DataExtractor extractor = new DataExtractor(DATA_DIR);
-        extractor.extract();
+        if (extractionEnabled) {
+            DataExtractor extractor = new DataExtractor(DATA_DIR);
+            extractor.extract();
+        }
 
         // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
@@ -47,7 +61,7 @@ public class Main {
             Path graph = mapper.map();
 
             // SHACL Validation
-            ShaclValidation validator = new ShaclValidation();
+            ShaclValidation validator = new ShaclValidation(shaclFail);
             validator.validate(graph);
         } finally {
             if (reconciliationEnabled) {
