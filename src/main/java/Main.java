@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import extraction.DataExtractor;
+import extraction.Registry;
+import extraction.hooks.*;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import rdf.validation.ShaclValidation;
@@ -48,6 +50,12 @@ public class Main {
             DataExtractor extractor = new DataExtractor(DATA_DIR);
             extractor.extract();
         }
+
+        Registry registry = new Registry(DATA_DIR);
+        registry.register(
+                new ParliamentarianReconciliation()
+        );
+        registry.run();
 
         // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
