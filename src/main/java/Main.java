@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import extraction.DataExtractor;
-import extraction.Registry;
-import extraction.hooks.*;
+import preprocessing.Registry;
+import preprocessing.hooks.*;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import rdf.validation.ShaclValidation;

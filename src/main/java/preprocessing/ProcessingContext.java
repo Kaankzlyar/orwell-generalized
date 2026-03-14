@@ -1,4 +1,4 @@
-package extraction;
+package preprocessing;
 
 import java.util.HashMap;
 import java.util.Map;

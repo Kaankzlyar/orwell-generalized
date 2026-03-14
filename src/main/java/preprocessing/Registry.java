@@ -1,4 +1,4 @@
-package extraction;
+package preprocessing;
 
 import java.nio.file.Path;
 import java.util.List;

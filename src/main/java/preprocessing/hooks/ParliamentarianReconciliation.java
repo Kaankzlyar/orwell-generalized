@@ -1,10 +1,10 @@
-package extraction.hooks;
+package preprocessing.hooks;
 
 import java.util.List;
 
-import extraction.Hook;
-import extraction.ProcessingContext;
-import extraction.XMLObject;
+import preprocessing.Hook;
+import preprocessing.ProcessingContext;
+import utils.XMLObject;
 
 public class ParliamentarianReconciliation extends Hook {
     @Override
