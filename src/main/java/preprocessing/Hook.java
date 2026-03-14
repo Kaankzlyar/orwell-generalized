@@ -2,6 +2,7 @@ package preprocessing;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -21,7 +22,7 @@ public abstract class Hook {
 
     protected void registerLookupTable(ProcessingContext context, String key, String value) {
         String hookName = getName();
-        Map<String, String> table = context.getLookupTable(hookName).orElse(Map.of());
+        Map<String, String> table = context.getLookupTable(hookName).orElse(new HashMap<>());
         table.put(key, value);
         context.registerLookupTable(hookName, table);
     }
