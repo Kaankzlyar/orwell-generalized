@@ -3,6 +3,7 @@ package extraction;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public abstract class Hook {
@@ -15,6 +16,13 @@ public abstract class Hook {
     public abstract void execute(ProcessingContext context);
 
     public abstract String getName();
+
+    protected void registerLookupTable(ProcessingContext context, String key, String value) {
+        String hookName = getName();
+        Map<String, String> table = context.getLookupTable(hookName).orElse(Map.of());
+        table.put(key, value);
+        context.registerLookupTable(hookName, table);
+    }
 
     protected void setDataDir(Path dataDir) {
         if (dataDir == null || !Files.isDirectory(dataDir)) {
@@ -44,7 +52,7 @@ public abstract class Hook {
         }
     }
 
-    private XMLObject parseXml(Path xmlPath) {
+    protected XMLObject parseXml(Path xmlPath) {
         try {
             String raw = Files.readString(xmlPath);
             String cleaned = XMLObject.removeBom(raw);

@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.xml.sax.InputSource;
 import java.io.IOException;
@@ -183,6 +184,15 @@ public class XMLObject {
         }
         String text = this.element.getTextContent();
         return text == null ? null : text.trim();
+    }
+
+    public Optional<String> getAttribute(String elementName){
+        XMLObject object = findFirstElementByName(elementName);
+        if (object == null) {
+            return Optional.empty();
+        }
+        String text = object.getText();
+        return text == null ? Optional.empty() : Optional.of(text.trim());
     }
 
     public XMLObject findFirstElementByName(String elementName) {
