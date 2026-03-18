@@ -75,7 +75,6 @@
           rr:predicate ex:query ;
           rr:objectMap [
             rr:template "Círculo {cpDes}" ;
-            rr:termType rr:Literal ;
             rr:datatype xsd:string
           ]
         ] ;
