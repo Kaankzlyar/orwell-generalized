@@ -40,7 +40,10 @@ public class Main {
                     break;
                 default:
                     throw new IllegalArgumentException(
-                            "Unknown argument: " + arg + ". Supported flags: " + DISABLE_RECONCILIATION_FLAG
+                            "Unknown argument: " + arg + ". Supported flags: "
+                                    + DISABLE_RECONCILIATION_FLAG + ", "
+                                    + DISABLE_EXTRACTION_FLAG + ", "
+                                    + DISABLE_SHACL_FAILURE
                     );
             }
         }

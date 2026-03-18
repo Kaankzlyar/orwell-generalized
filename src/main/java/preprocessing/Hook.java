@@ -3,11 +3,8 @@ package preprocessing;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import utils.XMLObject;
 
 public abstract class Hook {
     private Path dataDir;
@@ -20,6 +17,12 @@ public abstract class Hook {
 
     public abstract String getName();
 
+    /**
+     * Adds a key-value pair to a lookup table in the ProcessingContext specific to this hook.
+     * @param context
+     * @param key
+     * @param value
+     */
     protected void registerLookupTable(ProcessingContext context, String key, String value) {
         String hookName = getName();
         Map<String, String> table = context.getLookupTable(hookName).orElse(new HashMap<>());
@@ -38,32 +41,17 @@ public abstract class Hook {
         System.out.println("[" + getName() + "] " + message);
     }
 
-    protected List<XMLObject> loadDocuments(String resourceName) {
+    protected Stream<Path> streamDocuments(String resourceName) {
         Path resourceDir = dataDir.resolve(resourceName);
         if (!Files.isDirectory(resourceDir)) {
             throw new IllegalStateException("Resource directory not found: " + resourceDir);
         }
-
-        try (Stream<Path> paths = Files.list(resourceDir)) {
-            return paths
-                .filter(Files::isRegularFile)
-                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(XML_EXTENSION))
-                .map(this::parseXml)
-                .toList();
-        } catch (Exception e) {
-            throw new IllegalStateException("Failed to load XML files from: " + resourceDir + ": " + e.getMessage(), e);
-        }
-    }
-
-    protected XMLObject parseXml(Path xmlPath) {
         try {
-            String raw = Files.readString(xmlPath);
-            String cleaned = XMLObject.removeBom(raw);
-            XMLObject xmlObject = new XMLObject(cleaned);
-            return xmlObject;
+            return Files.list(resourceDir)
+                .filter(Files::isRegularFile)
+                .filter(path -> path.getFileName().toString().endsWith(XML_EXTENSION));
         } catch (Exception e) {
-            throw new IllegalStateException("Failed to parse XML: " + xmlPath + ": " + e.getMessage(), e);
+            throw new IllegalStateException("Failed to list XML files from: " + resourceDir + ": " + e.getMessage(), e);
         }
     }
-
 }

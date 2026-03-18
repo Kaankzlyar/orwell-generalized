@@ -14,6 +14,10 @@ public class ProcessingContext {
         lookupTables.put(name, table);
     }
 
+    public Map<String, Map<String, String>> getLookupTable() {
+        return lookupTables;
+    }
+
     public Optional<Map<String, String>> getLookupTable(String name) {
         return Optional.ofNullable(lookupTables.get(name));
     }
