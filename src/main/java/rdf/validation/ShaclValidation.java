@@ -2,8 +2,6 @@ package rdf.validation;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;

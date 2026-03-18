@@ -16,8 +16,6 @@ import reconciliation.WikidataReconciliationService;
 
 public class Main {
 
-    private static final Path TMP_DIR = Path.of("tmp");
-    private static final Path DATA_DIR = Path.of("data");
     private static final String DISABLE_RECONCILIATION_FLAG = "-dr";
     private static final String DISABLE_EXTRACTION_FLAG = "-de";
     private static final String DISABLE_SHACL_FAILURE = "-ds";
@@ -72,13 +70,14 @@ public class Main {
             ShaclValidation validator = new ShaclValidation();
             validator.validate();
         } finally {
+            
             if (Config.RECONCILIATION_ENABLED) {
                 WikidataReconciliationService.persistCache();
             }
 
             // Clean up the tmp directory
-            if (Files.exists(TMP_DIR)) {
-                try (var paths = Files.walk(TMP_DIR)) {
+            if (Files.exists(Config.TMP_DIR)) {
+                try (var paths = Files.walk(Config.TMP_DIR)) {
                     paths.sorted(Comparator.reverseOrder())
                         .forEach(path -> {
                             try {
