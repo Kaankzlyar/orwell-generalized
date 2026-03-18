@@ -23,26 +23,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // CLI
-        for (String arg : args) {
-            switch (arg) {
-                case DISABLE_RECONCILIATION_FLAG:
-                    Config.RECONCILIATION_ENABLED = false;
-                    break;
-                case DISABLE_EXTRACTION_FLAG:
-                    Config.EXTRACTION_ENABLED = false;
-                    break;
-                case DISABLE_SHACL_FAILURE:
-                    Config.THROW_ON_SHACL_UNCONFORM = false;
-                    break;
-                default:
-                    throw new IllegalArgumentException(
-                            "Unknown argument: " + arg + ". Supported flags: "
-                                    + DISABLE_EXTRACTION_FLAG + ", "
-                                    + DISABLE_RECONCILIATION_FLAG + ", "
-                                    + DISABLE_SHACL_FAILURE
-                    );
-            }
-        }
+        processArgs(args);
 
         // Extract the data from the source and store it in the data/ directory
         if (Config.EXTRACTION_ENABLED) {
@@ -87,6 +68,29 @@ public class Main {
                             }
                         });
                 }
+            }
+        }
+    }
+
+    private static void processArgs(String[] args){
+        for (String arg : args) {
+            switch (arg) {
+                case DISABLE_RECONCILIATION_FLAG:
+                    Config.RECONCILIATION_ENABLED = false;
+                    break;
+                case DISABLE_EXTRACTION_FLAG:
+                    Config.EXTRACTION_ENABLED = false;
+                    break;
+                case DISABLE_SHACL_FAILURE:
+                    Config.THROW_ON_SHACL_UNCONFORM = false;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            "Unknown argument: " + arg + ". Supported flags: "
+                                    + DISABLE_EXTRACTION_FLAG + ", "
+                                    + DISABLE_RECONCILIATION_FLAG + ", "
+                                    + DISABLE_SHACL_FAILURE
+                    );
             }
         }
     }
