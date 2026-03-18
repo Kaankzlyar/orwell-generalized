@@ -17,7 +17,6 @@ import config.Config;
 @Getter
 @Setter
 @NoArgsConstructor
-// TODO: This class may not be needed
 public class MappingPairPlanner {
 
     private static final String XML_EXTENSION = ".xml";
@@ -180,7 +179,6 @@ public class MappingPairPlanner {
         return output.toString();
     }
 
-    // TODO: I think rmlmapper has a CLI argument "-b" that sets the base IRI. Maybe solves this?
     // This is needed due to passing multiple mapping files to RMLMapper.
     private String applyUniqueBase(String mappingContent, String mappingName, String baseName) {
         String uniqueBase = "http://example.org/mappings/" + mappingName + "/" + baseName + "/";
