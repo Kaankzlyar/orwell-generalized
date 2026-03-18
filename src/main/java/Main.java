@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import extraction.DataExtractor;
+import preprocessing.Registry;
+import preprocessing.hooks.*;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import rdf.validation.ShaclValidation;
@@ -38,7 +40,10 @@ public class Main {
                     break;
                 default:
                     throw new IllegalArgumentException(
-                            "Unknown argument: " + arg + ". Supported flags: " + DISABLE_RECONCILIATION_FLAG
+                            "Unknown argument: " + arg + ". Supported flags: "
+                                    + DISABLE_RECONCILIATION_FLAG + ", "
+                                    + DISABLE_EXTRACTION_FLAG + ", "
+                                    + DISABLE_SHACL_FAILURE
                     );
             }
         }
@@ -48,6 +53,12 @@ public class Main {
             DataExtractor extractor = new DataExtractor(DATA_DIR);
             extractor.extract();
         }
+
+        Registry registry = new Registry(DATA_DIR);
+        registry.register(
+                new ParliamentarianReconciliation()
+        );
+        registry.run();
 
         // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
