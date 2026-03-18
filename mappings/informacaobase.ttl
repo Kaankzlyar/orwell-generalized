@@ -3,13 +3,12 @@
 @prefix ql:       <http://semweb.mmlab.be/ns/ql#> .
 @prefix fnml:     <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno:      <https://w3id.org/function/ontology#> .
-@prefix ex:       <http://example.org/fn/> .
+@prefix pofn:     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
 @prefix schema:   <https://schema.org/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 @prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
-@prefix :         <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/> .
-@base             <http://example.org/mappings/> .
+@prefix :         <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/InfoBase/> .
 
 <#LegislatureMap>
 
@@ -20,7 +19,7 @@
   ] ;
 
   rr:subjectMap [
-    rr:template "http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/{sigla}";
+    rr:template "http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/InfoBase/{sigla}";
     rr:class :Legislature
   ] ;
 
@@ -58,7 +57,7 @@
   ] ;
 
   rr:subjectMap [
-    rr:template "http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology-InfoBase/{cpDes}" ;
+    rr:template "http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/InfoBase/{cpDes}" ;
     rr:class :ElectoralCircle
   ] ;
 
@@ -69,21 +68,21 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant ex:reconciliate ]
+          rr:objectMap [ rr:constant pofn:reconciliate ]
         ] ;
         rr:predicateObjectMap [
-          rr:predicate ex:query ;
+          rr:predicate pofn:query ;
           rr:objectMap [
             rr:template "Círculo {cpDes}" ;
             rr:datatype xsd:string
           ]
         ] ;
         rr:predicateObjectMap [
-          rr:predicate ex:type ;
+          rr:predicate pofn:type ;
           rr:objectMap [ rr:constant "Q59576414" ]
         ] ;
         rr:predicateObjectMap [
-          rr:predicate ex:limit ;
+          rr:predicate pofn:limit ;
           rr:objectMap [ rr:constant "5"]
         ]
       ]

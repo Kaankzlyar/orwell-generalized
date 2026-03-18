@@ -17,6 +17,7 @@ import config.Config;
 @Getter
 @Setter
 @NoArgsConstructor
+// TODO: This class may not be needed
 public class MappingPairPlanner {
 
     private static final String XML_EXTENSION = ".xml";

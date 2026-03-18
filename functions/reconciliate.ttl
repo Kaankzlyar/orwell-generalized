@@ -2,48 +2,47 @@
 @prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
 @prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
 @prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix ex:   <http://example.org/fn/> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
 
-# TODO: Mudar ex para outra coisa?
-ex:reconciliate a fno:Function ;
+:reconciliate a fno:Function ;
 fno:name "reconciliate" ;
-fno:expects ( ex:queryParam ex:typeParam ex:limitParam ) ;
-fno:returns ( ex:wikidataIriOut ) .
+fno:expects ( :queryParam :typeParam :limitParam ) ;
+fno:returns ( :wikidataIriOut ) .
 
-ex:queryParam a fno:Parameter ;
-fno:predicate ex:query ;
+:queryParam a fno:Parameter ;
+fno:predicate :query ;
 fno:name "query" ;
 fno:description "Entity label to reconcile against Wikidata." ;
 fno:type xsd:string ;
 fno:required "true"^^xsd:boolean .
 
-ex:typeParam a fno:Parameter ;
-fno:predicate ex:type ;
+:typeParam a fno:Parameter ;
+fno:predicate :type ;
 fno:name "type" ;
 fno:description "Optional Wikidata QID type constraint used by reconciliation to help disambiguate entities." ;
 fno:type xsd:string ;
 fno:required "false"^^xsd:boolean .
 
-ex:limitParam a fno:Parameter ;
-fno:predicate ex:limit ;
+:limitParam a fno:Parameter ;
+fno:predicate :limit ;
 fno:name "limit" ;
 fno:description "Optional max number of candidates to retrieve (default: 1)." ;
 fno:type xsd:string ;
 fno:required "false"^^xsd:boolean .
 
-ex:wikidataIriOut a fno:Output ;
-fno:predicate ex:output ;
+:wikidataIriOut a fno:Output ;
+fno:predicate :output ;
 fno:name "wikidataIri" ;
 fno:description "Best-match Wikidata entity URI." ;
 fno:type xsd:string .
 
-ex:reconciliationService a fnoi:JavaClass ;
+:reconciliationService a fnoi:JavaClass ;
 doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
 fnoi:class-name "reconciliation.WikidataReconciliationService" .
 
-ex:reconciliateMapping a fno:Mapping ;
-fno:function ex:reconciliate ;
-fno:implementation ex:reconciliationService ;
+:reconciliateMapping a fno:Mapping ;
+fno:function :reconciliate ;
+fno:implementation :reconciliationService ;
 fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "reconciliate" ]
 .
