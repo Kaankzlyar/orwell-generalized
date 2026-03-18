@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
+import config.Config;
+
 final class ReconciliationCache {
 
-    private final Path cachePath;
     private final Map<String, String> cache = new ConcurrentHashMap<>();
     private final Object lock = new Object();
 
-    ReconciliationCache(Path cachePath) {
-        this.cachePath = cachePath;
+    ReconciliationCache() {
         load();
     }
 
@@ -45,7 +45,7 @@ final class ReconciliationCache {
             Properties properties = new Properties();
             properties.putAll(cache);
             try (var writer = Files.newBufferedWriter(
-                    cachePath,
+                    Config.CACHE_PATH,
                     StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING
@@ -58,13 +58,13 @@ final class ReconciliationCache {
     }
 
     private void load() {
-        if (!Files.exists(cachePath)) {
+        if (!Files.exists(Config.CACHE_PATH)) {
             return;
         }
 
         synchronized (lock) {
             Properties properties = new Properties();
-            try (var reader = Files.newBufferedReader(cachePath, StandardCharsets.UTF_8)) {
+            try (var reader = Files.newBufferedReader(Config.CACHE_PATH, StandardCharsets.UTF_8)) {
                 properties.load(reader);
                 for (String name : properties.stringPropertyNames()) {
                     String value = properties.getProperty(name);

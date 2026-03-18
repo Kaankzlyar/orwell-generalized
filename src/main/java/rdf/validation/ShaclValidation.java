@@ -11,6 +11,7 @@ import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.ValidationReport;
 import org.apache.jena.shacl.lib.ShLib;
 
+import config.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,38 +21,33 @@ import lombok.Setter;
 @Setter
 public class ShaclValidation {
 
-    private boolean fail = true;
-
-    private static final Path SHACL_DIR = Path.of("shacl");
-    private static final String SHACL_FILE_EXTENSION = ".ttl";
-
-    public void validate(Path dataTtl) {
-        if (!Files.isRegularFile(dataTtl)) {
-            throw new IllegalStateException("Data graph not found: " + dataTtl);
+    public void validate() {
+        if (!Files.isRegularFile(Config.OUTPUT_PATH)) {
+            throw new IllegalStateException("Data graph not found: " + Config.OUTPUT_PATH);
         }
-        if (!Files.isDirectory(SHACL_DIR)) {
-            throw new IllegalStateException("SHACL directory not found: " + SHACL_DIR);
+        if (!Files.isDirectory(Config.SHACL_DIR)) {
+            throw new IllegalStateException("SHACL directory not found: " + Config.SHACL_DIR);
         }
 
-        Model data = RDFDataMgr.loadModel(dataTtl.toString());
+        Model data = RDFDataMgr.loadModel(Config.OUTPUT_PATH.toString());
         Model shapes = ModelFactory.createDefaultModel();
 
-        try (var paths = Files.list(SHACL_DIR)) {
+        try (var paths = Files.list(Config.SHACL_DIR)) {
             paths
-                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(SHACL_FILE_EXTENSION))
+                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(Config.OUTPUT_FORMAT.getName()))
                 .sorted()
                 .forEach(path -> {
                     System.out.println("Reading SHACL shapes from: " + path);
                     RDFDataMgr.read(shapes, path.toString());
                 });
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read SHACL shapes from: " + SHACL_DIR, e);
+            throw new RuntimeException("Failed to read SHACL shapes from: " + Config.SHACL_DIR, e);
         }
 
         ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph());
         ShLib.printReport(report);
 
-        if (fail && !report.conforms()) {
+        if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
             throw new IllegalStateException("SHACL validation failed");
         }
     }

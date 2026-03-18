@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import config.Config;
+
 public abstract class Hook {
-    private Path dataDir;
+
     private static final String XML_EXTENSION = ".xml";
 
     /**
@@ -30,19 +32,12 @@ public abstract class Hook {
         context.registerLookupTable(hookName, table);
     }
 
-    protected void setDataDir(Path dataDir) {
-        if (dataDir == null || !Files.isDirectory(dataDir)) {
-            throw new IllegalArgumentException("Invalid data directory: " + dataDir);
-        }
-        this.dataDir = dataDir;
-    }
-
     protected void log(String message) {
         System.out.println("[" + getName() + "] " + message);
     }
 
     protected Stream<Path> streamDocuments(String resourceName) {
-        Path resourceDir = dataDir.resolve(resourceName);
+        Path resourceDir = Config.DATA_DIR.resolve(resourceName);
         if (!Files.isDirectory(resourceDir)) {
             throw new IllegalStateException("Resource directory not found: " + resourceDir);
         }

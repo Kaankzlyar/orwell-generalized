@@ -11,12 +11,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Registry {
-    private final Path dataDir;
     private List<Hook> hooks;
     private ProcessingContext context;
 
-    public Registry(Path dataDir) {
-        this.dataDir = dataDir;
+    public Registry() {
         this.hooks = new ArrayList<>();
     }
 
@@ -34,7 +32,6 @@ public class Registry {
     public void run(){
         context = new ProcessingContext();
         for (Hook hook : hooks) {
-            hook.setDataDir(dataDir);
             System.out.println("[Registry] Running hook: " + hook.getName());
             hook.execute(context);
         }

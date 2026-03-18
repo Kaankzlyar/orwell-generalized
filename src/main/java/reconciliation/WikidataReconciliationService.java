@@ -20,14 +20,13 @@ public class WikidataReconciliationService{
     private static final String WIKIDATA_ENTITY = "Q35120"; // Q35120 represents anything in Wikidata
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
     
-    private static final ReconciliationCache CACHE =
-            new ReconciliationCache(Path.of("reconciliation-cache.properties"));
-
+    private static final ReconciliationCache CACHE = new ReconciliationCache();
     private static final Path LOG_PATH = Path.of("log.txt");
     private static final Object LOG_LOCK = new Object();
     private static final boolean LOG_ENABLED =
             Boolean.parseBoolean(System.getProperty("orwell.reconciliation.log.enabled", "true"));
 
+            
     public static String reconciliate(String entityCandidate, String entityType){
         return reconciliate(entityCandidate, entityType, null);
     }

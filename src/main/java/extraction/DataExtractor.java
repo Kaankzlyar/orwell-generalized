@@ -14,16 +14,13 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.Config;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class DataExtractor{
 
-    private final Path DATA_DIR;
-    private static final Path SOURCE = Path.of("sources.json");
-
     private static final String XML_EXTENSION = ".xml";
-
-    public DataExtractor(Path dataDir){
-        this.DATA_DIR = dataDir;
-    }
 
     public void extract() {
         Map<String, Map<String, URI>> sources = loadSources();
@@ -31,13 +28,13 @@ public class DataExtractor{
     }
 
     private Map<String, Map<String, URI>> loadSources(){
-        if (!Files.exists(SOURCE)) {
-            throw new IllegalStateException("Source file does not exist: " + SOURCE);
+        if (!Files.exists(Config.SOURCES_PATH)) {
+            throw new IllegalStateException("Sources file does not exist: " + Config.SOURCES_PATH);
         }
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(SOURCE.toFile());
+            JsonNode root = mapper.readTree(Config.SOURCES_PATH.toFile());
 
             Map<String, Map<String, URI>> sources = new HashMap<>();
             root.properties().forEach(entry -> {
@@ -73,14 +70,14 @@ public class DataExtractor{
 
     private void storeData(Map<String, Map<String, URI>> sources){
         try {
-            Files.createDirectories(DATA_DIR);
+            Files.createDirectories(Config.DATA_DIR);
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .build();
 
             for (var datasetEntry : sources.entrySet()) {
                 String dataset = datasetEntry.getKey();
-                Path datasetDir = DATA_DIR.resolve(dataset);
+                Path datasetDir = Config.DATA_DIR.resolve(dataset);
                 Files.createDirectories(datasetDir);
 
                 for (var itemEntry : datasetEntry.getValue().entrySet()) {

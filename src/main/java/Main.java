@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 
+import config.Config;
 import extraction.DataExtractor;
 import preprocessing.Registry;
 import preprocessing.hooks.*;
@@ -24,37 +25,34 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // CLI
-        boolean reconciliationEnabled = true;
-        boolean extractionEnabled = true;
-        boolean shaclFail = true;
         for (String arg : args) {
             switch (arg) {
                 case DISABLE_RECONCILIATION_FLAG:
-                    reconciliationEnabled = false;
+                    Config.RECONCILIATION_ENABLED = false;
                     break;
                 case DISABLE_EXTRACTION_FLAG:
-                    extractionEnabled = false;
+                    Config.EXTRACTION_ENABLED = false;
                     break;
                 case DISABLE_SHACL_FAILURE:
-                    shaclFail = false;
+                    Config.THROW_ON_SHACL_UNCONFORM = false;
                     break;
                 default:
                     throw new IllegalArgumentException(
                             "Unknown argument: " + arg + ". Supported flags: "
-                                    + DISABLE_RECONCILIATION_FLAG + ", "
                                     + DISABLE_EXTRACTION_FLAG + ", "
+                                    + DISABLE_RECONCILIATION_FLAG + ", "
                                     + DISABLE_SHACL_FAILURE
                     );
             }
         }
 
         // Extract the data from the source and store it in the data/ directory
-        if (extractionEnabled) {
-            DataExtractor extractor = new DataExtractor(DATA_DIR);
+        if (Config.EXTRACTION_ENABLED) {
+            DataExtractor extractor = new DataExtractor();
             extractor.extract();
         }
 
-        Registry registry = new Registry(DATA_DIR);
+        Registry registry = new Registry();
         registry.register(
                 new ParliamentarianReconciliation()
         );
@@ -63,19 +61,18 @@ public class Main {
         // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
             // Generate the tmp mapping files
-            MappingPairPlanner planner = new MappingPairPlanner(TMP_DIR, DATA_DIR);
-            planner.setReconciliationEnabled(reconciliationEnabled);
+            MappingPairPlanner planner = new MappingPairPlanner();
             List<Path> mappingFiles = planner.createMappingPairs();
 
             // Map the data to RDF using the generated mapping files
-            RDFMapper mapper = new RDFMapper(mappingFiles, reconciliationEnabled);
-            Path graph = mapper.map();
+            RDFMapper mapper = new RDFMapper(mappingFiles);
+            mapper.map();
 
             // SHACL Validation
-            ShaclValidation validator = new ShaclValidation(shaclFail);
-            validator.validate(graph);
+            ShaclValidation validator = new ShaclValidation();
+            validator.validate();
         } finally {
-            if (reconciliationEnabled) {
+            if (Config.RECONCILIATION_ENABLED) {
                 WikidataReconciliationService.persistCache();
             }
 

@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.rio.RDFFormat;
 
+import config.Config;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,29 +30,20 @@ import org.eclipse.rdf4j.rio.RDFFormat;
 public class RDFMapper {
     
     private List<Path> mappingFiles;
-    private boolean reconciliationEnabled = true;
-    private static final Path OUTPUT_PATH = Path.of("output", "graph.ttl");
-    private static final Path GENERATED_MAPPINGS_BASE_PATH = Path.of("tmp", "mappings");
-    private static final Path FUNCTIONS_PATH = Path.of("functions");
-    private static final RDFFormat OUTPUT_FORMAT = RDFFormat.TURTLE;
     private static final String WIKIDATA_PREFIX = "wd";
     private static final String WIKIDATA_NAMESPACE = "http://www.wikidata.org/entity/";
 
-    public Path map() throws IOException, InterruptedException {
-        if (mappingFiles == null || OUTPUT_FORMAT == null) {
-            throw new IllegalStateException("Mapping files and output path must be set before running the mapper.");
-        }
-
+    public void map() throws IOException, InterruptedException {
         if (mappingFiles.isEmpty()) {
             throw new IllegalStateException("No mapping files provided to RDFMapper.");
         }
 
-        if (OUTPUT_PATH.getParent() != null) {
-            Files.createDirectories(OUTPUT_PATH.getParent());
+        if (Config.OUTPUT_PATH.getParent() != null) {
+            Files.createDirectories(Config.OUTPUT_PATH.getParent());
         }
 
         String cwd = System.getProperty("user.dir");
-        String mappingParent = GENERATED_MAPPINGS_BASE_PATH.toAbsolutePath().normalize().toString();
+        String mappingParent = Config.GENERATED_MAPPINGS_BASE_DIR.toAbsolutePath().normalize().toString();
 
         try {
             QuadStore rmlStore = new RDF4JStore();
@@ -75,16 +68,14 @@ public class RDFMapper {
             outputStore.copyNameSpaces(rmlStore);
             outputStore.addNameSpace(WIKIDATA_PREFIX, WIKIDATA_NAMESPACE);
 
-            try (OutputStream out = Files.newOutputStream(OUTPUT_PATH)) {
-                outputStore.write(out, OUTPUT_FORMAT.getName().toLowerCase());
+            try (OutputStream out = Files.newOutputStream(Config.OUTPUT_PATH)) {
+                outputStore.write(out, Config.OUTPUT_FORMAT.getName().toLowerCase());
             }
         } catch (Exception e) {
             throw new IOException("RMLMapper execution failed: " + e.getMessage(), e);
         }
 
-        System.out.println("RMLMapper finished successfully. Output graph: " + OUTPUT_PATH);
-
-        return OUTPUT_PATH;
+        System.out.println("RMLMapper finished successfully. Output graph: " + Config.OUTPUT_PATH);
     }
 
     private Agent createFunctionAgent() throws Exception {
@@ -92,7 +83,7 @@ public class RDFMapper {
         functionFiles.add("fno/functions_idlab.ttl");
         functionFiles.add("fno/functions_idlab_classes_java_mapping.ttl");
 
-        if (reconciliationEnabled) {
+        if (Config.RECONCILIATION_ENABLED) {
             for (Path functionFile : getFunctionList()) {
                 functionFiles.add(functionFile.toString().replace("\\", "/"));
             }
@@ -106,17 +97,17 @@ public class RDFMapper {
     private List<Path> getFunctionList() {
         List<Path> list = new ArrayList<>();
 
-        if (!Files.isDirectory(FUNCTIONS_PATH)) {
+        if (!Files.isDirectory(Config.FUNCTIONS_DIR)) {
             return list;
         }
 
-        try (Stream<Path> stream = Files.list(FUNCTIONS_PATH)) {
+        try (Stream<Path> stream = Files.list(Config.FUNCTIONS_DIR)) {
             stream
                     .filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().toLowerCase().endsWith(".ttl"))
                     .forEach(list::add);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read function files from " + FUNCTIONS_PATH, e);
+            throw new RuntimeException("Failed to read function files from " + Config.FUNCTIONS_DIR, e);
         }
 
         return list;
