@@ -1,9 +1,15 @@
 package preprocessing;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Registry {
     private final Path dataDir;
     private List<Hook> hooks;
@@ -11,6 +17,7 @@ public class Registry {
 
     public Registry(Path dataDir) {
         this.dataDir = dataDir;
+        this.hooks = new ArrayList<>();
     }
 
     public void register(Hook... hooks) {

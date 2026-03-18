@@ -29,6 +29,9 @@ public class ParliamentarianReconciliation extends Hook {
 
         try (InputStream in = Files.newInputStream(xmlPath)) {
             XMLStreamReader reader = factory.createXMLStreamReader(in);
+            factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+            factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+
             boolean inDetalheLegislatura = false;
             boolean inDeputado = false;
             String depId = null;
