@@ -5,7 +5,8 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 
-import config.Config;
+import static config.Config.*;
+import extraction.ARExtractor;
 import extraction.DataExtractor;
 import preprocessing.Registry;
 import preprocessing.hooks.*;
@@ -25,10 +26,15 @@ public class Main {
         // CLI
         processArgs(args);
 
-        // Extract the data from the source and store it in the data/ directory
-        if (Config.EXTRACTION_ENABLED) {
-            DataExtractor extractor = new DataExtractor();
-            extractor.extract();
+        // Extract the data from the sources and store it in the data/ directory
+        if (EXTRACTION_ENABLED) {
+            List<DataExtractor> extractors = List.of(
+                    new ARExtractor()
+            );
+
+            for (DataExtractor extractor : extractors) {
+                extractor.extract();
+            }
         }
 
         Registry registry = new Registry();
@@ -48,25 +54,28 @@ public class Main {
             mapper.map();
 
             // SHACL Validation
-            ShaclValidation validator = new ShaclValidation();
-            validator.validate();
+            if (SHACL_ENABLED){
+                ShaclValidation validator = new ShaclValidation();
+                validator.validate();
+            }
         } finally {
             
-            if (Config.RECONCILIATION_ENABLED) {
+            if (RECONCILIATION_ENABLED) {
                 WikidataReconciliationService.persistCache();
             }
 
-            // Clean up the tmp directory
-            if (Files.exists(Config.TMP_DIR)) {
-                try (var paths = Files.walk(Config.TMP_DIR)) {
-                    paths.sorted(Comparator.reverseOrder())
-                        .forEach(path -> {
-                            try {
-                                Files.delete(path);
-                            } catch (IOException e) {
-                                throw new UncheckedIOException(e);
-                            }
-                        });
+            if(DELETE_TMP){
+                if (Files.exists(TMP_DIR)) {
+                    try (var paths = Files.walk(TMP_DIR)) {
+                        paths.sorted(Comparator.reverseOrder())
+                            .forEach(path -> {
+                                try {
+                                    Files.delete(path);
+                                } catch (IOException e) {
+                                    throw new UncheckedIOException(e);
+                                }
+                            });
+                    }
                 }
             }
         }
@@ -76,13 +85,13 @@ public class Main {
         for (String arg : args) {
             switch (arg) {
                 case DISABLE_RECONCILIATION_FLAG:
-                    Config.RECONCILIATION_ENABLED = false;
+                    RECONCILIATION_ENABLED = false;
                     break;
                 case DISABLE_EXTRACTION_FLAG:
-                    Config.EXTRACTION_ENABLED = false;
+                    EXTRACTION_ENABLED = false;
                     break;
                 case DISABLE_SHACL_FAILURE:
-                    Config.THROW_ON_SHACL_UNCONFORM = false;
+                    THROW_ON_SHACL_UNCONFORM = false;
                     break;
                 default:
                     throw new IllegalArgumentException(

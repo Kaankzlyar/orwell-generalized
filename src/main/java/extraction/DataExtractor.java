@@ -1,6 +1,5 @@
 package extraction;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,57 +17,27 @@ import config.Config;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class DataExtractor{
+public abstract class DataExtractor {
 
-    private static final String XML_EXTENSION = ".xml";
+    protected final ObjectMapper objectMapper = new ObjectMapper();
 
     public void extract() {
-        Map<String, Map<String, URI>> sources = loadSources();
+        Path sourcePath = SOURCE_PATH();
+        Map<String, Map<String, URI>> sources = parseConfig(sourcePath);
         storeData(sources);
     }
 
-    private Map<String, Map<String, URI>> loadSources(){
-        if (!Files.exists(Config.SOURCES_PATH)) {
-            throw new IllegalStateException("Sources file does not exist: " + Config.SOURCES_PATH);
-        }
+    protected abstract Map<String, Map<String, URI>> parseConfig(Path sourcePath);
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(Config.SOURCES_PATH.toFile());
+    protected abstract Path SOURCE_PATH();
 
-            Map<String, Map<String, URI>> sources = new HashMap<>();
-            root.properties().forEach(entry -> {
-                
-                String name = entry.getKey();
-                JsonNode legislatures = entry.getValue();
+    protected abstract String getFileExtension();
 
-                Map<String, URI> items = new HashMap<>();
-                legislatures.properties().forEach(item -> {
-                    String legislature = item.getKey();
-                    JsonNode urlNode = item.getValue();
-                    if (!urlNode.isTextual()) {
-                        throw new IllegalStateException(
-                                "Invalid sources.json: expected URL string for " + name + "/" + legislature
-                        );
-                    }
-                    String url = urlNode.asText().trim();
-                    if (url.isEmpty()) {
-                        throw new IllegalStateException(
-                                "Invalid sources.json: empty URL for " + name + "/" + legislature
-                        );
-                    }
-                    items.put(legislature, URI.create(url));
-                });
-
-                sources.put(name, items);
-            });
-            return sources;
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to read sources.json: " + e.getMessage(), e);
-        }
-    }
-
-    private void storeData(Map<String, Map<String, URI>> sources){
+    /**
+     * Store the data locally according to the structure of the source json, under the DATA_DIR specified in the configuration
+     * @param sources
+     */
+    protected void storeData(Map<String, Map<String, URI>> sources) {
         try {
             Files.createDirectories(Config.DATA_DIR);
             HttpClient httpClient = HttpClient.newBuilder()
@@ -81,13 +50,13 @@ public class DataExtractor{
                 Files.createDirectories(datasetDir);
 
                 for (var itemEntry : datasetEntry.getValue().entrySet()) {
-                    String legislature = itemEntry.getKey();
+                    String identifier = itemEntry.getKey();
                     URI uri = itemEntry.getValue();
 
-                    String fileName = legislature + XML_EXTENSION;
+                    String fileName = identifier + getFileExtension();
                     Path target = datasetDir.resolve(fileName);
 
-                    byte[] content = fetchXml(httpClient, uri);
+                    byte[] content = fetchData(httpClient, uri);
                     Files.write(target, content);
                 }
             }
@@ -96,7 +65,36 @@ public class DataExtractor{
         }
     }
 
-    private static byte[] fetchXml(HttpClient httpClient, URI uri) {
+    /**
+     * Returns a map of source identifier to the respective URI
+     * Example:
+     * "XVII": "www.parlamento.com/.../xvii.xml"
+     * @param node
+     * @param parentKey
+     * @return
+     */
+    protected Map<String, URI> parseUriMap(JsonNode node, String parentKey) {
+        Map<String, URI> items = new HashMap<>();
+        node.properties().forEach(entry -> {
+            String key = entry.getKey();
+            JsonNode urlNode = entry.getValue();
+            if (!urlNode.isTextual()) {
+                throw new IllegalStateException(
+                        "Invalid source config: expected URL string for " + parentKey + "/" + key
+                );
+            }
+            String url = urlNode.asText().trim();
+            if (url.isEmpty()) {
+                throw new IllegalStateException(
+                        "Invalid source config: empty URL for " + parentKey + "/" + key
+                );
+            }
+            items.put(key, URI.create(url));
+        });
+        return items;
+    }
+
+    private static byte[] fetchData(HttpClient httpClient, URI uri) {
         try {
             HttpRequest request = HttpRequest.newBuilder(uri)
                     .timeout(Duration.ofSeconds(60))
