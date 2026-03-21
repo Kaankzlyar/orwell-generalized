@@ -14,10 +14,6 @@ public class ARExtractor extends DataExtractor {
         return Path.of("sources", "ar.json");
     }
 
-    protected String getFileExtension() {
-        return ".xml";
-    }
-
     protected Map<String, Map<String, URI>> parseConfig(Path sourcePath) {
         if (!Files.exists(sourcePath)) {
             throw new IllegalStateException("Sources file does not exist: " + sourcePath);

@@ -31,12 +31,10 @@ public abstract class DataExtractor {
 
     protected abstract Path SOURCE_PATH();
 
-    protected abstract String getFileExtension();
-
     /**
-     * Store the data locally according to the structure of the source json, under the DATA_DIR specified in the configuration
+     * Store the data locally according to the structure of the source json, under the DATA_DIR pecified in the configuration
      * @param sources
-     */
+    */
     protected void storeData(Map<String, Map<String, URI>> sources) {
         try {
             Files.createDirectories(Config.DATA_DIR);
@@ -53,16 +51,25 @@ public abstract class DataExtractor {
                     String identifier = itemEntry.getKey();
                     URI uri = itemEntry.getValue();
 
-                    String fileName = identifier + getFileExtension();
-                    Path target = datasetDir.resolve(fileName);
-
-                    byte[] content = fetchData(httpClient, uri);
-                    Files.write(target, content);
+                    HttpResponse<byte[]> response = fetchData(httpClient, uri);
+                    String extension = extractExtension(response);
+                    Path target = datasetDir.resolve(identifier + extension);
+                    Files.write(target, response.body());
                 }
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to store data: " + e.getMessage(), e);
         }
+    }
+
+    private String extractExtension(HttpResponse<byte[]> response) {
+        String contentType = response.headers().firstValue("Content-Type").orElse("");
+        return switch (contentType) {
+            case String ct when ct.contains("application/xml") || ct.contains("text/xml") -> ".xml";
+            case String ct when ct.contains("text/csv") -> ".csv";
+            case String ct when ct.contains("application/json") -> ".json";
+            default -> "";
+        };
     }
 
     /**
@@ -94,7 +101,7 @@ public abstract class DataExtractor {
         return items;
     }
 
-    private static byte[] fetchData(HttpClient httpClient, URI uri) {
+    private static HttpResponse<byte[]> fetchData(HttpClient httpClient, URI uri) {
         try {
             HttpRequest request = HttpRequest.newBuilder(uri)
                     .timeout(Duration.ofSeconds(60))
@@ -106,7 +113,7 @@ public abstract class DataExtractor {
             if (status < 200 || status >= 300) {
                 throw new IllegalStateException("Failed to download " + uri + ": HTTP " + status);
             }
-            return response.body();
+            return response;
         } catch (Exception e) {
             throw new IllegalStateException("Failed to download " + uri + ": " + e.getMessage(), e);
         }
