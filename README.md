@@ -62,13 +62,16 @@ docker run --rm -v "$(pwd)/output:/app/output" orwell
 
 ## Data Extraction
 
-Orwell expects a JSON as input to decide which information to extract. It should abide by the following structure:
+Orwell uses an extensible Data Extractor framework. Each data source has its own extractor that handles source-specific JSON structures.
+
+### Source Configuration
+
+Each source has a JSON file in the `sources/` directory:
 
 ```jsonc
+// sources/ar.json
 {
-  // name of the resource on the website
   "informacaobase": {
-    // list of legislatures
     "XVII": "https://www.parlamento.pt/.../some.xml",
     "XVI": "https://www.parlamento.pt/.../some-other.xml"
   },
@@ -78,21 +81,39 @@ Orwell expects a JSON as input to decide which information to extract. It should
 }
 ```
 
-After extraction, the data folder structure is as follows:
+The `DataExtractor` abstract class provides common functionality (HTTP fetching, file storage, Content-Type-based extension detection). Each extractor extends this class and implements `parseSources()` to handle its specific JSON structure.
+
+After extraction, the data folder structure mirrors the source JSON:
 
 ```txt
 data/
-|-informacaobase/
-| |-xvii.xml
-| |-xvi.xml
-|
-|-iniciativas/
-  |-xvii.xml
+|-ar/
+| |-informacaobase/
+| | |-xvii.xml
+| | |-xvi.xml
+| |
+| |-iniciativas/
+|   |-xvii.xml
 ```
+
+### Adding a New Source
+
+1. Create a JSON file in `sources/` (e.g., `sources/base.json`)
+2. Create a new extractor class extending `DataExtractor`
+3. Implement `SOURCE_PATH()` to return the path to your JSON file
+4. Implement `parseSources()` to build a `SourceNode` tree from your JSON structure
+5. Add the extractor to the list in `Main.java`
 
 ## Mapping
 
-Mappings are authored in Turtle under `mappings/` and may use dynamic reconciliation through FnML/FnO.
+Mappings are authored in Turtle under `mappings/<source>/` and may use dynamic reconciliation through FnML/FnO. Each source has its own mapping subdirectory matching the data folder structure:
+
+```txt
+mappings/
+|-ar/
+| |-informacaobase.ttl
+| |-iniciativas.ttl
+```
 
 When passing the reconciliation `query` argument, use one of these patterns:
 
