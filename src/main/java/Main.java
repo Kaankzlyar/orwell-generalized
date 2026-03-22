@@ -5,7 +5,8 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 
-import config.Config;
+import static config.Config.*;
+import extraction.ARExtractor;
 import extraction.DataExtractor;
 import preprocessing.Registry;
 import preprocessing.hooks.*;
@@ -18,6 +19,7 @@ public class Main {
 
     private static final String DISABLE_RECONCILIATION_FLAG = "-dr";
     private static final String DISABLE_EXTRACTION_FLAG = "-de";
+    private static final String DISABLE_MAPPING_FLAG = "-dm";
     private static final String DISABLE_SHACL_FAILURE = "-ds";
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -25,10 +27,15 @@ public class Main {
         // CLI
         processArgs(args);
 
-        // Extract the data from the source and store it in the data/ directory
-        if (Config.EXTRACTION_ENABLED) {
-            DataExtractor extractor = new DataExtractor();
-            extractor.extract();
+        // Extract the data from the sources and store it in the data/ directory
+        if (EXTRACTION_ENABLED) {
+            List<DataExtractor> extractors = List.of(
+                    new ARExtractor()
+            );
+
+            for (DataExtractor extractor : extractors) {
+                extractor.extract();
+            }
         }
 
         Registry registry = new Registry();
@@ -37,36 +44,39 @@ public class Main {
         );
         registry.run();
 
-        // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
-            // Generate the tmp mapping files
-            MappingPairPlanner planner = new MappingPairPlanner();
-            List<Path> mappingFiles = planner.createMappingPairs();
-
-            // Map the data to RDF using the generated mapping files
-            RDFMapper mapper = new RDFMapper(mappingFiles);
-            mapper.map();
+            // RDF Mapping
+            if(MAPPING_ENABLED){
+                MappingPairPlanner planner = new MappingPairPlanner();
+                List<Path> mappingFiles = planner.createMappingPairs();
+    
+                RDFMapper mapper = new RDFMapper(mappingFiles);
+                mapper.map();
+            }
 
             // SHACL Validation
-            ShaclValidation validator = new ShaclValidation();
-            validator.validate();
+            if (SHACL_ENABLED){
+                ShaclValidation validator = new ShaclValidation();
+                validator.validate();
+            }
         } finally {
             
-            if (Config.RECONCILIATION_ENABLED) {
+            if (RECONCILIATION_ENABLED) {
                 WikidataReconciliationService.persistCache();
             }
 
-            // Clean up the tmp directory
-            if (Files.exists(Config.TMP_DIR)) {
-                try (var paths = Files.walk(Config.TMP_DIR)) {
-                    paths.sorted(Comparator.reverseOrder())
-                        .forEach(path -> {
-                            try {
-                                Files.delete(path);
-                            } catch (IOException e) {
-                                throw new UncheckedIOException(e);
-                            }
-                        });
+            if(DELETE_TMP){
+                if (Files.exists(TMP_DIR)) {
+                    try (var paths = Files.walk(TMP_DIR)) {
+                        paths.sorted(Comparator.reverseOrder())
+                            .forEach(path -> {
+                                try {
+                                    Files.delete(path);
+                                } catch (IOException e) {
+                                    throw new UncheckedIOException(e);
+                                }
+                            });
+                    }
                 }
             }
         }
@@ -76,13 +86,16 @@ public class Main {
         for (String arg : args) {
             switch (arg) {
                 case DISABLE_RECONCILIATION_FLAG:
-                    Config.RECONCILIATION_ENABLED = false;
+                    RECONCILIATION_ENABLED = false;
                     break;
                 case DISABLE_EXTRACTION_FLAG:
-                    Config.EXTRACTION_ENABLED = false;
+                    EXTRACTION_ENABLED = false;
                     break;
                 case DISABLE_SHACL_FAILURE:
-                    Config.THROW_ON_SHACL_UNCONFORM = false;
+                    THROW_ON_SHACL_UNCONFORM = false;
+                    break;
+                case DISABLE_MAPPING_FLAG:
+                    MAPPING_ENABLED = false;
                     break;
                 default:
                     throw new IllegalArgumentException(

@@ -1,6 +1,5 @@
 package extraction;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -8,95 +7,85 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import config.Config;
+import static config.Config.*;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class DataExtractor{
-
-    private static final String XML_EXTENSION = ".xml";
+public abstract class DataExtractor {
 
     public void extract() {
-        Map<String, Map<String, URI>> sources = loadSources();
+        Path sourcePath = SOURCE_PATH();
+        List<SourceNode> sources = parseSources(sourcePath);
         storeData(sources);
     }
 
-    private Map<String, Map<String, URI>> loadSources(){
-        if (!Files.exists(Config.SOURCES_PATH)) {
-            throw new IllegalStateException("Sources file does not exist: " + Config.SOURCES_PATH);
-        }
+    protected abstract List<SourceNode> parseSources(Path sourcePath);
 
+    protected abstract Path SOURCE_PATH();
+
+    protected abstract String getName();
+
+    private void storeData(List<SourceNode> sources) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(Config.SOURCES_PATH.toFile());
-
-            Map<String, Map<String, URI>> sources = new HashMap<>();
-            root.properties().forEach(entry -> {
-                
-                String name = entry.getKey();
-                JsonNode legislatures = entry.getValue();
-
-                Map<String, URI> items = new HashMap<>();
-                legislatures.properties().forEach(item -> {
-                    String legislature = item.getKey();
-                    JsonNode urlNode = item.getValue();
-                    if (!urlNode.isTextual()) {
-                        throw new IllegalStateException(
-                                "Invalid sources.json: expected URL string for " + name + "/" + legislature
-                        );
-                    }
-                    String url = urlNode.asText().trim();
-                    if (url.isEmpty()) {
-                        throw new IllegalStateException(
-                                "Invalid sources.json: empty URL for " + name + "/" + legislature
-                        );
-                    }
-                    items.put(legislature, URI.create(url));
-                });
-
-                sources.put(name, items);
-            });
-            return sources;
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to read sources.json: " + e.getMessage(), e);
-        }
-    }
-
-    private void storeData(Map<String, Map<String, URI>> sources){
-        try {
-            Files.createDirectories(Config.DATA_DIR);
+            Path sourceDir = Path.of(DATA_DIR.toString(), getName());
+            Files.createDirectories(sourceDir);
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .build();
 
-            for (var datasetEntry : sources.entrySet()) {
-                String dataset = datasetEntry.getKey();
-                Path datasetDir = Config.DATA_DIR.resolve(dataset);
-                Files.createDirectories(datasetDir);
-
-                for (var itemEntry : datasetEntry.getValue().entrySet()) {
-                    String legislature = itemEntry.getKey();
-                    URI uri = itemEntry.getValue();
-
-                    String fileName = legislature + XML_EXTENSION;
-                    Path target = datasetDir.resolve(fileName);
-
-                    byte[] content = fetchXml(httpClient, uri);
-                    Files.write(target, content);
-                }
+            for (SourceNode node : sources) {
+                storeNode(httpClient, sourceDir, node);
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to store data: " + e.getMessage(), e);
         }
     }
 
-    private static byte[] fetchXml(HttpClient httpClient, URI uri) {
+    /**
+     * Creates a directory if the node is an object, downloads the file if the node is a key - value pair.
+     * @param httpClient
+     * @param parentDir
+     * @param node
+     * @throws Exception
+     */
+    private void storeNode(HttpClient httpClient, Path parentDir, SourceNode node) throws Exception {
+        switch (node) {
+            case SourceNode.SourceValue sourceValue -> {
+                // Download the file
+                HttpResponse<byte[]> response = fetchData(httpClient, sourceValue.uri());
+                String format = inferFormat(response);
+                Path target = parentDir.resolve(sourceValue.key() + format);
+                Files.write(target, response.body());
+            }
+            case SourceNode.SourceObject sourceObject -> {
+                // Create a directory
+                Path dir = parentDir.resolve(sourceObject.key());
+                Files.createDirectories(dir);
+                for (SourceNode child : sourceObject.children()) {
+                    storeNode(httpClient, dir, child);
+                }
+            }
+        }
+    }
+
+    /**
+     * Infers the file format by the Content-Type http header
+     * @param response
+     * @return
+     */
+    private String inferFormat(HttpResponse<byte[]> response) {
+        String contentType = response.headers().firstValue("Content-Type").orElse("");
+        return switch (contentType) {
+            case String ct when ct.contains("application/xml") || ct.contains("text/xml") -> ".xml";
+            case String ct when ct.contains("text/csv") -> ".csv";
+            case String ct when ct.contains("application/json") -> ".json";
+            default -> "";
+        };
+    }
+
+    private static HttpResponse<byte[]> fetchData(HttpClient httpClient, URI uri) {
         try {
             HttpRequest request = HttpRequest.newBuilder(uri)
                     .timeout(Duration.ofSeconds(60))
@@ -108,7 +97,7 @@ public class DataExtractor{
             if (status < 200 || status >= 300) {
                 throw new IllegalStateException("Failed to download " + uri + ": HTTP " + status);
             }
-            return response.body();
+            return response;
         } catch (Exception e) {
             throw new IllegalStateException("Failed to download " + uri + ": " + e.getMessage(), e);
         }
