@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +17,7 @@ class ARExtractorTest {
     Path tempDir;
 
     @Test
-    void parseConfigParsesNestedStructure() throws IOException {
+    void parseSourcesParsesNestedStructure() throws IOException {
         Path sourceFile = tempDir.resolve("ar.json");
         String json = """
             {
@@ -29,16 +29,19 @@ class ARExtractorTest {
         Files.writeString(sourceFile, json);
 
         TestableARExtractor extractor = new TestableARExtractor(sourceFile);
-        Map<String, Map<String, URI>> result = extractor.parseConfig(sourceFile);
+        List<SourceNode> result = extractor.parseSources(sourceFile);
 
         assertEquals(1, result.size());
-        assertTrue(result.containsKey("informacaobase"));
-        assertEquals(1, result.get("informacaobase").size());
-        assertEquals(URI.create("www.parlamento.com/xvii"), result.get("informacaobase").get("xvii"));
+        SourceNode.SourceObject dataset = (SourceNode.SourceObject) result.get(0);
+        assertEquals("informacaobase", dataset.key());
+        assertEquals(1, dataset.children().size());
+        SourceNode.SourceValue legislature = (SourceNode.SourceValue) dataset.children().get(0);
+        assertEquals("xvii", legislature.key());
+        assertEquals(URI.create("www.parlamento.com/xvii"), legislature.uri());
     }
 
     @Test
-    void parseConfigParsesMultipleDatasetsAndLegislatures() throws IOException {
+    void parseSourcesParsesMultipleDatasetsAndLegislatures() throws IOException {
         Path sourceFile = tempDir.resolve("ar.json");
         String json = """
             {
@@ -54,21 +57,25 @@ class ARExtractorTest {
         Files.writeString(sourceFile, json);
 
         TestableARExtractor extractor = new TestableARExtractor(sourceFile);
-        Map<String, Map<String, URI>> result = extractor.parseConfig(sourceFile);
+        List<SourceNode> result = extractor.parseSources(sourceFile);
 
         assertEquals(2, result.size());
-        assertEquals(2, result.get("informacaobase").size());
-        assertEquals(1, result.get("iniciativas").size());
+        SourceNode.SourceObject informacaobase = (SourceNode.SourceObject) result.get(0);
+        assertEquals("informacaobase", informacaobase.key());
+        assertEquals(2, informacaobase.children().size());
+        SourceNode.SourceObject iniciativas = (SourceNode.SourceObject) result.get(1);
+        assertEquals("iniciativas", iniciativas.key());
+        assertEquals(1, iniciativas.children().size());
     }
 
     @Test
-    void parseConfigThrowsWhenFileMissing() {
+    void parseSourcesThrowsWhenFileMissing() {
         TestableARExtractor extractor = new TestableARExtractor(Path.of("nonexistent.json"));
-        assertThrows(IllegalStateException.class, () -> extractor.parseConfig(Path.of("nonexistent.json")));
+        assertThrows(IllegalStateException.class, () -> extractor.parseSources(Path.of("nonexistent.json")));
     }
 
     @Test
-    void parseConfigThrowsWhenUrlIsNotTextual() throws IOException {
+    void parseSourcesThrowsWhenUrlIsNotTextual() throws IOException {
         Path sourceFile = tempDir.resolve("ar.json");
         String json = """
             {
@@ -80,11 +87,11 @@ class ARExtractorTest {
         Files.writeString(sourceFile, json);
 
         TestableARExtractor extractor = new TestableARExtractor(sourceFile);
-        assertThrows(IllegalStateException.class, () -> extractor.parseConfig(sourceFile));
+        assertThrows(IllegalStateException.class, () -> extractor.parseSources(sourceFile));
     }
 
     @Test
-    void parseConfigThrowsWhenUrlIsEmpty() throws IOException {
+    void parseSourcesThrowsWhenUrlIsEmpty() throws IOException {
         Path sourceFile = tempDir.resolve("ar.json");
         String json = """
             {
@@ -96,7 +103,7 @@ class ARExtractorTest {
         Files.writeString(sourceFile, json);
 
         TestableARExtractor extractor = new TestableARExtractor(sourceFile);
-        assertThrows(IllegalStateException.class, () -> extractor.parseConfig(sourceFile));
+        assertThrows(IllegalStateException.class, () -> extractor.parseSources(sourceFile));
     }
 
     private static class TestableARExtractor extends ARExtractor {

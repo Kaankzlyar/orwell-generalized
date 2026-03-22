@@ -7,62 +7,72 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import config.Config;
+import static config.Config.*;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public abstract class DataExtractor {
 
-    protected final ObjectMapper objectMapper = new ObjectMapper();
-
     public void extract() {
         Path sourcePath = SOURCE_PATH();
-        Map<String, Map<String, URI>> sources = parseConfig(sourcePath);
+        List<SourceNode> sources = parseSources(sourcePath);
         storeData(sources);
     }
 
-    protected abstract Map<String, Map<String, URI>> parseConfig(Path sourcePath);
+    protected abstract List<SourceNode> parseSources(Path sourcePath);
 
     protected abstract Path SOURCE_PATH();
 
-    /**
-     * Store the data locally according to the structure of the source json, under the DATA_DIR pecified in the configuration
-     * @param sources
-    */
-    protected void storeData(Map<String, Map<String, URI>> sources) {
+    private void storeData(List<SourceNode> sources) {
         try {
-            Files.createDirectories(Config.DATA_DIR);
+            Files.createDirectories(DATA_DIR);
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .build();
 
-            for (var datasetEntry : sources.entrySet()) {
-                String dataset = datasetEntry.getKey();
-                Path datasetDir = Config.DATA_DIR.resolve(dataset);
-                Files.createDirectories(datasetDir);
-
-                for (var itemEntry : datasetEntry.getValue().entrySet()) {
-                    String identifier = itemEntry.getKey();
-                    URI uri = itemEntry.getValue();
-
-                    HttpResponse<byte[]> response = fetchData(httpClient, uri);
-                    String extension = extractExtension(response);
-                    Path target = datasetDir.resolve(identifier + extension);
-                    Files.write(target, response.body());
-                }
+            for (SourceNode node : sources) {
+                storeNode(httpClient, DATA_DIR, node);
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to store data: " + e.getMessage(), e);
         }
     }
 
-    private String extractExtension(HttpResponse<byte[]> response) {
+    /**
+     * Creates a directory if the node is an object, downloads the file if the node is a key - value pair.
+     * @param httpClient
+     * @param parentDir
+     * @param node
+     * @throws Exception
+     */
+    private void storeNode(HttpClient httpClient, Path parentDir, SourceNode node) throws Exception {
+        switch (node) {
+            case SourceNode.SourceValue sourceValue -> {
+                // Download the file
+                HttpResponse<byte[]> response = fetchData(httpClient, sourceValue.uri());
+                String format = inferFormat(response);
+                Path target = parentDir.resolve(sourceValue.key() + format);
+                Files.write(target, response.body());
+            }
+            case SourceNode.SourceObject sourceObject -> {
+                // Create a directory
+                Path dir = parentDir.resolve(sourceObject.key());
+                Files.createDirectories(dir);
+                for (SourceNode child : sourceObject.children()) {
+                    storeNode(httpClient, dir, child);
+                }
+            }
+        }
+    }
+
+    /**
+     * Infers the file format by the Content-Type http header
+     * @param response
+     * @return
+     */
+    private String inferFormat(HttpResponse<byte[]> response) {
         String contentType = response.headers().firstValue("Content-Type").orElse("");
         return switch (contentType) {
             case String ct when ct.contains("application/xml") || ct.contains("text/xml") -> ".xml";
@@ -70,35 +80,6 @@ public abstract class DataExtractor {
             case String ct when ct.contains("application/json") -> ".json";
             default -> "";
         };
-    }
-
-    /**
-     * Returns a map of source identifier to the respective URI
-     * Example:
-     * "XVII": "www.parlamento.com/.../xvii.xml"
-     * @param node
-     * @param parentKey
-     * @return
-     */
-    protected Map<String, URI> parseUriMap(JsonNode node, String parentKey) {
-        Map<String, URI> items = new HashMap<>();
-        node.properties().forEach(entry -> {
-            String key = entry.getKey();
-            JsonNode urlNode = entry.getValue();
-            if (!urlNode.isTextual()) {
-                throw new IllegalStateException(
-                        "Invalid source config: expected URL string for " + parentKey + "/" + key
-                );
-            }
-            String url = urlNode.asText().trim();
-            if (url.isEmpty()) {
-                throw new IllegalStateException(
-                        "Invalid source config: empty URL for " + parentKey + "/" + key
-                );
-            }
-            items.put(key, URI.create(url));
-        });
-        return items;
     }
 
     private static HttpResponse<byte[]> fetchData(HttpClient httpClient, URI uri) {
