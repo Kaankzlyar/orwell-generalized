@@ -25,7 +25,7 @@ class ParliamentarianReconciliationTest {
         originalDataDir = Config.DATA_DIR;
         Path dataDir = tempDir.resolve("data");
         Files.createDirectories(dataDir);
-        Path resourceDir = dataDir.resolve("informacaobase");
+        Path resourceDir = dataDir.resolve("ar").resolve("informacaobase");
         Files.createDirectories(resourceDir);
         
         String xmlContent = """
@@ -92,7 +92,7 @@ class ParliamentarianReconciliationTest {
 
     @Test
     void executeHandlesMultipleDocuments() throws Exception {
-        Path resourceDir = Config.DATA_DIR.resolve("informacaobase");
+        Path resourceDir = Config.DATA_DIR.resolve("ar").resolve("informacaobase");
         String xmlContent = """
             <?xml version="1.0" encoding="UTF-8"?>
             <Legislatura>
@@ -138,7 +138,7 @@ class ParliamentarianReconciliationTest {
 
     @Test
     void executeHandlesEmptyDocument() throws Exception {
-        Path resourceDir = Config.DATA_DIR.resolve("informacaobase");
+        Path resourceDir = Config.DATA_DIR.resolve("ar").resolve("informacaobase");
         String xmlContent = """
             <?xml version="1.0" encoding="UTF-8"?>
             <Legislatura>

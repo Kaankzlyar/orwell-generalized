@@ -19,6 +19,7 @@ public final class Config {
     public static Path CACHE_PATH = Path.of("reconciliation-cache.properties");
 
     public static boolean EXTRACTION_ENABLED = true;
+    public static boolean MAPPING_ENABLED = true;
     public static boolean RECONCILIATION_ENABLED = true;
     public static boolean SHACL_ENABLED = true;
     public static boolean THROW_ON_SHACL_UNCONFORM = true;

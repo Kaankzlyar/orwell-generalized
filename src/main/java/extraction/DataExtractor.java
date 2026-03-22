@@ -25,15 +25,18 @@ public abstract class DataExtractor {
 
     protected abstract Path SOURCE_PATH();
 
+    protected abstract String getName();
+
     private void storeData(List<SourceNode> sources) {
         try {
-            Files.createDirectories(DATA_DIR);
+            Path sourceDir = Path.of(DATA_DIR.toString(), getName());
+            Files.createDirectories(sourceDir);
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .build();
 
             for (SourceNode node : sources) {
-                storeNode(httpClient, DATA_DIR, node);
+                storeNode(httpClient, sourceDir, node);
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to store data: " + e.getMessage(), e);

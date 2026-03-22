@@ -29,14 +29,20 @@ public class MappingPairPlanner {
         Path tmpMappingsDir = Files.createDirectories(Config.TMP_DIR.resolve(Config.MAPPINGS_DIR));
 
         List<Path> createdMappings = new ArrayList<>();
-        List<Path> mappingFiles = listFilesWithExtension(Config.MAPPINGS_DIR, TTL_EXTENSION);
-        if (mappingFiles.isEmpty()) {
-            throw new IllegalStateException("No mapping files found in: " + Config.MAPPINGS_DIR);
+        List<Path> extractorDirs = listExtractorDirectories(Config.MAPPINGS_DIR);
+        if (extractorDirs.isEmpty()) {
+            throw new IllegalStateException("No extractor directories found in: " + Config.MAPPINGS_DIR);
         }
 
-        for (Path mappingFile : mappingFiles) {
-            createdMappings.addAll(createPairsForMapping(mappingFile, tmpMappingsDir));
+        for (Path extractorDir : extractorDirs) {
+            String extractorName = extractorDir.getFileName().toString();
+            List<Path> mappingFiles = listFilesWithExtension(extractorDir, TTL_EXTENSION);
+
+            for (Path mappingFile : mappingFiles) {
+                createdMappings.addAll(createPairsForMapping(mappingFile, tmpMappingsDir, extractorName));
+            }
         }
+
         if (createdMappings.isEmpty()) {
             throw new IllegalStateException("No temporary mapping files were created in: " + tmpMappingsDir);
         }
@@ -52,10 +58,10 @@ public class MappingPairPlanner {
         }
     }
 
-    private List<Path> createPairsForMapping(Path mappingFile, Path tmpMappingsDir) throws IOException {
+    private List<Path> createPairsForMapping(Path mappingFile, Path tmpMappingsDir, String extractorName) throws IOException {
         List<Path> createdMappings = new ArrayList<>();
         String mappingName = stripExtension(mappingFile.getFileName().toString());
-        Path mappingDataDir = Config.DATA_DIR.resolve(mappingName);
+        Path mappingDataDir = Config.DATA_DIR.resolve(extractorName).resolve(mappingName);
 
         if (!Files.isDirectory(mappingDataDir)) {
             System.out.println("Skipping mapping " + mappingName + ": no data directory at " + mappingDataDir);
@@ -69,11 +75,11 @@ public class MappingPairPlanner {
         }
 
         String mappingTemplate = Files.readString(mappingFile);
-        Path tempMappingSubDir = tmpMappingsDir.resolve(mappingName);
+        Path tempMappingSubDir = tmpMappingsDir.resolve(extractorName).resolve(mappingName);
         Files.createDirectories(tempMappingSubDir);
 
         for (Path xmlPath : xmlFiles) {
-            Path createdMapping = createMappingFile(mappingName, mappingTemplate, xmlPath, tempMappingSubDir);
+            Path createdMapping = createMappingFile(mappingName, mappingTemplate, xmlPath, tempMappingSubDir, extractorName);
             createdMappings.add(createdMapping);
             System.out.println("Created mapping file: " + createdMapping);
         }
@@ -84,7 +90,8 @@ public class MappingPairPlanner {
         String mappingName,
         String mappingTemplate,
         Path xmlPath,
-        Path tempMappingSubDir
+        Path tempMappingSubDir,
+        String extractorName
     ) throws IOException {
         String xmlFileName = xmlPath.getFileName().toString();
         String baseName = stripExtension(xmlFileName);
@@ -94,7 +101,7 @@ public class MappingPairPlanner {
             SOURCE_PATTERN,
             Matcher.quoteReplacement("rml:source \"" + xmlSource + "\" ;")
         );
-        mappingContent = applyUniqueBase(mappingContent, mappingName, baseName);
+        mappingContent = applyUniqueBase(mappingContent, extractorName, mappingName, baseName);
         if (!Config.RECONCILIATION_ENABLED) {
             mappingContent = stripFunctionBasedPredicateObjectMaps(mappingContent);
         }
@@ -179,9 +186,8 @@ public class MappingPairPlanner {
         return output.toString();
     }
 
-    // This is needed due to passing multiple mapping files to RMLMapper.
-    private String applyUniqueBase(String mappingContent, String mappingName, String baseName) {
-        String uniqueBase = "http://example.org/mappings/" + mappingName + "/" + baseName + "/";
+    private String applyUniqueBase(String mappingContent, String extractorName, String mappingName, String baseName) {
+        String uniqueBase = "http://example.org/mappings/" + extractorName + "/" + mappingName + "/" + baseName + "/";
         String baseLine = "@base <" + uniqueBase + "> .";
         String withoutBase = mappingContent.replaceAll("(?m)^@base\\s+<[^>]+>\\s*\\.\\s*$\\R?", "");
         return baseLine + System.lineSeparator() + withoutBase;
@@ -197,6 +203,17 @@ public class MappingPairPlanner {
                 .forEach(files::add);
         }
         return files;
+    }
+
+    private List<Path> listExtractorDirectories(Path parentDir) throws IOException {
+        List<Path> dirs = new ArrayList<>();
+        try (Stream<Path> stream = Files.list(parentDir)) {
+            stream
+                .filter(Files::isDirectory)
+                .sorted(Comparator.comparing(path -> path.getFileName().toString()))
+                .forEach(dirs::add);
+        }
+        return dirs;
     }
 
     private String stripExtension(String fileName) {

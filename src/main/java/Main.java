@@ -19,6 +19,7 @@ public class Main {
 
     private static final String DISABLE_RECONCILIATION_FLAG = "-dr";
     private static final String DISABLE_EXTRACTION_FLAG = "-de";
+    private static final String DISABLE_MAPPING_FLAG = "-dm";
     private static final String DISABLE_SHACL_FAILURE = "-ds";
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -43,15 +44,15 @@ public class Main {
         );
         registry.run();
 
-        // Start the mapping and reconciliation process, which will generate the RDF graph
         try {
-            // Generate the tmp mapping files
-            MappingPairPlanner planner = new MappingPairPlanner();
-            List<Path> mappingFiles = planner.createMappingPairs();
-
-            // Map the data to RDF using the generated mapping files
-            RDFMapper mapper = new RDFMapper(mappingFiles);
-            mapper.map();
+            // RDF Mapping
+            if(MAPPING_ENABLED){
+                MappingPairPlanner planner = new MappingPairPlanner();
+                List<Path> mappingFiles = planner.createMappingPairs();
+    
+                RDFMapper mapper = new RDFMapper(mappingFiles);
+                mapper.map();
+            }
 
             // SHACL Validation
             if (SHACL_ENABLED){
@@ -92,6 +93,9 @@ public class Main {
                     break;
                 case DISABLE_SHACL_FAILURE:
                     THROW_ON_SHACL_UNCONFORM = false;
+                    break;
+                case DISABLE_MAPPING_FLAG:
+                    MAPPING_ENABLED = false;
                     break;
                 default:
                     throw new IllegalArgumentException(

@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MappingPairPlannerTest {
 
+    private static final String EXTRACTOR_NAME = "testextractor";
+    private static final String MAPPING_NAME = "test";
+
     @TempDir
     Path tempDir;
 
@@ -66,7 +69,16 @@ class MappingPairPlannerTest {
     }
 
     @Test
-    void createMappingPairsThrowsWhenNoMappingFiles() {
+    void createMappingPairsThrowsWhenNoExtractorDirs() {
+        MappingPairPlanner planner = new MappingPairPlanner();
+        
+        assertThrows(IllegalStateException.class, planner::createMappingPairs);
+    }
+
+    @Test
+    void createMappingPairsThrowsWhenNoMappingFiles() throws Exception {
+        Files.createDirectories(Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME));
+        
         MappingPairPlanner planner = new MappingPairPlanner();
         
         assertThrows(IllegalStateException.class, planner::createMappingPairs);
@@ -90,7 +102,8 @@ class MappingPairPlannerTest {
               ] .
             """;
         
-        Path mappingFile = Config.MAPPINGS_DIR.resolve("test.ttl");
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
         Files.writeString(mappingFile, mappingContent);
         
         MappingPairPlanner planner = new MappingPairPlanner();
@@ -118,10 +131,11 @@ class MappingPairPlannerTest {
               ] .
             """;
         
-        Path mappingFile = Config.MAPPINGS_DIR.resolve("test.ttl");
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
         Files.writeString(mappingFile, mappingContent);
         
-        Path dataDir = Config.DATA_DIR.resolve("test");
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
         Files.createDirectories(dataDir);
         Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
         
@@ -152,10 +166,11 @@ class MappingPairPlannerTest {
               ] .
             """;
         
-        Path mappingFile = Config.MAPPINGS_DIR.resolve("test.ttl");
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
         Files.writeString(mappingFile, mappingContent);
         
-        Path dataDir = Config.DATA_DIR.resolve("test");
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
         Files.createDirectories(dataDir);
         Path xmlFile = dataDir.resolve("data1.xml");
         Files.writeString(xmlFile, "<root><item><id>1</id></item></root>");
@@ -188,10 +203,11 @@ class MappingPairPlannerTest {
               ] .
             """;
         
-        Path mappingFile = Config.MAPPINGS_DIR.resolve("test.ttl");
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
         Files.writeString(mappingFile, mappingContent);
         
-        Path dataDir = Config.DATA_DIR.resolve("test");
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
         Files.createDirectories(dataDir);
         Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
         
@@ -199,7 +215,7 @@ class MappingPairPlannerTest {
         List<Path> result = planner.createMappingPairs();
         
         String createdContent = Files.readString(result.get(0));
-        assertTrue(createdContent.contains("@base <http://example.org/mappings/test/data1/>"));
+        assertTrue(createdContent.contains("@base <http://example.org/mappings/" + EXTRACTOR_NAME + "/" + MAPPING_NAME + "/data1/>"));
         assertFalse(createdContent.contains("http://example.org/old/"));
     }
 
@@ -223,10 +239,11 @@ class MappingPairPlannerTest {
               ] .
             """;
         
-        Path mappingFile = Config.MAPPINGS_DIR.resolve("test.ttl");
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
         Files.writeString(mappingFile, mappingContent);
         
-        Path dataDir = Config.DATA_DIR.resolve("test");
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
         Files.createDirectories(dataDir);
         Files.writeString(dataDir.resolve("a.xml"), "<root><item><id>a</id></item></root>");
         Files.writeString(dataDir.resolve("b.xml"), "<root><item><id>b</id></item></root>");
@@ -270,10 +287,11 @@ class MappingPairPlannerTest {
               ] .
             """;
         
-        Path mappingFile = Config.MAPPINGS_DIR.resolve("test.ttl");
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
         Files.writeString(mappingFile, mappingContent);
         
-        Path dataDir = Config.DATA_DIR.resolve("test");
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
         Files.createDirectories(dataDir);
         Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
         
