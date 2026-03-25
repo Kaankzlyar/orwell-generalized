@@ -21,6 +21,7 @@ public class Main {
     private static final String DISABLE_EXTRACTION_FLAG = "-de";
     private static final String DISABLE_MAPPING_FLAG = "-dm";
     private static final String DISABLE_SHACL_FAILURE = "-ds";
+    private static final String ENABLE_LOG_FLAG = "-l";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -97,12 +98,17 @@ public class Main {
                 case DISABLE_MAPPING_FLAG:
                     MAPPING_ENABLED = false;
                     break;
+                case ENABLE_LOG_FLAG:
+                    LOG_ENABLED = true;
+                    break;
                 default:
                     throw new IllegalArgumentException(
                             "Unknown argument: " + arg + ". Supported flags: "
                                     + DISABLE_EXTRACTION_FLAG + ", "
                                     + DISABLE_RECONCILIATION_FLAG + ", "
-                                    + DISABLE_SHACL_FAILURE
+                                    + DISABLE_SHACL_FAILURE + ", "
+                                    + DISABLE_MAPPING_FLAG + ", "
+                                    + ENABLE_LOG_FLAG
                     );
             }
         }

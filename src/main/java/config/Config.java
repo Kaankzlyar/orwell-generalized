@@ -17,6 +17,7 @@ public final class Config {
     
     public static Path OUTPUT_PATH = Path.of("output", "graph." + Config.OUTPUT_FORMAT.getDefaultFileExtension());
     public static Path CACHE_PATH = Path.of("reconciliation-cache.properties");
+    public static Path LOG_PATH = Path.of("log.txt");
 
     public static boolean EXTRACTION_ENABLED = true;
     public static boolean MAPPING_ENABLED = true;
@@ -24,4 +25,5 @@ public final class Config {
     public static boolean SHACL_ENABLED = true;
     public static boolean THROW_ON_SHACL_UNCONFORM = true;
     public static boolean DELETE_TMP = true;
+    public static boolean LOG_ENABLED = false;
 }

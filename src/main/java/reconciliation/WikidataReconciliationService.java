@@ -9,10 +9,12 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
+
+import static config.Config.LOG_ENABLED;
+import static config.Config.LOG_PATH;;
 
 public class WikidataReconciliationService{
     
@@ -21,10 +23,7 @@ public class WikidataReconciliationService{
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
     
     private static final ReconciliationCache CACHE = new ReconciliationCache();
-    private static final Path LOG_PATH = Path.of("log.txt");
     private static final Object LOG_LOCK = new Object();
-    private static final boolean LOG_ENABLED =
-            Boolean.parseBoolean(System.getProperty("orwell.reconciliation.log.enabled", "true"));
 
             
     public static String reconciliate(String entityCandidate, String entityType){
