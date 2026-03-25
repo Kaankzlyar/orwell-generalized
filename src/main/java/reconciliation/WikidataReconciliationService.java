@@ -14,7 +14,8 @@ import java.time.Instant;
 import java.util.Optional;
 
 import static config.Config.LOG_ENABLED;
-import static config.Config.LOG_PATH;;
+import static config.Config.LOG_PATH;
+import static config.Config.RECONCILIATION_ENABLED;;
 
 public class WikidataReconciliationService{
     
@@ -27,24 +28,28 @@ public class WikidataReconciliationService{
 
             
     public static String reconciliate(String entityCandidate, String entityType){
+        if(!RECONCILIATION_ENABLED) return entityCandidate;
+
         return reconciliate(entityCandidate, entityType, null);
     }
 
     public static String reconciliate(String entityCandidate, String entityType, String entityLimit){
+        if(!RECONCILIATION_ENABLED) return entityCandidate;
 
         System.out.println("Reconciliating:" + entityCandidate);
 
         if (entityCandidate == null) {
             return null;
         }
-
-        String type = entityType == null ? WIKIDATA_ENTITY : entityType;
-        int limit = parseLimit(entityLimit);
-
+        
         String query = entityCandidate.trim();
         if (query.isEmpty()) {
             return null;
         }
+
+        String type = entityType == null ? WIKIDATA_ENTITY : entityType;
+        int limit = parseLimit(entityLimit);
+
 
         Optional<String> cachedId = CACHE.get(query);
         if (cachedId.isPresent()) {

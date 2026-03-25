@@ -83,10 +83,8 @@ public class RDFMapper {
         functionFiles.add("fno/functions_idlab.ttl");
         functionFiles.add("fno/functions_idlab_classes_java_mapping.ttl");
 
-        if (Config.RECONCILIATION_ENABLED) {
-            for (Path functionFile : getFunctionList()) {
-                functionFiles.add(functionFile.toString().replace("\\", "/"));
-            }
+        for (Path functionFile : getFunctionList()) {
+            functionFiles.add(functionFile.toString().replace("\\", "/"));
         }
 
         return AgentFactory.createFromFnO(

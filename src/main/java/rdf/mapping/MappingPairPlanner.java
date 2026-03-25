@@ -102,88 +102,10 @@ public class MappingPairPlanner {
             Matcher.quoteReplacement("rml:source \"" + xmlSource + "\" ;")
         );
         mappingContent = applyUniqueBase(mappingContent, extractorName, mappingName, baseName);
-        if (!Config.RECONCILIATION_ENABLED) {
-            mappingContent = stripFunctionBasedPredicateObjectMaps(mappingContent);
-        }
 
         Path tempMappingPath = tempMappingSubDir.resolve(baseName + TTL_EXTENSION);
         Files.writeString(tempMappingPath, mappingContent);
         return tempMappingPath;
-    }
-
-    /**
-     * This removes the function predicates for dynamically loading Java functions into RMLMapper
-     * It is used to generate tmp mapping that do not contain the function calls, for when the reconcilication is disabled
-     * @param mappingContent Initial Mapping
-     * @return String Mapping with no function predicates
-     */
-    private String stripFunctionBasedPredicateObjectMaps(String mappingContent) {
-        final String marker = "rr:predicateObjectMap [";
-        StringBuilder output = new StringBuilder(mappingContent.length());
-        int cursor = 0;
-
-        while (true) {
-            int blockStart = mappingContent.indexOf(marker, cursor);
-            if (blockStart < 0) {
-                output.append(mappingContent, cursor, mappingContent.length());
-                break;
-            }
-
-            output.append(mappingContent, cursor, blockStart);
-
-            int firstBracket = mappingContent.indexOf('[', blockStart);
-            if (firstBracket < 0) {
-                output.append(mappingContent.substring(blockStart));
-                break;
-            }
-
-            int depth = 0;
-            int index = firstBracket;
-            for (; index < mappingContent.length(); index++) {
-                char ch = mappingContent.charAt(index);
-                if (ch == '[') {
-                    depth++;
-                } else if (ch == ']') {
-                    depth--;
-                    if (depth == 0) {
-                        index++;
-                        break;
-                    }
-                }
-            }
-
-            if (depth != 0) {
-                output.append(mappingContent.substring(blockStart));
-                break;
-            }
-
-            int blockEnd = index;
-            while (blockEnd < mappingContent.length() && Character.isWhitespace(mappingContent.charAt(blockEnd))) {
-                blockEnd++;
-            }
-
-            char terminator = '\0';
-            if (blockEnd < mappingContent.length()) {
-                char c = mappingContent.charAt(blockEnd);
-                if (c == ';' || c == '.') {
-                    terminator = c;
-                    blockEnd++;
-                }
-            }
-
-            String block = mappingContent.substring(blockStart, blockEnd);
-            if (block.contains("fnml:functionValue")) {
-                if (terminator == '.') {
-                    output.append('.');
-                }
-            } else {
-                output.append(block);
-            }
-
-            cursor = blockEnd;
-        }
-
-        return output.toString();
     }
 
     private String applyUniqueBase(String mappingContent, String extractorName, String mappingName, String baseName) {
