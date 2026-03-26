@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xsd:element name="RegistoBiografico">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RegistoBiograficoList">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosRegistoBiograficoWeb">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:choice maxOccurs="unbounded">
+                                            <xsd:element name="cadId" type="xsd:unsignedShort"/>
+                                            <xsd:element name="cadNomeCompleto" type="xsd:string"/>
+                                            <xsd:element name="cadDtNascimento" type="xsd:date"/>
+                                            <xsd:element name="cadSexo" type="xsd:string"/>
+                                            <xsd:element name="cadProfissao" type="xsd:string"/>
+                                            <xsd:element name="cadDeputadoLegis">
+                                                <xsd:complexType>
+                                                    <xsd:sequence>
+                                                        <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosDeputadoLegis">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element name="depNomeParlamentar" type="xsd:string"/>
+                                                                    <xsd:element name="legDes" type="xsd:string"/>
+                                                                    <xsd:element name="ceDes" type="xsd:string"/>
+                                                                    <xsd:element name="parSigla" type="xsd:string"/>
+                                                                    <xsd:element name="parDes" type="xsd:string"/>
+                                                                    <xsd:element name="gpSigla" type="xsd:string"/>
+                                                                    <xsd:element name="gpDes" type="xsd:string"/>
+                                                                    <xsd:element minOccurs="0" name="urlVideoBiografia" type="xsd:string"/>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="cadHabilitacoes">
+                                                <xsd:complexType>
+                                                    <xsd:sequence>
+                                                        <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosHabilitacoes">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element name="habId" type="xsd:unsignedShort"/>
+                                                                    <xsd:element name="habDes" type="xsd:string"/>
+                                                                    <xsd:element name="habTipoId" type="xsd:unsignedByte"/>
+                                                                    <xsd:element name="habEstado" type="xsd:string"/>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="cadCargosFuncoes">
+                                                <xsd:complexType>
+                                                    <xsd:sequence>
+                                                        <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosCargosFuncoes">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element name="funId" type="xsd:unsignedShort"/>
+                                                                    <xsd:element name="funDes" type="xsd:string"/>
+                                                                    <xsd:element name="funOrdem" type="xsd:unsignedByte"/>
+                                                                    <xsd:element name="funAntiga" type="xsd:string"/>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="cadCondecoracoes">
+                                                <xsd:complexType>
+                                                    <xsd:sequence>
+                                                        <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosCondecoracoes">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element name="codId" type="xsd:unsignedShort"/>
+                                                                    <xsd:element name="codDes" type="xsd:string"/>
+                                                                    <xsd:element name="codOrdem" type="xsd:unsignedByte"/>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="cadTitulos">
+                                                <xsd:complexType>
+                                                    <xsd:sequence>
+                                                        <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosTitulos">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element name="titId" type="xsd:unsignedShort"/>
+                                                                    <xsd:element name="titDes" type="xsd:string"/>
+                                                                    <xsd:element name="titOrdem" type="xsd:unsignedInt"/>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="cadObrasPublicadas">
+                                                <xsd:complexType>
+                                                    <xsd:sequence>
+                                                        <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosObrasPublicadas">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element name="pubId" type="xsd:unsignedShort"/>
+                                                                    <xsd:element name="pubDes" type="xsd:string"/>
+                                                                    <xsd:element name="pubOrdem" type="xsd:unsignedByte"/>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="cadActividadeOrgaos">
+                                                <xsd:complexType>
+                                                    <xsd:sequence minOccurs="0">
+                                                        <xsd:element name="actividadeCom">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosOrgaos">
+                                                                        <xsd:complexType>
+                                                                            <xsd:sequence>
+                                                                                <xsd:element name="orgId" type="xsd:unsignedShort"/>
+                                                                                <xsd:element name="orgDes" type="xsd:string"/>
+                                                                                <xsd:element name="orgSigla" type="xsd:string"/>
+                                                                                <xsd:element name="legDes" type="xsd:string"/>
+                                                                                <xsd:element name="timDes" type="xsd:string"/>
+                                                                                <xsd:element minOccurs="0" name="cargoDes">
+                                                                                    <xsd:complexType>
+                                                                                        <xsd:sequence>
+                                                                                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosCargosOrgao">
+                                                                                                <xsd:complexType>
+                                                                                                    <xsd:sequence>
+                                                                                                        <xsd:element name="tiaDes" type="xsd:string"/>
+                                                                                                    </xsd:sequence>
+                                                                                                </xsd:complexType>
+                                                                                            </xsd:element>
+                                                                                        </xsd:sequence>
+                                                                                    </xsd:complexType>
+                                                                                </xsd:element>
+                                                                            </xsd:sequence>
+                                                                        </xsd:complexType>
+                                                                    </xsd:element>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                        <xsd:element minOccurs="0" name="actividadeSCom">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosOrgaos">
+                                                                        <xsd:complexType>
+                                                                            <xsd:sequence>
+                                                                                <xsd:element name="orgId" type="xsd:unsignedShort"/>
+                                                                                <xsd:element name="orgDes" type="xsd:string"/>
+                                                                                <xsd:element name="orgSigla" type="xsd:string"/>
+                                                                                <xsd:element name="legDes" type="xsd:string"/>
+                                                                                <xsd:element name="timDes" type="xsd:string"/>
+                                                                                <xsd:element minOccurs="0" name="cargoDes">
+                                                                                    <xsd:complexType>
+                                                                                        <xsd:sequence>
+                                                                                            <xsd:element name="pt_ar_wsgode_objectos_DadosCargosOrgao">
+                                                                                                <xsd:complexType>
+                                                                                                    <xsd:sequence>
+                                                                                                        <xsd:element name="tiaDes" type="xsd:string"/>
+                                                                                                    </xsd:sequence>
+                                                                                                </xsd:complexType>
+                                                                                            </xsd:element>
+                                                                                        </xsd:sequence>
+                                                                                    </xsd:complexType>
+                                                                                </xsd:element>
+                                                                            </xsd:sequence>
+                                                                        </xsd:complexType>
+                                                                    </xsd:element>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                        <xsd:element minOccurs="0" name="actividadeGT">
+                                                            <xsd:complexType>
+                                                                <xsd:sequence>
+                                                                    <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosOrgaos">
+                                                                        <xsd:complexType>
+                                                                            <xsd:sequence>
+                                                                                <xsd:element name="orgId" type="xsd:unsignedShort"/>
+                                                                                <xsd:element name="orgDes" type="xsd:string"/>
+                                                                                <xsd:element name="orgSigla" type="xsd:string"/>
+                                                                                <xsd:element name="legDes" type="xsd:string"/>
+                                                                                <xsd:element name="timDes" type="xsd:string"/>
+                                                                                <xsd:element minOccurs="0" name="cargoDes">
+                                                                                    <xsd:complexType>
+                                                                                        <xsd:sequence>
+                                                                                            <xsd:element name="pt_ar_wsgode_objectos_DadosCargosOrgao">
+                                                                                                <xsd:complexType>
+                                                                                                    <xsd:sequence>
+                                                                                                        <xsd:element name="tiaDes" type="xsd:string"/>
+                                                                                                    </xsd:sequence>
+                                                                                                </xsd:complexType>
+                                                                                            </xsd:element>
+                                                                                        </xsd:sequence>
+                                                                                    </xsd:complexType>
+                                                                                </xsd:element>
+                                                                            </xsd:sequence>
+                                                                        </xsd:complexType>
+                                                                    </xsd:element>
+                                                                </xsd:sequence>
+                                                            </xsd:complexType>
+                                                        </xsd:element>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                        </xsd:choice>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="RegistoInteressesV1List">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosDeputadoRgiWeb">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="cadId" type="xsd:unsignedShort"/>
+                                        <xsd:element name="cadNomeCompleto" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="cadActividadeProfissional" type="xsd:string"/>
+                                        <xsd:element name="cadEstadoCivilCod" type="xsd:unsignedByte"/>
+                                        <xsd:element name="cadEstadoCivilDes" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="cadRgi">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="pt_ar_wsgode_objectos_DadosRegistoInteressesWeb">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="rgiId" type="xsd:unsignedShort"/>
+                                                                <xsd:element name="rgiLegDes" type="xsd:string"/>
+                                                                <xsd:element name="rgiDataVersao" type="xsd:date"/>
+                                                                <xsd:element minOccurs="0" name="rgiCargoDes" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiCargoData" type="xsd:unsignedShort"/>
+                                                                <xsd:element minOccurs="0" name="rgiActividades" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiApoiosBeneficios" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiServicosPrestados" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiOutrasSituacoes" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiCargosSociais">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosRgiCargosSociais">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element name="rgcId" type="xsd:unsignedShort"/>
+                                                                                        <xsd:element name="rgcCargo" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcEntidade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcAreaActividade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcLocalSede" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="rgiSociedades">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosRgiSociedades">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element name="rgsId" type="xsd:unsignedShort"/>
+                                                                                        <xsd:element name="rgsEntidade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgsAreaActividade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgsLocalSede" type="xsd:string"/>
+                                                                                        <xsd:element name="rgsPartiSocial" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element name="rgiCadId" type="xsd:unsignedShort"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="RegistoInteressesV2List">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosDeputadoRgiWebV2">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="cadId" type="xsd:unsignedShort"/>
+                                        <xsd:element name="cadNomeCompleto" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="cadActividadeProfissional" type="xsd:string"/>
+                                        <xsd:element name="cadEstadoCivilCod" type="xsd:unsignedByte"/>
+                                        <xsd:element minOccurs="0" name="cadEstadoCivilDes" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="cadRgi">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="pt_ar_wsgode_objectos_DadosRegistoInteressesWebV2">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="rgiId" type="xsd:unsignedShort"/>
+                                                                <xsd:element name="rgiLegDes" type="xsd:string"/>
+                                                                <xsd:element name="rgiDataVersao" type="xsd:date"/>
+                                                                <xsd:element name="rgiRegimeBensId" type="xsd:unsignedByte"/>
+                                                                <xsd:element minOccurs="0" name="rgiRegimeBensDes" type="xsd:string"/>
+                                                                <xsd:element name="rgiCargoDes" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiCargoData" type="xsd:unsignedShort"/>
+                                                                <xsd:element minOccurs="0" name="rgiApoiosBeneficios" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiServicosPrestados" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiOutrasSituacoes" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="rgiActividades">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosRgiActividades">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element name="rgaId" type="xsd:unsignedShort"/>
+                                                                                        <xsd:element name="rgaActividade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgaDataInicio" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="rgaDataFim" type="xsd:string"/>
+                                                                                        <xsd:element name="rgaRemunerada" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="rgiCargosSociais">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosRgiCargosSociaisV2">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element name="rgcId" type="xsd:unsignedShort"/>
+                                                                                        <xsd:element name="rgcCargo" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcEntidade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcAreaActividade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcLocalSede" type="xsd:string"/>
+                                                                                        <xsd:element name="rgcDataInicio" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="rgcDataFim" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="rgiSociedades">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="pt_ar_wsgode_objectos_DadosRgiSociedades">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element name="rgsId" type="xsd:unsignedShort"/>
+                                                                                        <xsd:element name="rgsEntidade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgsAreaActividade" type="xsd:string"/>
+                                                                                        <xsd:element name="rgsLocalSede" type="xsd:string"/>
+                                                                                        <xsd:element name="rgsPartiSocial" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element name="rgiCadId" type="xsd:unsignedShort"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="RegistoInteressesV3List">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element maxOccurs="unbounded" name="RecordResponse">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="RecordId" type="xsd:unsignedShort"/>
+                                        <xsd:element name="FullName" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="MaritalStatus" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="SpouseName" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="MatrimonialRegime" type="xsd:string"/>
+                                        <xsd:element name="DGFNumber" type="xsd:unsignedShort"/>
+                                        <xsd:element name="Exclusivity" type="xsd:string"/>
+                                        <xsd:element minOccurs="0" name="RecordInterests">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element maxOccurs="unbounded" name="RecordInterestResponse">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="RecordId" nillable="true"/>
+                                                                <xsd:element name="PositionDesignation" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="PositionEndDate" type="xsd:date"/>
+                                                                <xsd:element minOccurs="0" name="PositionBeginDate" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="PositionChangedDate" type="xsd:string"/>
+                                                                <xsd:element minOccurs="0" name="Activities">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="RecordInterestActivityResponse">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element minOccurs="0" name="Activity" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="Entity" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="BeginDate" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="EndDate" type="xsd:string"/>
+                                                                                        <xsd:element name="Type" type="xsd:unsignedByte"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="SocialPositions">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="RecordInterestSocialPositionResponse">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element minOccurs="0" name="Position" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="Entity" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="ActivityArea" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="HeadOfficeLocation" type="xsd:string"/>
+                                                                                        <xsd:element name="Type" type="xsd:unsignedByte"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="Supports">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="RecordInterestSupportResponse">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence minOccurs="0">
+                                                                                        <xsd:element name="Support" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="ServicesProvided">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="RecordInterestServiceProvidedResponse">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence minOccurs="0">
+                                                                                        <xsd:element name="Service" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="Societies">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="RecordInterestSocietyResponse">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence minOccurs="0">
+                                                                                        <xsd:element name="Entity" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="ActivityArea" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="HeadOfficeLocation" type="xsd:string"/>
+                                                                                        <xsd:element minOccurs="0" name="SocialParticipation" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="OtherSituations">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element maxOccurs="unbounded" name="RecordInterestOtherSituationResponse">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence minOccurs="0">
+                                                                                        <xsd:element name="Situation" type="xsd:string"/>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="RegistoInteressesV5List">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element maxOccurs="unbounded" name="RegistoInteressesV5">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="IdCadastroGODE" type="xsd:decimal"/>
+                                        <xsd:element name="Categoria" type="xsd:string"/>
+                                        <xsd:element name="NomeIdentificacao" type="xsd:string"/>
+                                        <xsd:element name="Servico" type="xsd:string"/>
+                                        <xsd:element name="Legislatura" type="xsd:string"/>
+                                        <xsd:element name="versao" type="xsd:unsignedByte"/>
+                                        <xsd:element name="FactoDeclaracao">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                    <xsd:element name="CargoFuncao" type="xsd:string"/>
+                                                    <xsd:element name="DataInicioFuncao" nillable="true" type="xsd:string"/>
+                                                    <xsd:element name="DataAlteracaoFuncao" nillable="true" type="xsd:string"/>
+                                                    <xsd:element name="DataCessacaoFuncao" nillable="true" type="xsd:string"/>
+                                                    <xsd:element name="ChkDeclaracao" type="xsd:boolean"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Exclusividade">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                    <xsd:element name="Exclusividade" type="xsd:boolean"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenDadosPessoais">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                    <xsd:element name="NomeCompleto" type="xsd:string"/>
+                                                    <xsd:element name="Sexo" type="xsd:unsignedByte"/>
+                                                    <xsd:element name="RegimeBens" type="xsd:string"/>
+                                                    <xsd:element name="NomeConjuge" type="xsd:string"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenCargosMenosTresAnos">
+                                            <xsd:complexType>
+                                                <xsd:sequence minOccurs="0">
+                                                    <xsd:element maxOccurs="unbounded" name="GenCargo">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="FormularioId" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="CargoFuncaoAtividade" type="xsd:string"/>
+                                                                <xsd:element name="Entidade" type="xsd:string"/>
+                                                                <xsd:element name="LocalSede" type="xsd:string"/>
+                                                                <xsd:element name="Natureza" type="xsd:string"/>
+                                                                <xsd:element name="DataInicio" type="xsd:string"/>
+                                                                <xsd:element name="DataTermo" type="xsd:string"/>
+                                                                <xsd:element name="Remunerada" type="xsd:unsignedByte"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenCargosMaisTresAnos">
+                                            <xsd:complexType>
+                                                <xsd:sequence minOccurs="0">
+                                                    <xsd:element maxOccurs="unbounded" name="GenCargo">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="FormularioId" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="CargoFuncaoAtividade" type="xsd:string"/>
+                                                                <xsd:element name="Entidade" type="xsd:string"/>
+                                                                <xsd:element name="LocalSede" type="xsd:string"/>
+                                                                <xsd:element name="Natureza" type="xsd:string"/>
+                                                                <xsd:element name="DataInicio" type="xsd:date"/>
+                                                                <xsd:element name="DataTermo" type="xsd:date"/>
+                                                                <xsd:element name="Remunerada" type="xsd:unsignedByte"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenApoios">
+                                            <xsd:complexType>
+                                                <xsd:sequence minOccurs="0">
+                                                    <xsd:element maxOccurs="unbounded" name="GenApoio">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="FormularioId" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="Apoio" type="xsd:string"/>
+                                                                <xsd:element name="Entidade" type="xsd:string"/>
+                                                                <xsd:element name="Data" type="xsd:string"/>
+                                                                <xsd:element name="NaturezaArea" type="xsd:string"/>
+                                                                <xsd:element name="NaturezaBeneficio" type="xsd:string"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenServicoPrestado">
+                                            <xsd:complexType>
+                                                <xsd:sequence minOccurs="0">
+                                                    <xsd:element maxOccurs="unbounded" name="GenServicoPrestado">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="FormularioId" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="Servico" type="xsd:string"/>
+                                                                <xsd:element name="Entidade" type="xsd:string"/>
+                                                                <xsd:element name="Local" type="xsd:string"/>
+                                                                <xsd:element name="Data" type="xsd:string"/>
+                                                                <xsd:element name="Natureza" type="xsd:string"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenSociedade">
+                                            <xsd:complexType>
+                                                <xsd:sequence minOccurs="0">
+                                                    <xsd:element maxOccurs="unbounded" name="GenSociedade">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="FormularioId" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="Sociedade" type="xsd:string"/>
+                                                                <xsd:element name="Natureza" type="xsd:string"/>
+                                                                <xsd:element name="LocalSede" type="xsd:string"/>
+                                                                <xsd:element name="NaturezaArea" type="xsd:string"/>
+                                                                <xsd:element name="Participacao" type="xsd:string"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenOutraSituacao">
+                                            <xsd:complexType>
+                                                <xsd:sequence minOccurs="0">
+                                                    <xsd:element maxOccurs="unbounded" name="GenOutraSituacao">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="FormularioId" type="xsd:unsignedByte"/>
+                                                                <xsd:element name="OutraSituacao" type="xsd:string"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="GenIncompatibilidade">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="Id" type="xsd:unsignedByte"/>
+                                                    <xsd:element name="Incompatibilidade" type="xsd:boolean"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xs:schema>
