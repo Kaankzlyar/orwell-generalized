@@ -24,3 +24,13 @@ The output of this step should be a markdown file with a table. This table shoul
 If a row has more than one possible term to match, explain each one in the file and choose the one you think is best.
 
 Each ontology should be correctly referenced to its base URI, so they can be manually checked and confirmed.
+
+## Conceptual Model Diagram
+
+With the vocabulary aligntment done, the final step is to build a conceptual model of the information and data hierarchy. In this case, what is most important is how different entities relate to eachother, not necessarily in a tree-like structure like XML, remember this is Web Semantics and Linked Data.
+
+Write the diagram using the mermaid language. Make the diagram compact, it should just contain boxes with the entity's name and arrows to other entities related to it. 
+
+Don't try to cram everything into one diagram, modularize it into logical segments. For example, a diagram can show the conceptual model of the "Members of Parliament" class, while another diagram can describe the conceptual model of the "Events" class.
+
+The mermaid chart should be written as a flowchart, with the elk layout.
