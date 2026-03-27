@@ -4,12 +4,5 @@ config:
 ---
 flowchart LR
     Decoration["Decoration<br>(schema:award)"] -- hasIdentifier --> did["ID<br>(dcterms:identifier)"]
-    Decoration -- description --> ddes["Description<br>(rdfs:label)"]
+    Decoration -- title --> ddes["Title<br>(rdfs:label)"]
     Decoration -- order --> dorder["Order<br>(schema:position)"]
-    Decoration -- type --> dtype["Type<br>(skos:Concept)"]
-    
-    dtype -->|"skos:inScheme"| dtypeEnum["Decoration Type<br>(skos:ConceptScheme)"]
-    dtypeEnum -.->|"skos:hasTopConcept"| dt1["National Order"]
-    dtypeEnum -.->|"skos:hasTopConcept"| dt2["Foreign Order"]
-    dtypeEnum -.->|"skos:hasTopConcept"| dt3["Military Medal"]
-    dtypeEnum -.->|"skos:hasTopConcept"| dt4["Civil Merit"]

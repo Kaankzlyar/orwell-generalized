@@ -12,11 +12,11 @@ flowchart LR
     Bodies -- bodyType --> btype["Body Type<br>(skos:Concept)"]
     
     btype -->|"skos:inScheme"| btypeEnum["Body Type Scheme<br>(skos:ConceptScheme)"]
-    btypeEnum -.->|"skos:hasTopConcept"| bt1["Committee"]
-    btypeEnum -.->|"skos:hasTopConcept"| bt2["Working Group"]
-    btypeEnum -.->|"skos:hasTopConcept"| bt3["Inquiry Committee"]
-    btypeEnum -.->|"skos:hasTopConcept"| bt4["Special Committee"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt1["Comissão"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt4["Subcomissão"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt2["Grupo de Trabalho"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt3["Grupo de Trabalho AR"]
     
     bmstat -->|"skos:inScheme"| bmstatEnum["Member Status Scheme<br>(skos:ConceptScheme)"]
-    bmstatEnum -.->|"skos:hasTopConcept"| ms1["Efetivo (Effective)"]
-    bmstatEnum -.->|"skos:hasTopConcept"| ms2["Suplente (Alternate)"]
+    bmstatEnum -.->|"skos:hasTopConcept"| ms1["Efetivo"]
+    bmstatEnum -.->|"skos:hasTopConcept"| ms2["Suplente"]

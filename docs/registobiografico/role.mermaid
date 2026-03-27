@@ -4,14 +4,6 @@ config:
 ---
 flowchart LR
     Role["Role<br>(org:Role)"] -- hasIdentifier --> rid["ID<br>(dcterms:identifier)"]
-    Role -- description --> rdes["Description<br>(rdfs:label)"]
+    Role -- title --> rdes["Description<br>(rdfs:label)"]
     Role -- order --> rorder["Order<br>(schema:position)"]
-    Role -- historical --> rhist["Historical<br>(schema:endTime)"]
-    Role -- type --> rtype["Role Type<br>(skos:Concept)"]
-    
-    rtype -->|"skos:inScheme"| rtypeEnum["Role Type Scheme<br>(skos:ConceptScheme)"]
-    rtypeEnum -.->|"skos:hasTopConcept"| rt1["Government Position"]
-    rtypeEnum -.->|"skos:hasTopConcept"| rt2["Party Position"]
-    rtypeEnum -.->|"skos:hasTopConcept"| rt3["Local Government"]
-    rtypeEnum -.->|"skos:hasTopConcept"| rt4["Social Position"]
-    rtypeEnum -.->|"skos:hasTopConcept"| rt5["Academic Position"]
+    Role -- hasDoneBefore --> rhist["xsd:boolean"]
