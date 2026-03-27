@@ -1,0 +1,17 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Habilitation["Habilitation<br>(schema:EducationalLevel)"] -- hasIdentifier --> hid["ID<br>(dcterms:identifier)"]
+    Habilitation -- description --> hdes["Description<br>(skos:prefLabel)"]
+    Habilitation -- type --> htype["Type<br>(skos:Concept)"]
+    Habilitation -- status --> hstatus["Status<br>(skos:Concept)"]
+    
+    htype -->|"skos:inScheme"| htypeEnum["Habilitation Type<br>(skos:ConceptScheme)"]
+    htypeEnum -.->|"skos:hasTopConcept"| ht1["Type 13 (Higher Education)"]
+    htypeEnum -.->|"skos:hasTopConcept"| ht2["Type 15 (Master)"]
+    htypeEnum -.->|"skos:hasTopConcept"| ht3["Type 16 (Postgrad)"]
+    
+    hstatus -->|"skos:inScheme"| hstatusEnum["Habilitation Status<br>(skos:ConceptScheme)"]
+    hstatusEnum -.->|"skos:hasTopConcept"| hs1["C (Completed)"]

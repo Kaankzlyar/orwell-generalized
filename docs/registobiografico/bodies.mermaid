@@ -1,0 +1,22 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Bodies["Body<br>(org:Organization)"] -- hasIdentifier --> bid["ID<br>(dcterms:identifier)"]
+    Bodies -- name --> bname["Name<br>(schema:name)"]
+    Bodies -- acronym --> bacr["Acronym<br>(org:alternateName)"]
+    Bodies -- legislature --> bleg["Legislature<br>(epvoc:parliamentaryTerm)"]
+    Bodies -- memberStatus --> bmstat["Member Status<br>(skos:Concept)"]
+    Bodies -- capacity --> bcap["Capacity/Role<br>(epvoc:capacityRole)"]
+    Bodies -- bodyType --> btype["Body Type<br>(skos:Concept)"]
+    
+    btype -->|"skos:inScheme"| btypeEnum["Body Type Scheme<br>(skos:ConceptScheme)"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt1["Committee"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt2["Working Group"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt3["Inquiry Committee"]
+    btypeEnum -.->|"skos:hasTopConcept"| bt4["Special Committee"]
+    
+    bmstat -->|"skos:inScheme"| bmstatEnum["Member Status Scheme<br>(skos:ConceptScheme)"]
+    bmstatEnum -.->|"skos:hasTopConcept"| ms1["Efetivo (Effective)"]
+    bmstatEnum -.->|"skos:hasTopConcept"| ms2["Suplente (Alternate)"]

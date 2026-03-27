@@ -1,0 +1,14 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Title["Title<br>(schema:honorificPrefix)"] -- hasIdentifier --> tid["ID<br>(dcterms:identifier)"]
+    Title -- description --> tdes["Description<br>(rdfs:label)"]
+    Title -- order --> torder["Order<br>(schema:position)"]
+    Title -- type --> ttype["Type<br>(skos:Concept)"]
+    
+    ttype -->|"skos:inScheme"| ttypeEnum["Title Type<br>(skos:ConceptScheme)"]
+    ttypeEnum -.->|"skos:hasTopConcept"| tt1["Academic Title"]
+    ttypeEnum -.->|"skos:hasTopConcept"| tt2["Honorary Title"]
+    ttypeEnum -.->|"skos:hasTopConcept"| tt3["Professional Title"]

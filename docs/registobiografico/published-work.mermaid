@@ -1,0 +1,16 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Work["Published Work<br>(bibo:Document)"] -- hasIdentifier --> wid["ID<br>(dcterms:identifier)"]
+    Work -- description --> wdes["Description<br>(rdfs:label)"]
+    Work -- order --> worder["Order<br>(schema:position)"]
+    Work -- type --> wtype["Type<br>(skos:Concept)"]
+    
+    wtype -->|"skos:inScheme"| wtypeEnum["Work Type<br>(skos:ConceptScheme)"]
+    wtypeEnum -.->|"skos:hasTopConcept"| wt1["Book"]
+    wtypeEnum -.->|"skos:hasTopConcept"| wt2["Article"]
+    wtypeEnum -.->|"skos:hasTopConcept"| wt3["Essay"]
+    wtypeEnum -.->|"skos:hasTopConcept"| wt4["Thesis"]
+    wtypeEnum -.->|"skos:hasTopConcept"| wt5["Co-authored Work"]
