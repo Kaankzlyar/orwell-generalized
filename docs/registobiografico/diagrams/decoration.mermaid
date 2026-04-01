@@ -1,0 +1,8 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Decoration["Decoration<br>(schema:award)"] -- hasIdentifier --> did["ID<br>(dcterms:identifier)"]
+    Decoration -- hasDescription --> ddes["Description<br>(rdfs:label)"]
+    Decoration -- hasPosition --> dorder["Position<br>(schema:position)"]

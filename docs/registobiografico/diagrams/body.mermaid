@@ -1,0 +1,21 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Bodies["Body<br>(org:Organization)"] -- hasIdentifier --> bid["ID<br>(dcterms:identifier)"]
+    Bodies -- hasName --> bname["Name<br>(schema:name)"]
+    Bodies -- hasAcronym --> bacr["Acronym<br>(org:alternateName)"]
+    Bodies -- performedRole --> bcap["Role<br>(rdfs:label)"]
+    Bodies -- hasMemberStatus --> bmstat["Member Status<br>(skos:Concept)"]
+    Bodies -- isType --> btype["Body Type<br>(skos:Concept)"]
+    
+    btype -->|"skos:inScheme"| btypeEnum["Body Type Scheme<br>(skos:ConceptScheme)"]
+    bt1["Comission"] -.-> btype
+    bt2["Subcomission"] -.-> btype
+    bt3["Working Group"] -.-> btype
+    bt4["AR Working Group"] -.-> btype
+    
+    bmstat -->|"skos:inScheme"| bmstatEnum["Member Status Scheme<br>(skos:ConceptScheme)"]
+    ms1["Effective"] -.-> bmstat
+    ms2["Alternate"] -.-> bmstat

@@ -1,9 +1,0 @@
----
-config:
-  layout: elk
----
-flowchart LR
-    Role["Role<br>(org:Role)"] -- hasIdentifier --> rid["ID<br>(dcterms:identifier)"]
-    Role -- title --> rdes["Description<br>(rdfs:label)"]
-    Role -- order --> rorder["Order<br>(schema:position)"]
-    Role -- hasDoneBefore --> rhist["xsd:boolean"]

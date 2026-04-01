@@ -1,0 +1,20 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Mandate["Mandate"] -- hasBiographyVideo --> Vid["schema:VideoObject"]
+    Mandate["Mandate"] -- relatedInitiative --> Ini["Initiative"]
+    Mandate["Mandate"] -- relatedRequest --> Req["Request"]
+    Mandate["Mandate"] -- relatedIntervention --> Interv["Intervention"]
+    Mandate["Mandate"] -- parliamentaryActivity --> PAct["Parliamentary Activity"]
+    Mandate["Mandate"] -- relatedEvent --> Event["Event"]
+    Mandate["Mandate"] -- hasVisit --> Visit["Visit"]
+    Mandate["Mandate"] -- hasMeetings --> Meet["Meeting"]
+    Mandate["Mandate"] -- hasHearing --> Hear["Hearing"]
+    Mandate["Mandate"] -- didYouthParliamentActivity --> YPA["Youth Parliament Activity"]
+    Mandate["Mandate"] -- hasMembership --> Mem["Membership"]
+    Mem["Membership"] -- relatedEventualDelegation --> DelE["Eventual Delegation"]
+    Mem["Membership"] -- relatedPermanentDelegation --> DelP["Permanent Delegation"]
+    Mem["Membership"] -- relatedFriendshipParliamentaryGroup --> FPG["Friendship Parliamentary Group"]
+
