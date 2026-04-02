@@ -3,7 +3,7 @@ config:
   layout: elk
 ---
 flowchart LR
-    Person["MoP<br>(foaf:Person)"] -- hasIdentifier --> pid["ID<br>(dcterms:identifier)"]
+    Person["MP"] -- hasIdentifier --> pid["ID<br>(dcterms:identifier)"]
     Person -- hasFullName --> name["Full Name<br>(foaf:name)"]
     Person -- hasBirthDate --> dob["Date of Birth<br>(foaf:birthday)"]
     Person -- hasGender --> gender["Sex/Gender<br>(schema:gender)"]
@@ -13,5 +13,6 @@ flowchart LR
     Person -- hasTitle --> Title["Title"]
     Person -- hasPublished --> Work["Published Work"]
     Person -- servedMandate --> Mandate["Mandate"]
-    Mandate -- performedRole --> Role["Role"]
-    Mandate -- partOf --> Body["Body"]
+    Person -- performedRole --> Role["Role"]
+    Mandate -- hasMembership --> Mem["Membership"]
+    Mem -- in --> Body["Organizational Body"]
