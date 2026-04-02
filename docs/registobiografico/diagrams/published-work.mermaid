@@ -1,0 +1,8 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Work["Published Work<br>(bibo:Document)"] -- hasIdentifier --> wid["ID<br>(dcterms:identifier)"]
+    Work -- hasDescription --> wdes["Description<br>(rdfs:label)"]
+    Work -- hasPosition --> worder["Position<br>(schema:position)"]

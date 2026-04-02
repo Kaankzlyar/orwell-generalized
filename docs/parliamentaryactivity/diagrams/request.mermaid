@@ -1,0 +1,14 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    ReqType --> |"skos:inScheme"| reqTypeEnum
+
+    subgraph reqTypeEnum["Request Type Scheme<br>(skos:ConceptScheme)"]
+      req1["Central Administration"]
+      req2["Local Administration"]
+      req3["Assembly of the Republic"]
+      req4["Independent Entities"]
+      req5["Autonomous Regions"]
+    end

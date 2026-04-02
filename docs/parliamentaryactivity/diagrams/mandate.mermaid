@@ -1,0 +1,26 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Mandate["Mandate"] -- hasRelatedInitiative --> Ini["Initiative"]
+    Mandate -- hasRelatedRequest --> Req["Request"]
+    Req -- isRequestType --> reqtype["Request Type"]
+    Mandate -- hasRelatedIntervention --> Interv["Intervention"]
+    Interv --> hasPublicationType["Publication Type"]
+    Mandate -- didParliamentaryActivity --> PAct["Parliamentary Activity"]
+    Mandate -- wasRapporteurIn --> Ini & Pet["Petition"] & PE["Public Expenses"] & EUINI["European Initiatives"]
+    PE -- isActivityType --> ActType["Activity Type"]
+    Mandate -- hasOpinion --> Opi["Parliamentary Opinion"]
+    Mandate -- hasRelatedEvent --> Event["Event"]
+    Mandate -- hasVisit --> Visit["Visit"]
+    Mandate -- hasMeetings --> Meet["Meeting"]
+    Mandate -- hasHearing --> Hear["Hearing"]
+    Mandate -- didYouthParliamentActivity --> YPA["Youth Parliament Activity"]
+    YPA -- tookPlaceIn --> TeaEs["Teaching Establishment"]
+    TeaEs -- isType --> EsType["Establishment Type"]
+    Mandate -- hasMembership --> Mem["Membership"]
+    Mem -- relatedEventualDelegation --> DelE["Eventual Delegation"]
+    Mem -- relatedPermanentDelegation --> DelP["Permanent Delegation"]
+    Mem -- relatedFriendshipParliamentaryGroup --> FPG["Friendship Parliamentary Group"]
+    DelP -- hasMeeting --> DelPM["Permanent Delegation Meeting"]

@@ -1,0 +1,8 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Title["Title<br>(schema:honorificPrefix)"] -- hasIdentifier --> tid["ID<br>(dcterms:identifier)"]
+    Title -- hasDescription --> tdes["Description<br>(rdfs:label)"]
+    Title -- hasPosition --> torder["Position<br>(schema:position)"]
