@@ -1,0 +1,29 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    IntervType --> |"skos:inScheme"| intervTypeEnum
+
+    subgraph intervTypeEnum["Intervention Type Scheme<br>(skos:ConceptScheme)"]
+      interv1["A(DAR II series A)"]
+      interv2["B(DAR II series B)"]
+      interv3["C(DAR II series C)"]
+      interv4["D(DAR I series)"]
+      interv5["E(DR I series B)"]
+      interv6["G(DAR II series D)"]
+      interv7["H(DAR II series E)"]
+      interv8["I(DAR II series C-RC)"]
+      interv9["K(DAR II series)"]
+      interv10["L(DR IO series B)"]
+      interv11["M(DR I series)"]
+      interv12["N(DAR)"]
+      interv13["O(DAR II series C GOP-OE)"]
+      interv14["P(Suplemento)"]
+      interv15["Q(DAR II S C-OE)"]
+      interv16["R(DR I series A)"]
+      interv17["S(Separata)"]
+      interv18["T(DAR II series C CEI)"]
+      interv19["U(DR II series A)"]
+      interv20["V(DAR II S-OE)"]
+    end
