@@ -36,7 +36,7 @@ public class WikidataReconciliationService{
     public static String reconciliate(String entityCandidate, String entityType, String entityLimit){
         if(!RECONCILIATION_ENABLED) return entityCandidate;
 
-        System.out.println("Reconciliating:" + entityCandidate);
+        //System.out.println("Reconciliating:" + entityCandidate);
 
         if (entityCandidate == null) {
             return null;
@@ -54,7 +54,7 @@ public class WikidataReconciliationService{
         Optional<String> cachedId = CACHE.get(query);
         if (cachedId.isPresent()) {
             ReconciliationResult cachedResult = new ReconciliationResult(cachedId.get(), "", "", "");
-            System.out.println("Found result for query in cache: " + query);
+            //System.out.println("Found result for query in cache: " + query);
             logReconciliation(query, type, limit, cachedResult);
             return BASE_URI + cachedId.get();
         }
