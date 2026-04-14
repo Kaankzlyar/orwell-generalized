@@ -1,0 +1,35 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:romanToDecimal a fno:Function ;
+    fno:name "romanToDecimal" ;
+    fno:expects ( :romanNumeralParam ) ;
+    fno:returns ( :decimalValueOut ) .
+
+:romanNumeralParam a fno:Parameter ;
+    fno:predicate :romanNumeral ;
+    fno:name "romanNumeral" ;
+    fno:description "Roman numeral value (e.g., XVII)." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:decimalValueOut a fno:Output ;
+    fno:predicate :output ;
+    fno:name "decimalValue" ;
+    fno:description "Decimal version of the input Roman numeral." ;
+    fno:type xsd:integer .
+
+:romanConversionService a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.RomanNumeralConverter" .
+
+:romanToDecimalMapping a fno:Mapping ;
+    fno:function :romanToDecimal ;
+    fno:implementation :romanConversionService ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "romanToDecimal" ]
+.
