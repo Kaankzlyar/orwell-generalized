@@ -19,9 +19,10 @@
 @prefix org:    <http://www.w3.org/ns/org#> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
-@prefix ini:    <http://purl.org/polis/ar/initiatives#> .
-@prefix bio:    <http://purl.org/polis/ar/biographic#> .
-@prefix core:   <http://purl.org/polis/ar/core#> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
+@prefix polis-core:   <http://purl.org/polis/ar/core#> .
 
 <#LegislatureMap>
 
@@ -39,7 +40,7 @@
 
   # Identifier
   rr:predicateObjectMap [
-    rr:predicate core:identifier ;
+    rr:predicate polis-core:identifier ;
     rr:objectMap [
       rml:reference "id" ;
       rr:datatype xsd:string
@@ -149,7 +150,7 @@
 
   # Legislature
   rr:predicateObjectMap [
-    rr:predicate core:belongsToLegislature ;
+    rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
       rr:template "http://purl.org/polis/ar/core#{../../DetalheLegislatura/sigla}" ;
       rr:termType rr:IRI
@@ -168,12 +169,12 @@
   # URI
   rr:subjectMap [
     rr:template "http://purl.org/polis/ar/core#{cpDes}Constituency" ;
-    rr:class core:Constituency
+    rr:class polis-core:Constituency
   ] ;
 
   # Identifier
   rr:predicateObjectMap [
-    rr:predicate core:identifier ;
+    rr:predicate polis-core:identifier ;
     rr:objectMap [
       rml:reference "cpId" ;
       rr:datatype xsd:string
@@ -191,7 +192,7 @@
 
   # Legislature
   rr:predicateObjectMap [
-    rr:predicate core:belongsToLegislature ;
+    rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
       rr:template "http://purl.org/polis/ar/core#{legDes}" ;
       rr:termType rr:IRI
@@ -224,6 +225,39 @@
           rr:objectMap [ rr:constant "5"]
         ]
       ]
+    ]
+  ] 
+  .
+
+<#PartyMap>
+
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/GruposParlamentares/pt_gov_ar_objectos_GPOut"
+  ] ;
+
+  # URI
+  rr:subjectMap [
+    rr:template "http://purl.org/polis/ar/core#{sigla}" ;
+    rr:class polis-core:Party
+  ] ;
+
+  # Name
+  rr:predicateObjectMap [
+    rr:predicate foaf:name ;
+    rr:objectMap [
+      rml:reference "nome" ;
+      rr:datatype xsd:string
+    ]
+  ] ;
+
+  # Acronym
+  rr:predicateObjectMap [
+    rr:predicate qudt:acronym ;
+    rr:objectMap [
+      rml:reference "sigla" ;
+      rr:datatype xsd:string
     ]
   ] 
   .
