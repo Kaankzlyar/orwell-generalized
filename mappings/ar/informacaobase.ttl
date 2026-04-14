@@ -49,7 +49,26 @@
   rr:predicateObjectMap [
     rr:predicate dct:date ;
     rr:objectMap [
-      rr:template "{dtini}/{dtfim}" ;
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:toIso8601Period ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:startDate ;
+          rr:objectMap [
+            rml:reference "dtini" ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:endDate ;
+          rr:objectMap [
+            rml:reference "dtfim" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
       rr:datatype xsd:string
     ]
   ] ;

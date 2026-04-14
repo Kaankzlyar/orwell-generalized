@@ -1,0 +1,42 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:toIso8601Period a fno:Function ;
+    fno:name "toIso8601Period" ;
+    fno:expects ( :startDateParam :endDateParam ) ;
+    fno:returns ( :periodValueOut ) .
+
+:startDateParam a fno:Parameter ;
+    fno:predicate :startDate ;
+    fno:name "startDate" ;
+    fno:description "Start date of the period." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:endDateParam a fno:Parameter ;
+    fno:predicate :endDate ;
+    fno:name "endDate" ;
+    fno:description "Optional end date of the period." ;
+    fno:type xsd:string ;
+    fno:required "false"^^xsd:boolean .
+
+:periodValueOut a fno:Output ;
+    fno:predicate :output ;
+    fno:name "periodValue" ;
+    fno:description "ISO 8601 period string. If endDate is missing, returns only startDate." ;
+    fno:type xsd:string .
+
+:datePeriodService a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.DatePeriodFormatter" .
+
+:toIso8601PeriodMapping a fno:Mapping ;
+    fno:function :toIso8601Period ;
+    fno:implementation :datePeriodService ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toIso8601Period" ]
+.
