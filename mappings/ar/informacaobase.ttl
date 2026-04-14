@@ -253,13 +253,13 @@
   ] ;
 
   # Acronym
-  rr:predicateObjectMap [
-    rr:predicate qudt:acronym ;
-    rr:objectMap [
-      rml:reference "sigla" ;
-      rr:datatype xsd:string
-    ]
-  ] 
+    rr:predicateObjectMap [
+      rr:predicate qudt:acronym ;
+      rr:objectMap [
+        rml:reference "sigla" ;
+        rr:datatype xsd:string
+      ]
+    ] 
   .
 
 <#ParliamentaryGroupMap>
@@ -319,6 +319,151 @@
     rr:objectMap [
       rr:template "http://purl.org/polis/ar/core#{../../DetalheLegislatura/sigla}" ;
       rr:termType rr:IRI
+    ]
+  ]
+  .
+
+<#ParliamentarianMap>
+
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario"
+  ] ;
+
+  # URI
+  rr:subjectMap [
+    rr:template "http://purl.org/polis/ar/core#{DepCadId}_Parliamentarian" ;
+    rr:class m4s:Parliamentarian
+  ] ;
+  
+  # Full Name
+  rr:predicateObjectMap [
+    rr:predicate foaf:name ;
+    rr:objectMap [
+      rml:reference "DepNomeCompleto" ;
+      rr:datatype xsd:string
+    ]
+  ] ;
+
+  # Mandate
+  rr:predicateObjectMap [
+    rr:predicate ocd:rif_mandatoCamera ;
+    rr:objectMap [
+      rr:termType rr:BlankNode ;
+      rr:template "mandate-{DepId}" ;
+    ]
+  ] ;
+
+  # Legislature
+  rr:predicateObjectMap [
+    rr:predicate polis-core:belongsToLegislature ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/core#{../../DetalheLegislatura/sigla}" ;
+      rr:termType rr:IRI
+    ]
+  ]
+  .
+
+<#MandateMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario"
+  ] ;
+
+  rr:subjectMap [
+    rr:termType rr:BlankNode ;
+    rr:template "mandate-{DepId}" ;
+    rr:class ocd:mandatoCamera
+  ] ;
+
+  # Parliamentary Name
+  rr:predicateObjectMap [
+    rr:predicate polis-core:parliamentaryName ;
+    rr:objectMap [
+      rml:reference "DepNomeParlamentar" ;
+      rr:datatype xsd:string
+    ]
+  ] ;
+
+  # Constituency
+  rr:predicateObjectMap [
+    rr:predicate polis-core:inConstituency ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/core#{DepCPDes}Constituency" ;
+      rr:termType rr:IRI
+    ]
+  ] ;
+
+  # TODO: Situation
+
+  # Membership
+  rr:predicateObjectMap [
+    rr:predicate polis-core:hasMembership ;
+    rr:objectMap [
+      rr:termType rr:BlankNode ;
+      rr:template "pg-membership-{DepId}-{DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP/gpId}-{DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP/gpDtInicio}"
+    ]
+  ] ;
+
+  # Legislature
+  rr:predicateObjectMap [
+    rr:predicate polis-core:belongsToLegislature ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/core#{LegDes}" ;
+      rr:termType rr:IRI
+    ]
+  ]
+  .
+
+<#PGMembershipMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP"
+  ] ;
+
+  rr:subjectMap [
+    rr:termType rr:BlankNode ;
+    rr:template "pg-membership-{../../DepId}-{gpId}-{gpDtInicio}" ;
+    rr:class polis-core:Membership
+  ] ;
+
+  # Is Member Of
+  rr:predicateObjectMap [
+    rr:predicate polis-core:isMemberOf ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/core#{gpSigla}" ;
+      rr:termType rr:IRI
+    ]
+  ] ;
+
+  # Date Period
+  rr:predicateObjectMap [
+    rr:predicate dct:date ;
+    rr:objectMap [
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:toIso8601Period ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:startDate ;
+          rr:objectMap [
+            rml:reference "gpDtInicio" ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:endDate ;
+          rr:objectMap [
+            rml:reference "gpDtFim" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
+      rr:datatype xsd:string
     ]
   ]
   .
