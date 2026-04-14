@@ -1,0 +1,916 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix ocd: <http://dati.camera.it/ocd/> .
+@prefix m4s: <https://purl.org/map4scrutiny-core#> .
+@prefix schema:	<https://schema.org/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix prov: <https://www.w3.org/ns/prov-o> .
+@prefix polis-mpact: <http://purl.org/polis/ar/mp-activity#> .
+@prefix polis-core: <http://purl.org/polis/ar/core#> .
+@prefix : <http://purl.org/polis/ar/initiatives#> .
+
+@base <http://purl.org/polis/ar/initiatives#> .
+
+:	
+	a                           	<http://purl.org/vocommons/voaf#Vocabulary> , owl:Ontology ;
+	dct:title                   	"Portuguese Political Structures Ontology";
+	dct:description             	"";
+	dct:creator                 	"Tiago Ribeiro de Sá Cruz", "João Miguel da Silva Lourenço";
+	dct:contributor                 "Mariana Curado Malta", "João Bispo";
+    dct:issued                 		""^^schema:Date;
+	dct:license                 	<http://creativecommons.org/publicdomain/zero/1.0/> ;
+	vann:preferredNamespacePrefix   "polis-ini:" ;
+	vann:preferredNamespaceUri      "http://purl.org/polis/ar/initiatives#" ;
+	owl:versionInfo					"1.0";
+    dct:description                    """The objective of the POLIS ontology is to (...)""" ;
+    dcterms:bibliographicCitation ""@en ;
+    dcterms:created ""^^xsd:date ;
+    dcterms:modified ""^^xsd:date ;
+    dcterms:language "en", "pt" ;
+.
+
+#################################################################
+#    Classes
+#################################################################
+
+:RegionalLegislativeAssembly rdf:type owl:Class ;
+	rdfs:label "Assembleia Legislativa Regional"@pt ,"Regional Legislative Assembly"@en ;
+	dct:description ""@pt , ""@en ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:CitizenGroup rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "Citizen Group"@en ,
+               "Grupo de Cidadãos"@pt .
+
+:Initiative rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "Initiative"@en ,
+               "Iniciativa"@pt ;
+    rdfs:subClassOf ocd:atto .
+
+:EuropeanInitiative rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "European Initiative"@en ,
+               "Iniciativa Europeia"@pt ;
+    rdfs:subClassOf ocd:atto .
+
+:ConstitutionalRevisionProject rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Uma proposta para amendar ou rever a Constituição, que requer uma maioria de dois terços dos votos"@pt , "A proposal to amend or revise the Constitution, which requires a two thirds majority vote"@en ;
+    rdfs:label "Constitutional Revision Project"@en ,
+               "Projeto de Revisão Constitucional"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:DeliberationProject rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "Deliberation Project"@en ,
+               "Projeto de Deliberação"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:LawProject rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Uma proposta legislativa apresentada por um deputado, um grupo parlamentar ou por um grupo de cidadãos, destinada a tornar-se lei após debate, alteração e aprovação no Parlamento"@pt, 
+		"A legislative proposal submitted by MP, PG or citizen group, intended to become law after debate, amendment, and approval in Parliament"@en ;
+    rdfs:label "Law Project"@en ,
+               "Projeto de Lei"@pt ;
+    rdfs:subClassOf :Initiative .
+
+
+:LawProposal rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Uma proposta legislativa apresentada pelo Governo ou pelas Assembleias Legislativas Regionais. Funciona de forma semelhante a um projeto de lei, mas difere na sua origem"@pt,
+		"A legislative proposal submitted by the Government or Regional Legislative Assemblies. Functions similarly to a Law Project but differs by origin"@en ;
+    rdfs:label "Law Proposal"@en ,
+               "Proposta de Lei"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:ParliamentaryAppreciation rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "Parliamentary Appreciation"@en ,
+               "Apreciação Parlamentar"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:ParliamentaryInquiry rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Um inquérito iniciado pelo Parlamento para examinar as atividades do governo ou da função pública, recolher provas e elaborar um relatório com conclusões ou recomendações. "@pt , 
+		"An investigation initiated by Parliament to examine government or public administration activities, gather evidence, and produce a report with conclusions or recommendations. "@en ;
+    rdfs:label "Parliamentary Inquiry"@en ,
+               "Inquérito Parlamentar"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:PopularReferendumInitiative rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Uma iniciativa de referendo de iniciativa popular que requer, pelo menos, 60000 assinaturas de eleitores recenseados, residentes no território nacional."@pt , 
+		"A citizen-driven referendum initiative that requires at least 60000 signatures of registered voters, registered in national territory."@en ;
+    rdfs:label "Popular Referendum Initiative"@en ,
+               "Iniciativa Popular de Referendo"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:Ratification rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "Ratification"@en ,
+               "Ratificação"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:ResolutionProject rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Iniciativa apresentada por deputados ou por grupos parlamentares, que não assume a forma de lei após a sua aprovação e que é, na sua maioria, de natureza política."@pt , 
+		"Initiative by MPs or parliamentary groups, which does not take the form of law once approved and is mostly of political nature."@en ;
+    rdfs:label "Resolution Project"@en ,
+               "Projeto de Resolução"@pt ;
+   rdfs:subClassOf :Initiative .
+
+:ResolutionProposal rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Iniciativa governamental apresentada à Assembleia da República para apreciação e aprovação de acordos e tratados internacionais."@pt , 
+		"Government initiative presented to the Assembly of the Republic for appreciation and approval of international agreements and treaties."@en ;
+    rdfs:label "Resolution Proposal"@en ,
+               "Proposta de Resolução"@pt ;
+    rdfs:subClassOf :Initiative .
+
+:RulesOfProcedureProject rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Uma proposta para criar ou alterar as normas e procedimentos internos que regem a organização e a atividade parlamentares."@pt , 
+		"A proposal to create or amend the internal rules and procedures governing parliamentary organization and activity."@en ;
+    rdfs:label "Rules Of Procedure Project"@en ,
+               "Projeto de Regimento"@pt ;
+    rdfs:subClassOf :Initiative .
+
+#:Content rdf:type owl:Class ;
+#	dct:description "Define todo o conteúdo de uma iniciativa"@pt , 
+#		"Defines the content of an initiative"@en ;
+#    rdfs:label "Content"@en ,
+#               "Conteúdo"@pt ;
+#    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+# :Annex a owl:Class ;
+#     dct:description "Um anexo é um documento que complementa uma iniciativa ou um evento, fornecendo conteúdo adicional não estruturado."@pt , 
+#         "An Annex is a documental entity that supplements an Initiative or Event by providing additional unstructured content."@en ;
+#     rdfs:label "Annex"@en ,
+#             "Anexo"@pt ;
+#     rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+#     rdfs:subClassOf ocd:documenti .
+
+:ChangeProposal a owl:Class ;
+    dct:description "Uma proposta de alteração é um documento formal de alteração associado a uma iniciativa, representando uma proposta estruturada para modificar o seu conteúdo durante o processo legislativo."@pt , 
+        "A Change Proposal is a formal amendment entity associated with an Initiative, representing a structured proposal to modify its content during the legislative process."@en ;
+    rdfs:label "Change Proposal"@en ,
+            "Proposta de Alteração"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:Petition a owl:Class ;
+    dct:description "Uma petição é um pedido formal apresentado no âmbito parlamentar por um grupo de cidadãos e registado numa legislatura e sessão legislativa específicas. Os proponentes podem ter a petição em consideração e apresentar iniciativas com base nos pedidos nela contidos."@pt , 
+        "A Petition is a formal request submitted within the parliamentary framework by a group of citizens and registered within a specific Legislature and Legislative Session. Proponents can take the petition into account and propose initiatives based on the requests of the petition."@en ;
+    rdfs:label "Petition"@en ,
+            "Petição"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:Event a owl:Class ;
+    dct:description "Um evento representa um acontecimento no ciclo de vida de uma iniciativa. Corresponde a uma fase ou ação específica no ciclo de vida da iniciativa, como a fase de apresentação, as revisões da comissão, os momentos de votação ou outras etapas formais."@pt , 
+        "An Event represents an occurrence within the lifecycle of an Initiative. It corresponds to a specific phase or action in the initiative lifecycle, such as the introduction phase, committee reviews, voting moments, or other formal steps."@en ;
+    rdfs:label "Event"@en ,
+            "Evento"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:DARPublication a owl:Class ;
+    dct:description "Uma publicação oficial no Diário da Assembleia da República"@pt , 
+        "An official publication in the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Diary of the Assembly of the Republic Publication"@en ,
+            "Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf ocd:pubblicistica .
+
+:CommissionEvent a owl:Class ;
+    dct:description "Uma Comissão de Evento representa a participação de uma comissão no contexto de um evento específico. Ao contrário de uma comissão enquanto órgão organizacional, um Evento de Comissão estrutura as atividades relacionadas com a comissão que são específicas de uma determinada iniciativa e fase processual"@pt , 
+        "An Event Commission represents the participation of a Commission within the context of a specific Event. Unlike a Commission as a organisational body, an Event Commission models commission-related activity that is specific to a given Initiative and procedural phase"@en ;
+    rdfs:label "Commission Event"@en ,
+            "Evento de Comissão"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:Transmission a owl:Class ;
+    dct:description "Indica a remessa de documentos legais pela comissão durante uma um evento de comissão"@pt , 
+        "Indicates the transmission of legal documents by the commission during a commission event"@en ;
+    rdfs:label "Transmission"@en ,
+            "Remessa"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:DARSeries1 a owl:Class ;
+    dct:description "Uma publicação oficial na Série 1 do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 1 of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 1 of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 1 Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARPublication .
+
+:DARSeries2 a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2 do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2 of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2 of the Diary of the Assembly of the Assembly of the Republic Publication"@en ,
+            "Série 2 Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARPublication .
+
+:DARSeparata a owl:Class ;
+    dct:description "Uma publicação oficial do tipo Separata no Diário da Assembleia da República"@pt , 
+        "An official Separata publication in the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Separata Publication in the Diary of the Assembly of the Republic"@en ,
+            "Separata no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARPublication .
+
+:DARSeries2A a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-A do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-A of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-A of the Diary of the Assembly of the Assembly of the Republic Publication"@en ,
+            "Série 2-A Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2  .
+
+:DARSeries2B a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-B do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-B of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-B of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-B Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2  .
+
+:DARSeries2C a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-C do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-C of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-C of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-C Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+:DARSeries2D a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-D do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-D of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-D of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-D Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2  .
+
+:DARSeries2E a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-E do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-E of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-E of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-E Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+:DARSeries1A a owl:Class ;
+    dct:description "Uma publicação oficial na Série 1-A do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 1-A of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 1-A of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 1-A Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries1 .
+
+:DARSeries2CRC a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-C-RC do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-C-RC of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-C-RC of the Diary of the Assembly of the Assembly of the Republic Publication"@en ,
+            "Série 2-C-RC Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+:DARSeries2CGOPOE a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-C GOP-OE do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-C GOP-OE of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-C GOP-OE of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-C GOP-OE Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+:DARSeries2SCOE a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-S C-OE do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-S C-OE of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-S C-OE of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-S C-OE Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+:DARSeries2CCEI a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-C CEI do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-C CEI of the Diary of the Assembly of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-C CEI of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-C CEI Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+:DARSeries2SOE a owl:Class ;
+    dct:description "Uma publicação oficial na Série 2-S-OE do Diário da Assembleia da República"@pt , 
+        "An official publication in the Series 2-S-OE of the Diary of the Assembly of the Republic"@en ;
+    rdfs:label "Series 2-S-OE of the Diary of the Assembly of the Republic Publication"@en ,
+            "Série 2-S-OE Publicação no Diário da Assembleia da República"@pt ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:subClassOf :DARSeries2 .
+
+#################################################################
+#    Data properties
+#################################################################
+
+:textSubstitutionDetails rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define detalhes sobre a substituição do texto da iniciativa"@pt , 
+		"Defines details about the substitution of the initiative's text"@en ;
+    rdfs:label "text substitution details"@en ,
+               "detalhes sobre substituição do texto"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range xsd:string .
+
+:changeProposalType rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o tipo de uma proposta de alteração"@pt , 
+		"Defines the type of a change proposal"@en ;
+    rdfs:label "change proposal type"@en ,
+               "tipo de proposta de alteração"@pt ;
+    rdfs:domain :ChangeProposal ;
+    rdfs:range xsd:string .
+
+:documentType rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o tipo de um documento"@pt , 
+		"Defines the type of a document"@en ;
+    rdfs:label "document type"@en ,
+               "tipo de documento"@pt ;
+    rdfs:domain bibo:Document ;
+    rdfs:range xsd:string .
+
+:transmissionType rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o tipo de uma remessa"@pt , 
+		"Defines the type of a transmission"@en ;
+    rdfs:label "transmission type"@en ,
+               "tipo de remessa"@pt ;
+    rdfs:domain :Transmission ;
+    rdfs:range xsd:string .
+
+:proponent rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o proponente de uma proposta de alteração"@pt , 
+		"Defines the proponent of a change proposal"@en ;
+    rdfs:label "proponent"@en ,
+               "proponente"@pt ;
+    rdfs:comment "This term is used when the data does not specify exactly which group or individual proposed the amendment. When we know exactly who it is, we should use the term 'proposed by a parliamentary group' or 'proposed by a member of parliament'."@en ,
+        "Este termo é utilizado quando os dados não especificam exatamente qual o grupo ou indivíduo que propôs a alteração. Quando sabemos exatamente de quem se trata, devemos utilizar o termo 'proposto por um grupo parlamentar' ou 'proposto por um deputado'."@pt ;
+    rdfs:domain :ChangeProposal ;
+    rdfs:range xsd:string .
+
+:typeId rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o id do tipo de evento"@pt , 
+		"Defines the id of the type of the event"@en ;
+    rdfs:label "has event type id"@en ,
+               "tem o id de tipo de evento"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:string .
+
+:eventType rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o tipo de evento"@pt , 
+		"Defines the type of event"@en ;
+    rdfs:label "has event type"@en ,
+               "tem o tipo de evento"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range xsd:string .
+
+:observation rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Observação realizada"@pt , 
+		"Observation done"@en ;
+    rdfs:label "has observation"@en ,
+               "tem observação"@pt ;
+    rdfs:domain [ rdf:type owl:Class ;
+      owl:unionOf ( :Event
+                    :CommissionEvent
+                    :DARPublication
+                  )
+    ] ;
+    rdfs:range xsd:string .
+
+:result rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o resultado de uma votação"@pt , 
+		"Defines the result of a vote"@en ;
+    rdfs:label "has result"@en ,
+               "tem resultado"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range xsd:string .
+
+:unanimous rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define se o resultado de uma votação é unânime"@pt , 
+		"Defines if the result of a vote is unanimous"@en ;
+    rdfs:label "is unanimous"@en ,
+               "é unânime"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range xsd:boolean .
+
+:reunionNumber rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o número da reunião em que a votação ocorreu"@pt , 
+		"Defines the number of the reunion in which the vote occurred"@en ;
+    rdfs:label "has reunion number"@en ,
+               "tem número da reunião"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range xsd:int .
+
+:reunionType rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o tipo da reunião em que a votação ocorreu"@pt , 
+		"Defines the type of the reunion in which the vote occurred"@en ;
+    rdfs:label "has reunion type"@en ,
+               "tem reunião do tipo"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range xsd:string .
+
+:competent rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define se a comissão do evento de comissão é competente na matéria"@pt , 
+		"Defines if the commission of the commission event is competent in the matter"@en ;
+    rdfs:label "competent"@en ,
+               "competente"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:boolean .
+
+:extended rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define se o prazo foi prorrogado"@pt , 
+		"Defines whether the deadline has been extended"@en ;
+    rdfs:label "extended"@en ,
+               "prorrogado"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:boolean .
+
+:awaitsPlenarySchedule rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define se aguarda agendamento plenário"@pt , 
+		"Defines wheter a plenary schedule is pending"@en ;
+    rdfs:label "awaits plenary schedule"@en ,
+               "aguarda agendamento plenário"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:boolean .
+
+:opinionRequested rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define se existem pedidos de parecer"@pt , 
+		"Defines if there are opinion requests"@en ;
+    rdfs:label "opinion request"@en ,
+               "pedido de parecer"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:boolean .
+
+:opinionReceived rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define se existem pareceres recebidos"@pt , 
+		"Defines if there are opinions received"@en ;
+    rdfs:label "opinion received"@en ,
+               "parecer recebido"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:boolean .
+
+:negativeOpinionReason rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o motivo de parecer negativo"@pt , 
+		"Defines the reason for a negative opinion"@en ;
+    rdfs:label "negative opinion reason"@en ,
+               "motivo parecer negativo"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:string .
+
+:pagesIdentifier rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf <http://w3id.org/nfdi4ing/metadata4ing#identifier> ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:label "pages' identifier"@en, "identificador de páginas"@pt ;
+    dct:description "An unique identifier to identify pages in the DAR"@en, "Um identificar único para identificar páginas no DAR"@pt ;
+    rdf:type owl:FunctionalProperty .
+
+:publicationSupplement rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:label "publication supplement"@en, "suplemento da publicação"@pt ;
+    dct:description "Supplement to the publication"@en, "Suplemento da publicação"@pt ;
+    rdfs:domain :DARPublication ;
+    rdfs:range xsd:string .
+
+:publicationSupplementFinalPage rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    rdfs:label "publication supplement final page"@en, "página final do suplemento da publicação"@pt ;
+    dct:description "Final page of the supplement to the publication"@en, "Página final do suplemento da publicação"@pt ;
+    rdfs:domain :DARPublication ;
+    rdfs:range xsd:string .
+
+#################################################################
+#    Object properties
+#################################################################
+
+:hasAuthor rdf:type owl:ObjectProperty ;
+	dct:description "Define o(s) autor(es) (MP) de uma iniciativa"@pt , 
+		"Defines the author(s) (MP) of an initiative"@en ;
+    rdfs:label "has author"@en ,
+               "tem autor(a)"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range m4s:Parliamentarian ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
+
+:hasProponent rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Define o(s) proponente(s) de uma iniciativa"@pt , 
+		"Defines the proponent(s) of an initiative"@en ;
+    rdfs:label "has proponent"@en ,
+               "tem proponente"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range [ rdf:type owl:Class ;
+      owl:unionOf ( ocd:governo
+                    m4s:Parliamentarian
+                    :CitizenGroup
+                    polis-core:Commission
+                    polis-core:ParliamentaryGroup
+                    :RegionalLegislativeAssembly
+                  )
+    ] .
+
+:ledTo rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma iniciativa a outras que a original levou a serem criadas"@pt , 
+		"Relates an initiative to other initiatives the original led to its creation"@en ;
+    rdfs:label "led to"@en ,
+               "levou a"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range :Initiative .
+
+
+:grewOutOf rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma iniciativa a iniciativas que levaram à sua origem, incluindo iniciativas europeias"@pt , 
+		"Relates an initiative to to other initiatives that it grew out of, including european initiatives"@en ;
+    rdfs:label "grew out of"@en ,
+               "teve origem em"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range [ rdf:type owl:Class ;
+                  owl:unionOf ( :EuropeanInitiative
+                                :Initiative
+                              )
+                ] .
+
+:happensJointlyWithInitiative rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Iniciativas em que o mesmo evento decorreu em conjunto com a iniciativa deste evento"@pt , 
+		"Initiatives that had the same event happening jointly with the initiative from this event"@en ;
+    rdfs:label "happens jointly with initiative"@en ,
+               "acontece em conjunto com iniciativa"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range :Initiative .
+
+:discussedJointlyWith rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Processos de contas públicas ou petições discutidas em conjunto com um evento"@pt , 
+		"Public accout proceedings or petitions discussed jointly with an event"@en ;
+    rdfs:label "discussed jointly with"@en ,
+               "discutido em conjunto com"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range :Petition .
+
+:hasAnnex rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma iniciativa ou um evento a um documento em anexo"@pt , 
+		"Relates an initiative or event to a document in annex"@en ;
+    rdfs:label "has annex"@en ,
+               "tem anexo"@pt ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( :Event
+                                :Initiative
+                              )
+                ] ;
+    rdfs:range bibo:Document .
+
+:approvesDiploma rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona um evento com o diploma que nele foi aprovado"@pt , 
+		"Relates an event to the diploma approved within its context"@en ;
+    rdfs:label "approves diploma"@en ,
+               "aprova o diploma"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range bibo:Document .
+
+:hasContent rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma iniciativa ao seu conteúdo textual"@pt , 
+		"Relates an initiative to its textual content"@en ;
+    rdfs:label "has content"@en ,
+               "tem conteúdo"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range bibo:Document .
+
+:receivedAppeal rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , 
+		""@en ;
+    rdfs:label "received appeal"@en ,
+               ""@pt ;
+    rdfs:domain :Event ;
+    rdfs:range [ rdf:type owl:Class ;
+                  owl:unionOf ( polis-core:ParliamentaryGroup
+                                m4s:Parliamentarian
+                              )
+                ] .
+
+:receivedChangeProposal rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , 
+		""@en ;
+    rdfs:label "received change proposal"@en ,
+               "recebeu proposta de alteração"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range :ChangeProposal .
+
+:hasRelatedPetition rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma iniciativa a petições levou em conta durante a sua formulação, estando então relacionada a esta"@pt , 
+		"Relates an initiative to petitions that it took into account during its formulation, and which is therefore related to it"@en ;
+    rdfs:label "has related petition"@en ,
+               "tem petição relacionada"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range :Petition .
+
+:hasEvent rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma iniciativa a eventos que ocorreram ao longo do seu ciclo de vida"@pt , 
+		"Relates an initiative to events that occurred during its lifecycle"@en ;
+    rdfs:label "has event"@en ,
+               "tem o evento"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range :Event .
+
+:hasVoteInFavourFrom rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma votação aos MPs e grupos parlamentares que votaram a favor"@pt , 
+		"Relates a vote to the MPs and parliamentary groups that voted in favor"@en ;
+    rdfs:label "has vote in favour from"@en ,
+               "tem voto a favor de"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range [ rdf:type owl:Class ;
+                  owl:unionOf ( polis-core:ParliamentaryGroup
+                                m4s:Parliamentarian
+                              )
+                ] .
+
+:hasVoteAgainstFrom rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma votação aos MPs e grupos parlamentares que votaram contra"@pt , 
+		"Relates a vote to the MPs and parliamentary groups that voted against"@en ;
+    rdfs:label "has vote against from"@en ,
+               "tem voto contra de"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range [ rdf:type owl:Class ;
+                  owl:unionOf ( polis-core:ParliamentaryGroup
+                                m4s:Parliamentarian
+                              )
+                ] .
+
+:hasAbstentionFrom rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma votação aos MPs e grupos parlamentares que se absteram de votar"@pt , 
+		"Relates a vote to the MPs and parliamentary groups that abstained from the vote"@en ;
+    rdfs:label "has abstention from"@en ,
+               "tem abstenção de"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range [ rdf:type owl:Class ;
+                  owl:unionOf ( polis-core:ParliamentaryGroup
+                                m4s:Parliamentarian
+                              )
+                ] .
+
+:hasAbsentee rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma votação aos MPs que estiveram ausentes"@pt , 
+		"Relates a vote to MPs who were absent"@en ;
+    rdfs:label "has absentee"@en ,
+               "tem ausente"@pt ;
+    rdfs:domain ocd:votazione ;
+    rdfs:range m4s:Parliamentarian .
+
+:hasVote rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona um evento de uma iniciativa a uma votação que ocorreu durante o mesmo"@pt , 
+		"Relates an event of an initiative to a vote that occurred during it"@en ;
+    rdfs:label "has vote"@en ,
+               "tem a votação"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range ocd:votazione .
+
+:isProposedBy rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma proposta de alteração ao grupo parlamentar ou deputado que a submeteu"@pt , 
+		"Relates a change proposal to the parliamentary group or MP who submitted it"@en ;
+    rdfs:label "proposed by parliamentary group"@en ,
+               "proposta pelo grupo parlamentar"@pt ;
+    rdfs:domain :ChangeProposal ;
+    rdfs:range [ rdf:type owl:Class ;
+      owl:unionOf ( polis-core:ParliamentaryGroup 
+                    m4s:Parliamentarian
+                  )
+    ] .
+
+:isPublishedInDAR rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description "Relaciona uma entidade a uma publicação correspondente no Diário da República"@pt , 
+		"Relates an entity to its corresponding publication in the Diário da República"@en ;
+    rdfs:label "is published in DAR"@en ,
+               "é publicado no DAR"@pt ;
+    rdfs:range :DARPublication .
+
+:hasSpeaker rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona uma intervenção parlamentar à pessoa que a proferiu."@pt , 
+                    "Relates a parliamentary intervention to the person who delivered it."@en ;
+    rdfs:label "has speaker"@en ,
+               "tem orador"@pt ;
+    rdfs:domain ocd:intervento ;
+    rdfs:range foaf:Person .
+
+:attributedToCommission rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão à comissão a qual este foi atribuído"@pt , 
+                    "Relates a commission event to the commission it was attributed to"@en ;
+    rdfs:label "attributed to commission"@en ,
+               "atribuído à comissão"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range polis-core:Commission .
+
+:hasRapporteur rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão a um relator de um documento apresentado"@pt , 
+                    "Relates a commission event to a rapporteur of a presented document"@en ;
+    rdfs:label "has rapporteur"@en ,
+               "tem o/a relator(a)"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range m4s:Parliamentarian .
+
+:hasPublishedReport rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão à publicação de um relatório"@pt , 
+                    "Relates a commission event to the publication of a report"@en ;
+    rdfs:label "has published report"@en ,
+               "tem a publicação do relatório"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range :DARPublication .
+
+:hasDiscussion rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento a um debate"@pt , 
+                    "Relates an event to a debate"@en ;
+    rdfs:label "has discussion"@en ,
+               "tem o debate"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range ocd:discussione .
+
+:hasTransmission rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão a uma remessa"@pt , 
+                    "Relates a commission event to a transmission"@en ;
+    rdfs:label "has transmission"@en ,
+               "tem remessa"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range :Transmission .
+
+:createsDocument rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão a um documento criado durante este"@pt , 
+                    "Relates a commission event to a document that was created in its duration"@en ;
+    rdfs:label "creates document"@en ,
+               "cria documento"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range bibo:Document .
+
+:hasActivity rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento a uma atividade"@pt , 
+                    "Relates an event to an activity"@en ;
+    rdfs:label "has activity"@en ,
+               "tem atividade"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range prov:Activity .
+
+:hasHearing rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão a um audiência que ocorreu durante o mesmo"@pt , 
+                    "Relates a commission event to a hearing that occurred in its duration"@en ;
+    rdfs:label "has hearing"@en ,
+               "tem audiência"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range polis-mpact:Hearing .
+
+:hasAudition rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão a um audição que ocorreu durante o mesmo"@pt , 
+                    "Relates a commission event to a audition that occurred in its duration"@en ;
+    rdfs:label "has audition"@en ,
+               "tem audição"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range polis-mpact:Audition .
+
+:hasSubCommission rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Relaciona um evento de comissão a uma subcomissão"@pt , 
+                    "Relates a commission event to a subcommission"@en ;
+    rdfs:label "has subcommission"@en ,
+               "tem subcomissão"@pt ;
+    rdfs:domain :Event ;
+    rdfs:range polis-core:Commission .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+:entryDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data de entrada de um evento de comissão"@pt , 
+                    "Defines the entry date of a commission event"@en ;
+    rdfs:label "entry date"@en ,
+               "data de entrada"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+:distributionDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data de distribuição de um evento de comissão pelas comissões"@pt , 
+                    "Defines the distribution date of a commission event between commissions"@en ;
+    rdfs:label "distribution date"@en ,
+               "data de distribuição"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+:scheduledDiscussionDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data de agendamento da discussão de um evento de comissão"@pt , 
+                    "Defines the date of the scheduled discussion of a commission event"@en ;
+    rdfs:label "scheduled discussion date"@en ,
+               "data de agendamento da discussão"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+:requestSchedulePlenaryDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data do pedido de agendamento de plenário de um evento da comissão"@pt , 
+                    "Defines the date of the request made to schedule a plenary of a commission event"@en ;
+    rdfs:label "request schedule plenary date"@en ,
+               "data do pedido de agendamento de plenário"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+:publicAppreciationDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data de inicio e fim da apreciação pública de um evento da comissão"@pt , 
+                    "Defines the start and end dates for the public review of a commission event"@en ;
+    rdfs:label "public appreciation date"@en ,
+               "data de apreciação pública"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+:subCommissionDistributionDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data de distribuição de um evento de comissão por subcomissões"@pt , 
+                    "Defines the distribution date of a commission event between subcommissions"@en ;
+    rdfs:label "subcommissions distribution date"@en ,
+               "data de distribuição por subcomissões"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+:negativeOpinionReasonDate rdf:type owl:AnnotationProperty ;
+    rdfs:subPropertyOf dct:date ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define a data do motivo do parecer negativo"@pt , 
+                    "Defines the date of the negative opinion reason"@en ;
+    rdfs:label "negative opinion reason date"@en ,
+               "data do motivo de parecer negativo"@pt ;
+    rdfs:domain :CommissionEvent ;
+    rdfs:range xsd:date .
+
+#:documentDate rdf:type owl:AnnotationProperty ;
+#    rdfs:subPropertyOf dct:date ;
+#    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+#    dct:description "Define a data de um documento associado a uma remessa"@pt , 
+#                    "Defines the date of a document associated to a transmission"@en ;
+#    rdfs:label "document date"@en ,
+#               "data do documento"@pt ;
+#    rdfs:domain :Transmission ;
+#    rdfs:range xsd:date .

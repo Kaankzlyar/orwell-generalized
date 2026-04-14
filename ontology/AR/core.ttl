@@ -1,0 +1,289 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix ocd: <http://dati.camera.it/ocd/> .
+@prefix m4s: <https://purl.org/map4scrutiny-core#> .
+@prefix schema:	<https://schema.org/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix pe: <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix polis-ini: <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-bio: <http://purl.org/polis/ar/biographic#> .
+@prefix : <http://purl.org/polis/ar/core#> .
+
+@base <http://purl.org/polis/ar/core#> .
+
+:	
+	a                           	<http://purl.org/vocommons/voaf#Vocabulary> , owl:Ontology ;
+	dct:title                   	"Portuguese Political Structures Ontology";
+	dct:description             	"";
+	dct:creator                 	"Tiago Ribeiro de Sá Cruz", "João Miguel da Silva Lourenço";
+	dct:contributor                 "Mariana Curado Malta", "João Bispo";
+    dct:issued                 		""^^schema:Date;
+	dct:license                 	<http://creativecommons.org/publicdomain/zero/1.0/> ;
+	vann:preferredNamespacePrefix   "polis-core:" ;
+	vann:preferredNamespaceUri      "http://purl.org/polis/ar/core#" ;
+	owl:versionInfo					"1.0";
+    dct:description                    """The objective of the POLIS ontology is to (...)""" ;
+    dcterms:bibliographicCitation ""@en ;
+    dcterms:created ""^^xsd:date ;
+    dcterms:modified ""^^xsd:date ;
+    dcterms:language "en", "pt" ;
+.
+
+#################################################################
+#    Classes
+#################################################################
+
+:ParliamentaryGroup rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Parliamentary Group"@en, "Grupo Parlamentar"@pt ;
+    dct:description "A parliamentary group that exists in a parliament during a legislature, containing elected MPs"@en,
+        "Um grupo parlamentar que existe num parlamento durante uma legislatura, que contém MPs eleitos"@pt ;
+    skos:broadMatch ocd:gruppoParlamentare .
+
+:Party rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Party"@en, "Partido"@pt ;
+    dct:description "A political party"@en, "Um partido político"@pt ;
+    rdfs:subClassOf <http://www.w3.org/ns/org#Organization> .
+
+:Membership rdf:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Membership"@en, "Afiliação"@pt ;
+    dct:description "Represents an n-ary relationship between an MP's mandate to a PG or Organisational Body"@en, "Representa uma relação n-ária entre o mandato de um MP e um grupo parlamentar ou órgão organizacional"@pt .
+
+:Guest df:type owl:Class ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Guest"@en, "Convidado"@pt ;
+    dct:description "Represents a person who was invited to the Assembly of the Republic"@en,
+        "Representa uma pessoa que foi convidada à Assembleia da República"@pt ;
+    rdfs:subClassOf foaf:Person .
+
+:Commission rdf:type owl:Class ;
+    rdfs:subClassOf ocd:organo ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Comissão"@pt ,
+               "Commission"@en ;
+	dct:description ""@pt , ""@en .
+
+:PAR rdf:type owl:Class ;
+    rdfs:subClassOf org:Post ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Presidente da Assembleia da República"@pt ,
+               "President of the Assembly of the Republic"@en ;
+	dct:description "Cargo de Presidente da Assembleia da República"@pt , "Duty of President of the Assembly of the Republic"@en .
+
+:VicePAR rdf:type owl:Class ;
+    rdfs:subClassOf org:Post ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Vice-Presidente da Assembleia da República"@pt ,
+               "Vice-President of the Assembly of the Republic"@en ;
+	dct:description "Cargo de Vice-Presidente da Assembleia da República"@pt , "Duty of Vice-President of the Assembly of the Republic"@en .
+
+:Secretary rdf:type owl:Class ;
+    rdfs:subClassOf org:Post ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Secretário da Assembleia da República"@pt ,
+               "Secretary of the Assembly of the Republic"@en ;
+	dct:description "Cargo de Secretário da Assembleia da República"@pt , "Duty of Secretary of the Assembly of the Republic"@en .
+
+:ViceSecretary rdf:type owl:Class ;
+    rdfs:subClassOf org:Post ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Vice-Secretário da Assembleia da República"@pt ,
+               "Vice-Secretary of the Assembly of the Republic"@en ;
+	dct:description "Cargo de Vice-Secretário da Assembleia da República"@pt , "Duty of Vice-Secretary of the Assembly of the Republic"@en .
+
+:Withdrawal rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Desistência"@pt ,
+               "Withdrawl"@en ;
+	dct:description "Situação de desistência de um deputado na Assembleia da Républica"@pt , "Withdrawal situation of an MP in the Assembly of the Republic"@en .
+
+:Incumbent rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Efetivo"@pt ,
+               "Incumbent"@en ;
+	dct:description "Situação de deputado efetivo na Assembleia da Républica"@pt , "Incumbent situation of an MP in the Assembly of the Republic"@en .
+
+:PermantentIncumbent rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Efetivo Definitivo"@pt ,
+               "Permanent Incumbent"@en ;
+	dct:description "Situação de deputado efetivo definitivo na Assembleia da Républica"@pt , "Permanent Incumbent situation of an MP in the Assembly of the Republic"@en .
+
+:TemporaryIncumbent rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Efetivo Temporário"@pt ,
+               "Temporary Incumbent"@en ;
+	dct:description "Situação de deputado efetivo temporário na Assembleia da Républica"@pt , "Temporary Incumbent situation of an MP in the Assembly of the Republic"@en .
+
+:Deceased rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Falecido/a"@pt ,
+               "Deceased"@en ;
+    dct:description "Situação de deputado falecido na Assembleia da República"@pt ,
+                    "Deceased situation of an MP in the Assembly of the Republic"@en .
+
+:Disqualified rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Impedido"@pt ,
+               "Disqualified"@en ;
+    dct:description "Situação de deputado impedido de exercer funções na Assembleia da República"@pt ,
+                    "Situation of an MP legally barred from exercising duties in the Assembly of the Republic"@en .
+
+:LossOfMandate rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Perda de Mandato"@pt ,
+               "Loss of Mandate"@en ;
+    dct:description "Situação de perda de mandato de um deputado na Assembleia da República"@pt ,
+                    "Loss of mandate situation of an MP in the Assembly of the Republic"@en .
+
+:Resigned rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Renunciou"@pt ,
+               "Resigned"@en ;
+    dct:description "Situação de renúncia de um deputado na Assembleia da República"@pt ,
+                    "Resignation situation of an MP in the Assembly of the Republic"@en .
+
+:Alternate rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Suplente"@pt ,
+               "Alternate"@en ;
+    dct:description "Situação de deputado suplente na Assembleia da República"@pt ,
+                    "Alternate member situation of an MP in the Assembly of the Republic"@en .
+
+:Suspended rdf:type owl:Class ;
+    rdfs:subClassOf ocd:proclamazione ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "Suspenso"@pt ,
+               "Suspended"@en ;
+    dct:description "Situação de suspensão de um deputado na Assembleia da República"@pt ,
+                    "Suspended situation of an MP in the Assembly of the Republic"@en .
+
+#################################################################
+#    Data properties
+#################################################################
+
+:identifier rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf <http://w3id.org/nfdi4ing/metadata4ing#identifier> ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "identifier"@en, "identificador"@pt ;
+    dct:description "An unique identifier to identify something"@en, "Um identificar único para identificar algo"@pt ;
+    rdf:type owl:FunctionalProperty .
+
+:honour rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:label "honour"@en, "de honra"@pt ;
+    dct:description "Indicates if a guest is a guest of honour"@en, "Indica se um convidado é um convidado de honra"@pt ;
+    rdfs:domain :Guest ;
+    rdfs:range xsd:boolean .
+
+:parliamentaryName rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf <http://xmlns.com/foaf/0.1/name> ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+	dct:description "Define o nome parlamentar de um MP durante uma legislatura"@pt , 
+		"Defines the parliamentarian name of a MP during a legislature"@en ;
+    rdfs:label "has parliamentary name"@en ,
+               "tem nome parlamentar"@pt ;
+    rdfs:domain ocd:mandatoCamera ;
+    rdfs:range xsd:string .
+
+
+#################################################################
+#    Object properties
+#################################################################
+
+:belongsToLegislature rdf:type owl:ObjectProperty ,
+            owl:FunctionalProperty ;
+            rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+            rdfs:range ocd:legislatura .
+
+:isOfParty rdf:type owl:ObjectProperty ,
+             owl:FunctionalProperty ;
+            rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:domain :ParliamentaryGroup ;
+    rdfs:range :Party .
+
+
+:belongsToLegislativeSession rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+     rdfs:range ocd:sessioneLegislatura .
+
+:hasMembership rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+     rdfs:domain m4s:Parliamentarian ;
+     rdfs:range :Membership .
+
+:isMemberOf rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+     rdfs:domain :Membership .
+
+:hasRole rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+     rdfs:domain :Membership ;
+     rdfs:range polis-bio:Role .
+
+:holdsSituation rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:domain ocd:mandatoCamera ;
+    rdfs:range :SituationHolding ;
+    rdfs:label "holds situation"@en, "exercita situação"@pt ;
+    dct:description "Relates the mandate of a MP to a situation they hold"@en, "Relaciona um deputado a uma situação que exerçam"@pt .
+
+:holdsDuty rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:range org:Post ;
+    rdfs:label "holds duty"@en, "exercita cargo"@pt ;
+    dct:description "Relates something to a duty it holds"@en, "Relaciona algo a um cargo que exerça"@pt .
+
+:hasSubCommission rdf:type owl:ObjectProperty ;
+    owl:inverseOf :isSubCommissionOf ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:domain :Commission ;
+    rdfs:range :Commission ;
+    rdfs:label "has subcommission"@en, "tem subcomissão"@pt ;
+    dct:description "Relates a commission to a subcommission"@en, "Relaciona uma comissão a uma subcomissão"@pt .
+
+:isSubCommissionOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasSubCommission ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:domain :Commission ;
+    rdfs:range :Commission ;
+    rdfs:label "is subcommission of"@en, "é subcomissão de"@pt ;
+    dct:description "Relates a subcommission to a commission"@en, "Relaciona uma subcomissão a uma comissão"@pt .
+
+:inConstituency rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdfs:range pe:ConstituencyArea ;
+    rdfs:label "in constituency"@en, "em circunscrição"@pt ;
+    dct:description "Relates something to a Constituency"@en, "Relaciona algo a um círculo eleitoral"@pt .
+
+#################################################################
+#    Data properties
+#################################################################
+
+:duty rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+	dct:description "Define o cargo de algo"@pt , 
+		"Defines the duty of something"@en ;
+    rdfs:label "duty"@en ,
+               "cargo"@pt ;
+    rdfs:comment "It is preferred to use core:holdsDuty and org:Post when a controlled vocabulary exists"@en,
+        "É preferível utilizar core:holdsDuty e org:Post quando um vocabulário controlado existe"@pt ;
+    rdfs:range xsd:string .
+
