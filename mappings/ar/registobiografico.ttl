@@ -34,7 +34,7 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/core#{CadId}_Parliamentarian" ;
+        rr:template "http://purl.org/polis/ar/graph#{CadId}_Parliamentarian" ;
         rr:class m4s:Parliamentarian
     ] ;
 

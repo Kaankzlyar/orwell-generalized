@@ -23,6 +23,7 @@
 @prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
 @prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
 @prefix polis-core:   <http://purl.org/polis/ar/core#> .
+@prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
 <#LegislatureMap>
 
@@ -34,7 +35,7 @@
 
   # URI (Roman numeral in the sigla, e.g. "XIV" -> http://purl.org/polis/ar/core#XIV)
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/core#{sigla}";
+    rr:template "http://purl.org/polis/ar/graph#{sigla}";
     rr:class ocd:legislatura
   ] ;
 
@@ -107,7 +108,7 @@
 
   # URI 
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/core#Session{numSessao}_of_{../../DetalheLegislatura/sigla}" ;
+    rr:template "http://purl.org/polis/ar/graph#Session{numSessao}_of_{../../DetalheLegislatura/sigla}" ;
     rr:class ocd:sessioneLegislatura
   ] ;
 
@@ -168,7 +169,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/core#{cpDes}Constituency" ;
+    rr:template "http://purl.org/polis/ar/graph#{cpDes}Constituency" ;
     rr:class polis-core:Constituency
   ] ;
 
@@ -239,7 +240,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/core#{sigla}" ;
+    rr:template "http://purl.org/polis/ar/graph#{sigla}" ;
     rr:class polis-core:Party
   ] ;
 
@@ -272,7 +273,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/core#{sigla}_ParliamentaryGroup_of_{../../DetalheLegislatura/sigla}" ;
+    rr:template "http://purl.org/polis/ar/graph#{sigla}_ParliamentaryGroup_of_{../../DetalheLegislatura/sigla}" ;
     rr:class polis-core:ParliamentaryGroup
   ] ;
 
@@ -333,7 +334,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/core#{DepCadId}_Parliamentarian" ;
+    rr:template "http://purl.org/polis/ar/graph#{DepCadId}_Parliamentarian" ;
     rr:class m4s:Parliamentarian
   ] ;
   
