@@ -108,7 +108,7 @@
 
   # URI 
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/graph#Session{numSessao}_of_{../../DetalheLegislatura/sigla}" ;
+    rr:template "http://purl.org/polis/ar/graph#Session_{numSessao}_of_{../../DetalheLegislatura/sigla}" ;
     rr:class ocd:sessioneLegislatura
   ] ;
 
@@ -153,7 +153,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{../../DetalheLegislatura/sigla}" ;
+      rr:template "http://purl.org/polis/ar/graph#{../../DetalheLegislatura/sigla}" ;
       rr:termType rr:IRI
     ]
   ]
@@ -169,7 +169,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/graph#{cpDes}Constituency" ;
+    rr:template "http://purl.org/polis/ar/graph#Constituency_{cpDes}" ;
     rr:class polis-core:Constituency
   ] ;
 
@@ -195,7 +195,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{legDes}" ;
+      rr:template "http://purl.org/polis/ar/graph#{legDes}" ;
       rr:termType rr:IRI
     ]
   ] ;
@@ -273,7 +273,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/graph#{sigla}_ParliamentaryGroup_of_{../../DetalheLegislatura/sigla}" ;
+    rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{sigla}_of_{../../DetalheLegislatura/sigla}" ;
     rr:class polis-core:ParliamentaryGroup
   ] ;
 
@@ -281,7 +281,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:isOfParty ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{sigla}" ;
+      rr:template "http://purl.org/polis/ar/graph#{sigla}" ;
       rr:termType rr:IRI
     ]
   ] ;
@@ -318,7 +318,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{../../DetalheLegislatura/sigla}" ;
+      rr:template "http://purl.org/polis/ar/graph#{../../DetalheLegislatura/sigla}" ;
       rr:termType rr:IRI
     ]
   ]
@@ -334,7 +334,7 @@
 
   # URI
   rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/graph#{DepCadId}_Parliamentarian" ;
+    rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{DepCadId}" ;
     rr:class m4s:Parliamentarian
   ] ;
   
@@ -360,7 +360,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{../../DetalheLegislatura/sigla}" ;
+      rr:template "http://purl.org/polis/ar/graph#{../../DetalheLegislatura/sigla}" ;
       rr:termType rr:IRI
     ]
   ]
@@ -392,7 +392,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:inConstituency ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{DepCPDes}Constituency" ;
+      rr:template "http://purl.org/polis/ar/graph#Constituency_{DepCPDes}" ;
       rr:termType rr:IRI
     ]
   ] ;
@@ -410,7 +410,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:belongsToLegislature ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{LegDes}" ;
+      rr:template "http://purl.org/polis/ar/graph#{LegDes}" ;
       rr:termType rr:IRI
     ]
   ]
@@ -625,7 +625,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:isMemberOf ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/core#{gpSigla}" ;
+      rr:template "http://purl.org/polis/ar/graph#{gpSigla}" ;
       rr:termType rr:IRI
     ]
   ] ;

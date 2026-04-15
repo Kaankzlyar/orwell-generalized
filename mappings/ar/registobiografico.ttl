@@ -34,7 +34,7 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#{CadId}_Parliamentarian" ;
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{CadId}" ;
         rr:class m4s:Parliamentarian
     ] ;
 
@@ -76,7 +76,7 @@
 
     rr:subjectMap [
         rr:class m4s:Parliamentarian ;
-        rr:template "http://purl.org/polis/ar/graph#{../../CadId}_Parliamentarian" ;
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
     ] ;
 
     rr:predicateObjectMap [
@@ -132,15 +132,15 @@
     # Done Before
     rr:predicateObjectMap [
         rr:predicate polis-bio:doneBefore ;
-        rr:datatype xsd:boolean ;
         rr:objectMap [ 
+            rr:datatype xsd:boolean ;
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
                     rr:objectMap [ rr:constant pofn:toBoolean ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:input ;
+                    rr:predicate pofn:stringValue ;
                     rr:objectMap [
                         rml:reference "FunAntiga" ;
                         rr:datatype xsd:string

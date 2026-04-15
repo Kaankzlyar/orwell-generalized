@@ -8,10 +8,10 @@
 
 :toBoolean a fno:Function ;
     fno:name "toBoolean" ;
-    fno:expects ( :inputParam ) ;
+    fno:expects ( :stringValueParam ) ;
     fno:returns ( :booleanOutputParam ) .
 
-:inputParam a fno:Parameter ;
+:stringValueParam a fno:Parameter ;
     fno:predicate :stringValue ;
     fno:name "stringValue" ;
     fno:description "String value (e.g., S or N)." ;
