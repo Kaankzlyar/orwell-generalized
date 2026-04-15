@@ -6,23 +6,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ToEnglishTest {
 
+    private static final String NS = "http://purl.org/polis/ar/core#";
+
     @Test
     void toEnglishNormalizesSituationInput() {
-        assertEquals("Withdrawal", ToEnglish.toEnglish("  Desístência  ", "situation"));
+        assertEquals(NS + "Withdrawal", ToEnglish.toEnglish("  Desístência  ", "situation"));
     }
 
     @Test
     void toEnglishNormalizesDutyInput() {
-        assertEquals("VicePAR", ToEnglish.toEnglish("VícE-PrésiDéntE", "duty"));
+        assertEquals(NS + "VicePAR", ToEnglish.toEnglish("VícE-PrésiDéntE", "duty"));
     }
 
     @Test 
     void toEnglishNormalizesSituationInputWithSlash() {
-        assertEquals("Deceased", ToEnglish.toEnglish("Falecido/a", "situation"));
+        assertEquals(NS + "Deceased", ToEnglish.toEnglish("Falecido/a", "situation"));
     }
 
     @Test
     void toEnglishReturnsNormalizedUnknownValue() {
-        assertEquals("nao mapeado", ToEnglish.toEnglish("NãO Mapeádo", "situation"));
+        assertEquals(NS + "nao mapeado", ToEnglish.toEnglish("NãO Mapeádo", "situation"));
     }
 }

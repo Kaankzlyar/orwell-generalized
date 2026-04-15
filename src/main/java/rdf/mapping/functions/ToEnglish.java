@@ -6,6 +6,7 @@ import java.util.Locale;
 
 public class ToEnglish {
 
+    private static final String POLIS_CORE_NS = "http://purl.org/polis/ar/core#";
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();
 
@@ -25,6 +26,9 @@ public class ToEnglish {
         situationMap.put("renunciou", "Resigned");
         situationMap.put("suplente", "Alternate");
         situationMap.put("suspenso", "Suspended");
+        situationMap.put("suspenso(eleito)", "Suspended");
+        situationMap.put("suspenso(efet def)", "Suspended");
+        situationMap.put("suspenso(nao eleito)", "Suspended");
     }
 
     private static void fillDutyMap() {
@@ -42,15 +46,18 @@ public class ToEnglish {
 
         String normalizedInput = normalize(entityName);
 
+        String englishName;
         if (className.equals("situation")) {
-            return situationMap.getOrDefault(normalizedInput, normalizedInput);
+            englishName = situationMap.getOrDefault(normalizedInput, normalizedInput);
+        }
+        else if (className.equals("duty")) {
+            englishName = dutyMap.getOrDefault(normalizedInput, normalizedInput);
         }
         else {
-            if (className.equals("duty"))
-                return dutyMap.getOrDefault(normalizedInput, normalizedInput);
+            return null;
         }
 
-        return null;
+        return POLIS_CORE_NS + englishName;
     }
 
     private static String normalize(String input) {

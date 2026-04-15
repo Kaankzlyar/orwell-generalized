@@ -113,7 +113,7 @@
                "Incumbent"@en ;
 	dct:description "Situação de deputado efetivo na Assembleia da Républica"@pt , "Incumbent situation of an MP in the Assembly of the Republic"@en .
 
-:PermantentIncumbent rdf:type owl:Class ;
+:PermanentIncumbent rdf:type owl:Class ;
     rdfs:subClassOf ocd:proclamazione ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
     rdfs:label "Efetivo Definitivo"@pt ,
@@ -286,4 +286,3 @@
     rdfs:comment "It is preferred to use core:holdsDuty and org:Post when a controlled vocabulary exists"@en,
         "É preferível utilizar core:holdsDuty e org:Post quando um vocabulário controlado existe"@pt ;
     rdfs:range xsd:string .
-

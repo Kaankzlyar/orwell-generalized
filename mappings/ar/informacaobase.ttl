@@ -397,24 +397,6 @@
     ]
   ] ;
 
-  # Situation
-  rr:predicateObjectMap [
-    rr:predicate ocd:tipoProclamazione ;
-    rr:objectMap [
-      rr:termType rr:BlankNode ;
-      rr:template "situation-{DepId}"
-    ]
-  ] ;
-
-  # Duty
-  rr:predicateObjectMap [
-    rr:predicate polis-core:holdsDuty ;
-    rr:objectMap [
-      rr:termType rr:BlankNode ;
-      rr:template "duty-{DepId}"
-    ]
-  ] ;
-
   # Membership
   rr:predicateObjectMap [
     rr:predicate polis-core:hasMembership ;
@@ -434,7 +416,7 @@
   ]
   .
 
-<#SituationMap>
+<#MandateSituationRelationMap>
   rml:logicalSource [
     rml:source "data/" ;
     rml:referenceFormulation ql:XPath ;
@@ -443,8 +425,58 @@
 
   rr:subjectMap [
     rr:termType rr:BlankNode ;
-    rr:template "situation-{../../DepId}" ;
-    rr:class ocd:proclamazione # TODO: Insert correct subclass
+    rr:template "mandate-{../../DepId}"
+  ] ;
+
+  rr:predicateObjectMap [
+    rr:predicate ocd:tipoProclamazione ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/graph#Situation_{../../DepId}_of_{sioDtInicio}" ;
+      rr:termType rr:IRI
+    ]
+  ] ;
+  .
+
+<#SituationMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepSituacao/pt_ar_wsgode_objectos_DadosSituacaoDeputado"
+  ] ;
+
+  # URI
+  rr:subjectMap [
+    rr:termType rr:IRI ;
+    rr:template "http://purl.org/polis/ar/graph#Situation_{../../DepId}_of_{sioDtInicio}" ;
+    rr:class ocd:proclamazione
+  ] ;
+
+  # Type of Situation (e.g. "Desístência", "Falecido/a", etc.)
+  rr:predicateObjectMap [
+    rr:predicate rdf:type ;
+    rr:objectMap [
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:toEnglish ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:entityName ;
+          rr:objectMap [
+            rml:reference "sioDes" ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:className ;
+          rr:objectMap [
+            rr:constant "situation" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
+      rr:termType rr:IRI
+    ]
   ] ;
 
   # Label
@@ -485,7 +517,7 @@
   ] ;
   .
 
-<#DutyMap>
+<#MandateDutyRelationMap>
   rml:logicalSource [
     rml:source "data/" ;
     rml:referenceFormulation ql:XPath ;
@@ -494,10 +526,32 @@
 
   rr:subjectMap [
     rr:termType rr:BlankNode ;
-    rr:template "duty-{../../DepId}" ;
-    #rr:class org:Post # TODO: Insert subcorrect class
+    rr:template "mandate-{../../DepId}"
   ] ;
 
+  rr:predicateObjectMap [
+    rr:predicate polis-core:holdsDuty ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/graph#Duty_{../../DepId}_of_{carDtInicio}" ;
+      rr:termType rr:IRI
+    ]
+  ] ;
+  .
+
+<#DutyMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepCargo/pt_ar_wsgode_objectos_DadosCargoDeputado"
+  ] ;
+
+  rr:subjectMap [
+    rr:termType rr:IRI ;
+    rr:template "http://purl.org/polis/ar/graph#Duty_{../../DepId}_of_{carDtInicio}" ;
+    rr:class org:Post
+  ] ;
+
+  # Type of Duty (e.g. "PAR", "ViceSecretary", etc.)
   rr:predicateObjectMap [
       rr:predicate rdf:type ;
       rr:objectMap [
@@ -521,8 +575,8 @@
               ]
             ]
           ] ;
-          rr:datatype xsd:string
-      ]
+      rr:termType rr:IRI
+    ]
   ] ;
 
   # Date Period

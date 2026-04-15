@@ -267,7 +267,7 @@ polis-core:MandateShape a sh:NodeShape ;
             [ sh:class ocd:proclamazione ]
             [ sh:class polis-core:Withdrawal ]
             [ sh:class polis-core:Incumbent ]
-            [ sh:class polis-core:PermantentIncumbent ]
+            [ sh:class polis-core:PermanentIncumbent ]
             [ sh:class polis-core:TemporaryIncumbent ]
             [ sh:class polis-core:Deceased ]
             [ sh:class polis-core:Disqualified ]
@@ -386,7 +386,7 @@ polis-core:SituationShape a sh:NodeShape ;
     sh:targetClass ocd:proclamazione ;
     sh:targetClass polis-core:Withdrawal ;
     sh:targetClass polis-core:Incumbent ;
-    sh:targetClass polis-core:PermantentIncumbent ;
+    sh:targetClass polis-core:PermanentIncumbent ;
     sh:targetClass polis-core:TemporaryIncumbent ;
     sh:targetClass polis-core:Deceased ;
     sh:targetClass polis-core:Disqualified ;
