@@ -150,3 +150,67 @@
         ]
     ] ;
     .
+
+<#ParliamentarianTitleRelationMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadTitulos/DadosTitulos"
+    ] ;
+
+    rr:subjectMap [
+        rr:class m4s:Parliamentarian ; 
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-bio:hasTitle ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Title_{TitId}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+    .
+
+<#TitleMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadTitulos/DadosTitulos"
+    ] ;
+
+    # URI
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Title_{TitId}" ;
+        rr:class polis-bio:Title
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "TitId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            rml:reference "TitDes" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [ 
+            rml:reference "TitOrdem" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+     ] ;
+    .
