@@ -55,4 +55,13 @@
             rr:datatype xsd:string
         ]
     ] ;
+
+    # Profession
+    rr:predicateObjectMap [
+        rr:predicate schema:jobTitle ;
+        rr:objectMap [ 
+            rml:reference "CadProfissao" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
     .
