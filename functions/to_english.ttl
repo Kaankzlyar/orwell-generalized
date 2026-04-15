@@ -1,0 +1,42 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:toEnglish a fno:Function ;
+    fno:name "toEnglish" ;
+    fno:expects ( :entityNameParam :classNameParam ) ;
+    fno:returns ( :outputParam ) .
+
+:entityNameParam a fno:Parameter ;
+    fno:predicate :entityName ;
+    fno:name "entityName" ;
+    fno:description "Input string to convert to English." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:classNameParam a fno:Parameter ;
+    fno:predicate :className ;
+    fno:name "className" ;
+    fno:description "The class of the input string (e.g., 'duty', 'situation')." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:outputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "Converted string in English." ;
+    fno:type xsd:string .
+
+:toEnglishImplementation a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.ToEnglish" .
+
+:toEnglishMapping a fno:Mapping ;
+    fno:function :toEnglish ;
+    fno:implementation :toEnglishImplementation ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toEnglish" ]
+.

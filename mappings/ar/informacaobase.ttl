@@ -495,16 +495,34 @@
   rr:subjectMap [
     rr:termType rr:BlankNode ;
     rr:template "duty-{../../DepId}" ;
-    rr:class org:Post # TODO: Insert subcorrect class
+    #rr:class org:Post # TODO: Insert subcorrect class
   ] ;
 
-  # Label
   rr:predicateObjectMap [
-    rr:predicate rdfs:label ;
-    rr:objectMap [
-      rml:reference "carDes" ;
-      rr:datatype xsd:string
-    ]
+      rr:predicate rdf:type ;
+      rr:objectMap [
+          fnml:functionValue [
+            rr:predicateObjectMap [
+              rr:predicate fno:executes ;
+              rr:objectMap [ rr:constant pofn:toEnglish ]
+            ] ;
+            rr:predicateObjectMap [
+              rr:predicate pofn:entityName ;
+              rr:objectMap [
+                rml:reference "carDes" ;
+                rr:datatype xsd:string
+              ]
+            ] ;
+            rr:predicateObjectMap [
+              rr:predicate pofn:className ;
+              rr:objectMap [
+                rr:constant "duty" ;
+                rr:datatype xsd:string
+              ]
+            ]
+          ] ;
+          rr:datatype xsd:string
+      ]
   ] ;
 
   # Date Period
