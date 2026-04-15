@@ -1,0 +1,595 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ocd:  <http://dati.camera.it/ocd/> .
+@prefix m4s: <http://purl.org/map4scrutiny-core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix prov: <https://www.w3.org/ns/prov-o> .
+@prefix time: <https://www.w3.org/2006/time> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix pe: <http://parliament.uk/ontologies/election/> .
+@prefix polis-core: <http://purl.org/polis/ar/core#> .
+@prefix polis-bio: <http://purl.org/polis/ar/biographic#> .
+@prefix polis-ini: <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-mpact: <http://purl.org/polis/ar/mp-activity#> .
+
+# ------------------ CORE ------------------
+
+#################################################################
+# Person
+#################################################################
+
+polis-core:PersonShape a sh:NodeShape ;
+    sh:targetClass foaf:Person ;
+    sh:targetClass m4s:Parliamentarian ;
+    sh:targetClass ocd:membroGoverno ;
+    sh:targetClass polis-core:Guest ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Person must have at most one name and the name must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path foaf:birthday ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A Person must at most one birthday and the birthday must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path schema:gender ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Person must at most one gender and the gender must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path schema:jobTitle ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Person must at most one job title and the job title must be a xsd:string"@en
+    ] .
+
+#################################################################
+# MP
+#################################################################
+
+polis-core:ParliamentarianShape a sh:NodeShape;
+    sh:targetClass m4s:Parliamentarian ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A parliamentarian must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:minCount 1 ;
+        sh:class ocd:legislatura ;
+        sh:message "A parliamentarian must belong to at least one legislature"@en
+    ] ;
+
+    sh:property [
+        sh:path ocd:rif_mandatoCamera ;
+        sh:minCount 1 ;
+        sh:class ocd:mandatoCamera ;
+        sh:message "A parliamentarian must have served in at least one mandate"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-bio:hasHabilitation ;
+        sh:class polis-bio:Habilitation ;
+        sh:message "A parliamentarian habilitation must be of the class polis-bio:Habilitation"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:award ;
+        sh:class dbo:Award ;
+        sh:message "A parliamentarian award must be of the class dbo:Award"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-bio:hasTitle ;
+        sh:class polis-bio:Title ;
+        sh:message "A parliamentarian title must be of the class polis-bio:Title"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-bio:authorOf ;
+        sh:class bibo:Document ;
+        sh:message "A parliamentarian publications must be of the class bibo:Document"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-bio:hasRole ;
+        sh:class polis-bio:Role ;
+        sh:message "A parliamentarian role must be of the class polis-bio:Role"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:hasMembership ;
+        sh:class polis-core:Membership ;
+        sh:message "A parliamentarian membership must be of the class polis-core:Membership"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:didYouthParliamentActivity ;
+        sh:class polis-mpact:YouthParliamentActivity ;
+        sh:message "A parliamentarian youth parliament activity must be of the class polis-mpact:YouthParliamentActivity"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:didRequisition ;
+        sh:or (
+            [ sh:class ocd:richiestaParere ]
+            [ sh:class polis-mpact:Request ]
+            [ sh:class polis-mpact:Inquiry ]
+        ) ;
+        sh:message "A parliamentarian requisition must be of the class ocd:richiestaParere or polis-mpact:Request or polis-mpact:Inquiry"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:didCommissionActivity ;
+        sh:class polis-mpact:CommissionActivity ;
+        sh:message "A parliamentarian commission activity must be of the class polis-mpact:CommissionActivity"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:didParliamentaryActivity ;
+        sh:class polis-mpact:ParliamentaryActivity ;
+        sh:message "A parliamentarian parliamentary activity must be of the class polis-mpact:ParliamentaryActivity"@en
+    ] .
+
+#################################################################
+# MG
+#################################################################
+
+polis-core:MGShape a sh:NodeShape;
+    sh:targetClass ocd:membroGoverno ;
+
+    sh:propery [
+        sh:path polis-core:duty ;
+        sh:datatype xsd:string ;
+        sh:message "A member of government duty must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:holdsDuty ;
+        sh:or (
+            [ sh:class org:Post ]
+            [ sh:class polis-core:PAR ]
+            [ sh:class polis-core:VicePAR ]
+            [ sh:class polis-core:Secretary ]
+            [ sh:class polis-core:ViceSecretary ]
+        ) ;
+        sh:message "A member of government held duty must be of the class org:Post"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToGovernment ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:governo ;
+        sh:message "A member of government must belong to one and only one government"@en
+    ] .
+
+#################################################################
+# Guest
+#################################################################
+
+polis-core:GuestShape a sh:NodeShape;
+    sh:targetClass polis-core:Guest ;
+
+    sh:property [
+        sh:path polis-core:honour ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:boolean ;
+        sh:message "A guest must at most one boolean declaration on whether it is a guest of honour"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:country ;
+        sh:maxCount 1 ;
+        sh:class dbo:Country ;
+        sh:message "A guest must at most one country of origin"@en
+    ] ;
+
+    sh:propery [
+        sh:path polis-core:duty ;
+        sh:datatype xsd:string ;
+        sh:message "A guest duty must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:holdsDuty ;
+        sh:or (
+            [ sh:class org:Post ]
+            [ sh:class polis-core:PAR ]
+            [ sh:class polis-core:VicePAR ]
+            [ sh:class polis-core:Secretary ]
+            [ sh:class polis-core:ViceSecretary ]
+        ) ;
+        sh:message "A guest held duty must be of the class org:Post"@en
+    ] .
+
+#################################################################
+# Mandate
+#################################################################
+
+polis-core:MandateShape a sh:NodeShape ;
+    sh:targetClass ocd:mandatoCamera ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A mandate must have at most one identifier and the identifier must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:parliamentaryName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A mandate must have at least one parliamentary name and the parliamentary name must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:legislatura ;
+        sh:message "A mandate must belong to one and only one legislature"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:hasMembership ;
+        sh:minCount 1 ;
+        sh:class polis-core:Membership ;
+        sh:message "A mandate must have at least one membership"@en
+    ] ;
+
+    sh:property [
+        sh:path ocd:tipoProclamazione ;
+        sh:minCount 1 ;
+        sh:or (
+            [ sh:class ocd:proclamazione ]
+            [ sh:class polis-core:Withdrawal ]
+            [ sh:class polis-core:Incumbent ]
+            [ sh:class polis-core:PermantentIncumbent ]
+            [ sh:class polis-core:TemporaryIncumbent ]
+            [ sh:class polis-core:Deceased ]
+            [ sh:class polis-core:Disqualified ]
+            [ sh:class polis-core:LossOfMandate ]
+            [ sh:class polis-core:Resigned ]
+            [ sh:class polis-core:Alternate ]
+            [ sh:class polis-core:Suspended ]
+        ) ;
+        sh:message "A mandate must be in at least one situation"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:inConstituency ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class polis-core:Constituency ;
+        sh:message "A mandate must have exactly one constituency"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:holdsDuty ;
+        sh:or (
+            [ sh:class org:Post ]
+            [ sh:class polis-core:PAR ]
+            [ sh:class polis-core:VicePAR ]
+            [ sh:class polis-core:Secretary ]
+            [ sh:class polis-core:ViceSecretary ]
+        ) ;
+        sh:message "A mandate with a duty must be of the type org:Post"@en
+    ] .
+
+#################################################################
+# Organo
+#################################################################
+
+polis-core:OrganoShape a sh:NodeShape ;
+    sh:targetClass ocd:organo ;
+    sh:targetClass polis-core:Commission ;
+    sh:targetClass polis-core:WorkingGroup ;
+    sh:targetClass polis-core:ARWorkingGroup ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An organo must have an identifier and the identifier must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:description ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An organo must have at most one description and the description must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An organo must have at most one name and the name must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path qudt:acronym ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An organo must have at most one acronym and the acronym must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An organo must belong to one and only one legislature"@en
+    ] .
+
+#################################################################
+# Commission
+#################################################################
+
+polis-core:CommissionShape a sh:NodeShape ;
+    sh:targetClass polis-core:Commission ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:maxCount 1 ;
+        sh:message "A commission must at most one number and the number must be xsd:nonNegativeInteger"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:isPublishedInDAR ;
+        sh:class polis-ini:DARPublication ;
+        sh:message "A Commission publication in the DAR must be of the class polis-ini:DARPublication"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-core:isSubCommissionOf ;
+        sh:class polis-core:Commission ;
+        sh:message "A Commission must be a subcommission of a Commission"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-core:hasSubCommission ;
+        sh:class polis-core:Commission ;
+        sh:message "A Commission must have a subcommission of class polis-core:Commission"@en
+    ] .
+
+#################################################################
+# Situation
+#################################################################
+
+polis-core:SituationShape a sh:NodeShape ;
+    sh:targetClass ocd:proclamazione ;
+    sh:targetClass polis-core:Withdrawal ;
+    sh:targetClass polis-core:Incumbent ;
+    sh:targetClass polis-core:PermantentIncumbent ;
+    sh:targetClass polis-core:TemporaryIncumbent ;
+    sh:targetClass polis-core:Deceased ;
+    sh:targetClass polis-core:Disqualified ;
+    sh:targetClass polis-core:LossOfMandate ;
+    sh:targetClass polis-core:Resigned ;
+    sh:targetClass polis-core:Alternate ;
+    sh:targetClass polis-core:Suspended ;
+    
+    sh:property [
+        sh:path dct:date ;
+        sh:maxCount 1 ;
+        sh:message "A Situation must have at most one date"@en
+    ] .
+
+#################################################################
+# Duty / Post
+#################################################################~
+
+polis-core:DutyShape a sh:NodeShape ;
+    sh:targetClass org:Post ;
+    sh:targetClass polis-core:PAR ;
+    sh:targetClass polis-core:VicePAR ;
+    sh:targetClass polis-core:Secreatary ;
+    sh:targetClass polis-core:ViceSecretary ;
+    
+    sh:property [
+        sh:path dct:date ;
+        sh:maxCount 1 ;
+        sh:message "A Duty must have at most one date"@en
+    ] .
+
+#################################################################
+# Membership
+#################################################################
+
+polis-core:MembershipShape a sh:NodeShape ;
+    sh:targetClass polis-core:Membership ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:maxCount 1 ;
+        sh:message "A Membership must have at most one date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:isMemberOf ;
+        sh:maxCount 1 ;
+        # ehhh, não sei se esta será a melhor mensagem, mas fica a ideia.
+        # sh:or foi removido porque Membership já não especifica range, para ser mais flexivel.
+        sh:message "A Membership must have at most one isMemberOf property"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:hasRole ;
+        sh:class polis-bio:Role ;
+        sh:maxCount 1 ;
+         sh:message "A Membership must have at most one Role and it must be of the type polis-bio:Role"@en
+    ] .
+
+#################################################################
+# Legislature
+#################################################################
+
+polis-core:LegislatureShape a sh:NodeShape ;
+    sh:targetClass ocd:legislatura ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A legislatura must have one identifier and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A legislatura must have one date"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A legislatura must have one and only one number and the number must be xsd:nonNegativeInteger"@en
+    ] .
+
+#################################################################
+# Legislative Session
+#################################################################
+
+polis-core:LegislativeSessionShape a sh:NodeShape ;
+    sh:targetClass ocd:sessioneLegislatura ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:maxCount 1 ;
+        sh:message "A sessioneLegislatura session must at most have one number and the number must be of the type xsd:nonNegativeInteger"
+    ] ;
+    
+    sh:property [
+        sh:path dct:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A sessioneLegislatura must have one and only one date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:legislatura ;
+        sh:message "A sessioneLegislatura must belong to one and only one legislatura"@en
+    ] .
+
+#################################################################
+# Party
+#################################################################
+
+polis-core:PartyShape a sh:NodeShape ;
+    sh:targetClass polis-core:Party ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A party must have at most one and only one name and the name must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path qudt:acronym ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A party must have one and only one acronym and the acronym must be xsd:string"@en
+    ] .
+
+#################################################################
+# Parliamentary Group
+#################################################################
+
+polis-core:ParliamentaryGroupShape a sh:NodeShape ;
+    sh:targetClass polis-core:ParliamentaryGroup ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:maxCount 1 ;
+        sh:message "A parliamentary group must have at most one date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:isOfParty ;
+        sh:class polis-core:Party ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A parliamentary group must be of one and only one party"@en
+    ] ; 
+    
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:legislatura ;
+        sh:message "A parliamentary group must belong to one and only one legislature"@en
+    ] .
+
+#################################################################
+# Government
+#################################################################
+
+polis-core:GovernmentShape a sh:NodeShape ;
+    sh:targetClass ocd:governo ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:maxCount 1 ;
+        sh:message "A governo must have at most one number and the number must be xsd:nonNegativeInteger"@en
+    ] .
+
+#################################################################
+# Constituency
+#################################################################
+
+polis-core:ConstituencyShape a sh:NodeShape ;
+    sh:targetClass pe:ConstituencyArea ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A constituency must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A constituency must have exactly one name and the name must be a xsd:string"@en
+    ] .

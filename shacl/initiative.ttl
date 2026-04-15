@@ -1,0 +1,938 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ocd:  <http://dati.camera.it/ocd/> .
+@prefix m4s: <http://purl.org/map4scrutiny-core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix prov: <https://www.w3.org/ns/prov-o> .
+@prefix time: <https://www.w3.org/2006/time> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix pe: <http://parliament.uk/ontologies/election/> .
+@prefix polis-core: <http://purl.org/polis/ar/core#> .
+@prefix polis-bio: <http://purl.org/polis/ar/biographic#> .
+@prefix polis-ini: <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-mpact: <http://purl.org/polis/ar/mp-activity#> .
+
+# ------------------ Initiative ------------------
+
+#################################################################
+# Initiative
+#################################################################
+
+polis-ini:InitiativeShape a sh:NodeShape ;
+    sh:targetClass polis-ini:Initiative ;
+    sh:targetClass polis-ini:ConstitutionalRevisionProject ;
+    sh:targetClass polis-ini:DeliberationProject ;
+    sh:targetClass polis-ini:LawProject ;
+    sh:targetClass polis-ini:LawProposal ;
+    sh:targetClass polis-ini:ParliamentaryAppreciation ;
+    sh:targetClass polis-ini:ParliamentaryInquiry ;
+    sh:targetClass polis-ini:PopularReferendumInitiative ;
+    sh:targetClass polis-ini:Ratification ;
+    sh:targetClass polis-ini:ResolutionProject ;
+    sh:targetClass polis-ini:ResolutionProposal ;
+    sh:targetClass polis-ini:RulesOfProcedureProject ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An initiative must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An initiative must have one and exactly one title and the title must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An initiative must one and only one number and the number must be xsd:nonNegativeInteger"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:textSubstitutionDetails ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An initiative must have at most one text substitution detail and it must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:legislatura ;
+        sh:message "An initiative must belong to one and only one legislature"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:message "An initiative must belong to one and only one legislaturive session"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasAuthor ;
+        sh:class m4s:Parliamentarian ;
+        sh:message "An initiative author must be of the class m4s:Parliamentarian"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasProponent ;
+        sh:or (
+            [ sh:class polis-core:ParliamentaryGroup ]
+            [ sh:class m4s:Parliamentarian ]
+            [ sh:class ocd:governo ]
+            [ sh:class polis-core:Commission ]
+            [ sh:class polis-ini:RegionalLegislativeAssembly ]
+            [ sh:class polis-ini:CitizenGroup ]
+        ) ;
+        sh:message "An initiative proponent must be a polis-core:ParliamentaryGroup, m4s:Parliamentarian, ocd:governo, polis-core:Commission, polis-ini:RegionalLegislativeAssembly or polis-ini:CitizenGroup "@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasEvent ;
+        sh:class polis-ini:Event ;
+        sh:message "An initiative event must be of the class polis-ini:Event"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasAnnex ;
+        sh:class bibo:Document ;
+        sh:message "An initiative annex must be of the class bibo:Document"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:grewOutOf ;
+        sh:or (
+            [sh:class polis-ini:Initiative]
+            [sh:class polis-ini:EuropeanInitiative]
+            [ sh:class polis-ini:ConstitutionalRevisionProject ]
+            [ sh:class polis-ini:DeliberationProject ]
+            [ sh:class polis-ini:LawProject ]
+            [ sh:class polis-ini:LawProposal ]
+            [ sh:class polis-ini:ParliamentaryAppreciation ]
+            [ sh:class polis-ini:ParliamentaryInquiry ]
+            [ sh:class polis-ini:PopularReferendumInitiative ]
+            [ sh:class polis-ini:Ratification ]
+            [ sh:class polis-ini:ResolutionProject ]
+            [ sh:class polis-ini:ResolutionProposal ]
+            [ sh:class polis-ini:RulesOfProcedureProject ]
+        ) ;
+        sh:message "An initiative must grow out of a polis-ini:Initiative or a polis-ini:EuropeanInitiative"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:ledTo ;
+        sh:or (
+            [ sh:class polis-ini:Initiative ]
+            [ sh:class polis-ini:ConstitutionalRevisionProject ]
+            [ sh:class polis-ini:DeliberationProject ]
+            [ sh:class polis-ini:LawProject ]
+            [ sh:class polis-ini:LawProposal ]
+            [ sh:class polis-ini:ParliamentaryAppreciation ]
+            [ sh:class polis-ini:ParliamentaryInquiry ]
+            [ sh:class polis-ini:PopularReferendumInitiative ]
+            [ sh:class polis-ini:Ratification ]
+            [ sh:class polis-ini:ResolutionProject ]
+            [ sh:class polis-ini:ResolutionProposal ]
+            [ sh:class polis-ini:RulesOfProcedureProject ]
+        ) ;
+        sh:message "An initiative must lead to initiatives of the class polis-ini:Initiative"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:receivedChangeProposal ;
+        sh:class polis-ini:ChangeProposal ;
+        sh:message "An initiative received change proposal must be of the class polis-ini:ChangeProposal"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasRelatedPetition ;
+        sh:class polis-ini:Petition ;
+        sh:message "An initiative related petition must be of the class polis-ini:Petition"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasContent ;
+        sh:class bibo:Document ;
+        sh:maxCount 1 ;
+        sh:message "An initiative must have at most one content document and the class of the document must be bibo:Document"@en
+    ] .
+    
+#################################################################
+# European Initiative
+#################################################################
+
+polis-ini:EuropeanInitiativeShape a sh:NodeShape ;
+    sh:targetClass polis-ini:EuropeanInitiative ;
+
+    sh:property [
+        sh:path schema:url ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An european initiative must have one and only one url and the type must be xsd:string"@en
+    ] .
+
+#################################################################
+# Regional Legislative Assembly
+#################################################################
+
+polis-ini:RegionalLegislativeAssemblyShape a sh:NodeShape ;
+    sh:targetClass polis-ini:RegionalLegislativeAssembly ;
+
+    sh:property [
+        sh:path sem:hasPlace ;
+        sh:class sem:Place ;
+        sh:maxCount 1 ;
+        sh:message "A regional legislative assembly must have at most one place of the class sem:Place"@en
+    ] .
+
+#################################################################
+# Change Proposal
+#################################################################
+
+polis-ini:ChangeProposalShape a sh:NodeShape ;
+    sh:targetClass polis-ini:ChangeProposal ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A change proposal must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:changeProposalType ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A change proposal must have at most one change proposal type and it must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:proponent ;
+        sh:datatype xsd:string ;
+        sh:message "A change proposal proponent must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:isPublishedInDAR ;
+        sh:class polis-ini:DARPublication ;
+        sh:message "A change proposal publication in the DAR must be of the class polis-ini:DARPublication"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:isProposedBy ;
+        sh:or (
+            [sh:class m4s:Parliamentarian]
+            [sh:class polis-core:ParliamentaryGroup]
+        ) ;
+        sh: "A change proposal can only be proposed by m4s:Parliamentarian or polis-core:ParliamentaryGroup"@en
+    ] .
+
+#################################################################
+# DAR Publication
+#################################################################
+
+polis-ini:DARPublicationShape a sh:NodeShape ;
+    sh:targetClass polis-ini:DARPublication ;
+    sh:targetClass polis-ini:DARSeries1 ;
+    sh:targetClass polis-ini:DARSeries2 ;
+    sh:targetClass polis-ini:DARSeparata ;
+    sh:targetClass polis-ini:DARSeries2A ;
+    sh:targetClass polis-ini:DARSeries2B ;
+    sh:targetClass polis-ini:DARSeries2C ;
+    sh:targetClass polis-ini:DARSeries2D ;
+    sh:targetClass polis-ini:DARSeries2E ;
+    sh:targetClass polis-ini:DARSeries1A ;
+    sh:targetClass polis-ini:DARSeries2CRC ;
+    sh:targetClass polis-ini:DARSeries2CGOPOE ;
+    sh:targetClass polis-ini:DARSeries2SCOE ;
+    sh:targetClass polis-ini:DARSeries2CCEI ;
+    sh:targetClass polis-ini:DARSeries2SOE ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must one and only one number and the number must be xsd:nonNegativeInteger"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:code ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have one and only one code and the code must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have one and only one date and it must be of the type xsd:date"@en
+    ] ;
+    
+    sh:property [
+        sh:path schema:pagination ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message  "A DAR publication must have one and only one pagination and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:pagesIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have one and only one pages' identifier and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path schema:url ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have one and only one url and it must be of the type xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:publicationSupplement ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have at most one supplement and it must be of the type xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:publicationSupplementFinalPage ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have at most one supplement final page and it must be of the type xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:observation ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A DAR publication must have at most one observation and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:legislatura ;
+        sh:message "A DAR publication must belong to one and only one legislature"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:message "A DAR publication must belong to one and only one legislaturive session"@en
+    ] .
+
+#################################################################
+# Document
+#################################################################
+
+polis-ini:DocumentShape a sh:NodeShape ;
+    sh:targetClass bibo:Document ;
+
+    sh:property [
+        sh:path polis-ini:documentType ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A document must have at most one document type and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A document must have at most one title and the title must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A document must have at most one date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path schema:url ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A document must have at most one url and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path bibo:content ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A document must have at most one content and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A document must have at most one identifier and the identifier must be xsd:string"@en
+    ] .
+
+#################################################################
+# Legislation
+#################################################################
+
+polis-ini:LegislationShape a sh:NodeShape ;
+    sh:targetClass bibo:Legislation ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A legislation must have at most one identifier and the identifier must be xsd:string"@en
+    ] .
+
+#################################################################
+# Petition
+#################################################################
+
+polis-ini:PetitionShape a sh:NodeShape ;
+    sh:targetClass polis-ini:Petition ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A petition must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:maxCount 1 ;
+        sh:message "A petition must at most one number and the number must be xsd:nonNegativeInteger"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An petition must have one and only one title and the title must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:message "An petition must belong a legislature of the type ocd:legislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:message "An initiative must belong to a legislaturive session of the type ocd:sessioneLegislatura"@en
+    ] .
+
+#################################################################
+# Event
+#################################################################
+
+polis-ini:EventShape a sh:NodeShape ;
+    sh:targetClass polis-ini:Event ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An event must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:typeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:message "An event must have one and only one typeId and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:eventType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An event must have one and exactly one event type and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An event must have one and only one date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:code ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An event must have one and only one code and the code must be xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:observation ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An event must have at most one observation and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:approvesDiploma;
+        sh:class bibo:Legislation ;
+        sh:message "An event approved diploma must be of the class bibo:Legislation"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasDiscussion ;
+        sh:class ocd:discussione ;
+        sh:maxCount 1 ;
+        sh:message "An event must have at most one discussion and it must be of the class ocd:discussione"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:happensJointlyWithInitiative ;
+        sh:class polis-ini:Initiative ;
+        sh:message "An event may happen jointly with initiatives and they must be of the type polis-ini:Initiative"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:discussedJointlyWith ;
+        sh:class polis-ini:Petition ;
+        sh:message "An event may be discussed jointly with petitions and they must be of the type polis-ini:Petition"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasAnnex ;
+        sh:class bibo:Document ;
+        sh:message "An event annex must be of the class bibo:Document"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasVote ;
+        sh:class ocd:votazione ;
+        sh:message "An event vote must be of the class ocd:votazione"@en
+    ] ;
+
+    sh:property [
+        sh:class polis-ini:receivedAppeal ;
+        sh:or (
+            [sh:class m4s:Parliamentarian]
+            [sh:class polis-core:ParliamentaryGroup]
+        ) ;
+        sh:message "An event may only receive appeals from m4s:Parliamentarian or polis-core:ParliamentaryGroup"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:isPublishedInDAR ;
+        sh:class polis-ini:DARPublication ;
+        sh:message "An event publication in the DAR must be of the class polis-ini:DARPublication"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasActivity ;
+        sh:class prov:Activity ;
+        sh:message "An event activity must be of the class prov:Activity"@en
+    ] .
+
+#################################################################
+# Vote
+#################################################################
+
+polis-ini:VoteShape a sh:NodeShape ;
+    sh:targetClass ocd:votazione ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A vote must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:result ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A vote must have at most one result and the reslt must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:unanimous ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A vote must have at most one unanimous boolean"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:description ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A vote must have at most one description and it must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:reunionNumber ;
+        sh:datatype xsd:int ;
+        sh:maxCount 1 ;
+        sh:message "A vote must have at most one reunion number and it must be xsd:int"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:reunionType ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A vote must have at most one reunion type and it must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasVoteAgainstFrom ;
+        sh:or (
+            [sh:class m4s:Parliamentarian]
+            [sh:class polis-core:ParliamentaryGroup]
+        ) ;
+        sh:message "A vote can only have votes against from m4s:Parliamentarian or polis-core:ParliamentaryGroup"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasVoteInFavourFrom ;
+        sh:or (
+            [sh:class m4s:Parliamentarian]
+            [sh:class polis-core:ParliamentaryGroup]
+        ) ;
+        sh:message "A vote can only have votes in favour from m4s:Parliamentarian or polis-core:ParliamentaryGroup"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasAbstentionFrom ;
+        sh:or (
+            [sh:class m4s:Parliamentarian]
+            [sh:class polis-core:ParliamentaryGroup]
+        ) ;
+        sh:message "A vote can only have abstentions from m4s:Parliamentarian or polis-core:ParliamentaryGroup"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasAbsentee ;
+        sh:class m4s:Parliamentarian ;
+        sh:message "A vote may only have absentees from the class m4s:Parliamentarian"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:isPublishedInDAR ;
+        sh:class polis-ini:DARPublication ;
+        sh:maxCount 1 ;
+        sh:message "A vote must have at most one publication in the DAR must be of the class polis-ini:DARPublication"@en
+    ] .
+
+#################################################################
+# Activity
+#################################################################
+
+polis-ini:ActivityShape a sh:NodeShape ;
+    sh:targetClass prov:Activity ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An activity must have one and only one identifier and the identifier must be xsd:string"@en
+    ] .
+
+#################################################################
+# Discussion
+#################################################################
+
+polis-ini:DiscussionShape a sh:NodeShape ;
+    sh:targetClass ocd:discussione ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A discussione must have one and only one date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:abstract ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A discussione must have at most one abstract and it must be of the type xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path ocd:rif_intervento ;
+        sh:class ocd:intervento ;
+        sh:message "A discussione's intervention must be of the class ocd:intervento"@en
+    ] .
+
+#################################################################
+# Intervention
+#################################################################
+
+polis-ini:InterventionShape a sh:NodeShape ;
+    sh:targetClass ocd:intervento ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "An intervento must have one and only one identifier and the identifier must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path schema:url ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "An intervento must have one and only one url and the type must be xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:isPublishedInDAR ;
+        sh:class polis-ini:DARPublication ;
+        sh:maxCount 1 ;
+        sh:message "An intervento must have at most one publication in the DAR must be of the class polis-ini:DARPublication"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasSpeaker ;
+        sh:class foaf:Person ;
+        sh:maxCount 1 ;
+        sh:message "An intervention must have at most one speaker and the speaker must be of the class foaf:Person"
+    ] .
+
+#################################################################
+# Commission Event
+#################################################################
+
+polis-ini:CommissionEventShape a sh:NodeShape ;
+    sh:targetClass polis-ini:CommissionEvent ;
+
+    sh:property [
+        sh:path polis-ini:observation ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one observation and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:competent ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one competent boolean"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:entryDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one entry date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:distributionDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one distribution date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:extended ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one extended boolean"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:scheduledDiscussionDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one scheduled discussion date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:requestSchedulePlenaryDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one request schedule plenary date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:awaitsPlenarySchedule ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one awaits plenary schedule boolean"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:publicAppreciationDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one public appreciation date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:opinionRequested ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one opinion requested boolean"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:opinionReceived ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one opinion received boolean"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:subCommissionDistributionDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one sub commission distribution date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:negativeOpinionReason ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one negative opinion reason and it must be of the type xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:negativeOpinionReasonDate ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one negative opinion reason date and it must be of the type xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:attributedToCommission ;
+        sh:class polis-core:Commission ;
+        sh:minCount 1 ;
+        sh:message "A commission event must have at least one attributed commission and it must be of the class polis-core:Commission"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasAudition ;
+        sh:class polis-mpact:Audition ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one audition and it must be of the class polis-mpact:Audition"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasHearing ;
+        sh:class polis-mpact:Hearing ;
+        sh:maxCount 1 ;
+        sh:message "A commission event must have at most one hearing and it must be of the class polis-mpact:Hearing"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:isPublishedInDAR ;
+        sh:class polis-ini:DARPublication ;
+        sh:message "A commission event publication in the DAR must be of the class polis-ini:DARPublication"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasVote ;
+        sh:class ocd:votazione ;
+        sh:message "A commission event vote must be of the class ocd:votazione"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:hasTransmission ;
+        sh:class polis-ini:Transmission ;
+        sh:message "A commission event transmission must be of the class polis-ini:Transmission"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasRapporteur ;
+        sh:class m4s:Parliamentarian ;
+        sh:message "A commission event rapporteur must be of the class m4s:Parliamentarian"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasPublishedReport ;
+        sh:class polis-ini:DARPublication ;
+        sh:message "A commission event published report must be of the class polis-ini:DARPublication"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-ini:createsDocument ;
+        sh:class bibo:Document ;
+        sh:message "A commission event created documents must be of the class bibo:Documents"@en
+    ] ;
+    
+    sh:property [
+        sh:path polis-ini:hasSubComission ;
+        sh:class polis-core:Commission ;
+        sh:message "A commission event's subcommissions must be of the class polis-core:Commission"@en
+    ] .
+
+#################################################################
+# Transmission
+#################################################################
+
+polis-ini:TransmissionShape a sh:NodeShape ;
+    sh:targetClass polis-ini:Transmission ;
+
+    sh:property [
+        sh:path polis-ini:transmissionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A transmission must have one and only one transmission type of the type xsd:string"@en
+    ] ;
+    
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A transmission must at most one date and it must be of the type xsd:date"@en
+    ] ;
+    
+    sh:property [
+        sh:path dct:created ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "A transmission must have at most one creation date and it must be of the type xsd:date"@en
+    ] .

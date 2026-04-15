@@ -1,0 +1,524 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ocd:  <http://dati.camera.it/ocd/> .
+@prefix m4s: <http://purl.org/map4scrutiny-core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix prov: <https://www.w3.org/ns/prov-o> .
+@prefix time: <https://www.w3.org/2006/time> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix pe: <http://parliament.uk/ontologies/election/> .
+@prefix polis-core: <http://purl.org/polis/ar/core#> .
+@prefix polis-bio: <http://purl.org/polis/ar/biographic#> .
+@prefix polis-ini: <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-mpact: <http://purl.org/polis/ar/mp-activity#> .
+
+# ------------------ MPACT ------------------
+
+#################################################################
+# Requisition
+#################################################################
+
+polis-mpact:RequisitionShape a sh:NodeShape ;
+    sh:targetClass ocd:richiestaParere ;
+    sh:targetClass polis-mpact:Request ;
+    sh:targetClass polis-mpact:Inquiry ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one identifier and the identifier must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one number and the number must be a xsd:nonNegativeInteger"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:subject ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one subject and the subject must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:toPublicEntityType ;
+        sh:in (
+            polis-mpact:AC 
+            polis-mpact:AL 
+            polis-mpact:AR 
+            polis-mpact:EI 
+            polis-mpact:RA  
+        ) ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have at most one toPublicEntityType and the public entity type must be a mpact:PublicEntityType"@en
+    ] .
+
+#################################################################
+# Parliamentary Activity
+#################################################################
+
+polis-mpact:ParliamentaryActivityShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:ParliamentaryActivity ;
+    sh:targetClass polis-mpact:AGP ;
+    sh:targetClass polis-mpact:CER ;
+    sh:targetClass polis-mpact:DEB ;
+    sh:targetClass polis-mpact:DES ;
+    sh:targetClass polis-mpact:DPO ;
+    sh:targetClass polis-mpact:DPR ;
+    sh:targetClass polis-mpact:EGP ;
+    sh:targetClass polis-mpact:EVN ;
+    sh:targetClass polis-mpact:GOD ; 
+    sh:targetClass polis-mpact:IMU ;
+    sh:targetClass polis-mpact:INI ;
+    sh:targetClass polis-mpact:ITG ;
+    sh:targetClass polis-mpact:MOC ;
+    sh:targetClass polis-mpact:OEX ;
+    sh:targetClass polis-mpact:PEC ;
+    sh:targetClass polis-mpact:PEG ;
+    sh:targetClass polis-mpact:PET ;
+    sh:targetClass polis-mpact:PII ;
+    sh:targetClass polis-mpact:POR ;
+    sh:targetClass polis-mpact:PRC ;
+    sh:targetClass polis-mpact:PRG ;
+    sh:targetClass polis-mpact:PUE ;
+    sh:targetClass polis-mpact:REP ;
+    sh:targetClass polis-mpact:RSI ;
+    sh:targetClass polis-mpact:SES ;
+    sh:targetClass polis-mpact:VOT ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have exactly one identifier and the identifier must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dbo:number ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have exactly one number and the number must be a xsd:nonNegativeInteger"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:debateDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have at most one debate date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:subject ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Parliamentary Activity must have exactly one subject and the subject must be a xsd:string"@en
+    ] .
+
+#################################################################
+# Friendship Parliamentary Group
+#################################################################
+
+polis-mpact:FriendshipParliamentaryGroupShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:FriendshipParliamentaryGroup ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Friendship Parliamentary Group must have exactly one identifier and the identifier must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Friendship Parliamentary Group must have exactly one name and the name must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Friendship Parliamentary Group must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] .
+
+#################################################################
+# Public Accounts
+#################################################################
+
+polis-mpact:PublicAccountsShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:PublicAccounts ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Public Accounts must have exactly one identifier and the identifier must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:civilYear ;
+        sh:datatype xsd:gYear ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "A Public Accounts must have exactly one civil year and the civil year must be a xsd:gYear"@en
+    ] ; 
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "A Public Accounts must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:subject ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Public Accounts must have exactly one subject and the subject must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "A Public Accounts must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] .
+
+#################################################################
+# Delegation
+#################################################################
+
+polis-mpact:Delegation a sh:NodeShape ;
+    sh:targetClass polis-mpact:Delegation ;
+    sh:targetClass polis-mpact:PermanentDelegation ;
+    sh:targetClass polis-mpact:TemporaryDelegation ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Delegation must have exactly one identifier and the identifier must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Delegation must have exactly one name and the name must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Delegation must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Delegation must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
+    ] .
+
+polis-mpact:PermanentDelegationShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:PermanentDelegation ;
+
+    sh:property [
+        sh:path polis-mpact:hasPermanentDelegationMeeting ;
+        sh:class polis-mpact:PermanentDelegationMeeting ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Permanent Delegation must have exactly one permanent delegation meeting and the meeting must be a polis-mpact:PermanentDelegationMeeting"@en
+    ] .
+
+polis-mpact:TemporaryDelegationShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:TemporaryDelegation ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Temporary Delegation must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path sem:hasPlace ;
+        sh:class sem:Place ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Temporary Delegation must have exactly one place and the place must be a sem:Place"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:hasDelegationScope ;
+        sh:in (
+            polis-mpact:NationalDelegation
+            polis-mpact:InternationalDelegation 
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Temporary Delegation must have exactly one delegation scope and the delegation scope must be a polis-mpact:DelegationScope"@en
+    ] .
+
+polis-mpact:PermanentDelegationMeetingShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:PermanentDelegationMeeting ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Permanent Delegation Meeting must have exactly one name and the name must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Permanent Delegation Meeting must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path sem:hasPlace ;
+        sh:class sem:Place ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Permanent Delegation Meeting must have exactly one place and the place must be a sem:Place"@en
+    ] .
+
+#################################################################
+# Youth Parliament Activity
+#################################################################
+
+polis-mpact:YouthParliamentActivityShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:YouthParliamentActivity ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Youth Parliament Activity must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:meetingType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Youth Parliament Activity must have exactly one meetingType and the type must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:heldAt ;
+        sh:class dbo:School ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Youth Parliament Activity must have exactly one location and the location must be a dbo:School"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:inConstituency ;
+        sh:class pe:ConstituencyArea ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Youth Parliament Activity must have exactly one constituency and the constituency must be a pe:ConstituencyArea"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Youth Parliament Activity must have exactly one legislature and the legislature must be a ocd:legislatura"@en
+    ] .
+
+polis-mpact:SchoolShape a sh:NodeShape ;
+    sh:targetClass dbo:School ;
+
+    sh:property [
+        sh:path polis-mpact:isSchoolType ;
+        sh:or (
+            [ sh:class polis-mpact:Basic]
+            [ sh:class polis-mpact:Secondary ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A School must have exactly one school type and the type must be a subclass of polis-mpact:SchoolType"@en
+    ] .
+
+#################################################################
+# Commission Activity
+#################################################################
+
+polis-mpact:CommissionActivityShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:CommissionActivity ;
+    sh:targetClass polis-mpact:Audition ;
+    sh:targetClass polis-mpact:Event ;
+    sh:targetClass polis-mpact:Debate ;
+    sh:targetClass polis-mpact:Cerimony ;
+    sh:targetClass polis-mpact:Conference ;
+    sh:targetClass polis-mpact:Others ;
+    sh:targetClass polis-mpact:Visit ;
+    sh:targetClass polis-mpact:Hearing ;
+
+    sh:property [
+        sh:path polis-core:identifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission Activity must have exactly one identifier and the identifier must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:subject ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission Activity must have exactly one subject and the subject must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path dct:date ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission Activity must have exactly one date and the date must be a xsd:date"@en
+    ] ;
+
+    sh:property [
+        sh:path schema:location ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission Activity must have exactly one location and the location must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission Activity must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] ;
+
+    sh:property [
+        sh:path polis-mpact:relatedCommission ;
+        sh:class polis-core:Commission ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission Activity must have exactly one related commission and the related commission must be a polis-core:Commission"@en
+    ] .
+
+polis-mpact:AuditionHearingShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:Audition ;
+    sh:targetClass polis-mpact:Hearing ;
+
+    sh:property [
+        sh:path polis-mpact:commissionIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission must have exactly one name and the name must be a xsd:string"@en
+    ] ;
+
+    sh:property [
+        sh:path prov:wasAssociatedWith ;
+        sh:class polis-mpact:ThirdPartyEntity ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Commission must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] .
+
+polis-mpact:ThirdPartyEntityShape a sh:NodeShape ;
+    sh:targetClass polis-mpact:ThirdPartyEntity ;
+
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Third Party Entity must have exactly one name and the name must be a xsd:string"@en
+    ] .
