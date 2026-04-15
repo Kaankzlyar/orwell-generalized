@@ -396,7 +396,23 @@
     ]
   ] ;
 
-  # TODO: Situation
+  # Situation
+  rr:predicateObjectMap [
+    rr:predicate ocd:tipoProclamazione ;
+    rr:objectMap [
+      rr:termType rr:BlankNode ;
+      rr:template "situation-{DepId}"
+    ]
+  ] ;
+
+  # Duty
+  rr:predicateObjectMap [
+    rr:predicate polis-core:holdsDuty ;
+    rr:objectMap [
+      rr:termType rr:BlankNode ;
+      rr:template "duty-{DepId}"
+    ]
+  ] ;
 
   # Membership
   rr:predicateObjectMap [
@@ -415,6 +431,108 @@
       rr:termType rr:IRI
     ]
   ]
+  .
+
+<#SituationMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepSituacao/pt_ar_wsgode_objectos_DadosSituacaoDeputado"
+  ] ;
+
+  rr:subjectMap [
+    rr:termType rr:BlankNode ;
+    rr:template "situation-{../../DepId}" ;
+    rr:class ocd:proclamazione # TODO: Insert correct subclass
+  ] ;
+
+  # Label
+  rr:predicateObjectMap [
+    rr:predicate rdfs:label ;
+    rr:objectMap [
+      rml:reference "sioDes" ;
+      rr:datatype xsd:string
+    ]
+  ] ;
+
+  # Date Period
+  rr:predicateObjectMap [
+    rr:predicate dct:date ;
+    rr:objectMap [
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:toIso8601Period ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:startDate ;
+          rr:objectMap [
+            rml:reference "sioDtInicio" ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:endDate ;
+          rr:objectMap [
+            rml:reference "sioDtFim" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
+      rr:datatype xsd:string
+    ]
+  ] ;
+  .
+
+<#DutyMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepCargo/pt_ar_wsgode_objectos_DadosCargoDeputado"
+  ] ;
+
+  rr:subjectMap [
+    rr:termType rr:BlankNode ;
+    rr:template "duty-{../../DepId}" ;
+    rr:class org:Post # TODO: Insert subcorrect class
+  ] ;
+
+  # Label
+  rr:predicateObjectMap [
+    rr:predicate rdfs:label ;
+    rr:objectMap [
+      rml:reference "carDes" ;
+      rr:datatype xsd:string
+    ]
+  ] ;
+
+  # Date Period
+  rr:predicateObjectMap [
+    rr:predicate dct:date ;
+    rr:objectMap [
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:toIso8601Period ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:startDate ;
+          rr:objectMap [
+            rml:reference "carDtInicio" ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:endDate ;
+          rr:objectMap [
+            rml:reference "carDtFim" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
+      rr:datatype xsd:string
+    ]
+  ] ;
   .
 
 <#PGMembershipMap>
