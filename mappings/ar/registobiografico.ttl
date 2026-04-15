@@ -46,4 +46,13 @@
             rr:datatype xsd:date
         ]
     ] ;
+
+    # Gender
+    rr:predicateObjectMap [
+        rr:predicate schema:gender ;
+        rr:objectMap [ 
+            rml:reference "CadSexo" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
     .
