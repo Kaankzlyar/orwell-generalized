@@ -391,8 +391,8 @@
   rr:predicateObjectMap [
     rr:predicate ocd:rif_mandatoCamera ;
     rr:objectMap [
-      rr:termType rr:BlankNode ;
-      rr:template "mandate-{DepId}" ;
+      rr:template "http://purl.org/polis/ar/graph#Mandate_{DepId}" ;
+      rr:termType rr:IRI
     ]
   ] ;
 
@@ -414,8 +414,7 @@
   ] ;
 
   rr:subjectMap [
-    rr:termType rr:BlankNode ;
-    rr:template "mandate-{DepId}" ;
+    rr:template "http://purl.org/polis/ar/graph#Mandate_{DepId}" ;
     rr:class ocd:mandatoCamera
   ] ;
 
@@ -445,15 +444,6 @@
     ]
   ] ;
 
-  # Membership
-  rr:predicateObjectMap [
-    rr:predicate polis-core:hasMembership ;
-    rr:objectMap [
-      rr:termType rr:BlankNode ;
-      rr:template "pg-membership-{DepId}-{DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP/gpDtInicio}"
-    ]
-  ] ;
-
   # Legislature
   rr:predicateObjectMap [
     rr:predicate polis-core:belongsToLegislature ;
@@ -464,6 +454,28 @@
   ]
   .
 
+<#MandateMembershipRelationMap>
+
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP"
+  ] ;
+
+  rr:subjectMap [
+    rr:class ocd:mandatoCamera ;
+    rr:template "http://purl.org/polis/ar/graph#Mandate_{../../DepId}"
+  ] ;
+
+  rr:predicateObjectMap [
+    rr:predicate polis-core:hasMembership ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/graph#Membership_{../../DepId}_{gpSigla}_{gpDtInicio}" ;
+      rr:termType rr:IRI
+    ]
+  ] ;
+  .
+
 <#MandateSituationRelationMap>
   rml:logicalSource [
     rml:source "data/" ;
@@ -472,8 +484,8 @@
   ] ;
 
   rr:subjectMap [
-    rr:termType rr:BlankNode ;
-    rr:template "mandate-{../../DepId}"
+    rr:class ocd:mandatoCamera ;
+    rr:template "http://purl.org/polis/ar/graph#Mandate_{../../DepId}"
   ] ;
 
   rr:predicateObjectMap [
@@ -589,8 +601,8 @@
   ] ;
 
   rr:subjectMap [
-    rr:termType rr:BlankNode ;
-    rr:template "mandate-{../../DepId}"
+    rr:class ocd:mandatoCamera ;
+    rr:template "http://purl.org/polis/ar/graph#Mandate_{../../DepId}"
   ] ;
 
   rr:predicateObjectMap [
@@ -688,8 +700,7 @@
   ] ;
 
   rr:subjectMap [
-    rr:termType rr:BlankNode ;
-    rr:template "pg-membership-{../../DepId}-{gpDtInicio}" ;
+    rr:template "http://purl.org/polis/ar/graph#Membership_{../../DepId}_{gpSigla}_{gpDtInicio}" ;
     rr:class polis-core:Membership
   ] ;
 
