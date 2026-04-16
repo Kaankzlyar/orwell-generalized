@@ -246,3 +246,147 @@
         ]
      ] ;
     .
+
+<#ParliamentarianAwardRelationMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadCondecoracoes/DadosCondecoracoes"
+    ] ;
+
+    rr:subjectMap [
+        rr:class m4s:Parliamentarian ; 
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate dbo:award ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Award_{CodId}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+    .
+
+<#AwardMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadCondecoracoes/DadosCondecoracoes"
+    ] ;
+
+    # URI
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Award_{CodId}" ;
+        rr:class dbo:Award
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "CodId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "CodDes" ]
+                ]
+            ]
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [ 
+            rml:reference "CodOrdem" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+     ] ;
+    .
+
+<#ParliamentarianPublishedWorkMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadObrasPublicadas/DadosObrasPublicadas"
+    ] ;
+
+    rr:subjectMap [
+        rr:class m4s:Parliamentarian ; 
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-bio:authorOf ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#PublishedWork_{PubId}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+    .
+
+<#PublishedWorkMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadObrasPublicadas/DadosObrasPublicadas"
+    ] ;
+
+    # URI
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#PublishedWork_{PubId}" ;
+        rr:class polis-bio:PublishedWork
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "PubId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "PubDes" ]
+                ]
+            ]
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [ 
+            rml:reference "PubOrdem" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+     ] ;
+    .
