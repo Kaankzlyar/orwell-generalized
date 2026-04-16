@@ -50,18 +50,34 @@
     # Gender
     rr:predicateObjectMap [
         rr:predicate schema:gender ;
-        rr:objectMap [ 
-            rml:reference "CadSexo" ;
-            rr:datatype xsd:string
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "CadSexo" ]
+                ]
+            ]
         ]
     ] ;
 
     # Profession
     rr:predicateObjectMap [
         rr:predicate schema:jobTitle ;
-        rr:objectMap [ 
-            rml:reference "CadProfissao" ;
-            rr:datatype xsd:string
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "CadProfissao" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -114,9 +130,17 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
-            rml:reference "FunDes" ;
-            rr:datatype xsd:string
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "FunDes" ]
+                ]
+            ]
         ]
     ] ;
 
@@ -199,9 +223,17 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
-            rml:reference "TitDes" ;
-            rr:datatype xsd:string
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "TitDes" ]
+                ]
+            ]
         ]
     ] ;
 

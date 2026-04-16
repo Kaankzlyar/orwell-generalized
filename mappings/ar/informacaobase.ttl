@@ -43,8 +43,16 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:identifier ;
     rr:objectMap [
-      rml:reference "id" ;
-      rr:datatype xsd:string
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:inputTrim ;
+          rr:objectMap [ rml:reference "id" ]
+        ]
+      ]
     ]
   ] ;
 
@@ -186,8 +194,16 @@
   rr:predicateObjectMap [
     rr:predicate foaf:name ;
     rr:objectMap [
-      rml:reference "cpDes" ;
-      rr:datatype xsd:string
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:inputTrim ;
+          rr:objectMap [ rml:reference "cpDes" ]
+        ]
+      ]
     ]
   ] ;
 
@@ -248,8 +264,16 @@
   rr:predicateObjectMap [
     rr:predicate foaf:name ;
     rr:objectMap [
-      rml:reference "nome" ;
-      rr:datatype xsd:string
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:inputTrim ;
+          rr:objectMap [ rml:reference "nome" ]
+        ]
+      ]
     ]
   ] ;
 
@@ -257,8 +281,16 @@
     rr:predicateObjectMap [
       rr:predicate qudt:acronym ;
       rr:objectMap [
-        rml:reference "sigla" ;
-        rr:datatype xsd:string
+        fnml:functionValue [
+          rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ rr:constant pofn:trim ]
+          ] ;
+          rr:predicateObjectMap [
+            rr:predicate pofn:inputTrim ;
+            rr:objectMap [ rml:reference "sigla" ]
+          ]
+        ]
       ]
     ] 
   .
@@ -342,8 +374,16 @@
   rr:predicateObjectMap [
     rr:predicate foaf:name ;
     rr:objectMap [
-      rml:reference "DepNomeCompleto" ;
-      rr:datatype xsd:string
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:inputTrim ;
+          rr:objectMap [ rml:reference "DepNomeCompleto" ]
+        ]
+      ]
     ]
   ] ;
 
@@ -383,8 +423,16 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:parliamentaryName ;
     rr:objectMap [
-      rml:reference "DepNomeParlamentar" ;
-      rr:datatype xsd:string
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:inputTrim ;
+          rr:objectMap [ rml:reference "DepNomeParlamentar" ]
+        ]
+      ]
     ]
   ] ;
 
@@ -463,8 +511,16 @@
         rr:predicateObjectMap [
           rr:predicate pofn:entityName ;
           rr:objectMap [
-            rml:reference "sioDes" ;
-            rr:datatype xsd:string
+            fnml:functionValue [
+              rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:trim ]
+              ] ;
+              rr:predicateObjectMap [
+                rr:predicate pofn:inputTrim ;
+                rr:objectMap [ rml:reference "sioDes" ]
+              ]
+            ]
           ]
         ] ;
         rr:predicateObjectMap [
@@ -483,8 +539,16 @@
   rr:predicateObjectMap [
     rr:predicate rdfs:label ;
     rr:objectMap [
-      rml:reference "sioDes" ;
-      rr:datatype xsd:string
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:inputTrim ;
+          rr:objectMap [ rml:reference "sioDes" ]
+        ]
+      ]
     ]
   ] ;
 
@@ -563,8 +627,16 @@
             rr:predicateObjectMap [
               rr:predicate pofn:entityName ;
               rr:objectMap [
-                rml:reference "carDes" ;
-                rr:datatype xsd:string
+                fnml:functionValue [
+                  rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                  ] ;
+                  rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "carDes" ]
+                  ]
+                ]
               ]
             ] ;
             rr:predicateObjectMap [

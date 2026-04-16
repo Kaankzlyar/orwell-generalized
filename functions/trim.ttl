@@ -1,0 +1,34 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:trim a fno:Function ;
+    fno:name "trim" ;
+    fno:expects ( :inputTrimParam ) ;
+    fno:returns ( :outputTrimParam ) .
+
+:inputTrimParam a fno:Parameter ;
+    fno:predicate :inputTrim ;
+    fno:name "inputTrim" ;
+    fno:description "Input string to trim." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:outputTrimParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "Trimmed string with leading and trailing whitespace removed." ;
+    fno:type xsd:string .
+
+:trimImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.Trim" .
+
+:trimMapping a fno:Mapping ;
+    fno:function :trim ;
+    fno:implementation :trimImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "trim" ]
+.
