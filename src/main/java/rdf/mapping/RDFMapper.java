@@ -75,7 +75,7 @@ public class RDFMapper {
             throw new IOException("RMLMapper execution failed: " + e.getMessage(), e);
         }
 
-        System.out.println("RMLMapper finished successfully. Output graph: " + Config.OUTPUT_PATH);
+        System.out.println("RMLMapper finished successfully.\nOutput graph: " + Config.OUTPUT_PATH);
     }
 
     private Agent createFunctionAgent() throws Exception {

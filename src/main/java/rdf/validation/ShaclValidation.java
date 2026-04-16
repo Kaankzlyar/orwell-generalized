@@ -43,6 +43,7 @@ public class ShaclValidation {
         }
 
         ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph());
+        System.out.println("SHACL validation completed.");
         ShLib.printReport(report);
 
         if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
