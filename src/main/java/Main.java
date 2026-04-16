@@ -14,6 +14,7 @@ import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import rdf.validation.ShaclValidation;
 import reconciliation.WikidataReconciliationService;
+import utils.Benchmark;
 
 public class Main {
 
@@ -25,11 +26,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        // CLI
         processArgs(args);
 
-        // Extract the data from the sources and store it in the data/ directory
+        Benchmark benchmark = new Benchmark();
+
         if (EXTRACTION_ENABLED) {
+            benchmark.startTiming("Extraction");
             List<DataExtractor> extractors = List.of(
                     new ARExtractor()
             );
@@ -37,36 +39,45 @@ public class Main {
             for (DataExtractor extractor : extractors) {
                 extractor.extract();
             }
+            benchmark.endTiming();
         }
 
+        benchmark.startTiming("Hooks");
         Registry registry = new Registry();
         registry.register(
                 new ParliamentarianReconciliation()
         );
         registry.run();
-
+        benchmark.endTiming();
         try {
-            // RDF Mapping
             if(MAPPING_ENABLED){
+                benchmark.startTiming("MappingPairPlanner");
                 MappingPairPlanner planner = new MappingPairPlanner();
                 List<Path> mappingFiles = planner.createMappingPairs();
-    
+                benchmark.endTiming();
+
+                benchmark.startTiming("RDFMapper");
                 RDFMapper mapper = new RDFMapper(mappingFiles);
                 mapper.map();
+                benchmark.endTiming();
             }
 
-            // SHACL Validation
             if (SHACL_ENABLED){
+                benchmark.startTiming("SHACL Validation");
                 ShaclValidation validator = new ShaclValidation();
                 validator.validate();
+                benchmark.endTiming();
             }
         } finally {
             
             if (RECONCILIATION_ENABLED) {
+                benchmark.startTiming("Reconciliation Cache Persist");
                 WikidataReconciliationService.persistCache();
+                benchmark.endTiming();
             }
 
             if(DELETE_TMP){
+                benchmark.startTiming("Cleanup");
                 if (Files.exists(TMP_DIR)) {
                     try (var paths = Files.walk(TMP_DIR)) {
                         paths.sorted(Comparator.reverseOrder())
@@ -79,8 +90,11 @@ public class Main {
                             });
                     }
                 }
+                benchmark.endTiming();
             }
         }
+
+        benchmark.printTimingSummary();
     }
 
     private static void processArgs(String[] args){
