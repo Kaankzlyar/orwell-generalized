@@ -118,7 +118,7 @@ polis-bio:HabilitationShape a sh:NodeShape ;
             [ sh:class polis-bio:Master ]
             [ sh:class polis-bio:Postgrad ]
         ) ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:message "A Habilitation must have exactly one level and the level must be a subclass of polis-bio:HabilitationLevel"@en
     ] ;
@@ -129,9 +129,9 @@ polis-bio:HabilitationShape a sh:NodeShape ;
             [ sh:class polis-bio:C ]
             [ sh:class polis-bio:F ]
         ) ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Habilitation must have exactly one status and the status must be a polis-bio:HabilitationStatus"@en
+        sh:message "A Habilitation must at most one status and the status must be a polis-bio:HabilitationStatus"@en
     ] .
 
 polis-bio:HabilitationLevelShape a sh:NodeShape ;

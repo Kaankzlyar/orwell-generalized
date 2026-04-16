@@ -390,3 +390,92 @@
         ]
      ] ;
     .
+
+<#ParliamentarianHabilitationRelationMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadHabilitacoes/DadosHabilitacoes"
+    ] ;
+
+    rr:subjectMap [
+        rr:class m4s:Parliamentarian ; 
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-bio:hasHabilitation ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Habilitation_{HabId}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+    .
+
+<#HabilitationMap>
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadHabilitacoes/DadosHabilitacoes"
+    ] ;
+
+    # URI
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Habilitation_{HabId}" ;
+        rr:class polis-bio:Habilitation
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "HabId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "HabDes" ]
+                ]
+            ]
+        ]
+    ] ;
+
+    # Type/Should change this to individual
+    # rr:predicateObjectMap [
+    #     rr:predicate rdf:type ;
+    #     rr:termType rr:IRI ;
+    #     fnml:functionValue [
+    #         rr:predicateObjectMap [
+    #             rr:predicate fno:executes ;
+    #             rr:objectMap [ rr:constant pofn:toHabilitationlitationLevel]
+    #         ] ;
+    #         rr:predicateObjectMap [
+    #             rr:predicate pofn:inputHabilitationlitationLevel ;
+    #             rr:objectMap [ rml:reference "HabTipoId"]
+    #         ]
+    #     ]
+    #  ] ;
+
+    # Status
+    rr:predicateObjectMap [
+        rr:predicate polis-bio:habilitationStatus ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            #rr:datatype xsd:string ;
+            rr:template "http://purl.org/polis/ar/biographic#{HabEstado}"
+        ]
+    ] ;
+    .

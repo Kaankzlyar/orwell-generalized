@@ -71,13 +71,10 @@ public class Main {
         } finally {
             
             if (RECONCILIATION_ENABLED) {
-                benchmark.startTiming("Reconciliation Cache Persist");
                 WikidataReconciliationService.persistCache();
-                benchmark.endTiming();
             }
 
             if(DELETE_TMP){
-                benchmark.startTiming("Cleanup");
                 if (Files.exists(TMP_DIR)) {
                     try (var paths = Files.walk(TMP_DIR)) {
                         paths.sorted(Comparator.reverseOrder())
@@ -90,7 +87,6 @@ public class Main {
                             });
                     }
                 }
-                benchmark.endTiming();
             }
         }
 

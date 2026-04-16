@@ -32,7 +32,7 @@ public class ShaclValidation {
 
         try (var paths = Files.list(Config.SHACL_DIR)) {
             paths
-                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(Config.OUTPUT_FORMAT.getName()))
+                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(Config.OUTPUT_FORMAT.getDefaultFileExtension()))
                 .sorted()
                 .forEach(path -> {
                     System.out.println("Reading SHACL shapes from: " + path);

@@ -209,12 +209,12 @@
 #    Individuals
 #################################################################
 
-:Complete rdf:type :HabilitationStatus, owl:NamedIndividual ;
+:C rdf:type :HabilitationStatus, owl:NamedIndividual ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/biographic#> ;
     rdfs:label "Complete"@en, "Completo"@pt ;
     dct:description "Indicates that an MP has completed a given habilitation"@en, "Indica que um MP completou uma dada habilitação"@pt .
 
-:Incomplete rdf:type :HabilitationStatus, owl:NamedIndividual ;
+:F rdf:type :HabilitationStatus, owl:NamedIndividual ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/biographic#> ;
     rdfs:label "Incomplete"@en, "Incompleto"@pt ;
     dct:description "Indicates that an MP has not completed a given habilitation"@en, "Indica que um MP não completou uma dada habilitação"@pt .

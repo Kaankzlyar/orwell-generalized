@@ -1,0 +1,34 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:toHabilitationlitationLevel a fno:Function ;
+    fno:name "toHabilitationlitationLevel" ;
+    fno:expects ( :inputHabilitationlitationLevelParam ) ;
+    fno:returns ( :outputHabilitationlitationLevelParam ) .
+
+:inputHabilitationlitationLevelParam a fno:Parameter ;
+    fno:predicate :inputHabilitationlitationLevel ;
+    fno:name "inputHabilitationlitationLevel" ;
+    fno:description "Input string to convert to habilitation type." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:outputHabilitationlitationLevelParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "outputHabilitationlitationLevel" ;
+    fno:description "Converted habilitation type." ;
+    fno:type xsd:string .
+
+:toHabilitationlitationLevelImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.ToHabilitationlitationLevel" .
+
+:toHabilitationlitationLevelMapping a fno:Mapping ;
+    fno:function :toHabilitationlitationLevel ;
+    fno:implementation :toHabilitationlitationLevelImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toHabilitationlitationLevel" ]
+.
