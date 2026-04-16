@@ -470,11 +470,63 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:hasMembership ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#Membership_{../../DepId}_{gpSigla}_{gpDtInicio}" ;
-      rr:termType rr:IRI
+      rr:parentTriplesMap <#PGMembershipMap> ;
     ]
   ] ;
   .
+
+
+<#PGMembershipMap>
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP"
+  ] ;
+
+  rr:subjectMap [
+    rr:termType rr:BlankNode ;
+    rr:template "membership-{../../DepId}_{gpSigla}_{gpDtInicio}" ;
+    rr:class polis-core:Membership
+  ] ;
+
+  # Is Member Of
+  rr:predicateObjectMap [
+    rr:predicate polis-core:isMemberOf ;
+    rr:objectMap [
+      rr:template "http://purl.org/polis/ar/graph#{gpSigla}" ;
+      rr:termType rr:IRI
+    ]
+  ] ;
+
+  # Date Period
+  rr:predicateObjectMap [
+    rr:predicate dct:date ;
+    rr:objectMap [
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:toIso8601Period ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:startDate ;
+          rr:objectMap [
+            rml:reference "gpDtInicio" ;
+            rr:datatype xsd:string
+          ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:endDate ;
+          rr:objectMap [
+            rml:reference "gpDtFim" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
+      rr:datatype xsd:string
+    ]
+  ]
+  .
+
 
 <#MandateSituationRelationMap>
   rml:logicalSource [
@@ -608,8 +660,7 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:holdsDuty ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#Duty_{../../DepId}_of_{carDtInicio}" ;
-      rr:termType rr:IRI
+      rr:parentTriplesMap <#DutyMap> ;
     ]
   ] ;
   .
@@ -622,8 +673,8 @@
   ] ;
 
   rr:subjectMap [
-    rr:termType rr:IRI ;
-    rr:template "http://purl.org/polis/ar/graph#Duty_{../../DepId}_of_{carDtInicio}" ;
+    rr:termType rr:BlankNode ;
+    rr:template "duty-{../../DepId}_of_{carDtInicio}" ;
     rr:class org:Post
   ] ;
 
@@ -692,52 +743,3 @@
   ] ;
   .
 
-<#PGMembershipMap>
-  rml:logicalSource [
-    rml:source "data/" ;
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP"
-  ] ;
-
-  rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/graph#Membership_{../../DepId}_{gpSigla}_{gpDtInicio}" ;
-    rr:class polis-core:Membership
-  ] ;
-
-  # Is Member Of
-  rr:predicateObjectMap [
-    rr:predicate polis-core:isMemberOf ;
-    rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#{gpSigla}" ;
-      rr:termType rr:IRI
-    ]
-  ] ;
-
-  # Date Period
-  rr:predicateObjectMap [
-    rr:predicate dct:date ;
-    rr:objectMap [
-      fnml:functionValue [
-        rr:predicateObjectMap [
-          rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant pofn:toIso8601Period ]
-        ] ;
-        rr:predicateObjectMap [
-          rr:predicate pofn:startDate ;
-          rr:objectMap [
-            rml:reference "gpDtInicio" ;
-            rr:datatype xsd:string
-          ]
-        ] ;
-        rr:predicateObjectMap [
-          rr:predicate pofn:endDate ;
-          rr:objectMap [
-            rml:reference "gpDtFim" ;
-            rr:datatype xsd:string
-          ]
-        ]
-      ] ;
-      rr:datatype xsd:string
-    ]
-  ]
-  .

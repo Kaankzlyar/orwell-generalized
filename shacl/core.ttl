@@ -276,7 +276,7 @@ polis-core:MandateShape a sh:NodeShape ;
             [ sh:class polis-core:Alternate ]
             [ sh:class polis-core:Suspended ]
         ) ;
-        sh:message "A mandate must be in at least one situation"@en
+        sh:message "A mandate must have at least one situation"@en
     ] ;
 
     sh:property [

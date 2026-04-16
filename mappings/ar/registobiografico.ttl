@@ -98,8 +98,7 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasRole ;
         rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/graph#Role_{FunId}" ;
-            rr:termType rr:IRI
+            rr:parentTriplesMap <#RoleMap> ;
         ]
     ] ;
     .
@@ -114,7 +113,8 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Role_{FunId}" ;
+        rr:template "role-{FunId}" ;
+        rr:termType rr:BlankNode ;
         rr:class polis-bio:Role
     ] ;
 
@@ -190,14 +190,13 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasTitle ;
-        rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/graph#Title_{TitId}" ;
-            rr:termType rr:IRI
+        rr:objectMap [
+            rr:parentTriplesMap <#TitleMap> ;
         ]
     ] ;
     .
 
-<#TitleMap>
+<#TitleMap> a rr:TriplesMap ;
 
     rml:logicalSource [
         rml:source "data/" ;
@@ -207,7 +206,8 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Title_{TitId}" ;
+        rr:termType rr:BlankNode ;
+        rr:template "title-{TitId}" ;
         rr:class polis-bio:Title
     ] ;
 
@@ -263,8 +263,7 @@
     rr:predicateObjectMap [
         rr:predicate dbo:award ;
         rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/graph#Award_{CodId}" ;
-            rr:termType rr:IRI
+            rr:parentTriplesMap <#AwardMap> ;
         ]
     ] ;
     .
@@ -279,7 +278,8 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Award_{CodId}" ;
+        rr:termType rr:BlankNode ;
+        rr:template "award-{CodId}" ;
         rr:class dbo:Award
     ] ;
 
@@ -335,8 +335,7 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:authorOf ;
         rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/graph#PublishedWork_{PubId}" ;
-            rr:termType rr:IRI
+            rr:parentTriplesMap <#PublishedWorkMap> ;
         ]
     ] ;
     .
@@ -351,7 +350,8 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#PublishedWork_{PubId}" ;
+        rr:termType rr:BlankNode ;
+        rr:template "publishedwork-{PubId}" ;
         rr:class polis-bio:PublishedWork
     ] ;
 
@@ -407,8 +407,7 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasHabilitation ;
         rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/graph#Habilitation_{HabId}" ;
-            rr:termType rr:IRI
+            rr:parentTriplesMap <#HabilitationMap> ;
         ]
     ] ;
     .
@@ -423,7 +422,8 @@
 
     # URI
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Habilitation_{HabId}" ;
+        #rr:termType rr:BlankNode ;
+        rr:template "http://purl.org/polis/ar/graph#habilitation-{HabId}" ;
         rr:class polis-bio:Habilitation
     ] ;
 
@@ -453,21 +453,24 @@
         ]
     ] ;
 
-    # Type/Should change this to individual
-    # rr:predicateObjectMap [
-    #     rr:predicate rdf:type ;
-    #     rr:termType rr:IRI ;
-    #     fnml:functionValue [
-    #         rr:predicateObjectMap [
-    #             rr:predicate fno:executes ;
-    #             rr:objectMap [ rr:constant pofn:toHabilitationlitationLevel]
-    #         ] ;
-    #         rr:predicateObjectMap [
-    #             rr:predicate pofn:inputHabilitationlitationLevel ;
-    #             rr:objectMap [ rml:reference "HabTipoId"]
-    #         ]
-    #     ]
-    #  ] ;
+    # Level
+    rr:predicateObjectMap [
+        rr:predicate polis-bio:isHabilitationLevel ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toHabilitationLevel]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputHabilitationLevel ;
+                    rr:objectMap [ rml:reference "HabTipoId"]
+                ]
+            ]
+        ] ;
+    ] ;
+
 
     # Status
     rr:predicateObjectMap [

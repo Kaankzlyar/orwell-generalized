@@ -28,10 +28,10 @@
 	vann:preferredNamespaceUri      "http://purl.org/polis/ar/initiatives#" ;
 	owl:versionInfo					"1.0";
     dct:description                    """The objective of the POLIS ontology is to (...)""" ;
-    dcterms:bibliographicCitation ""@en ;
-    dcterms:created ""^^xsd:date ;
-    dcterms:modified ""^^xsd:date ;
-    dcterms:language "en", "pt" ;
+    dct:bibliographicCitation ""@en ;
+    dct:created ""^^xsd:date ;
+    dct:modified ""^^xsd:date ;
+    dct:language "en", "pt" ;
 .
 
 #################################################################

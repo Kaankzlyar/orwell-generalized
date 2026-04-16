@@ -32,10 +32,10 @@
 	vann:preferredNamespaceUri      "http://purl.org/polis/ar/mp-activity#" ;
 	owl:versionInfo					"1.0";
     dct:description                  "This ontology enables the modelling of data relating to the activities of members of the Portuguese Parliament within the context of the Portuguese Parliament."@en;
-   # dcterms:bibliographicCitation ""@en ;
-    dcterms:created "15/04/2026"^^xsd:date ;
-   # dcterms:modified ""^^xsd:date ;
-    dcterms:language "en", "pt" ;
+   # dct:bibliographicCitation ""@en ;
+    dct:created "15/04/2026"^^xsd:date ;
+   # dct:modified ""^^xsd:date ;
+    dct:language "en", "pt" ;
 .
 
 #################################################################
