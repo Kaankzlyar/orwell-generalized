@@ -2,6 +2,8 @@ package rdf.validation;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
@@ -19,6 +21,8 @@ import lombok.Setter;
 @Setter
 public class ShaclValidation {
 
+    private static final Path ONTOLOGY_DIR = Path.of("ontology");
+
     public void validate() {
         if (!Files.isRegularFile(Config.OUTPUT_PATH)) {
             throw new IllegalStateException("Data graph not found: " + Config.OUTPUT_PATH);
@@ -28,6 +32,22 @@ public class ShaclValidation {
         }
 
         Model data = RDFDataMgr.loadModel(Config.OUTPUT_PATH.toString());
+
+        if (Files.isDirectory(ONTOLOGY_DIR)) {
+            try (Stream<Path> walk = Files.walk(ONTOLOGY_DIR)) {
+                walk
+                    .filter(path -> Files.isRegularFile(path))
+                    .filter(path -> path.getFileName().toString().toLowerCase().endsWith(".ttl"))
+                    .sorted()
+                    .forEach(path -> {
+                        System.out.println("Loading ontology from: " + path);
+                        RDFDataMgr.read(data, path.toString());
+                    });
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read ontology from: " + ONTOLOGY_DIR, e);
+            }
+        }
+
         Model shapes = ModelFactory.createDefaultModel();
 
         try (var paths = Files.list(Config.SHACL_DIR)) {
