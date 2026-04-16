@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class Benchmark {
-    private static final List<StepTiming> STEP_TIMINGS = new ArrayList<>();
+    private final List<StepTiming> stepTimings = new ArrayList<>();
 
     private long currentStepStartTime;
     private String currentStepName;
 
     private void addStepTiming(String name, long millis) {
-        STEP_TIMINGS.add(new StepTiming(name, millis));
+        stepTimings.add(new StepTiming(name, millis));
     }
 
     public void startTiming(String name) {
@@ -38,8 +38,8 @@ public class Benchmark {
 
     public void printTimingSummary() {
         System.out.println("\n=== Execution Summary ===");
-        long total = STEP_TIMINGS.stream().mapToLong(StepTiming::millis).sum();
-        for (StepTiming step : STEP_TIMINGS) {
+        long total = stepTimings.stream().mapToLong(StepTiming::millis).sum();
+        for (StepTiming step : stepTimings) {
             System.out.printf("%-30s %6d ms%n", step.name(), step.millis());
         }
         System.out.println("-".repeat(44));
