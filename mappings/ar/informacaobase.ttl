@@ -88,6 +88,7 @@
   rr:predicateObjectMap [
     rr:predicate dbo:number ;
     rr:objectMap [
+      rr:datatype xsd:nonNegativeInteger ;
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
@@ -101,7 +102,6 @@
           ]
         ]
       ] ;
-      rr:datatype xsd:integer
     ]
   ] 
   .
@@ -125,7 +125,7 @@
     rr:predicate dbo:number ;
     rr:objectMap [
       rml:reference "numSessao" ;
-      rr:datatype xsd:string
+      rr:datatype xsd:nonNegativeInteger
     ]
   ] ;
 
@@ -450,7 +450,7 @@
     rr:predicate polis-core:hasMembership ;
     rr:objectMap [
       rr:termType rr:BlankNode ;
-      rr:template "pg-membership-{DepId}-{DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP/gpId}-{DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP/gpDtInicio}"
+      rr:template "pg-membership-{DepId}-{DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP/gpDtInicio}"
     ]
   ] ;
 
@@ -479,7 +479,7 @@
   rr:predicateObjectMap [
     rr:predicate ocd:tipoProclamazione ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#Situation_{../../DepId}_of_{sioDtInicio}" ;
+      rr:template "http://purl.org/polis/ar/graph#Situation_{sioDes}_{../../DepId}_of_{sioDtInicio}" ;
       rr:termType rr:IRI
     ]
   ] ;
@@ -495,7 +495,7 @@
   # URI
   rr:subjectMap [
     rr:termType rr:IRI ;
-    rr:template "http://purl.org/polis/ar/graph#Situation_{../../DepId}_of_{sioDtInicio}" ;
+    rr:template "http://purl.org/polis/ar/graph#Situation_{sioDes}_{../../DepId}_of_{sioDtInicio}" ;
     rr:class ocd:proclamazione
   ] ;
 
@@ -689,7 +689,7 @@
 
   rr:subjectMap [
     rr:termType rr:BlankNode ;
-    rr:template "pg-membership-{../../DepId}-{gpId}-{gpDtInicio}" ;
+    rr:template "pg-membership-{../../DepId}-{gpDtInicio}" ;
     rr:class polis-core:Membership
   ] ;
 
