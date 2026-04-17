@@ -471,13 +471,11 @@
         ] ;
     ] ;
 
-
     # Status
     rr:predicateObjectMap [
-        rr:predicate polis-bio:habilitationStatus ;
+        rr:predicate polis-bio:hasHabilitationStatus ;
         rr:objectMap [ 
             rr:termType rr:IRI ;
-            #rr:datatype xsd:string ;
             rr:template "http://purl.org/polis/ar/biographic#{HabEstado}"
         ]
     ] ;

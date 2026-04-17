@@ -10,6 +10,7 @@
 @prefix schema:	<https://schema.org/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix prov: <https://www.w3.org/ns/prov-o> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix polis-mpact: <http://purl.org/polis/ar/mp-activity#> .
 @prefix polis-core: <http://purl.org/polis/ar/core#> .
 @prefix : <http://purl.org/polis/ar/initiatives#> .
@@ -28,9 +29,9 @@
 	vann:preferredNamespaceUri      "http://purl.org/polis/ar/initiatives#" ;
 	owl:versionInfo					"1.0";
     dct:description                    """The objective of the POLIS ontology is to (...)""" ;
-    dct:bibliographicCitation ""@en ;
-    dct:created ""^^xsd:date ;
-    dct:modified ""^^xsd:date ;
+    #dct:bibliographicCitation ""@en ;
+    #dct:created ""^^xsd:date ;
+    #dct:modified ""^^xsd:date ;
     dct:language "en", "pt" ;
 .
 

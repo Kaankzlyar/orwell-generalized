@@ -33,7 +33,7 @@
 	owl:versionInfo					"1.0";
     dct:description                  "This ontology enables the modelling of data relating to the activities of members of the Portuguese Parliament within the context of the Portuguese Parliament."@en;
    # dct:bibliographicCitation ""@en ;
-    dct:created "15/04/2026"^^xsd:date ;
+    #dct:created "15/04/2026"^^xsd:date ;
    # dct:modified ""^^xsd:date ;
     dct:language "en", "pt" ;
 .
@@ -455,7 +455,7 @@
 	rdfs:label "related commission"@en, "comissão relacionada"@pt ;
 	rdfs:comment "Indicates the commission related to a commission activity."@en, "Indica a comissão relacionada a uma atividade de comissão."@pt ;
 	rdfs:domain :CommissionActivity ;
-	rdfs:range core:Commission .
+	rdfs:range polis-core:Commission .
 
 ##################################################################
 #    Individuals

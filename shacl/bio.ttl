@@ -108,15 +108,15 @@ polis-bio:HabilitationShape a sh:NodeShape ;
 
     sh:property [
         sh:path polis-bio:isHabilitationLevel ;
-        sh:or (
-            [ sh:class polis-bio:PrimarySchool ]
-            [ sh:class polis-bio:MiddleSchool ]
-            [ sh:class polis-bio:EarlyHighSchool ]
-            [ sh:class polis-bio:HighSchool ]
-            [ sh:class polis-bio:HigherEducation ]
-            [ sh:class polis-bio:Bachelor ]
-            [ sh:class polis-bio:Master ]
-            [ sh:class polis-bio:Postgrad ]
+        sh:in (
+            polis-bio:PrimarySchool
+            polis-bio:MiddleSchool
+            polis-bio:EarlyHighSchool
+            polis-bio:HighSchool
+            polis-bio:HigherEducation
+            polis-bio:Bachelor
+            polis-bio:Master
+            polis-bio:Postgrad
         ) ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -124,14 +124,14 @@ polis-bio:HabilitationShape a sh:NodeShape ;
     ] ;
 
     sh:property [
-        sh:path polis-bio:isHabilitationStatus ;
-        sh:or (
-            [ sh:class polis-bio:C ]
-            [ sh:class polis-bio:F ]
+        sh:path polis-bio:hasHabilitationStatus ;
+        sh:in (
+            polis-bio:C
+            polis-bio:F
         ) ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Habilitation must at most one status and the status must be a polis-bio:HabilitationStatus"@en
+        sh:message "A Habilitation must have at most one status and the status must be a polis-bio:HabilitationStatus"@en
     ] .
 
 polis-bio:HabilitationLevelShape a sh:NodeShape ;
