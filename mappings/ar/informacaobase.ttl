@@ -178,7 +178,7 @@
   # URI
   rr:subjectMap [
     rr:template "http://purl.org/polis/ar/graph#Constituency_{cpDes}" ;
-    rr:class polis-core:Constituency
+    rr:class pe:ConstituencyArea
   ] ;
 
   # Identifier

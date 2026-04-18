@@ -505,3 +505,8 @@
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "Secondary"@en, "Secundário"@pt ;
 	rdfs:comment "Secondary school."@en, "Escola secundária."@pt .
+
+:BasicSecondary a owl:NamedIndividual, :SchoolType ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Basic and Secondary"@en, "Básico e Secundário"@pt ;
+	rdfs:comment "Basic and secondary school."@en, "Escola básica e secundária."@pt .

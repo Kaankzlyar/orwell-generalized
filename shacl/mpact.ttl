@@ -13,7 +13,7 @@
 @prefix prov: <https://www.w3.org/ns/prov-o> .
 @prefix time: <https://www.w3.org/2006/time> .
 @prefix org: <http://www.w3.org/ns/org#> .
-@prefix pe: <http://parliament.uk/ontologies/election/> .
+@prefix pe: <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix polis-core: <http://purl.org/polis/ar/core#> .
 @prefix polis-bio: <http://purl.org/polis/ar/biographic#> .
 @prefix polis-ini: <http://purl.org/polis/ar/initiatives#> .
@@ -56,27 +56,27 @@ polis-mpact:RequisitionShape a sh:NodeShape ;
 
     sh:property [
         sh:path dct:date ;
-        sh:datatype xsd:date ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "A Requisition must have exactly one date and the date must be a xsd:date"@en
+        sh:message "A Requisition must have exactly one date and the date must be a xsd:dateTime"@en
     ] ;
 
-    sh:property [
-        sh:path polis-core:belongsToLegislature ;
-        sh:class ocd:legislatura ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "A Requisition must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
-    ] ;
+    # sh:property [
+    #     sh:path polis-core:belongsToLegislature ;
+    #     sh:class ocd:legislatura ;
+    #     sh:minCount 1 ;
+    #     sh:maxCount 1 ;
+    #     sh:message "A Requisition must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    # ] ;
 
-    sh:property [
-        sh:path polis-core:belongsToLegislativeSession ;
-        sh:class ocd:sessioneLegislatura ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "A Requisition must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
-    ] ;
+    # sh:property [
+    #     sh:path polis-core:belongsToLegislativeSession ;
+    #     sh:class ocd:sessioneLegislatura ;
+    #     sh:minCount 1 ;
+    #     sh:maxCount 1 ;
+    #     sh:message "A Requisition must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
+    # ] ;
 
     sh:property [
         sh:path polis-mpact:toPublicEntityType ;
@@ -394,9 +394,9 @@ polis-mpact:YouthParliamentActivityShape a sh:NodeShape ;
     sh:property [
         sh:path polis-mpact:heldAt ;
         sh:class dbo:School ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Youth Parliament Activity must have exactly one location and the location must be a dbo:School"@en
+        sh:message "A Youth Parliament Activity must have at most one location and the location must be a dbo:School"@en
     ] ;
 
     sh:property [

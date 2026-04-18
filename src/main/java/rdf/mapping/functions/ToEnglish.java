@@ -9,10 +9,12 @@ public class ToEnglish {
     private static final String POLIS_CORE_NS = "http://purl.org/polis/ar/core#";
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();
+    private static final HashMap<String, String> schoolTypeMap = new HashMap<>();
 
     static {
         fillSituationMap();
         fillDutyMap();
+        fillSchoolTypeMap();
     }
 
     private static void fillSituationMap() {
@@ -38,6 +40,12 @@ public class ToEnglish {
         dutyMap.put("vice-secretario", "ViceSecretary");
     }
 
+    private static void fillSchoolTypeMap() {
+        schoolTypeMap.put("basico", "Basic");
+        schoolTypeMap.put("secundario", "Secondary");
+        schoolTypeMap.put("basico/secundario", "BasicSecondary");
+    }
+
     public static String toEnglish(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -52,6 +60,9 @@ public class ToEnglish {
         }
         else if (className.equals("duty")) {
             englishName = dutyMap.getOrDefault(normalizedInput, normalizedInput);
+        }
+        else if (className.equals("schoolType")) {
+            englishName = schoolTypeMap.getOrDefault(normalizedInput, normalizedInput);
         }
         else {
             return null;

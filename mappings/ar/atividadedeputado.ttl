@@ -149,3 +149,175 @@
         ]
     ] ;
     .
+
+<#ParliamentarianYPARelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:didYouthParliamentActivity ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#YouthParliamentActivityMap> ;
+        ]
+    ] ;
+    .
+
+<#YouthParliamentActivityMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:toDeterministicUri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:entityPrefix ;
+                rr:objectMap [ rr:constant "YPA" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:sourceSystem ;
+                rr:objectMap [ rr:constant "AR" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:key1 ;
+                rr:objectMap [ rml:reference "TipoReuniao" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:key2 ;
+                rr:objectMap [ rml:reference "Data" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:key3 ;
+                rr:objectMap [ rml:reference "../../../../Deputado/DepCadId" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:key4 ;
+                rr:objectMap [ rml:reference "Estabelecimento" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:key5 ;
+                rr:objectMap [ rml:reference "CirculoEleitoral" ]
+            ]
+        ] ;
+        rr:class polis-mpact:YouthParliamentActivity
+    ] ;
+
+    # Date
+        rr:predicateObjectMap [
+            rr:predicate dct:date ;
+            rr:objectMap [
+                rml:reference "Data" ;
+                rr:datatype xsd:date
+            ] ;
+        ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{Legislatura}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Meeting Type
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:meetingType ;
+        rr:objectMap [ 
+            rml:reference "TipoReuniao" ;
+            rr:datatype xsd:string ;
+        ]
+    ] ;
+
+    # School
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:heldAt ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#SchoolMap> ;
+        ]
+    ] ;
+
+    # Constituency
+    rr:predicateObjectMap [
+        rr:predicate polis-core:inConstituency ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Constituency_{CirculoEleitoral}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    .
+
+<#SchoolMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#School_{Estabelecimento}" ;
+        rr:class dbo:School
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            rml:reference "Estabelecimento" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # School Type
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:isSchoolType ;
+        rr:objectMap [
+        fnml:functionValue [
+            rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ rr:constant pofn:toEnglish ]
+            ] ;
+            rr:predicateObjectMap [
+            rr:predicate pofn:entityName ;
+            rr:objectMap [
+                fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputTrim ;
+                    rr:objectMap [ rml:reference "Sessao" ]
+                ]
+                ]
+            ]
+            ] ;
+            rr:predicateObjectMap [
+            rr:predicate pofn:className ;
+            rr:objectMap [
+                rr:constant "schoolType" ;
+                rr:datatype xsd:string
+            ]
+            ]
+        ] ;
+        rr:termType rr:IRI
+        ]
+    ] ;
+    .
