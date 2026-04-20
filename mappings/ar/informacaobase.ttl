@@ -186,7 +186,16 @@
   rr:predicateObjectMap [
     rr:predicate polis-core:identifier ;
     rr:objectMap [
-      rml:reference "cpId" ;
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant grel:string_trim ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate grel:valueParameter ;
+          rr:objectMap [ rml:reference "cpId" ]
+        ]
+      ] ;
       rr:datatype xsd:string
     ]
   ] ;

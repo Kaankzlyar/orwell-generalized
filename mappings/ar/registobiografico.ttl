@@ -123,7 +123,16 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
         rr:objectMap [ 
-            rml:reference "FunId" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "FunId" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;
@@ -216,7 +225,16 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
         rr:objectMap [ 
-            rml:reference "TitId" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "TitId" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;
@@ -288,7 +306,16 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
         rr:objectMap [ 
-            rml:reference "CodId" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "CodId" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;
@@ -360,7 +387,16 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
         rr:objectMap [ 
-            rml:reference "PubId" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "PubId" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;
@@ -432,7 +468,16 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
         rr:objectMap [ 
-            rml:reference "HabId" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "HabId" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;

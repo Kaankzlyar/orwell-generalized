@@ -420,13 +420,13 @@ polis-mpact:SchoolShape a sh:NodeShape ;
 
     sh:property [
         sh:path polis-mpact:isSchoolType ;
-        sh:or (
-            [ sh:class polis-mpact:Basic]
-            [ sh:class polis-mpact:Secondary ]
+        sh:in (
+            polis-mpact:Basic
+            polis-mpact:Secondary
+            polis-mpact:BasicSecondary
         ) ;
         sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "A School must have exactly one school type and the type must be a subclass of polis-mpact:SchoolType"@en
+        sh:message "A School must have at least one school type and the types must be subclasses of polis-mpact:SchoolType"@en
     ] .
 
 #################################################################

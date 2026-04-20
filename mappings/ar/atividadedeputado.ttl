@@ -78,11 +78,20 @@
         ]
     ] ;
 
-    # URI
+    # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
         rr:objectMap [ 
-            rml:reference "ReqId" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ReqId" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;
@@ -100,7 +109,16 @@
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
         rr:objectMap [ 
-            rml:reference "ReqAs" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ReqAs" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;
@@ -182,51 +200,81 @@
 
     rr:subjectMap [
         rr:termType rr:IRI ;
+        rr:class polis-mpact:YouthParliamentActivity ;
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:toDeterministicUri ]
+                rr:objectMap [ rr:constant grel:array_join ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:entityPrefix ;
-                rr:objectMap [ rr:constant "YPA" ]
+                rr:predicate grel:p_array_a ;
+                rr:objectMap [ rr:constant "urn:ypa:" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:sourceSystem ;
-                rr:objectMap [ rr:constant "AR" ]
+                rr:predicate grel:p_array_a ;
+                rr:objectMap [
+                    fnml:functionValue [
+                        rr:predicateObjectMap [
+                            rr:predicate fno:executes ;
+                            rr:objectMap [ rr:constant grel:string_sha1 ]
+                        ] ;
+                        rr:predicateObjectMap [
+                            rr:predicate grel:valueParameter ;
+                            rr:objectMap [
+                                fnml:functionValue [
+                                    rr:predicateObjectMap [
+                                        rr:predicate fno:executes ;
+                                        rr:objectMap [ rr:constant grel:array_join ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_array_a ;
+                                        rr:objectMap [ rml:reference "Legislatura" ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_array_a ;
+                                        rr:objectMap [ rml:reference "Data" ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_array_a ;
+                                        rr:objectMap [ rml:reference "TipoReuniao" ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_array_a ;
+                                        rr:objectMap [ rml:reference "Estabelecimento" ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_array_a ;
+                                        rr:objectMap [ rml:reference "CirculoEleitoral" ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_array_a ;
+                                        rr:objectMap [ rml:reference "Sessao" ]
+                                    ] ;
+                                    rr:predicateObjectMap [
+                                        rr:predicate grel:p_string_sep ;
+                                        rr:objectMap [ rr:constant "|" ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:key1 ;
-                rr:objectMap [ rml:reference "TipoReuniao" ]
-            ] ;
-            rr:predicateObjectMap [
-                rr:predicate pofn:key2 ;
-                rr:objectMap [ rml:reference "Data" ]
-            ] ;
-            rr:predicateObjectMap [
-                rr:predicate pofn:key3 ;
-                rr:objectMap [ rml:reference "../../../../Deputado/DepCadId" ]
-            ] ;
-            rr:predicateObjectMap [
-                rr:predicate pofn:key4 ;
-                rr:objectMap [ rml:reference "Estabelecimento" ]
-            ] ;
-            rr:predicateObjectMap [
-                rr:predicate pofn:key5 ;
-                rr:objectMap [ rml:reference "CirculoEleitoral" ]
+                rr:predicate grel:p_string_sep ;
+                rr:objectMap [ rr:constant "" ]
             ]
         ] ;
-        rr:class polis-mpact:YouthParliamentActivity
     ] ;
 
     # Date
-        rr:predicateObjectMap [
-            rr:predicate dct:date ;
-            rr:objectMap [
-                rml:reference "Data" ;
-                rr:datatype xsd:date
-            ] ;
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [
+            rml:reference "Data" ;
+            rr:datatype xsd:date
         ] ;
+    ] ;
 
     # Legislature
     rr:predicateObjectMap [
@@ -241,7 +289,16 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:meetingType ;
         rr:objectMap [ 
-            rml:reference "TipoReuniao" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "TipoReuniao" ]
+                ]
+            ] ;
             rr:datatype xsd:string ;
         ]
     ] ;
@@ -281,7 +338,16 @@
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
         rr:objectMap [ 
-            rml:reference "Estabelecimento" ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "Estabelecimento" ]
+                ]
+            ] ;
             rr:datatype xsd:string
         ]
     ] ;

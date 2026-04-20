@@ -283,7 +283,7 @@ polis-core:MandateShape a sh:NodeShape ;
         sh:path polis-core:inConstituency ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:class polis-core:Constituency ;
+        sh:class pe:ConstituencyArea ;
         sh:message "A mandate must have exactly one constituency"@en
     ] ;
 
