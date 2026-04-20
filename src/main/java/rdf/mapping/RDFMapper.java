@@ -82,11 +82,13 @@ public class RDFMapper {
         List<String> functionFiles = new ArrayList<>();
         functionFiles.add("fno/functions_idlab.ttl");
         functionFiles.add("fno/functions_idlab_classes_java_mapping.ttl");
+        functionFiles.add("functions_grel.ttl");
+        functionFiles.add("grel_java_mapping.ttl");
 
         for (Path functionFile : getFunctionList()) {
             functionFiles.add(functionFile.toString().replace("\\", "/"));
         }
-
+        
         return AgentFactory.createFromFnO(
             functionFiles.toArray(String[]::new)
         );

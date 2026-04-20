@@ -16,6 +16,7 @@
 @prefix m4s:    <https://purl.org/map4scrutiny-core#> .
 @prefix schema: <https://schema.org/> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix org:    <http://www.w3.org/ns/org#> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
@@ -300,10 +301,10 @@
                 fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:trim ]
+                    rr:objectMap [ rr:constant grel:string_trim ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:inputTrim ;
+                    rr:predicate grel:valueParameter ;
                     rr:objectMap [ rml:reference "Sessao" ]
                 ]
                 ]
