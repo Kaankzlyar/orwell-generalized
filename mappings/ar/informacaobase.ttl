@@ -176,11 +176,39 @@
     rml:iterator "/Legislatura/CirculosEleitorais/pt_ar_wsgode_objectos_DadosCirculoEleitoralList"
   ] ;
 
-  # URI
-  rr:subjectMap [
-    rr:template "http://purl.org/polis/ar/graph#Constituency_{cpDes}" ;
-    rr:class pe:ConstituencyArea
-  ] ;
+rr:subjectMap [
+    rr:termType rr:IRI ;
+    rr:class pe:ConstituencyArea ;
+    fnml:functionValue [
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ rr:constant grel:array_join ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate grel:p_array_a ;
+            rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Constituency_" ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate grel:p_array_a ;
+            rr:objectMap [
+                fnml:functionValue [
+                    rr:predicateObjectMap [
+                        rr:predicate fno:executes ;
+                        rr:objectMap [ rr:constant pofn:normalize ]
+                    ] ;
+                    rr:predicateObjectMap [
+                        rr:predicate pofn:inputString ;
+                        rr:objectMap [ rml:reference "cpDes" ]
+                    ]
+                ]
+            ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate grel:p_string_sep ;
+            rr:objectMap [ rr:constant "" ]
+        ]
+    ] ;
+] ;
 
   # Identifier
   rr:predicateObjectMap [

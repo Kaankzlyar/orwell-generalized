@@ -62,21 +62,21 @@ polis-mpact:RequisitionShape a sh:NodeShape ;
         sh:message "A Requisition must have exactly one date and the date must be a xsd:dateTime"@en
     ] ;
 
-    # sh:property [
-    #     sh:path polis-core:belongsToLegislature ;
-    #     sh:class ocd:legislatura ;
-    #     sh:minCount 1 ;
-    #     sh:maxCount 1 ;
-    #     sh:message "A Requisition must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
-    # ] ;
+    sh:property [
+        sh:path polis-core:belongsToLegislature ;
+        sh:class ocd:legislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+    ] ;
 
-    # sh:property [
-    #     sh:path polis-core:belongsToLegislativeSession ;
-    #     sh:class ocd:sessioneLegislatura ;
-    #     sh:minCount 1 ;
-    #     sh:maxCount 1 ;
-    #     sh:message "A Requisition must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
-    # ] ;
+    sh:property [
+        sh:path polis-core:belongsToLegislativeSession ;
+        sh:class ocd:sessioneLegislatura ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A Requisition must have exactly one belongsToLegislativeSession and the legislative session must be a ocd:sessioneLegislatura"@en
+    ] ;
 
     sh:property [
         sh:path polis-mpact:toPublicEntityType ;
@@ -306,9 +306,7 @@ polis-mpact:PermanentDelegationShape a sh:NodeShape ;
     sh:property [
         sh:path polis-mpact:hasPermanentDelegationMeeting ;
         sh:class polis-mpact:PermanentDelegationMeeting ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "A Permanent Delegation must have exactly one permanent delegation meeting and the meeting must be a polis-mpact:PermanentDelegationMeeting"@en
+        sh:message "A Permanent Delegation's meeting must be a polis-mpact:PermanentDelegationMeeting"@en
     ] .
 
 polis-mpact:TemporaryDelegationShape a sh:NodeShape ;
