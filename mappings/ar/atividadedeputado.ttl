@@ -770,7 +770,7 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#ParliamentaryActivity_{ActId}_of_{ActSelLg}" ;
+        rr:template "http://purl.org/polis/ar/graph#ParliamentaryActivity_{ActTp}_{ActId}_of_{ActSelLg}" ;
         rr:class polis-mpact:ParliamentaryActivity
     ] ;
 
