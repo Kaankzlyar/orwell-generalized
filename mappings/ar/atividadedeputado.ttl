@@ -356,8 +356,39 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#School_{Estabelecimento}" ;
-        rr:class dbo:School
+        rr:termType rr:IRI ;
+        rr:class dbo:School ;
+        fnml:functionValue [
+            rr:termType rr:IRI ;
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant grel:array_join ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate grel:p_array_a ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#School_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate grel:p_array_a ;
+                rr:objectMap [
+                    fnml:functionValue [
+                        rr:predicateObjectMap [
+                            rr:predicate fno:executes ;
+                            rr:objectMap [ rr:constant pofn:normalize ]
+                        ] ;
+                        rr:predicateObjectMap [
+                            rr:predicate pofn:inputString ;
+                            rr:objectMap [ rml:reference "Estabelecimento" ]
+                        ]
+                    ] ;
+                    rr:datatype xsd:string
+                ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate grel:p_string_sep ;
+                rr:objectMap [ rr:constant "" ]
+            ]
+        ] ;
     ] ;
 
     # Name
