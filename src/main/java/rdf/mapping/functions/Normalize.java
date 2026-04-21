@@ -1,6 +1,7 @@
 package rdf.mapping.functions;
 
 import java.text.Normalizer;
+import java.util.Locale;
 
 public class Normalize {
 
@@ -9,16 +10,10 @@ public class Normalize {
             return null;
         }
 
-        // Trim whitespace
         String trimmed = input.trim();
+        String lowercase = trimmed.toLowerCase(Locale.ROOT);
+        String decomposed = Normalizer.normalize(lowercase, Normalizer.Form.NFD);
 
-        // Convert to lowercase
-        String lowercase = trimmed.toLowerCase();
-
-        // Remove diacritics using NFD normalization
-        String nfd = Normalizer.normalize(lowercase, Normalizer.Form.NFD);
-        String normalized = nfd.replaceAll("\\p{M}", "");
-
-        return normalized;
+        return decomposed.replaceAll("\\p{M}+", "").replaceAll("\\s+", "");
     }
 }

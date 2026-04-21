@@ -25,6 +25,7 @@
 @prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
 @prefix polis-core:   <http://purl.org/polis/ar/core#> .
 @prefix polis-mpact:  <http://purl.org/polis/ar/mp-activity#> .
+@prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
 <#ParliamentarianRequisitionRelationMap> a rr:TriplesMap ;
     
@@ -314,9 +315,34 @@
     # Constituency
     rr:predicateObjectMap [
         rr:predicate polis-core:inConstituency ;
-        rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/graph#Constituency_{CirculoEleitoral}" ;
+        rr:termType rr:IRI ;
+        rr:objectMap [
             rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Constituency_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:normalize ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ rml:reference "CirculoEleitoral" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ] ;
         ]
     ] ;
     .

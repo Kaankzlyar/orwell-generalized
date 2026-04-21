@@ -176,39 +176,40 @@
     rml:iterator "/Legislatura/CirculosEleitorais/pt_ar_wsgode_objectos_DadosCirculoEleitoralList"
   ] ;
 
-rr:subjectMap [
-    rr:termType rr:IRI ;
-    rr:class pe:ConstituencyArea ;
-    fnml:functionValue [
-        rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ rr:constant grel:array_join ]
-        ] ;
-        rr:predicateObjectMap [
-            rr:predicate grel:p_array_a ;
-            rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Constituency_" ]
-        ] ;
-        rr:predicateObjectMap [
-            rr:predicate grel:p_array_a ;
-            rr:objectMap [
-                fnml:functionValue [
-                    rr:predicateObjectMap [
-                        rr:predicate fno:executes ;
-                        rr:objectMap [ rr:constant pofn:normalize ]
-                    ] ;
-                    rr:predicateObjectMap [
-                        rr:predicate pofn:inputString ;
-                        rr:objectMap [ rml:reference "cpDes" ]
-                    ]
-                ]
-            ]
-        ] ;
-        rr:predicateObjectMap [
-            rr:predicate grel:p_string_sep ;
-            rr:objectMap [ rr:constant "" ]
-        ]
-    ] ;
-] ;
+  rr:subjectMap [
+      rr:termType rr:IRI ;
+      rr:class pe:ConstituencyArea ;
+      fnml:functionValue [
+          rr:predicateObjectMap [
+              rr:predicate fno:executes ;
+              rr:objectMap [ rr:constant grel:array_join ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate grel:p_array_a ;
+              rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Constituency_" ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate grel:p_array_a ;
+              rr:objectMap [
+                  fnml:functionValue [
+                      rr:predicateObjectMap [
+                          rr:predicate fno:executes ;
+                          rr:objectMap [ rr:constant pofn:normalize ]
+                      ] ;
+                      rr:predicateObjectMap [
+                          rr:predicate pofn:inputString ;
+                          rr:objectMap [ rml:reference "cpDes" ]
+                      ]
+                ] ;
+                rr:datatype xsd:string
+              ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate grel:p_string_sep ;
+              rr:objectMap [ rr:constant "" ]
+          ]
+      ] ;
+  ] ;
 
   # Identifier
   rr:predicateObjectMap [
@@ -475,11 +476,36 @@ rr:subjectMap [
 
   # Constituency
   rr:predicateObjectMap [
-    rr:predicate polis-core:inConstituency ;
-    rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#Constituency_{DepCPDes}" ;
-      rr:termType rr:IRI
-    ]
+      rr:predicate polis-core:inConstituency ;
+      rr:termType rr:IRI ;
+      rr:objectMap [
+          rr:termType rr:IRI ;
+          fnml:functionValue [
+              rr:predicateObjectMap [
+                  rr:predicate fno:executes ;
+                  rr:objectMap [ rr:constant pofn:stringConcat ]
+              ] ;
+              rr:predicateObjectMap [
+                  rr:predicate pofn:leftPart ;
+                  rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Constituency_" ]
+              ] ;
+              rr:predicateObjectMap [
+                  rr:predicate pofn:rightPart ;
+                  rr:objectMap [
+                      fnml:functionValue [
+                          rr:predicateObjectMap [
+                              rr:predicate fno:executes ;
+                              rr:objectMap [ rr:constant pofn:normalize ]
+                          ] ;
+                          rr:predicateObjectMap [
+                              rr:predicate pofn:inputString ;
+                              rr:objectMap [ rml:reference "DepCPDes" ]
+                          ]
+                      ] ;
+                  ]
+              ]
+          ] ;
+      ]
   ] ;
 
   # Legislature

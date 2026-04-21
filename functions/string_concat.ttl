@@ -1,0 +1,42 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:stringConcat a fno:Function ;
+    fno:name "stringConcat" ;
+    fno:expects ( :leftPartParam :rightPartParam ) ;
+    fno:returns ( :outputParam ) .
+
+:leftPartParam a fno:Parameter ;
+    fno:predicate :leftPart ;
+    fno:name "leftPart" ;
+    fno:description "Left-hand string to concatenate first." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:rightPartParam a fno:Parameter ;
+    fno:predicate :rightPart ;
+    fno:name "rightPart" ;
+    fno:description "Right-hand string to concatenate second." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:outputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "Deterministic concatenation of the left part followed by the right part." ;
+    fno:type xsd:string .
+
+:stringConcatImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.StringConcat" .
+
+:stringConcatMapping a fno:Mapping ;
+    fno:function :stringConcat ;
+    fno:implementation :stringConcatImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "stringConcat" ]
+.
