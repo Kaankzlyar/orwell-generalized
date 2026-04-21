@@ -650,3 +650,92 @@
         ]
     ] ;
     .
+
+<#ParliamentarianPublicAccountRelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Rel/RelatoresContasPublicas/RelatoresContasPublicasOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:wasRapporteurIn ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#PublicAccountMap> ;
+        ]
+    ] ;
+    .
+
+<#PublicAccountMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Rel/RelatoresContasPublicas/RelatoresContasPublicasOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#PublicAccount_{ActId}" ;
+        rr:class polis-mpact:PublicAccount
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "ActId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Civil Year
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:civilYear ;
+        rr:objectMap [ 
+            rml:reference "anoCiv" ;
+            rr:datatype xsd:gYear
+        ]
+    ] ;
+
+    # Appointment Date
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [ 
+            rml:reference "dtNom" ;
+            rr:datatype xsd:date
+        ]
+    ] ;
+
+    # Subject Matter
+    rr:predicateObjectMap [
+        rr:predicate dct:subject ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ActAs" ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{actSelLg}" ;
+            rr:termType rr:IRI ;
+        ]
+     ] ;
+    .
