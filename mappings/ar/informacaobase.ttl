@@ -430,8 +430,7 @@
   rr:predicateObjectMap [
     rr:predicate ocd:rif_mandatoCamera ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#Mandate_{DepId}" ;
-      rr:termType rr:IRI
+      rr:parentTriplesMap <#MandateMap> ;
     ]
   ] ;
 
