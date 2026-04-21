@@ -507,7 +507,7 @@ polis-mpact:AuditionHearingShape a sh:NodeShape ;
         sh:class polis-mpact:ThirdPartyEntity ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "A Commission must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
+        sh:message "A Commission must have exactly one Third Party Entity and the Third Party Entity must be a polis-mpact:ThirdPartyEntity"@en
     ] .
 
 polis-mpact:ThirdPartyEntityShape a sh:NodeShape ;
