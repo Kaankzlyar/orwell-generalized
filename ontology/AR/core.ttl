@@ -204,6 +204,13 @@
     rdfs:domain ocd:mandatoCamera ;
     rdfs:range xsd:string .
 
+:role rdf:type owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    dct:description "Define o papel de algo numa relação de Membership"@pt ,
+        "Defines the role of something in a Membership relationship"@en ;
+    rdfs:label "role"@en, "cargo"@pt ;
+    rdfs:domain :Membership ;
+    rdfs:range xsd:string .
 
 #################################################################
 #    Object properties
@@ -233,11 +240,6 @@
 :isMemberOf rdf:type owl:ObjectProperty ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
      rdfs:domain :Membership .
-
-:hasRole rdf:type owl:ObjectProperty ;
-    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
-     rdfs:domain :Membership ;
-     rdfs:range polis-bio:Role .
 
 :holdsSituation rdf:type owl:ObjectProperty ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
