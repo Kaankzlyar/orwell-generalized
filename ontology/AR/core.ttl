@@ -234,12 +234,11 @@
 
 :hasMembership rdf:type owl:ObjectProperty ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
-     rdfs:domain m4s:Parliamentarian ;
-     rdfs:range :Membership .
+    rdfs:range :Membership .
 
 :isMemberOf rdf:type owl:ObjectProperty ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
-     rdfs:domain :Membership .
+    rdfs:domain :Membership .
 
 :holdsSituation rdf:type owl:ObjectProperty ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
