@@ -27,26 +27,6 @@
 @prefix polis-mpact:  <http://purl.org/polis/ar/mp-activity#> .
 @prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
-# <#MandateCommissionRelationMap> a rr:TriplesMap ;
-    
-#     rml:logicalSource [
-#         rml:source "data/" ;
-#         rml:referenceFormulation ql:XPath ;
-#         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Cms/ComissoesOut" ;
-#     ] ;
-
-#     rr:subjectMap [
-#         rr:template "http://purl.org/polis/ar/graph#Mandate{../../../../Deputado/DepId}" ;
-#         rr:class polis-core:Mandate
-#     ] ;
-
-#     rr:predicateObjectMap [
-#         rr:predicate polis-core:hasMembership ;
-#         rr:objectMap [ 
-#             rr:parentTriplesMap <#CommissionMap> ;
-#         ]
-#     ] ;
-#     .
 
 <#CommissionMap> a rr:TriplesMap ;
     
@@ -57,68 +37,9 @@
     ] ;
 
     rr:subjectMap [
-        rr:termType rr:IRI ;
         rr:class polis-core:Commission ;
-        fnml:functionValue [
-            rr:termType rr:IRI ;
-            rr:predicateObjectMap [
-                rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:stringConcat ]
-            ] ;
-            rr:predicateObjectMap [
-                rr:predicate pofn:leftPart ;
-                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Commission_" ]
-            ] ;
-            rr:predicateObjectMap [
-                rr:predicate pofn:rightPart ;
-                rr:objectMap [
-                    fnml:functionValue [
-                        rr:predicateObjectMap [
-                            rr:predicate fno:executes ;
-                            rr:objectMap [ rr:constant pofn:normalize ]
-                        ] ;
-                        rr:predicateObjectMap [
-                            rr:predicate pofn:inputString ;
-                            rr:objectMap [ rml:reference "CmsNo" ]
-                        ]
-                    ] ;
-                    rr:datatype xsd:string
-                ]
-            ] ;
-        ] ;
+        rr:template "http://purl.org/polis/ar/graph#Commission_{CmsCd}_of_{CmsLg}" ;
     ] ;
-
-    # rr:subjectMap [
-    #     rr:class polis-core:Commission ;
-    #     rr:objectMap [
-    #         rr:termType rr:IRI ;
-    #         fnml:functionValue [
-    #             rr:predicateObjectMap [
-    #                 rr:predicate fno:executes ;
-    #                 rr:objectMap [ rr:constant pofn:stringConcat ]
-    #             ] ;
-    #             rr:predicateObjectMap [
-    #                 rr:predicate pofn:leftPart ;
-    #                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Commission_" ]
-    #             ] ;
-    #             rr:predicateObjectMap [
-    #                 rr:predicate pofn:rightPart ;
-    #                 rr:objectMap [
-    #                     fnml:functionValue [
-    #                         rr:predicateObjectMap [
-    #                             rr:predicate fno:executes ;
-    #                             rr:objectMap [ rr:constant pofn:normalize ]
-    #                         ] ;
-    #                         rr:predicateObjectMap [
-    #                             rr:predicate pofn:inputString ;
-    #                             rr:objectMap [ rml:reference "CmsNo" ]
-    #                         ]
-    #                     ] ;
-    #                 ]
-    #             ]
-    #         ]
-    #     ] 
-    # ] ;
 
     # Identifier
     rr:predicateObjectMap [
@@ -147,6 +68,15 @@
                     ]
                 ]
             ]
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{CmsLg}" ;
+            rr:termType rr:IRI ;
         ]
     ] ;
     .
