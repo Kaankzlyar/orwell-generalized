@@ -14,6 +14,6 @@ public class Normalize {
         String lowercase = trimmed.toLowerCase(Locale.ROOT);
         String decomposed = Normalizer.normalize(lowercase, Normalizer.Form.NFD);
 
-        return decomposed.replaceAll("\\p{M}+", "").replaceAll(",", "-").replaceAll("\\s+", "-").replaceAll("\"", "").replaceAll("/", "-");
+        return decomposed.replaceAll("\\p{M}+", "").replaceAll(",", "-").replaceAll("\\s+", "-").replaceAll("\"", "").replaceAll("/", "-").replaceAll(";", "-");
     }
 }
