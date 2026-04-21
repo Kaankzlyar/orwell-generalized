@@ -607,8 +607,7 @@
   rr:predicateObjectMap [
     rr:predicate ocd:tipoProclamazione ;
     rr:objectMap [
-      rr:template "http://purl.org/polis/ar/graph#Situation_{sioDes}_{../../DepId}_of_{sioDtInicio}" ;
-      rr:termType rr:IRI
+      rr:parentTriplesMap <#SituationMap> ;
     ]
   ] ;
   .
@@ -623,8 +622,59 @@
   # URI
   rr:subjectMap [
     rr:termType rr:IRI ;
-    rr:template "http://purl.org/polis/ar/graph#Situation_{sioDes}_{../../DepId}_of_{sioDtInicio}" ;
-    rr:class ocd:proclamazione
+    rr:class ocd:proclamazione ;
+    fnml:functionValue [
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ rr:constant pofn:stringConcat ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate pofn:leftPart ;
+            rr:objectMap [ rr:constant "urn:situation:" ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate pofn:rightPart ;
+            rr:objectMap [
+                fnml:functionValue [
+                    rr:predicateObjectMap [
+                        rr:predicate fno:executes ;
+                        rr:objectMap [ rr:constant grel:string_sha1 ]
+                    ] ;
+                    rr:predicateObjectMap [
+                        rr:predicate grel:valueParameter ;
+                        rr:objectMap [
+                            fnml:functionValue [
+                                rr:predicateObjectMap [
+                                    rr:predicate fno:executes ;
+                                    rr:objectMap [ rr:constant grel:array_join ]
+                                ] ;
+                                rr:predicateObjectMap [
+                                    rr:predicate grel:p_array_a ;
+                                    rr:objectMap [ rml:reference "sioDes" ]
+                                ] ;
+                                rr:predicateObjectMap [
+                                    rr:predicate grel:p_array_a ;
+                                    rr:objectMap [ rml:reference "sioDtInicio" ]
+                                ] ;
+                                rr:predicateObjectMap [
+                                    rr:predicate grel:p_array_a ;
+                                    rr:objectMap [ rml:reference "sioDtFim" ]
+                                ] ;
+                                rr:predicateObjectMap [
+                                    rr:predicate grel:p_string_sep ;
+                                    rr:objectMap [ rr:constant "|" ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate grel:p_string_sep ;
+            rr:objectMap [ rr:constant "" ]
+        ]
+    ] ;
   ] ;
 
   # Type of Situation (e.g. "Desístência", "Falecido/a", etc.)
