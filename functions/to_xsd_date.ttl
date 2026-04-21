@@ -1,0 +1,34 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:toXsdDate a fno:Function ;
+    fno:name "toXsdDate" ;
+    fno:expects ( :inputDateParam ) ;
+    fno:returns ( :outputDateParam ) .
+
+:inputDateParam a fno:Parameter ;
+    fno:predicate :inputDate ;
+    fno:name "inputDate" ;
+    fno:description "Input date string in dd-MM-yyyy format to normalize to xsd:date lexical form." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:outputDateParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "outputDate" ;
+    fno:description "Normalized xsd:date lexical value (yyyy-MM-dd)." ;
+    fno:type xsd:string .
+
+:toXsdDateImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.ToXsdDate" .
+
+:toXsdDateMapping a fno:Mapping ;
+    fno:function :toXsdDate ;
+    fno:implementation :toXsdDateImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toXsdDate" ]
+.

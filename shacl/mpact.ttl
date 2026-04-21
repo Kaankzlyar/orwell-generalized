@@ -136,9 +136,9 @@ polis-mpact:ParliamentaryActivityShape a sh:NodeShape ;
     sh:property [
         sh:path dbo:number ;
         sh:datatype xsd:nonNegativeInteger ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Parliamentary Activity must have exactly one number and the number must be a xsd:nonNegativeInteger"@en
+        sh:message "A Parliamentary Activity must have at most one number and the number must be a xsd:nonNegativeInteger"@en
     ] ;
 
     sh:property [
@@ -167,10 +167,10 @@ polis-mpact:ParliamentaryActivityShape a sh:NodeShape ;
 
     sh:property [
         sh:path polis-mpact:debateDate ;
-        sh:datatype xsd:date ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Parliamentary Activity must have at most one debate date and the date must be a xsd:date"@en
+        sh:message "A Parliamentary Activity must have at most one debate date and the date must be a xsd:dateTime"@en
     ] ;
 
     sh:property [
