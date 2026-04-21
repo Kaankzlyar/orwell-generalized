@@ -547,9 +547,60 @@
   ] ;
 
   rr:subjectMap [
-    rr:termType rr:BlankNode ;
-    rr:template "membership-{../../DepId}_{gpSigla}_{gpDtInicio}" ;
-    rr:class polis-core:Membership
+      rr:termType rr:IRI ;
+      rr:class polis-core:Membership ;
+      fnml:functionValue [
+          rr:predicateObjectMap [
+              rr:predicate fno:executes ;
+              rr:objectMap [ rr:constant pofn:stringConcat ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:leftPart ;
+              rr:objectMap [ rr:constant "urn:membership:" ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:rightPart ;
+              rr:objectMap [
+                  fnml:functionValue [
+                      rr:predicateObjectMap [
+                          rr:predicate fno:executes ;
+                          rr:objectMap [ rr:constant grel:string_sha1 ]
+                      ] ;
+                      rr:predicateObjectMap [
+                          rr:predicate grel:valueParameter ;
+                          rr:objectMap [
+                              fnml:functionValue [
+                                  rr:predicateObjectMap [
+                                      rr:predicate fno:executes ;
+                                      rr:objectMap [ rr:constant grel:array_join ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "gpSigla" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "gpDtInicio" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "gpDtFim" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_string_sep ;
+                                      rr:objectMap [ rr:constant "|" ]
+                                  ]
+                              ]
+                          ]
+                      ]
+                  ]
+              ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate grel:p_string_sep ;
+              rr:objectMap [ rr:constant "" ]
+          ]
+      ] ;
   ] ;
 
   # Is Member Of
@@ -785,10 +836,61 @@
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepCargo/pt_ar_wsgode_objectos_DadosCargoDeputado"
   ] ;
 
-  rr:subjectMap [
-    rr:termType rr:BlankNode ;
-    rr:template "duty-{../../DepId}_of_{carDtInicio}" ;
-    rr:class org:Post
+    rr:subjectMap [
+      rr:termType rr:IRI ;
+      rr:class org:Post ;
+      fnml:functionValue [
+          rr:predicateObjectMap [
+              rr:predicate fno:executes ;
+              rr:objectMap [ rr:constant pofn:stringConcat ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:leftPart ;
+              rr:objectMap [ rr:constant "urn:duty:" ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:rightPart ;
+              rr:objectMap [
+                  fnml:functionValue [
+                      rr:predicateObjectMap [
+                          rr:predicate fno:executes ;
+                          rr:objectMap [ rr:constant grel:string_sha1 ]
+                      ] ;
+                      rr:predicateObjectMap [
+                          rr:predicate grel:valueParameter ;
+                          rr:objectMap [
+                              fnml:functionValue [
+                                  rr:predicateObjectMap [
+                                      rr:predicate fno:executes ;
+                                      rr:objectMap [ rr:constant grel:array_join ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "carDes" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "carDtInicio" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "carDtFim" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_string_sep ;
+                                      rr:objectMap [ rr:constant "|" ]
+                                  ]
+                              ]
+                          ]
+                      ]
+                  ]
+              ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate grel:p_string_sep ;
+              rr:objectMap [ rr:constant "" ]
+          ]
+      ] ;
   ] ;
 
   # Type of Duty (e.g. "PAR", "ViceSecretary", etc.)

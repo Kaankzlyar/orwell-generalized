@@ -445,3 +445,208 @@
         ]
     ] ;
     .
+
+<#ParliamentarianFriendshipParliamentaryGroupRelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Gpa/GruposParlamentaresAmizadeOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-core:hasMembership ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#ParliamentarianFriendshipParliamentaryGroupMembershipMap> ;
+        ]
+    ] ;
+    .
+
+<#ParliamentarianFriendshipParliamentaryGroupMembershipMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Gpa/GruposParlamentaresAmizadeOut" ;
+    ] ;
+
+  rr:subjectMap [
+      rr:termType rr:IRI ;
+      rr:class polis-core:Membership ;
+      fnml:functionValue [
+          rr:predicateObjectMap [
+              rr:predicate fno:executes ;
+              rr:objectMap [ rr:constant pofn:stringConcat ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:leftPart ;
+              rr:objectMap [ rr:constant "urn:membership:" ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:rightPart ;
+              rr:objectMap [
+                  fnml:functionValue [
+                      rr:predicateObjectMap [
+                          rr:predicate fno:executes ;
+                          rr:objectMap [ rr:constant grel:string_sha1 ]
+                      ] ;
+                      rr:predicateObjectMap [
+                          rr:predicate grel:valueParameter ;
+                          rr:objectMap [
+                              fnml:functionValue [
+                                  rr:predicateObjectMap [
+                                      rr:predicate fno:executes ;
+                                      rr:objectMap [ rr:constant grel:array_join ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "GplId" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "CgaDtini" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "CgaDtfim" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_array_a ;
+                                      rr:objectMap [ rml:reference "CgaCrg" ]
+                                  ] ;
+                                  rr:predicateObjectMap [
+                                      rr:predicate grel:p_string_sep ;
+                                      rr:objectMap [ rr:constant "|" ]
+                                  ]
+                              ]
+                          ]
+                      ]
+                  ]
+              ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate grel:p_string_sep ;
+              rr:objectMap [ rr:constant "" ]
+          ]
+      ] ;
+  ] ;
+
+    # Group
+    rr:predicateObjectMap [
+        rr:predicate polis-core:isMemberOf ;
+        rr:objectMap [
+            rr:template "http://purl.org/polis/ar/graph#FriendshipParliamentaryGroup_{GplId}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+
+  # Date Period
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [
+            rr:datatype xsd:string ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toIso8601Period ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:startDate ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:toXsdDateTime ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputDateTime ;
+                                rr:objectMap [ rml:reference "CgaDtini" ]
+                            ]
+                        ] ;
+                        rr:datatype xsd:dateTime
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:endDate ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:toXsdDateTime ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputDateTime ;
+                                rr:objectMap [ rml:reference "CgaDtfim" ]
+                            ]
+                        ] ;
+                        rr:datatype xsd:dateTime
+                    ]
+                ]
+            ] ;
+        ]
+    ] ;
+
+    # Role
+    rr:predicateObjectMap [
+        rr:predicate polis-core:role ;
+        rr:objectMap [
+            rml:reference "CgaCrg" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+    .
+
+<#FriendshipParliamentaryGroupMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Gpa/GruposParlamentaresAmizadeOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#FriendshipParliamentaryGroup_{GplId}" ;
+        rr:class polis-mpact:FriendshipParliamentaryGroup
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "GplId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "GplNo" ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Leg
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{GplSelLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    .
