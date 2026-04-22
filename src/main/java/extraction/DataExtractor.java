@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public abstract class DataExtractor {
+    // TODO: The work done in this class can very well be parallelized.
 
     public void extract() {
         Path sourcePath = SOURCE_PATH();

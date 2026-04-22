@@ -2,20 +2,22 @@ package rdf.mapping.functions;
 
 import java.text.Normalizer;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class Normalize {
 
+    public static final Pattern MARKS        = Pattern.compile("\\p{M}+");
+    public static final Pattern NON_ALNUM    = Pattern.compile("[^\\p{Alnum}\\s]");
+    public static final Pattern WHITESPACE   = Pattern.compile("\\s+");
+
     public static String normalize(String input) {
-        if (input == null) {
-            return null;
-        }
+    if (input == null) return null;
 
-        String trimmed = input.trim();
-        String lowercase = trimmed.toLowerCase(Locale.ROOT);
-        String decomposed = Normalizer.normalize(lowercase, Normalizer.Form.NFD);
-        String withoutAccents = decomposed.replaceAll("\\p{M}+", "");
-        String withoutSpecialChars = withoutAccents.replaceAll("[^\\p{Alnum}\\s]", "");
-
-        return withoutSpecialChars.replaceAll("\\s+", "-");
-    }
+    String decomposed = Normalizer.normalize(input.trim().toLowerCase(Locale.ROOT), Normalizer.Form.NFD);
+    return WHITESPACE.matcher(
+               NON_ALNUM.matcher(
+                   MARKS.matcher(decomposed).replaceAll("")
+               ).replaceAll("")
+           ).replaceAll("-");
+}
 }
