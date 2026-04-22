@@ -4,7 +4,7 @@ import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class ToEnglish {
+public class ToClass {
 
     private static final String POLIS_CORE_NS = "http://purl.org/polis/ar/core#";
     private static final String POLIS_MPACT_NS = "http://purl.org/polis/ar/mp-activity#";
@@ -65,7 +65,7 @@ public class ToEnglish {
         delegationScopeMap.put("internacional", POLIS_MPACT_NS + "InternationalDelegation");
     }
 
-    public static String toEnglish(String entityName, String className) {
+    public static String toClass(String entityName, String className) {
 
         if (entityName == null || className == null) {
             return null;

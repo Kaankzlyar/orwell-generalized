@@ -734,7 +734,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant pofn:toEnglish ]
+          rr:objectMap [ rr:constant pofn:toClass ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate pofn:entityName ;
@@ -900,7 +900,7 @@
           fnml:functionValue [
             rr:predicateObjectMap [
               rr:predicate fno:executes ;
-              rr:objectMap [ rr:constant pofn:toEnglish ]
+              rr:objectMap [ rr:constant pofn:toClass ]
             ] ;
             rr:predicateObjectMap [
               rr:predicate pofn:entityName ;

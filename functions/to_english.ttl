@@ -6,8 +6,8 @@
 # TODO: Update URI to match where this function is hosted
 @prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
 
-:toEnglish a fno:Function ;
-    fno:name "toEnglish" ;
+:toClass a fno:Function ;
+    fno:name "toClass" ;
     fno:expects ( :entityNameParam :classNameParam ) ;
     fno:returns ( :outputParam ) .
 
@@ -31,12 +31,12 @@
     fno:description "Converted string in English." ;
     fno:type xsd:string .
 
-:toEnglishImplementation a fnoi:JavaClass ;
+:toClassImplementation a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.ToEnglish" .
+    fnoi:class-name "rdf.mapping.functions.ToClass" .
 
-:toEnglishMapping a fno:Mapping ;
-    fno:function :toEnglish ;
-    fno:implementation :toEnglishImplementation ;
-    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toEnglish" ]
+:toClassMapping a fno:Mapping ;
+    fno:function :toClass ;
+    fno:implementation :toClassImplementation ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toClass" ]
 .
