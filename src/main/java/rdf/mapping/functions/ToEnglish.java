@@ -11,11 +11,13 @@ public class ToEnglish {
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();
     private static final HashMap<String, String> schoolTypeMap = new HashMap<>();
+    private static final HashMap<String, String> eventTypeMap = new HashMap<>();
 
     static {
         fillSituationMap();
         fillDutyMap();
         fillSchoolTypeMap();
+        fillEventTypeMap();
     }
 
     private static void fillSituationMap() {
@@ -48,6 +50,13 @@ public class ToEnglish {
         schoolTypeMap.put("secundario/basico", POLIS_MPACT_NS + "BasicSecondary");
     }
 
+    private static void fillEventTypeMap() {
+        eventTypeMap.put("cerimonia", POLIS_MPACT_NS + "Cerimony");
+        eventTypeMap.put("conferencia", POLIS_MPACT_NS + "Conference");
+        eventTypeMap.put("debate", POLIS_MPACT_NS + "Debate");
+        eventTypeMap.put("outros", POLIS_MPACT_NS + "Others");
+    }
+
     public static String toEnglish(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -56,21 +65,18 @@ public class ToEnglish {
 
         String normalizedInput = normalize(entityName);
 
-        String englishName;
-        if (className.equals("situation")) {
-            englishName = situationMap.getOrDefault(normalizedInput, normalizedInput);
+        switch (className) {
+            case "situation":
+                return situationMap.getOrDefault(normalizedInput, normalizedInput);
+            case "duty":
+                return dutyMap.getOrDefault(normalizedInput, normalizedInput);
+            case "schoolType":
+                return schoolTypeMap.getOrDefault(normalizedInput, normalizedInput);
+            case "eventType":
+                return eventTypeMap.getOrDefault(normalizedInput, normalizedInput);
+            default:
+                return null;
         }
-        else if (className.equals("duty")) {
-            englishName = dutyMap.getOrDefault(normalizedInput, normalizedInput);
-        }
-        else if (className.equals("schoolType")) {
-            englishName = schoolTypeMap.getOrDefault(normalizedInput, normalizedInput);
-        }
-        else {
-            return null;
-        }
-
-        return englishName;
     }
 
     private static String normalize(String input) {

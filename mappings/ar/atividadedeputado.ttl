@@ -1182,6 +1182,108 @@
     # Related Commission
     .
 
+<#EventMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Eventos/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Event_{ActId}" ;
+    ] ;
+
+    # Subject
+    rr:predicateObjectMap [
+        rr:predicate dct:subject ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ActAs" ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Type
+    rr:predicateObjectMap [
+        rr:predicate rdf:type ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toEnglish ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:entityName ;
+                    rr:objectMap [ rml:reference "TevTp" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:className ;
+                    rr:objectMap [ rr:constant "eventType" ]
+                ] ;
+            ]
+        ]
+    ] ;
+
+    # Date Period
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [
+            rr:datatype xsd:string ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toIso8601Period ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:startDate ;
+                    rr:objectMap [
+                        rml:reference "ActDtdes1" ;
+                        rr:datatype xsd:date
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:endDate ;
+                    rr:objectMap [
+                        rml:reference "ActDtdes2" ;
+                        rr:datatype xsd:date
+                    ]
+                ]
+            ] ;
+        ]
+    ] ;
+    
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Location
+    rr:predicateObjectMap [
+        rr:predicate schema:location ;
+        rr:objectMap [ 
+            rml:reference "ActLoc" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Related Commission
+    .
+
 <#AuditionThirdPartyEntityMap> a rr:TriplesMap ;
     
     rml:logicalSource [
