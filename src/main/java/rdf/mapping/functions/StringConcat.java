@@ -3,9 +3,10 @@ package rdf.mapping.functions;
 public class StringConcat {
 
     public static String stringConcat(String leftPart, String rightPart) {
-        String left = leftPart == null ? "" : leftPart;
-        String right = rightPart == null ? "" : rightPart;
+        if (leftPart == null || rightPart == null) {
+            return null;
+        }
 
-        return left + right;
+        return leftPart + rightPart;
     }
 }
