@@ -21,6 +21,7 @@
 @prefix prov:   <https://www.w3.org/ns/prov-o#> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
 @prefix qudt:   <http://qudt.org/schema/qudt/> .
 @prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
 @prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
@@ -1486,4 +1487,172 @@
             rr:datatype xsd:string
         ]
     ] ;
+    .
+
+<#TemporaryDelegationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlE/DelegacoesEventuaisOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#TemporaryDelegation_{DevId}" ;
+        rr:class polis-mpact:TemporaryDelegation
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "DevId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "DevNo" ; ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+    
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{DevSelLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Legislative Session
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislativeSession ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Session_{DevSelNr}_of_{DevSelLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Date Period (with conversion to xsd:dateTime)
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [
+            rr:datatype xsd:string ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toIso8601Period ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:startDate ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:toXsdDateTime ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputDateTime ;
+                                rr:objectMap [ rml:reference "DevDtini" ]
+                            ]
+                        ] ;
+                        rr:datatype xsd:dateTime
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:endDate ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:toXsdDateTime ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputDateTime ;
+                                rr:objectMap [ rml:reference "DevDtfim" ]
+                            ]
+                        ] ;
+                        rr:datatype xsd:dateTime
+                    ]
+                ]
+            ] ;
+        ]
+    ] ;
+
+    # Location
+    rr:predicateObjectMap [
+        rr:predicate sem:hasPlace ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Place_{DevLoc}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+
+    # Scope
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:hasDelegationScope ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toEnglish ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:entityName ;
+                    rr:objectMap [ rml:reference "DevTp" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:className ;
+                    rr:objectMap [ rr:constant "delegationScope" ]
+                ] ;
+            ]
+        ]
+    ] ; 
+    .
+
+<#PlaceMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlE/DelegacoesEventuaisOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Place_{DevLoc}" ;
+        rr:class sem:Place
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:normalize ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputString ;
+                    rr:objectMap [ rml:reference "DevLoc" ; ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] 
     .

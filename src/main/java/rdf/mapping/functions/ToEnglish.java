@@ -12,12 +12,15 @@ public class ToEnglish {
     private static final HashMap<String, String> dutyMap = new HashMap<>();
     private static final HashMap<String, String> schoolTypeMap = new HashMap<>();
     private static final HashMap<String, String> eventTypeMap = new HashMap<>();
+    private static final HashMap<String, String> delegationScopeMap = new HashMap<>();
 
     static {
         fillSituationMap();
         fillDutyMap();
         fillSchoolTypeMap();
         fillEventTypeMap();
+        fillDelegationScopeMap();
+
     }
 
     private static void fillSituationMap() {
@@ -57,6 +60,11 @@ public class ToEnglish {
         eventTypeMap.put("outros", POLIS_MPACT_NS + "Others");
     }
 
+    private static void fillDelegationScopeMap() {
+        delegationScopeMap.put("nacional", POLIS_MPACT_NS + "NationalDelegation");
+        delegationScopeMap.put("internacional", POLIS_MPACT_NS + "InternationalDelegation");
+    }
+
     public static String toEnglish(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -74,6 +82,8 @@ public class ToEnglish {
                 return schoolTypeMap.getOrDefault(normalizedInput, normalizedInput);
             case "eventType":
                 return eventTypeMap.getOrDefault(normalizedInput, normalizedInput);
+            case "delegationScope":
+                return delegationScopeMap.getOrDefault(normalizedInput, normalizedInput);
             default:
                 return null;
         }
