@@ -1194,6 +1194,15 @@
         rr:template "http://purl.org/polis/ar/graph#Event_{ActId}" ;
     ] ;
 
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "ActId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
@@ -1238,27 +1247,8 @@
     rr:predicateObjectMap [
         rr:predicate dct:date ;
         rr:objectMap [
-            rr:datatype xsd:string ;
-            fnml:functionValue [
-                rr:predicateObjectMap [
-                    rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:toIso8601Period ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate pofn:startDate ;
-                    rr:objectMap [
-                        rml:reference "ActDtdes1" ;
-                        rr:datatype xsd:date
-                    ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate pofn:endDate ;
-                    rr:objectMap [
-                        rml:reference "ActDtdes2" ;
-                        rr:datatype xsd:date
-                    ]
-                ]
-            ] ;
+            rml:reference "ActDtent" ;
+            rr:datatype xsd:date ;
         ]
     ] ;
     
@@ -1268,6 +1258,15 @@
         rr:predicate polis-core:belongsToLegislature ;
         rr:objectMap [ 
             rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Legislative Session
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislativeSession ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Session_{ActSl}_of_{ActLg}" ;
             rr:termType rr:IRI ;
         ]
     ] ;
