@@ -18,7 +18,7 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix org:    <http://www.w3.org/ns/org#> .
-@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix prov:   <https://www.w3.org/ns/prov-o> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix qudt:   <http://qudt.org/schema/qudt/> .
@@ -975,15 +975,6 @@
         rr:objectMap [ 
             rml:reference "AccDtaud" ;
             rr:datatype xsd:date
-        ]
-    ] ;
-
-    # Location
-    rr:predicateObjectMap [
-        rr:predicate schema:location ;
-        rr:objectMap [ 
-            rml:reference "ActLoc" ;
-            rr:datatype xsd:string
         ]
     ] ;
 
