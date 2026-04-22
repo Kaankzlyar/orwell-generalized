@@ -14,14 +14,14 @@
 :inputStringParam a fno:Parameter ;
     fno:predicate :inputString ;
     fno:name "inputString" ;
-    fno:description "Input string to normalize (trim, lowercase, remove diacritics)." ;
+    fno:description "Input string to normalize (trim, lowercase, remove diacritics, remove punctuation and hyphenate spaces)." ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean .
 
 :normalizedOutputParam a fno:Output ;
     fno:predicate :output ;
     fno:name "output" ;
-    fno:description "Normalized string (trimmed, lowercased, diacritics removed)." ;
+    fno:description "Normalized string (trimmed, lowercased, diacritics removed, punctuation removed, spaces hyphenated)." ;
     fno:type xsd:string .
 
 :normalizeImpl a fnoi:JavaClass ;
