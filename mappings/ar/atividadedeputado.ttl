@@ -18,7 +18,7 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix org:    <http://www.w3.org/ns/org#> .
-@prefix prov:   <https://www.w3.org/ns/prov-o> .
+@prefix prov:   <https://www.w3.org/ns/prov-o#> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix qudt:   <http://qudt.org/schema/qudt/> .
@@ -1010,17 +1010,160 @@
     rr:predicateObjectMap [
         rr:predicate prov:wasAssociatedWith ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#ThirdPartyEntityMap> ;
+            rr:parentTriplesMap <#AuditionThirdPartyEntityMap> ;
         ]
     ] ;
     .
 
-<#ThirdPartyEntityMap> a rr:TriplesMap ;
+<#HearingMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audicoes/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Hearing_{ActId}" ;
+        rr:class polis-mpact:Hearing
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "ActId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Subject
+    rr:predicateObjectMap [
+        rr:predicate dct:subject ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ActAs" ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Date
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [ 
+            rml:reference "AccDtaud" ;
+            rr:datatype xsd:date
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # TODO: Related Commission
+    # Vou precisar da lookup table. Tenho que guardar na table uma key com um nome e o valor sendo o seu identificador, que parece ser o seu codigo e a legislatura a que pertence.
+    # rr:predicateObjectMap [
+    #     rr:predicate polis-mpact:relatedCommission ;
+    #     rr:objectMap [ 
+    #         rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
+    #         rr:termType rr:IRI ;
+    #     ]
+    # ]
+
+    # Comission Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:commissionIdentifier ;
+        rr:objectMap [ 
+            rml:reference "ActNr" ;
+            rr:datatype xsd:string ;
+        ]
+    ] ;
+
+    # Third Party Entity
+    rr:predicateObjectMap [
+        rr:predicate prov:wasAssociatedWith ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#HearingThirdPartyEntityMap> ;
+        ]
+    ] ;
+    .
+
+
+<#AuditionThirdPartyEntityMap> a rr:TriplesMap ;
     
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audiencias/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-mpact:ThirdPartyEntity ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:stringConcat ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:leftPart ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#ThirdPartyEntity_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:rightPart ;
+                rr:objectMap [
+                    fnml:functionValue [
+                        rr:predicateObjectMap [
+                            rr:predicate fno:executes ;
+                            rr:objectMap [ rr:constant pofn:normalize ]
+                        ] ;
+                        rr:predicateObjectMap [
+                            rr:predicate pofn:inputString ;
+                            rr:objectMap [ rml:reference "NomeEntidadeExterna" ; ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:string_trim ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "NomeEntidadeExterna" ; ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+    .
+
+<#HearingThirdPartyEntityMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audicoes/ActividadesComissaoOut" ;
     ] ;
 
     rr:subjectMap [
