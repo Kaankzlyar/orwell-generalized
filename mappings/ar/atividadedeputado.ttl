@@ -929,6 +929,27 @@
     ] ;
     .
 
+<#ParliamentarianAuditionRelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audiencias/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-core:didCommissionActivity ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#AuditionMap> ;
+        ]
+    ] ;
+    .
+
 <#AuditionMap> a rr:TriplesMap ;
     
     rml:logicalSource [
@@ -1011,6 +1032,27 @@
         rr:predicate prov:wasAssociatedWith ;
         rr:objectMap [ 
             rr:parentTriplesMap <#AuditionThirdPartyEntityMap> ;
+        ]
+    ] ;
+    .
+
+<#ParliamentarianHearingRelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audicoes/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-core:didCommissionActivity ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#HearingMap> ;
         ]
     ] ;
     .
@@ -1101,6 +1143,27 @@
     ] ;
     .
 
+<#ParliamentarianVisitRelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Deslocacoes/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-core:didCommissionActivity ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#VisitMap> ;
+        ]
+    ] ;
+    .
+
 <#VisitMap> a rr:TriplesMap ;
     
     rml:logicalSource [
@@ -1179,7 +1242,28 @@
         ]
     ] ;
 
-    # Related Commission
+    # TODO: Related Commission
+    .
+
+<#ParliamentarianEventRelationMap> a rr:TriplesMap ;
+    
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Eventos/ActividadesComissaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
+        rr:class m4s:Parliamentarian
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-core:didCommissionActivity ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#EventMap> ;
+        ]
+    ] ;
     .
 
 <#EventMap> a rr:TriplesMap ;
@@ -1280,7 +1364,7 @@
         ]
     ] ;
 
-    # Related Commission
+    # TODO: Related Commission
     .
 
 <#AuditionThirdPartyEntityMap> a rr:TriplesMap ;
