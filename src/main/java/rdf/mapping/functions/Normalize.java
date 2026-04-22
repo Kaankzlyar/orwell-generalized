@@ -13,7 +13,9 @@ public class Normalize {
         String trimmed = input.trim();
         String lowercase = trimmed.toLowerCase(Locale.ROOT);
         String decomposed = Normalizer.normalize(lowercase, Normalizer.Form.NFD);
+        String withoutAccents = decomposed.replaceAll("\\p{M}+", "");
+        String withoutSpecialChars = withoutAccents.replaceAll("[^\\p{Alnum}\\s]", "");
 
-        return decomposed.replaceAll("\\p{M}+", "").replaceAll(",", "-").replaceAll("\\s+", "-").replaceAll("\"", "").replaceAll("/", "-").replaceAll(";", "-");
+        return withoutSpecialChars.replaceAll("\\s+", "-");
     }
 }
