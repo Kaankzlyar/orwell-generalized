@@ -351,18 +351,17 @@ polis-mpact:PermanentDelegationMeetingShape a sh:NodeShape ;
 
     sh:property [
         sh:path dct:date ;
-        sh:datatype xsd:date ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "A Permanent Delegation Meeting must have exactly one date and the date must be a xsd:date"@en
+        sh:message "A Permanent Delegation Meeting must have exactly one date"@en
     ] ;
 
     sh:property [
         sh:path sem:hasPlace ;
         sh:class sem:Place ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Permanent Delegation Meeting must have exactly one place and the place must be a sem:Place"@en
+        sh:message "A Permanent Delegation Meeting must have at most one place and the place must be a sem:Place"@en
     ] .
 
 #################################################################
