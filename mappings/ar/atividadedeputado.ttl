@@ -1177,6 +1177,15 @@
         rr:class polis-mpact:Visit
     ] ;
 
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "ActId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
