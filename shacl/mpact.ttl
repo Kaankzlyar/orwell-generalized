@@ -471,7 +471,7 @@ polis-mpact:CommissionActivityShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Commission Activity must have exactly at most one location and the location must be a xsd:string"@en
+        sh:message "A Commission Activity must have at most one location and the location must be a xsd:string"@en
     ] ;
 
     sh:property [
