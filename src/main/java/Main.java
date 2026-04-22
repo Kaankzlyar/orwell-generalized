@@ -98,18 +98,23 @@ public class Main {
             switch (arg) {
                 case DISABLE_RECONCILIATION_FLAG:
                     RECONCILIATION_ENABLED = false;
+                    System.out.println("Reconciliation disabled.");
                     break;
                 case DISABLE_EXTRACTION_FLAG:
                     EXTRACTION_ENABLED = false;
+                    System.out.println("Extraction disabled.");
                     break;
                 case DISABLE_SHACL_FAILURE:
                     THROW_ON_SHACL_UNCONFORM = false;
+                    System.out.println("SHACL throwing on unconform disabled.");
                     break;
                 case DISABLE_MAPPING_FLAG:
                     MAPPING_ENABLED = false;
+                    System.out.println("Mapping disabled.");
                     break;
                 case ENABLE_LOG_FLAG:
                     LOG_ENABLED = true;
+                    System.out.println("Logging enabled.");
                     break;
                 default:
                     throw new IllegalArgumentException(

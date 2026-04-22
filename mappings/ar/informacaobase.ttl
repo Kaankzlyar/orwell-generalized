@@ -47,7 +47,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -218,7 +218,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -236,7 +236,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -306,7 +306,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -323,7 +323,7 @@
         fnml:functionValue [
           rr:predicateObjectMap [
             rr:predicate fno:executes ;
-            rr:objectMap [ rr:constant grel:string_trim ]
+            rr:objectMap [ rr:constant pofn:trimSafe ]
           ] ;
           rr:predicateObjectMap [
             rr:predicate grel:valueParameter ;
@@ -416,7 +416,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -430,7 +430,8 @@
   rr:predicateObjectMap [
     rr:predicate ocd:rif_mandatoCamera ;
     rr:objectMap [
-      rr:parentTriplesMap <#MandateMap> ;
+      rr:template "http://purl.org/polis/ar/graph#Mandate_{DepId}" ;
+      rr:termType rr:IRI ;
     ]
   ] ;
 
@@ -463,7 +464,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -742,7 +743,7 @@
             fnml:functionValue [
               rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant grel:string_trim ]
+                rr:objectMap [ rr:constant pofn:trimSafe ]
               ] ;
               rr:predicateObjectMap [
                 rr:predicate grel:valueParameter ;
@@ -770,7 +771,7 @@
       fnml:functionValue [
         rr:predicateObjectMap [
           rr:predicate fno:executes ;
-          rr:objectMap [ rr:constant grel:string_trim ]
+          rr:objectMap [ rr:constant pofn:trimSafe ]
         ] ;
         rr:predicateObjectMap [
           rr:predicate grel:valueParameter ;
@@ -908,7 +909,7 @@
                 fnml:functionValue [
                   rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                   ] ;
                   rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -957,4 +958,3 @@
     ]
   ] ;
   .
-

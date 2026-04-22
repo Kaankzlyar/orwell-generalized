@@ -15,8 +15,14 @@ public class RomanNumeralConverter {
     );
 
     public static Integer romanToDecimal(String romanNumeral) {
+        if (romanNumeral == null) {
+            return null;
+        }
 
         String normalized = romanNumeral.trim().toUpperCase();
+        if (normalized.isEmpty()) {
+            return null;
+        }
 
         int total = 0;
         int previous = 0;
@@ -24,6 +30,9 @@ public class RomanNumeralConverter {
         for (int i = normalized.length() - 1; i >= 0; i--) {
             char symbol = normalized.charAt(i);
             Integer value = ROMAN_VALUES.get(symbol);
+            if (value == null) {
+                return null;
+            }
 
             if (value < previous) {
                 total -= value;

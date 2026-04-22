@@ -18,7 +18,16 @@ public class ToHabilitationLevel {
     );
 
     public static String toHabilitationLevel(String inputHabilitationLevel){
-        return habilitationLevelMap.get(inputHabilitationLevel.trim());
+        if (inputHabilitationLevel == null) {
+            return null;
+        }
+
+        String normalized = inputHabilitationLevel.trim();
+        if (normalized.isEmpty()) {
+            return null;
+        }
+
+        return habilitationLevelMap.get(normalized);
     }
 
 }

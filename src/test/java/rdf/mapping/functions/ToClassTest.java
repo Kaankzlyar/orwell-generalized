@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class toClassTest {
+class ToClassTest {
 
     private static final String NS = "http://purl.org/polis/ar/core#";
 

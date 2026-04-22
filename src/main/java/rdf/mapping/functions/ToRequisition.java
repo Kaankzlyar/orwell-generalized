@@ -10,6 +10,9 @@ public class ToRequisition {
         }
 
         String trimmedInput = inputRequisition.trim();
+        if (trimmedInput.isEmpty()) {
+            return null;
+        }
 
         switch (trimmedInput) {
             case "REQ":
@@ -17,7 +20,6 @@ public class ToRequisition {
             case "PER":
                 return MPACT_NS + "Inquiry";
             default:
-                System.err.println("Warning: Unrecognized requisition type '" + inputRequisition + "'. Returning null.");
                 return null;
         }
     }

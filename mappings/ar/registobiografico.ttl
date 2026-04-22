@@ -55,7 +55,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -72,7 +72,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -126,7 +126,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -144,7 +144,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -228,7 +228,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -246,7 +246,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -309,7 +309,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -327,7 +327,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -390,7 +390,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -408,7 +408,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -444,7 +444,8 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasHabilitation ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#HabilitationMap> ;
+            rr:template "http://purl.org/polis/ar/graph#habilitation-{HabId}" ;
+            rr:termType rr:IRI ;
         ]
     ] ;
     .
@@ -471,7 +472,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -489,7 +490,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -522,7 +523,20 @@
         rr:predicate polis-bio:hasHabilitationStatus ;
         rr:objectMap [ 
             rr:termType rr:IRI ;
-            rr:template "http://purl.org/polis/ar/biographic#{HabEstado}"
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/biographic#" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "HabEstado" ]
+                ]
+            ]
         ]
     ] ;
     .

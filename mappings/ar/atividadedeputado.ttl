@@ -60,7 +60,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -99,7 +99,8 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:didRequisition ;
         rr:objectMap [
-            rr:parentTriplesMap <#RequisitionMap> ;
+            rr:template "http://purl.org/polis/ar/graph#Requisition_{ReqId}" ;
+            rr:termType rr:IRI ;
         ]
     ] ;
     .
@@ -142,7 +143,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -169,7 +170,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -220,8 +221,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:toPublicEntityType ;
         rr:objectMap [ 
-            rr:template "http://purl.org/polis/ar/mp-activity#{ReqTp}" ;
             rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/mp-activity#" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "ReqTp" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -349,7 +363,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -454,7 +468,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -480,7 +494,7 @@
                 fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -686,7 +700,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -723,7 +737,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:wasRapporteurIn ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#PublicAccountMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#PublicAccount_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "ActId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -737,8 +765,23 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#PublicAccount_{ActId}" ;
+        rr:termType rr:IRI ;
         rr:class polis-mpact:PublicAccount
+        ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:prefixedIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#PublicAccount_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:value ;
+                rr:objectMap [ rml:reference "ActId" ]
+            ]
+        ]
     ] ;
 
     # Identifier
@@ -775,7 +818,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -812,7 +855,25 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:didParliamentaryActivity ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#ParliamentaryActivityMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:parliamentaryActivityIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:activityType ;
+                    rr:objectMap [ rml:reference "ActTp" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:activityId ;
+                    rr:objectMap [ rml:reference "ActId" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:legislature ;
+                    rr:objectMap [ rml:reference "ActSelLg" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -826,8 +887,27 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#ParliamentaryActivity_{ActTp}_{ActId}_of_{ActSelLg}" ;
+        rr:termType rr:IRI ;
         rr:class polis-mpact:ParliamentaryActivity
+        ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:parliamentaryActivityIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:activityType ;
+                rr:objectMap [ rml:reference "ActTp" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:activityId ;
+                rr:objectMap [ rml:reference "ActId" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:legislature ;
+                rr:objectMap [ rml:reference "ActSelLg" ]
+            ]
+        ]
     ] ;
 
     # Type
@@ -918,7 +998,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -946,7 +1026,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#AuditionMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Audition_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "ActId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -960,8 +1054,23 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Audition_{ActId}" ;
+        rr:termType rr:IRI ;
         rr:class polis-mpact:Audition
+        ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:prefixedIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Audition_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:value ;
+                rr:objectMap [ rml:reference "ActId" ]
+            ]
+        ]
     ] ;
 
     # Identifier
@@ -980,7 +1089,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1053,7 +1162,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#HearingMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Hearing_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "ActId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -1067,8 +1190,23 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Hearing_{ActId}" ;
+        rr:termType rr:IRI ;
         rr:class polis-mpact:Hearing
+        ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:prefixedIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Hearing_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:value ;
+                rr:objectMap [ rml:reference "ActId" ]
+            ]
+        ]
     ] ;
 
     # Identifier
@@ -1087,7 +1225,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1160,7 +1298,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#VisitMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Visit_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "ActId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -1174,8 +1326,23 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Visit_{ActId}" ;
+        rr:termType rr:IRI ;
         rr:class polis-mpact:Visit
+        ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:prefixedIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Visit_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:value ;
+                rr:objectMap [ rml:reference "ActId" ]
+            ]
+        ]
     ] ;
 
     # Identifier
@@ -1194,7 +1361,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1271,7 +1438,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
         rr:objectMap [ 
-            rr:parentTriplesMap <#EventMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Event_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:value ;
+                    rr:objectMap [ rml:reference "ActId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -1285,7 +1466,21 @@
     ] ;
 
     rr:subjectMap [
-        rr:template "http://purl.org/polis/ar/graph#Event_{ActId}" ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:prefixedIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Event_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:value ;
+                rr:objectMap [ rml:reference "ActId" ]
+            ]
+        ]
     ] ;
 
     # Identifier
@@ -1304,7 +1499,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1421,7 +1616,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1477,7 +1672,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1518,7 +1713,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
@@ -1709,7 +1904,7 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:string_trim ]
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate grel:valueParameter ;
