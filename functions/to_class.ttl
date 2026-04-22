@@ -14,21 +14,21 @@
 :entityNameParam a fno:Parameter ;
     fno:predicate :entityName ;
     fno:name "entityName" ;
-    fno:description "Input string to convert to English." ;
+    fno:description "Input string to convert to Class." ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean .
 
 :classNameParam a fno:Parameter ;
     fno:predicate :className ;
     fno:name "className" ;
-    fno:description "The class of the input string (e.g., 'duty', 'situation')." ;
+    fno:description "The class type of the input string (e.g., 'duty', 'situation')." ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean .
 
 :outputParam a fno:Output ;
     fno:predicate :output ;
     fno:name "output" ;
-    fno:description "Converted string in English." ;
+    fno:description "Converted string in Class." ;
     fno:type xsd:string .
 
 :toClassImplementation a fnoi:JavaClass ;
