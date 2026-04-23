@@ -553,53 +553,23 @@
       fnml:functionValue [
           rr:predicateObjectMap [
               rr:predicate fno:executes ;
-              rr:objectMap [ rr:constant pofn:stringConcat ]
+              rr:objectMap [ rr:constant pofn:hashIri ]
           ] ;
           rr:predicateObjectMap [
-              rr:predicate pofn:leftPart ;
+              rr:predicate pofn:prefix ;
               rr:objectMap [ rr:constant "urn:membership:" ]
           ] ;
           rr:predicateObjectMap [
-              rr:predicate pofn:rightPart ;
-              rr:objectMap [
-                  fnml:functionValue [
-                      rr:predicateObjectMap [
-                          rr:predicate fno:executes ;
-                          rr:objectMap [ rr:constant grel:string_sha1 ]
-                      ] ;
-                      rr:predicateObjectMap [
-                          rr:predicate grel:valueParameter ;
-                          rr:objectMap [
-                              fnml:functionValue [
-                                  rr:predicateObjectMap [
-                                      rr:predicate fno:executes ;
-                                      rr:objectMap [ rr:constant grel:array_join ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_array_a ;
-                                      rr:objectMap [ rml:reference "gpSigla" ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_array_a ;
-                                      rr:objectMap [ rml:reference "gpDtInicio" ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_array_a ;
-                                      rr:objectMap [ rml:reference "gpDtFim" ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_string_sep ;
-                                      rr:objectMap [ rr:constant "|" ]
-                                  ]
-                              ]
-                          ]
-                      ]
-                  ]
-              ]
+              rr:predicate pofn:elements ;
+              rr:objectMap [ rml:reference "gpSigla" ]
           ] ;
           rr:predicateObjectMap [
-              rr:predicate grel:p_string_sep ;
-              rr:objectMap [ rr:constant "" ]
+              rr:predicate pofn:elements ;
+              rr:objectMap [ rml:reference "gpDtInicio" ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:elements ;
+              rr:objectMap [ rml:reference "gpDtFim" ]
           ]
       ] ;
   ] ;
@@ -677,53 +647,23 @@
     fnml:functionValue [
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
-            rr:objectMap [ rr:constant pofn:stringConcat ]
+            rr:objectMap [ rr:constant pofn:hashIri ]
         ] ;
         rr:predicateObjectMap [
-            rr:predicate pofn:leftPart ;
+            rr:predicate pofn:prefix ;
             rr:objectMap [ rr:constant "urn:situation:" ]
         ] ;
         rr:predicateObjectMap [
-            rr:predicate pofn:rightPart ;
-            rr:objectMap [
-                fnml:functionValue [
-                    rr:predicateObjectMap [
-                        rr:predicate fno:executes ;
-                        rr:objectMap [ rr:constant grel:string_sha1 ]
-                    ] ;
-                    rr:predicateObjectMap [
-                        rr:predicate grel:valueParameter ;
-                        rr:objectMap [
-                            fnml:functionValue [
-                                rr:predicateObjectMap [
-                                    rr:predicate fno:executes ;
-                                    rr:objectMap [ rr:constant grel:array_join ]
-                                ] ;
-                                rr:predicateObjectMap [
-                                    rr:predicate grel:p_array_a ;
-                                    rr:objectMap [ rml:reference "sioDes" ]
-                                ] ;
-                                rr:predicateObjectMap [
-                                    rr:predicate grel:p_array_a ;
-                                    rr:objectMap [ rml:reference "sioDtInicio" ]
-                                ] ;
-                                rr:predicateObjectMap [
-                                    rr:predicate grel:p_array_a ;
-                                    rr:objectMap [ rml:reference "sioDtFim" ]
-                                ] ;
-                                rr:predicateObjectMap [
-                                    rr:predicate grel:p_string_sep ;
-                                    rr:objectMap [ rr:constant "|" ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+            rr:predicate pofn:elements ;
+            rr:objectMap [ rml:reference "sioDes" ]
         ] ;
         rr:predicateObjectMap [
-            rr:predicate grel:p_string_sep ;
-            rr:objectMap [ rr:constant "" ]
+            rr:predicate pofn:elements ;
+            rr:objectMap [ rml:reference "sioDtInicio" ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate pofn:elements ;
+            rr:objectMap [ rml:reference "sioDtFim" ]
         ]
     ] ;
   ] ;
@@ -843,53 +783,23 @@
       fnml:functionValue [
           rr:predicateObjectMap [
               rr:predicate fno:executes ;
-              rr:objectMap [ rr:constant pofn:stringConcat ]
+              rr:objectMap [ rr:constant pofn:hashIri ]
           ] ;
           rr:predicateObjectMap [
-              rr:predicate pofn:leftPart ;
+              rr:predicate pofn:prefix ;
               rr:objectMap [ rr:constant "urn:duty:" ]
           ] ;
           rr:predicateObjectMap [
-              rr:predicate pofn:rightPart ;
-              rr:objectMap [
-                  fnml:functionValue [
-                      rr:predicateObjectMap [
-                          rr:predicate fno:executes ;
-                          rr:objectMap [ rr:constant grel:string_sha1 ]
-                      ] ;
-                      rr:predicateObjectMap [
-                          rr:predicate grel:valueParameter ;
-                          rr:objectMap [
-                              fnml:functionValue [
-                                  rr:predicateObjectMap [
-                                      rr:predicate fno:executes ;
-                                      rr:objectMap [ rr:constant grel:array_join ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_array_a ;
-                                      rr:objectMap [ rml:reference "carDes" ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_array_a ;
-                                      rr:objectMap [ rml:reference "carDtInicio" ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_array_a ;
-                                      rr:objectMap [ rml:reference "carDtFim" ]
-                                  ] ;
-                                  rr:predicateObjectMap [
-                                      rr:predicate grel:p_string_sep ;
-                                      rr:objectMap [ rr:constant "|" ]
-                                  ]
-                              ]
-                          ]
-                      ]
-                  ]
-              ]
+              rr:predicate pofn:elements ;
+              rr:objectMap [ rml:reference "carDes" ]
           ] ;
           rr:predicateObjectMap [
-              rr:predicate grel:p_string_sep ;
-              rr:objectMap [ rr:constant "" ]
+              rr:predicate pofn:elements ;
+              rr:objectMap [ rml:reference "carDtInicio" ]
+          ] ;
+          rr:predicateObjectMap [
+              rr:predicate pofn:elements ;
+              rr:objectMap [ rml:reference "carDtFim" ]
           ]
       ] ;
   ] ;

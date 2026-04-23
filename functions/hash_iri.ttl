@@ -1,0 +1,43 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:hashIri a fno:Function ;
+    fno:name "hashIri" ;
+    fno:expects ( :prefixParam :elementsParam ) ;
+    fno:returns ( :outputParam ) .
+
+:prefixParam a fno:Parameter ;
+    fno:predicate :prefix ;
+    fno:name "prefix" ;
+    fno:description "The IRI prefix to prepend to the hash." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:elementsParam a fno:Parameter ;
+    fno:predicate :elements ;
+    fno:name "elements" ;
+    fno:description "Variable number of elements to hash and concat." ;
+    fno:type rdf:List ;
+    fno:required "true"^^xsd:boolean ;
+    fno:ordered "true"^^xsd:boolean .
+
+:outputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "IRI with prefix followed by SHA-1 hash of pipe-separated elements." ;
+    fno:type xsd:string .
+
+:hashIriImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.HashIri" .
+
+:hashIriMapping a fno:Mapping ;
+    fno:function :hashIri ;
+    fno:implementation :hashIriImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "hashIri" ]
+.
