@@ -508,11 +508,15 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:toHabilitationLevel]
+                    rr:objectMap [ rr:constant pofn:toClass]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:inputHabilitationLevel ;
+                    rr:predicate pofn:entityName ;
                     rr:objectMap [ rml:reference "HabTipoId"]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:className ;
+                    rr:objectMap [ rr:constant "habilitationLevel" ]
                 ]
             ]
         ] ;

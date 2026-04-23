@@ -8,11 +8,15 @@ public class ToClass {
 
     private static final String POLIS_CORE_NS = "http://purl.org/polis/ar/core#";
     private static final String POLIS_MPACT_NS = "http://purl.org/polis/ar/mp-activity#";
+    private static final String POLIS_BIO_NS = "http://purl.org/polis/ar/biographic#";
+
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();
     private static final HashMap<String, String> schoolTypeMap = new HashMap<>();
     private static final HashMap<String, String> eventTypeMap = new HashMap<>();
     private static final HashMap<String, String> delegationScopeMap = new HashMap<>();
+    private static final HashMap<String, String> habilitationLevelMap = new HashMap<>();
+    private static final HashMap<String, String> requisitionMap = new HashMap<>();
 
     static {
         fillSituationMap();
@@ -20,7 +24,8 @@ public class ToClass {
         fillSchoolTypeMap();
         fillEventTypeMap();
         fillDelegationScopeMap();
-
+        fillHabilitationLevelMap();
+        fillRequisitionMap();
     }
 
     private static void fillSituationMap() {
@@ -65,6 +70,23 @@ public class ToClass {
         delegationScopeMap.put("internacional", POLIS_MPACT_NS + "InternationalDelegation");
     }
 
+    private static void fillHabilitationLevelMap() {
+        habilitationLevelMap.put("0.0", POLIS_BIO_NS + "HighestLevelNotInformed");
+        habilitationLevelMap.put("9.0", POLIS_BIO_NS + "PrimarySchool");
+        habilitationLevelMap.put("10.0", POLIS_BIO_NS + "MiddleSchool");
+        habilitationLevelMap.put("11.0", POLIS_BIO_NS + "EarlyHighSchool");
+        habilitationLevelMap.put("12.0", POLIS_BIO_NS + "HighSchool");
+        habilitationLevelMap.put("13.0", POLIS_BIO_NS + "HigherEducation");
+        habilitationLevelMap.put("14.0", POLIS_BIO_NS + "Bachelor");
+        habilitationLevelMap.put("15.0", POLIS_BIO_NS + "Master");
+        habilitationLevelMap.put("16.0", POLIS_BIO_NS + "Postgrad");
+    }
+
+    private static void fillRequisitionMap() {
+        requisitionMap.put("req", POLIS_MPACT_NS + "Request");
+        requisitionMap.put("per", POLIS_MPACT_NS + "Inquiry");
+    }
+
     public static String toClass(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -84,7 +106,12 @@ public class ToClass {
                 return eventTypeMap.getOrDefault(normalizedInput, normalizedInput);
             case "delegationScope":
                 return delegationScopeMap.getOrDefault(normalizedInput, normalizedInput);
+            case "habilitationLevel":
+                return habilitationLevelMap.getOrDefault(normalizedInput, normalizedInput);
+            case "requisitionType":
+                return requisitionMap.getOrDefault(normalizedInput, normalizedInput);
             default:
+                System.out.println("Unknown className: " + className + " for entityName: " + entityName);
                 return null;
         }
     }

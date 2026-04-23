@@ -109,6 +109,7 @@ polis-bio:HabilitationShape a sh:NodeShape ;
     sh:property [
         sh:path polis-bio:isHabilitationLevel ;
         sh:in (
+            polis-bio:HighestLevelNotInformed
             polis-bio:PrimarySchool
             polis-bio:MiddleSchool
             polis-bio:EarlyHighSchool

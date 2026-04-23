@@ -140,6 +140,12 @@
     rdfs:label "Incomplete"@en, "Incompleto"@pt ;
     dct:description "Indicates that an MP has not completed a given habilitation"@en, "Indica que um MP não completou uma dada habilitação"@pt .
 
+:HighestLevelNotInformed a :HabilitationLevel, owl:NamedIndividual ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/biographic#> ;
+    rdfs:label "Highest Level Not Informed"@en, "Nível mais alto não informado"@pt ;
+    dbo:number "0"^^xsd:nonNegativeInteger;
+    dct:description "Indicates that the highest level of habilitation of an MP is not informed"@en, "Indica que o nível mais alto de habilitação de um MP não é informado"@pt .
+
 :PrimarySchool a :HabilitationLevel, owl:NamedIndividual ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/biographic#> ;
     rdfs:label "Primary School"@en, "Ensino Primário"@pt ;
