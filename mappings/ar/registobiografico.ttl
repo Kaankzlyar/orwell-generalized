@@ -526,14 +526,14 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/biographic#" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "HabEstado" ]
                 ]
             ]

@@ -225,14 +225,14 @@
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/mp-activity#" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "ReqTp" ]
                 ]
             ]
@@ -681,14 +681,14 @@ rr:subjectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#PublicAccount_" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "ActId" ]
                 ]
             ]
@@ -711,14 +711,14 @@ rr:subjectMap [
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:prefixedIri ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:prefix ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#PublicAccount_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:value ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [ rml:reference "ActId" ]
             ]
         ]
@@ -799,20 +799,30 @@ rr:subjectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:parliamentaryActivityIri ]
+                    rr:objectMap [ rr:constant pofn:hashIri ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:activityType ;
-                    rr:objectMap [ rml:reference "ActTp" ]
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:paract:" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:activityId ;
-                    rr:objectMap [ rml:reference "ActId" ]
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [
+                        rml:reference "ActTp" ;
+                    ]
+                ]  ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [
+                        rml:reference "ActId" ;
+                    ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:legislature ;
-                    rr:objectMap [ rml:reference "ActSelLg" ]
-                ]
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [
+                        rml:reference "ActSelLg" ;
+                    ]
+            ] ;
             ]
         ]
     ] ;
@@ -828,25 +838,34 @@ rr:subjectMap [
 
     rr:subjectMap [
         rr:termType rr:IRI ;
-        rr:class polis-mpact:ParliamentaryActivity
-        ;
+        rr:class polis-mpact:ParliamentaryActivity;
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:parliamentaryActivityIri ]
+                rr:objectMap [ rr:constant pofn:hashIri ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:activityType ;
-                rr:objectMap [ rml:reference "ActTp" ]
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:paract:" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:activityId ;
-                rr:objectMap [ rml:reference "ActId" ]
+                rr:predicate pofn:elements ;
+                rr:objectMap [
+                    rml:reference "ActTp" ;
+                ]
+            ]  ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [
+                    rml:reference "ActId" ;
+                ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:legislature ;
-                rr:objectMap [ rml:reference "ActSelLg" ]
-            ]
+                rr:predicate pofn:elements ;
+                rr:objectMap [
+                    rml:reference "ActSelLg" ;
+                ]
+            ] ;
         ]
     ] ;
 
@@ -970,14 +989,14 @@ rr:subjectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Audition_" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "ActId" ]
                 ]
             ]
@@ -1000,14 +1019,14 @@ rr:subjectMap [
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:prefixedIri ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:prefix ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Audition_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:value ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [ rml:reference "ActId" ]
             ]
         ]
@@ -1106,14 +1125,14 @@ rr:subjectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Hearing_" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "ActId" ]
                 ]
             ]
@@ -1136,14 +1155,14 @@ rr:subjectMap [
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:prefixedIri ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:prefix ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Hearing_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:value ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [ rml:reference "ActId" ]
             ]
         ]
@@ -1242,14 +1261,14 @@ rr:subjectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Visit_" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "ActId" ]
                 ]
             ]
@@ -1267,19 +1286,18 @@ rr:subjectMap [
 
     rr:subjectMap [
         rr:termType rr:IRI ;
-        rr:class polis-mpact:Visit
-        ;
+        rr:class polis-mpact:Visit ;
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:prefixedIri ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:prefix ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Visit_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:value ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [ rml:reference "ActId" ]
             ]
         ]
@@ -1382,14 +1400,14 @@ rr:subjectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:prefixedIri ]
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:prefix ;
+                    rr:predicate pofn:leftPart ;
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Event_" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:value ;
+                    rr:predicate pofn:rightPart ;
                     rr:objectMap [ rml:reference "ActId" ]
                 ]
             ]
@@ -1410,14 +1428,14 @@ rr:subjectMap [
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant pofn:prefixedIri ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:prefix ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Event_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate pofn:value ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [ rml:reference "ActId" ]
             ]
         ]
