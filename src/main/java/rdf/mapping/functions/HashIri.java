@@ -11,9 +11,9 @@ public class HashIri {
             return null;
         }
 
-        StringBuilder toHash = new StringBuilder(prefix);
+        StringBuilder toHash = new StringBuilder();
         for (int i = 0; i < elements.length; i++) {
-            toHash.append("|").append(elements[i]);
+            toHash.append(elements[i]);
         }
         
         try {
