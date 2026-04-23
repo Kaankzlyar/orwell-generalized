@@ -1752,7 +1752,7 @@ rr:subjectMap [
             ] ;
             rr:predicateObjectMap [
                 rr:predicate pofn:elements ;
-                rr:objectMap [ rml:reference "RenDtini" ]
+                rr:objectMap [ rml:reference "RenDtIni" ]
             ] ;
             rr:predicateObjectMap [
                 rr:predicate pofn:elements ;
