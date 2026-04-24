@@ -10,6 +10,7 @@
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix dbo:    <http://dbpedia.org/ontology/> .
 @prefix dct:    <http://purl.org/dc/terms/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vann:   <http://purl.org/vocab/vann/> .
 @prefix ocd:    <http://dati.camera.it/ocd/> .
@@ -132,4 +133,61 @@
             rr:termType rr:IRI ;
         ]
     ] ;
+
+    # Content
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasContent ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:content:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "IniLinkTexto" ]
+                ]
+            ]
+        ]
+    ] ;
+    .
+
+<#ContentMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniLinkTexto" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class bibo:Document ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:content:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "." ]
+            ]
+        ]
+    ] ;
+
+    # URL
+    rr:predicateObjectMap [
+        rr:predicate schema:url ;
+        rr:objectMap [ rml:reference "." ]
+    ] ;
+
     .

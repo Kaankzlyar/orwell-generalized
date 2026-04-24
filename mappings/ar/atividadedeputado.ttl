@@ -273,7 +273,7 @@
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
     ] ;
 
-rr:subjectMap [
+    rr:subjectMap [
         rr:termType rr:IRI ;
         rr:class polis-mpact:YouthParliamentActivity ;
         fnml:functionValue [
