@@ -9,6 +9,7 @@ public class ToClass {
     private static final String POLIS_CORE_NS = "http://purl.org/polis/ar/core#";
     private static final String POLIS_MPACT_NS = "http://purl.org/polis/ar/mp-activity#";
     private static final String POLIS_BIO_NS = "http://purl.org/polis/ar/biographic#";
+    private static final String POLIS_INI_NS = "http://purl.org/polis/ar/initiatives#";
 
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();
@@ -17,6 +18,7 @@ public class ToClass {
     private static final HashMap<String, String> delegationScopeMap = new HashMap<>();
     private static final HashMap<String, String> habilitationLevelMap = new HashMap<>();
     private static final HashMap<String, String> requisitionMap = new HashMap<>();
+    private static final HashMap<String, String> initiativeMap = new HashMap<>();
 
     static {
         fillSituationMap();
@@ -26,6 +28,7 @@ public class ToClass {
         fillDelegationScopeMap();
         fillHabilitationLevelMap();
         fillRequisitionMap();
+        fillInitiativeMap();
     }
 
     private static void fillSituationMap() {
@@ -87,6 +90,20 @@ public class ToClass {
         requisitionMap.put("per", POLIS_MPACT_NS + "Inquiry");
     }
 
+    private static void fillInitiativeMap() {
+        initiativeMap.put("proposta de lei", POLIS_INI_NS + "LawProposal");
+        initiativeMap.put("projeto de lei", POLIS_INI_NS + "LawProject");
+        initiativeMap.put("proposta de resolucao", POLIS_INI_NS + "ResolutionProposal");
+        initiativeMap.put("projeto de resolucao", POLIS_INI_NS + "ResolutionProject");
+        initiativeMap.put("ratificacao", POLIS_INI_NS + "Ratification");
+        initiativeMap.put("projeto de deliberacao", POLIS_INI_NS + "DeliberationProject");
+        initiativeMap.put("apreciacao parlamentar", POLIS_INI_NS + "ParliamentaryAppreciation");
+        initiativeMap.put("inquerito parlamentar", POLIS_INI_NS + "ParliamentaryInquiry");
+        initiativeMap.put("iniciativa popular de referendo", POLIS_INI_NS + "PopularReferendumInitiative");
+        initiativeMap.put("projeto de revisao constitucional", POLIS_INI_NS + "ConstitutionalRevisionProject");
+        initiativeMap.put("projeto de regimento", POLIS_INI_NS + "RulesOfProcedureProject");
+    }
+
     public static String toClass(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -110,6 +127,8 @@ public class ToClass {
                 return habilitationLevelMap.getOrDefault(normalizedInput, normalizedInput);
             case "requisitionType":
                 return requisitionMap.getOrDefault(normalizedInput, normalizedInput);
+            case "initiativeType":
+                return initiativeMap.getOrDefault(normalizedInput, normalizedInput);
             default:
                 System.out.println("Unknown className: " + className + " for entityName: " + entityName);
                 return null;
