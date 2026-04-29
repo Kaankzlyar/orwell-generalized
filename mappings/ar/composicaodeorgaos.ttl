@@ -91,9 +91,18 @@
     # Number
     rr:predicateObjectMap [
         rr:predicate dbo:number ;
-        rr:objectMap [ 
-            rml:reference "numeroOrgao" ;
-            rr:datatype xsd:nonNegativeInteger 
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stripDecimal ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "numeroOrgao" ]
+                ]
+            ] ;
+            rr:datatype xsd:nonNegativeInteger
         ] ;
     ]
     .

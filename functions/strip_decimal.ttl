@@ -1,0 +1,34 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:stripDecimal a fno:Function ;
+    fno:name "stripDecimal" ;
+    fno:expects ( :stripDecimalValueParam ) ;
+    fno:returns ( :stripDecimalOutputParam ) .
+
+:stripDecimalValueParam a fno:Parameter ;
+    fno:predicate grel:valueParameter ;
+    fno:name "value" ;
+    fno:description "String value to strip trailing .0 from." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:stripDecimalOutputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "String with trailing '.0' removed, or null when the input is null." ;
+    fno:type xsd:string .
+
+:stripDecimalImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.StripDecimal" .
+
+:stripDecimalMapping a fno:Mapping ;
+    fno:function :stripDecimal ;
+    fno:implementation :stripDecimalImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "stripDecimal" ] .
