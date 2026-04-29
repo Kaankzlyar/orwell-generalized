@@ -436,6 +436,7 @@ polis-mpact:CommissionActivityShape a sh:NodeShape ;
     sh:targetClass polis-mpact:Debate ;
     sh:targetClass polis-mpact:Cerimony ;
     sh:targetClass polis-mpact:Conference ;
+    sh:targetClass polis-mpact:Colloquium ;
     sh:targetClass polis-mpact:Others ;
     sh:targetClass polis-mpact:Visit ;
     sh:targetClass polis-mpact:Hearing ;

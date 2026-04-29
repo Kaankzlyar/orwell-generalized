@@ -1526,8 +1526,16 @@
     rr:predicateObjectMap [
         rr:predicate schema:location ;
         rr:objectMap [ 
-            rml:reference "ActLoc" ;
-            rr:datatype xsd:string
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ActLoc" ]
+                ]
+            ] ;
         ]
     ] ;
 

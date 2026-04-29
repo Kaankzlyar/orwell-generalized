@@ -322,6 +322,12 @@
 	rdfs:comment "A conference."@en, "Uma conferência."@pt ;
 	rdfs:subClassOf :Event .
 
+:Colloquium a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Colloquium"@en, "Colóquio"@pt ;
+	rdfs:comment "A colloquium."@en, "Um colóquio."@pt ;
+	rdfs:subClassOf :Event .
+
 :Others a owl:Class ;
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "Others"@en, "Outros"@pt ;

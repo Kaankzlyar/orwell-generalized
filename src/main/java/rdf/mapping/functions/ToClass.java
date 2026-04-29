@@ -65,6 +65,7 @@ public class ToClass {
         eventTypeMap.put("cerimonia", POLIS_MPACT_NS + "Cerimony");
         eventTypeMap.put("conferencia", POLIS_MPACT_NS + "Conference");
         eventTypeMap.put("debate", POLIS_MPACT_NS + "Debate");
+        eventTypeMap.put("coloquio", POLIS_MPACT_NS + "Colloquium");
         eventTypeMap.put("outros", POLIS_MPACT_NS + "Others");
     }
 
