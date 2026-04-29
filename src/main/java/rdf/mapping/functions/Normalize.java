@@ -1,23 +1,11 @@
 package rdf.mapping.functions;
 
-import java.text.Normalizer;
-import java.util.Locale;
-import java.util.regex.Pattern;
+import utils.NormalizeString;
 
 public class Normalize {
 
-    public static final Pattern MARKS        = Pattern.compile("\\p{M}+");
-    public static final Pattern NON_ALNUM    = Pattern.compile("[^\\p{Alnum}\\s]");
-    public static final Pattern WHITESPACE   = Pattern.compile("\\s+");
-
     public static String normalize(String input) {
-    if (input == null) return null;
+        return NormalizeString.normalize(input);
+    }
+}
 
-    String decomposed = Normalizer.normalize(input.trim().toLowerCase(Locale.ROOT), Normalizer.Form.NFD);
-    return WHITESPACE.matcher(
-               NON_ALNUM.matcher(
-                   MARKS.matcher(decomposed).replaceAll("")
-               ).replaceAll("")
-           ).replaceAll("-");
-}
-}

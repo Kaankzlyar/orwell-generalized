@@ -45,7 +45,8 @@ public class Main {
         benchmark.startTiming("Hooks");
         Registry registry = new Registry();
         registry.register(
-                new ParliamentarianReconciliation()
+                new ParliamentarianReconciliation(),
+                new CommissionInformation()
         );
         registry.run();
         benchmark.endTiming();

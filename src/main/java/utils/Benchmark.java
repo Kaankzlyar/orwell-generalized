@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class Benchmark {
+
+    private record StepTiming(String name, long millis) {}
+
     private final List<StepTiming> stepTimings = new ArrayList<>();
 
     private long currentStepStartTime;

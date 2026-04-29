@@ -41,34 +41,34 @@ public class ParliamentarianReconciliation extends Hook {
                 int event = reader.next();
                 if (event == XMLStreamConstants.START_ELEMENT) {
                     String name = reader.getLocalName();
-                    if ("DetalheLegislatura".equals(name)) {
+                    if (name.equals("DetalheLegislatura")) {
                         inDetalheLegislatura = true;
                         continue;
                     }
-                    if (inDetalheLegislatura && "sigla".equals(name) && legislature == null) {
+                    if (inDetalheLegislatura && name.equals("sigla") && legislature == null) {
                         legislature = readElementText(reader);
                         continue;
                     }
-                    if ("DadosDeputadoOrgaoPlenario".equals(name)) {
+                    if (name.equals("DadosDeputadoOrgaoPlenario")) {
                         inDeputado = true;
                         depId = null;
                         depName = null;
                         continue;
                     }
-                    if (inDeputado && "DepCadId".equals(name)) {
+                    if (inDeputado && name.equals("DepCadId")) {
                         depId = readElementText(reader);
                         continue;
                     }
-                    if (inDeputado && "DepNomeParlamentar".equals(name)) {
+                    if (inDeputado && name.equals("DepNomeParlamentar")) {
                         depName = readElementText(reader);
                     }
                 } else if (event == XMLStreamConstants.END_ELEMENT) {
                     String name = reader.getLocalName();
-                    if ("DetalheLegislatura".equals(name)) {
+                    if (name.equals("DetalheLegislatura")) {
                         inDetalheLegislatura = false;
                         continue;
                     }
-                    if ("DadosDeputadoOrgaoPlenario".equals(name)) {
+                    if (name.equals("DadosDeputadoOrgaoPlenario")) {
                         if (legislature != null && depId != null && depName != null) {
                             String key = legislature + ":" + depName.trim().toLowerCase();
                             registerLookupTable(context, key, depId.trim());
