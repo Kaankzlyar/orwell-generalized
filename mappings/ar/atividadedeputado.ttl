@@ -1075,8 +1075,6 @@
         ]
     ] ;
 
-    # TODO: Related Commission
-    # Vou precisar da lookup table. Tenho que guardar na table uma key com um nome e o valor sendo o seu identificador, que parece ser o seu codigo e a legislatura a que pertence.
     rr:predicateObjectMap [
         rr:predicate polis-mpact:relatedCommission ;
         rr:objectMap [ 
@@ -1244,14 +1242,45 @@
     ] ;
 
     # TODO: Related Commission
-    # Vou precisar da lookup table. Tenho que guardar na table uma key com um nome e o valor sendo o seu identificador, que parece ser o seu codigo e a legislatura a que pertence.
-    # rr:predicateObjectMap [
-    #     rr:predicate polis-mpact:relatedCommission ;
-    #     rr:objectMap [ 
-    #         rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
-    #         rr:termType rr:IRI ;
-    #     ]
-    # ]
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:relatedCommission ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Commission_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:lookup ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupTable ;
+                                rr:objectMap [ rr:constant "CommissionInformation" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupValue ;
+                                rr:objectMap [ rml:reference "CmsNo" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupValue ;
+                                rr:objectMap [ rml:reference "ActLg" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ] ;
+        ]
+    ] ;
 
     # Comission Identifier
     rr:predicateObjectMap [
@@ -1408,6 +1437,45 @@
     ] ;
 
     # TODO: Related Commission
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:relatedCommission ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Commission_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:lookup ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupTable ;
+                                rr:objectMap [ rr:constant "CommissionInformation" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupValue ;
+                                rr:objectMap [ rml:reference "CmsNo" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupValue ;
+                                rr:objectMap [ rml:reference "ActLg" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ] ;
+        ]
+    ] ;
     .
 
 <#ParliamentarianEventRelationMap> a rr:TriplesMap ;
@@ -1566,6 +1634,45 @@
     ] ;
 
     # TODO: Related Commission
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:relatedCommission ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Commission_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:lookup ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupTable ;
+                                rr:objectMap [ rr:constant "CommissionInformation" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupValue ;
+                                rr:objectMap [ rml:reference "CmsNo" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:lookupValue ;
+                                rr:objectMap [ rml:reference "ActLg" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ] ;
+        ]
+    ] ;
     .
 
 <#AuditionThirdPartyEntityMap> a rr:TriplesMap ;

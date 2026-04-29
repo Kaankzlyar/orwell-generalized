@@ -71,7 +71,6 @@ public class CommissionInformation extends Hook {
                             String normalizedName = NormalizeString.normalize(comissaoNome);
                             String normalizedLegislature = legislature.toLowerCase();
                             String key = normalizedName + ":" + normalizedLegislature;
-                            System.out.println("Registering commission: " + key + " with ID: " + comissaoId);
                             registerLookupTable(context, key, comissaoId);
                         }
                     }
