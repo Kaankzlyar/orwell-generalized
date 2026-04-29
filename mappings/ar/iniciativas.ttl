@@ -191,3 +191,45 @@
     ] ;
 
     .
+
+<#CommissionMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Comissao/Pt_gov_ar_objectos_iniciativas_ComissoesIniOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-core:Commission ;
+        rr:termType rr:IRI ;
+        rr:template "http://purl.org/polis/ar/graph#Commission_{IdComissao}" ;
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [
+            rml:reference "IdComissao";
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [
+            rml:reference "Nome";
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{../../../../IniLeg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    .

@@ -43,12 +43,11 @@ public class Main {
         }
 
         benchmark.startTiming("Hooks");
-        Registry registry = new Registry();
-        registry.register(
+        Registry.register(
                 new ParliamentarianReconciliation(),
                 new CommissionInformation()
         );
-        registry.run();
+        Registry.run();
         benchmark.endTiming();
         try {
             if(MAPPING_ENABLED){

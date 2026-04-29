@@ -4,31 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class Registry {
-    private List<Hook> hooks;
-    private ProcessingContext context;
+    private static List<Hook> hooks = new ArrayList<>();
+    private static ProcessingContext context;
 
-    public Registry() {
-        this.hooks = new ArrayList<>();
+    public static void reset() {
+        hooks = new ArrayList<>();
+        context = null;
     }
 
-    public void register(Hook... hooks) {
-        this.hooks = List.of(hooks);
+    public static void register(Hook... newHooks) {
+        hooks = List.of(newHooks);
     }
 
-    public Map<String, Map<String, String>> getLookupTable() {
+    public static Map<String, Map<String, String>> getLookupTable() {
         return context.getLookupTable();
+    }
+
+    public static ProcessingContext getContext() {
+        return context;
+    }
+
+    public static List<Hook> getHooks() {
+        return hooks;
     }
 
     /**
      * Executes all registered hooks in the order they were registered. Each hook will have access to the shared ProcessingContext, incrementally building up the necessary data for the mapping and reconciliation process.
      */
-    public void run(){
+    public static void run(){
         context = new ProcessingContext();
         for (Hook hook : hooks) {
             System.out.println("[Registry] Running hook: " + hook.getName());

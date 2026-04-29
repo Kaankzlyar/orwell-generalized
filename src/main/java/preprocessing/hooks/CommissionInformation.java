@@ -67,7 +67,10 @@ public class CommissionInformation extends Hook {
                     if (name.equals("Pt_gov_ar_objectos_iniciativas_ComissoesIniOut")) {
                         inComissao = false;
                         if (comissaoId != null && comissaoNome != null && legislature != null) {
-                            String key = NormalizeString.normalize(comissaoNome) + ":" + legislature;
+                            String normalizedName = NormalizeString.normalize(comissaoNome);
+                            // Legislature just needs to be lowercased, as it is already in a normalized format (e.g., "XIV" -> "xiv")
+                            String normalizedLegislature = legislature.toLowerCase();
+                            String key = normalizedName + ":" + normalizedLegislature;
                             registerLookupTable(context, key, comissaoId);
                         }
                     }

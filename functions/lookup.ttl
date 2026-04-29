@@ -1,0 +1,43 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:lookup a fno:Function ;
+    fno:name "lookup" ;
+    fno:expects ( :lookupTableParam :lookupValueParam  ) ;
+    fno:returns ( :outputValueOut ) .
+
+:lookupTableParam a fno:Parameter ;
+    fno:predicate :lookupTable ;
+    fno:name "lookupTable" ;
+    fno:description "The name of the lookup table to look up the value in." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:lookupValueParam a fno:Parameter ;
+    fno:predicate :lookupValue ;
+    fno:name "inputValue" ;
+    fno:description "The value to look up in the table." ;
+    fno:type rdf:List ;
+    fno:required "true"^^xsd:boolean .
+
+:outputValueOut a fno:Output ;
+    fno:predicate :outputValue ;
+    fno:name "outputValue" ;
+    fno:description "The value obtained from the lookup table for the given input value." ;
+    fno:type xsd:string .
+
+:lookupImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.Lookup" .
+
+:lookupMapping a fno:Mapping ;
+    fno:function :lookup ;
+    fno:implementation :lookupImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "lookup" ]
+.

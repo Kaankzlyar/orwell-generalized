@@ -13,14 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RegistryTest {
 
-    private Registry registry;
-
     @TempDir
     Path tempDir;
 
     @BeforeEach
     void setUp() throws Exception {
-        registry = new Registry();
+        Registry.reset();
         Path dataDir = tempDir.resolve("data");
         Files.createDirectories(dataDir);
         Path resourceDir = dataDir.resolve("testresource");
@@ -33,34 +31,34 @@ class RegistryTest {
 
     @Test
     void newRegistryHasEmptyHooksList() {
-        assertTrue(registry.getHooks().isEmpty());
+        assertTrue(Registry.getHooks().isEmpty());
     }
 
     @Test
     void registerSingleHookAddsToList() {
         TestHook hook = new TestHook();
-        registry.register(hook);
+        Registry.register(hook);
         
-        assertEquals(1, registry.getHooks().size());
-        assertSame(hook, registry.getHooks().get(0));
+        assertEquals(1, Registry.getHooks().size());
+        assertSame(hook, Registry.getHooks().get(0));
     }
 
     @Test
     void registerMultipleHooksAddsAll() {
         TestHook hook1 = new TestHook();
         TestHook hook2 = new TestHook();
-        registry.register(hook1, hook2);
+        Registry.register(hook1, hook2);
         
-        assertEquals(2, registry.getHooks().size());
+        assertEquals(2, Registry.getHooks().size());
     }
 
     @Test
     void runExecutesAllRegisteredHooks() {
         TestHook hook1 = new TestHook();
         TestHook hook2 = new TestHook();
-        registry.register(hook1, hook2);
+        Registry.register(hook1, hook2);
         
-        registry.run();
+        Registry.run();
         
         assertTrue(hook1.executed);
         assertTrue(hook2.executed);
@@ -70,34 +68,34 @@ class RegistryTest {
     void runPassesSameContextToAllHooks() {
         TestHook hook1 = new TestHook();
         TestHook hook2 = new TestHook();
-        registry.register(hook1, hook2);
+        Registry.register(hook1, hook2);
         
-        registry.run();
+        Registry.run();
         
         assertSame(hook1.context, hook2.context);
     }
 
     @Test
     void runDoesNothingWithNoHooks() {
-        registry.run();
+        Registry.run();
         
-        assertNotNull(registry.getContext());
-        assertTrue(registry.getLookupTable().isEmpty());
+        assertNotNull(Registry.getContext());
+        assertTrue(Registry.getLookupTable().isEmpty());
     }
 
     @Test
     void getLookupTableReturnsContextLookupTable() {
         TestHook hook = new TestHook();
-        registry.register(hook);
-        registry.run();
+        Registry.register(hook);
+        Registry.run();
         
-        Map<String, Map<String, String>> lookupTable = registry.getLookupTable();
+        Map<String, Map<String, String>> lookupTable = Registry.getLookupTable();
         assertNotNull(lookupTable);
     }
 
     @Test
     void contextIsNullBeforeRun() {
-        assertNull(registry.getContext());
+        assertNull(Registry.getContext());
     }
 
     private class TestHook extends Hook {
