@@ -75,15 +75,6 @@
             ]
         ] ;
     ] ;
-
-    # Code
-    rr:predicateObjectMap [
-        rr:predicate dbo:number ;
-        rr:objectMap [ 
-            rml:reference "CmsCd" ;
-            rr:datatype xsd:nonNegativeInteger
-        ]
-    ] ;
     .
 
 <#ParliamentarianRequisitionRelationMap> a rr:TriplesMap ;

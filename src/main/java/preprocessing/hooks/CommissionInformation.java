@@ -16,7 +16,7 @@ import utils.NormalizeString;
 public class CommissionInformation extends Hook {
     @Override
     public void execute(ProcessingContext context) {
-        try (Stream<Path> paths = streamDocuments("ar/iniciativas")) {
+        try (Stream<Path> paths = streamDocuments("ar/composicaodeorgaos")) {
             paths.forEach(path -> processDocument(context, path));
         }
     }
@@ -35,44 +35,48 @@ public class CommissionInformation extends Hook {
             factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
 
-            boolean inComissao = false;
+            boolean inComissoes = false;
             String legislature = null;
             String comissaoId = null;
             String comissaoNome = null;
 
-            while(reader.hasNext()) {
+            while (reader.hasNext()) {
                 int event = reader.next();
                 if (event == XMLStreamReader.START_ELEMENT) {
                     String name = reader.getLocalName();
-                    if (name.equals("Pt_gov_ar_objectos_iniciativas_ComissoesIniOut")) {
-                        inComissao = true;
-                        comissaoId = null;
-                        comissaoNome = null;
+                    if (name.equals("Comissoes")) {
+                        inComissoes = true;
                         continue;
                     }
-                    if (inComissao && name.equals("IdComissao")) {
+                    if (inComissoes && name.equals("OrgaoBase")) {
+                        comissaoId = null;
+                        comissaoNome = null;
+                    }
+                    if (inComissoes && name.equals("idOrgao")) {
                         comissaoId = readElementText(reader);
                         continue;
                     }
-                    if (inComissao && name.equals("Nome")) {
+                    if (inComissoes && name.equals("nomeSigla")) {
                         comissaoNome = readElementText(reader);
                         continue;
                     }
-                    if (name.equals("IniLeg") && legislature == null) {
+                    if (name.equals("siglaLegislatura") && legislature == null) {
                         legislature = readElementText(reader);
                         continue;
                     }
                 } else if (event == XMLStreamReader.END_ELEMENT) {
                     String name = reader.getLocalName();
-                    if (name.equals("Pt_gov_ar_objectos_iniciativas_ComissoesIniOut")) {
-                        inComissao = false;
+                    if (inComissoes && name.equals("OrgaoBase")) {
                         if (comissaoId != null && comissaoNome != null && legislature != null) {
                             String normalizedName = NormalizeString.normalize(comissaoNome);
-                            // Legislature just needs to be lowercased, as it is already in a normalized format (e.g., "XIV" -> "xiv")
                             String normalizedLegislature = legislature.toLowerCase();
                             String key = normalizedName + ":" + normalizedLegislature;
+                            System.out.println("Registering commission: " + key + " with ID: " + comissaoId);
                             registerLookupTable(context, key, comissaoId);
                         }
+                    }
+                    if (name.equals("Comissoes")) {
+                        inComissoes = false;
                     }
                 }
             }

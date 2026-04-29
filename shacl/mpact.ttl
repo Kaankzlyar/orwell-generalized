@@ -480,7 +480,6 @@ polis-mpact:CommissionActivityShape a sh:NodeShape ;
         sh:message "A Commission Activity must have exactly one belongsToLegislature and the legislature must be a ocd:legislatura"@en
     ] ;
 
-    # TODO: Uncomment quando mapear comissão no Ini
     # sh:property [
     #     sh:path polis-mpact:relatedCommission ;
     #     sh:class polis-core:Commission ;
