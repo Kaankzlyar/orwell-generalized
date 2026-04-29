@@ -149,21 +149,6 @@
                "Projeto de Regimento"@pt ;
     rdfs:subClassOf :Initiative .
 
-#:Content rdf:type owl:Class ;
-#	dct:description "Define todo o conteúdo de uma iniciativa"@pt , 
-#		"Defines the content of an initiative"@en ;
-#    rdfs:label "Content"@en ,
-#               "Conteúdo"@pt ;
-#    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
-
-# :Annex a owl:Class ;
-#     dct:description "Um anexo é um documento que complementa uma iniciativa ou um evento, fornecendo conteúdo adicional não estruturado."@pt , 
-#         "An Annex is a documental entity that supplements an Initiative or Event by providing additional unstructured content."@en ;
-#     rdfs:label "Annex"@en ,
-#             "Anexo"@pt ;
-#     rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
-#     rdfs:subClassOf ocd:documenti .
-
 :ChangeProposal a owl:Class ;
     dct:description "Uma proposta de alteração é um documento formal de alteração associado a uma iniciativa, representando uma proposta estruturada para modificar o seu conteúdo durante o processo legislativo."@pt , 
         "A Change Proposal is a formal amendment entity associated with an Initiative, representing a structured proposal to modify its content during the legislative process."@en ;
