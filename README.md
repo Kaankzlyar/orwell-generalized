@@ -32,7 +32,7 @@ Run:
 Run without reconciliation HTTP calls:
 
 ```sh
-./gradlew run --args="--disable-reconciliation"
+./gradlew run --args="-dr"
 ```
 
 Generated artifacts:
