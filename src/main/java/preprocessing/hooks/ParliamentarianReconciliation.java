@@ -81,13 +81,4 @@ public class ParliamentarianReconciliation extends Hook {
             throw new IllegalStateException("Failed to parse XML: " + xmlPath + ": " + e.getMessage(), e);
         }
     }
-
-    private static String readElementText(XMLStreamReader reader) {
-        try {
-            String text = reader.getElementText();
-            return text == null ? null : text.trim();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

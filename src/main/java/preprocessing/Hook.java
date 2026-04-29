@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import javax.xml.stream.XMLStreamReader;
+
 import config.Config;
 
 public abstract class Hook {
@@ -34,6 +36,15 @@ public abstract class Hook {
 
     protected void log(String message) {
         System.out.println("[" + getName() + "] " + message);
+    }
+
+    public static String readElementText(XMLStreamReader reader) {
+        try {
+            String text = reader.getElementText();
+            return text == null ? null : text.trim();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     protected Stream<Path> streamDocuments(String resourceName) {
