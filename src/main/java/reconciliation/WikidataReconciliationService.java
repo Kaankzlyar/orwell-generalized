@@ -88,6 +88,7 @@ public class WikidataReconciliationService{
             ObjectMapper objectMapper = new ObjectMapper();
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(10))
+                    .followRedirects(HttpClient.Redirect.NORMAL)
                     .build();
 
             ReconciliationRequest reconciliationRequest = new ReconciliationRequest(query, type, limit);
