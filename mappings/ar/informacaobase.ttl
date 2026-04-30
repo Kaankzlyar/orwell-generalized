@@ -26,6 +26,42 @@
 @prefix polis-core:   <http://purl.org/polis/ar/core#> .
 @prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
+<#GovernmentMap>
+
+  rml:logicalSource [
+    rml:source "data/" ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/Legislatura/DetalheLegislatura"
+  ] ;
+
+  # URI (e.g. http://purl.org/polis/ar/graph#Government_XIV for the XIV legislature)
+  rr:subjectMap [
+    rr:template "http://purl.org/polis/ar/graph#Government_{sigla}" ;
+    rr:class ocd:governo
+  ] ;
+
+  # Number
+  rr:predicateObjectMap [
+    rr:predicate dbo:number ;
+    rr:objectMap [
+      rr:datatype xsd:nonNegativeInteger ;
+      fnml:functionValue [
+        rr:predicateObjectMap [
+          rr:predicate fno:executes ;
+          rr:objectMap [ rr:constant pofn:romanToDecimal ]
+        ] ;
+        rr:predicateObjectMap [
+          rr:predicate pofn:romanNumeral ;
+          rr:objectMap [
+            rml:reference "sigla" ;
+            rr:datatype xsd:string
+          ]
+        ]
+      ] ;
+    ]
+  ] 
+  .
+
 <#LegislatureMap>
 
   rml:logicalSource [
