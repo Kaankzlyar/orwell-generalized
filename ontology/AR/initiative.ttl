@@ -891,12 +891,11 @@
     rdfs:domain :CommissionEvent ;
     rdfs:range xsd:date .
 
-#:documentDate rdf:type owl:AnnotationProperty ;
-#    rdfs:subPropertyOf dct:date ;
-#    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
-#    dct:description "Define a data de um documento associado a uma remessa"@pt , 
-#                    "Defines the date of a document associated to a transmission"@en ;
-#    rdfs:label "document date"@en ,
-#               "data do documento"@pt ;
-#    rdfs:domain :Transmission ;
-#    rdfs:range xsd:date .
+:proponentType rdf:type owl:AnnotationProperty ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+    dct:description "Define o tipo de proponente de uma proposta de alteração"@pt , 
+                    "Defines the type of the change proposal proponent"@en ;
+    rdfs:label "proponent type"@en ,
+               "tipo de proponente"@pt ;
+    rdfs:domain :Initiative ;
+    rdfs:range xsd:string .
