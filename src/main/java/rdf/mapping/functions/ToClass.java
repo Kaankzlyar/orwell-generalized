@@ -11,7 +11,6 @@ public class ToClass {
     private static final String POLIS_BIO_NS = "http://purl.org/polis/ar/biographic#";
     private static final String POLIS_INI_NS = "http://purl.org/polis/ar/initiatives#";
     private static final String POLIS_GRAPH_NS = "http://purl.org/polis/ar/graph#";
-    private static final String OCD_NS = "http://dati.camera.it/ocd/";
 
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();

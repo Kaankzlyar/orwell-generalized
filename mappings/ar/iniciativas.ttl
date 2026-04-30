@@ -19,6 +19,7 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix org:    <http://www.w3.org/ns/org#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix qudt:   <http://qudt.org/schema/qudt/> .
@@ -387,6 +388,102 @@
         rr:objectMap [ 
             rml:reference "nome" ;
             rr:datatype xsd:string ;
+        ]
+    ] ;
+
+    # Location
+    rr:predicateObjectMap [
+        rr:predicate sem:hasPlace ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Place_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:regionalAssemblyLocation ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ 
+                                    rml:reference "nome" 
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ] ;
+    .
+
+<#PlaceMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorOutros" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class sem:Place ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:stringConcat ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:leftPart ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Place_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:rightPart ;
+                rr:objectMap [
+                    fnml:functionValue [
+                        rr:predicateObjectMap [
+                            rr:predicate fno:executes ;
+                            rr:objectMap [ rr:constant pofn:regionalAssemblyLocation ]
+                        ] ;
+                        rr:predicateObjectMap [
+                            rr:predicate pofn:inputString ;
+                            rr:objectMap [ 
+                                rml:reference "nome" 
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            rr:datatype xsd:string ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:regionalAssemblyLocation ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputString ;
+                    rr:objectMap [ 
+                        rml:reference "nome" 
+                    ]
+                ]
+            ]
         ]
     ] ;
     .

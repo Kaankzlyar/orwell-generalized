@@ -11,22 +11,38 @@ public class StringUtils {
     private static final Pattern WHITESPACE   = Pattern.compile("\\s+");
 
     public static String normalize(String input) {
-    if (input == null) return null;
+        return normalize(input, "-");
+    }
 
-    String decomposed = Normalizer.normalize(input.trim().toLowerCase(Locale.ROOT), Normalizer.Form.NFD);
-    return WHITESPACE.matcher(
-               NON_ALNUM.matcher(
-                   MARKS.matcher(decomposed).replaceAll("")
-               ).replaceAll("")
-           ).replaceAll("-");
+    public static String normalize(String input, String delimiter) {
+        if (input == null) return null;
+
+        String decomposed = Normalizer.normalize(input.trim().toLowerCase(Locale.ROOT), Normalizer.Form.NFD);
+        return WHITESPACE.matcher(
+                NON_ALNUM.matcher(
+                    MARKS.matcher(decomposed).replaceAll("")
+                ).replaceAll("")
+            ).replaceAll(delimiter);
 
     }
 
     public static String getLastWord(String input) {
         if (input == null || input.isEmpty()) return null;
 
-        String normalizedInput = normalize(input);
-        String[] words = normalizedInput.split("\\s+");
+        String[] words = input.split("\\s+");
         return words[words.length - 1];
+    }
+
+    public static String[] getFirstNWords(String input, int n) {
+        if (input == null || n <= 0) return null;
+
+        String[] words = input.split("\\s+");
+        if (words.length < n) return words;
+
+        String[] result = new String[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = words[i];
+        }
+        return result;
     }
 }

@@ -1,0 +1,35 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:regionalAssemblyLocation a fno:Function ;
+    fno:name "regionalAssemblyLocation" ;
+    fno:expects ( :inputStringParam ) ;
+    fno:returns ( :locationOutputParam ) .
+
+:inputStringParam a fno:Parameter ;
+    fno:predicate :inputString ;
+    fno:name "inputString" ;
+    fno:description "Input string to determine the regional assembly location for." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:locationOutputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "Name of the regional assembly location." ;
+    fno:type xsd:string .
+
+:regionalAssemblyLocationImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.RegionalAssemblyLocation" .
+
+:regionalAssemblyLocationMapping a fno:Mapping ;
+    fno:function :regionalAssemblyLocation ;
+    fno:implementation :regionalAssemblyLocationImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "getRegionalAssemblyLocation" ]
+.
