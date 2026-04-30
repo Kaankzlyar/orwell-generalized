@@ -189,5 +189,27 @@
         rr:predicate schema:url ;
         rr:objectMap [ rml:reference "." ]
     ] ;
-
     .
+
+<#OriginatedMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniciativasOriginadas/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Initiative ;
+        rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
+    ] ;
+
+    # Led To
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:ledTo ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Initiative_{id}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    . 
