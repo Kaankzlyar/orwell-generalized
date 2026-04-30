@@ -1,11 +1,11 @@
 package rdf.mapping.functions;
 
-import utils.NormalizeString;
+import utils.StringUtils;
 
 public class Normalize {
 
     public static String normalize(String input) {
-        return NormalizeString.normalize(input);
+        return StringUtils.normalize(input);
     }
 }
 

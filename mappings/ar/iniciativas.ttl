@@ -354,3 +354,39 @@
         ]
     ] ;
     .
+
+<#RegionalLegislativeAssemblyMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorOutros" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:RegionalLegislativeAssembly ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:toClass ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:entityName ;
+                rr:objectMap [ rml:reference "nome" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:className ;
+                rr:objectMap [ rr:constant "regionalLegislativeAssembly" ]
+            ]
+        ]
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            rml:reference "nome" ;
+            rr:datatype xsd:string ;
+        ]
+    ] ;
+    .

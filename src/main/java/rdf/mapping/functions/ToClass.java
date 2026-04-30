@@ -10,6 +10,7 @@ public class ToClass {
     private static final String POLIS_MPACT_NS = "http://purl.org/polis/ar/mp-activity#";
     private static final String POLIS_BIO_NS = "http://purl.org/polis/ar/biographic#";
     private static final String POLIS_INI_NS = "http://purl.org/polis/ar/initiatives#";
+    private static final String POLIS_GRAPH_NS = "http://purl.org/polis/ar/graph#";
     private static final String OCD_NS = "http://dati.camera.it/ocd/";
 
     private static final HashMap<String, String> situationMap = new HashMap<>();
@@ -113,6 +114,7 @@ public class ToClass {
         otherProponentMap.put("cidadaos", POLIS_INI_NS + "CitizenGroup");
     }
 
+
     public static String toClass(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -140,6 +142,21 @@ public class ToClass {
                 return initiativeMap.getOrDefault(normalizedInput, normalizedInput);
             case "otherProponent":
                 return otherProponentMap.getOrDefault(normalizedInput, null);
+            case "regionalLegislativeAssembly":
+
+                // Get first 4 words and check if they match "assembleia legislativa da regiao"
+                String[] words = normalizedInput.split("\\s+");
+                if (words.length >= 4) {
+                    String firstFourWords = String.join(" ", words[0], words[1], words[2], words[3]);
+                    if (!firstFourWords.equals("assembleia legislativa da regiao")) {
+                        return null;
+                    }
+                    // Extract the region name (the last word) and return the corresponding class
+                    String regionName = words[words.length - 1];
+                    return POLIS_GRAPH_NS + "RegionalLegislativeAssembly_" + regionName;
+                }
+                
+                return null;
             default:
                 System.out.println("Unknown className: " + className + " for entityName: " + entityName);
                 return null;

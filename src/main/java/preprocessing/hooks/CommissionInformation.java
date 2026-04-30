@@ -10,7 +10,7 @@ import javax.xml.stream.XMLStreamReader;
 
 import preprocessing.Hook;
 import preprocessing.ProcessingContext;
-import utils.NormalizeString;
+import utils.StringUtils;
 
 // This class was created because the "atividadedeputado" dataset does not contain the commission ID, but only the name and legislature.
 public class CommissionInformation extends Hook {
@@ -68,7 +68,7 @@ public class CommissionInformation extends Hook {
                     String name = reader.getLocalName();
                     if (inComissoes && name.equals("OrgaoBase")) {
                         if (comissaoId != null && comissaoNome != null && legislature != null) {
-                            String normalizedName = NormalizeString.normalize(comissaoNome);
+                            String normalizedName = StringUtils.normalize(comissaoNome);
                             String normalizedLegislature = legislature.toLowerCase();
                             String key = normalizedName + ":" + normalizedLegislature;
                             registerLookupTable(context, key, comissaoId);
