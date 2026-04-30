@@ -155,6 +155,15 @@
             ]
         ]
     ] ;
+
+    # Proponent Type
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:proponentType ;
+        rr:objectMap [
+            rr:datatype xsd:string ;
+            rml:reference "IniAutorOutros/nome"
+        ]
+    ] ;
     .
 
 <#ContentMap> a rr:TriplesMap ;
@@ -282,4 +291,3 @@
         ]
     ] ;
     .
-
