@@ -10,6 +10,7 @@ public class ToClass {
     private static final String POLIS_MPACT_NS = "http://purl.org/polis/ar/mp-activity#";
     private static final String POLIS_BIO_NS = "http://purl.org/polis/ar/biographic#";
     private static final String POLIS_INI_NS = "http://purl.org/polis/ar/initiatives#";
+    private static final String OCD_NS = "http://dati.camera.it/ocd/";
 
     private static final HashMap<String, String> situationMap = new HashMap<>();
     private static final HashMap<String, String> dutyMap = new HashMap<>();
@@ -19,6 +20,7 @@ public class ToClass {
     private static final HashMap<String, String> habilitationLevelMap = new HashMap<>();
     private static final HashMap<String, String> requisitionMap = new HashMap<>();
     private static final HashMap<String, String> initiativeMap = new HashMap<>();
+    private static final HashMap<String, String> otherProponentMap = new HashMap<>();
 
     static {
         fillSituationMap();
@@ -29,6 +31,7 @@ public class ToClass {
         fillHabilitationLevelMap();
         fillRequisitionMap();
         fillInitiativeMap();
+        fillOtherProponentMap();
     }
 
     private static void fillSituationMap() {
@@ -105,6 +108,11 @@ public class ToClass {
         initiativeMap.put("projeto de regimento", POLIS_INI_NS + "RulesOfProcedureProject");
     }
 
+    private static void fillOtherProponentMap() {
+        otherProponentMap.put("par", POLIS_CORE_NS + "PresidentOfTheAssemblyOfTheRepublic");
+        otherProponentMap.put("cidadaos", POLIS_INI_NS + "CitizenGroup");
+    }
+
     public static String toClass(String entityName, String className) {
 
         if (entityName == null || className == null) {
@@ -130,6 +138,8 @@ public class ToClass {
                 return requisitionMap.getOrDefault(normalizedInput, normalizedInput);
             case "initiativeType":
                 return initiativeMap.getOrDefault(normalizedInput, normalizedInput);
+            case "otherProponent":
+                return otherProponentMap.getOrDefault(normalizedInput, null);
             default:
                 System.out.println("Unknown className: " + className + " for entityName: " + entityName);
                 return null;
