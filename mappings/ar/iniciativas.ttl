@@ -14,7 +14,7 @@
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vann:   <http://purl.org/vocab/vann/> .
 @prefix ocd:    <http://dati.camera.it/ocd/> .
-@prefix m4s:    <https://purl.org/map4scrutiny-core#> .
+@prefix m4s:    <http://purl.org/map4scrutiny-core#> .
 @prefix schema: <https://schema.org/> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
@@ -235,4 +235,27 @@
             rr:termType rr:IRI ;
         ]
     ] ;
-    . 
+    .
+
+<#InitiativeAuthorParliamentarianMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorDeputados/pt_gov_ar_objectos_iniciativas_AutoresDeputadosOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Initiative ;
+        rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
+    ] ;
+
+    # Authored
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasAuthor ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{idCadastro}.0" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    .

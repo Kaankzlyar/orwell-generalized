@@ -108,8 +108,8 @@ polis-core:ParliamentarianShape a sh:NodeShape;
     
     sh:property [
         sh:path polis-bio:authorOf ;
-        sh:class bibo:Document ;
-        sh:message "A parliamentarian publications must be of the class bibo:Document"@en
+        sh:class polis-bio:PublishedWork ;
+        sh:message "A parliamentarian publications must be of the class polis-bio:PublishedWork"@en
     ] ;
 
     sh:property [
