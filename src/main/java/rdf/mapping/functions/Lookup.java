@@ -18,6 +18,6 @@ public class Lookup {
 
         return Registry.getLookupTable()
                 .getOrDefault(lookupTable, Map.of())
-                .getOrDefault(key, "Key not found in lookup table");
+                .getOrDefault(key, null);
     }
 }
