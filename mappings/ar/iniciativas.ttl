@@ -486,4 +486,44 @@
             ]
         ]
     ] ;
+
+    # Same as
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:reconciliate ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:query ;
+                    rr:objectMap [ 
+                        rr:datatype xsd:string ;
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:regionalAssemblyLocation ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ 
+                                    rml:reference "nome" 
+                                ]
+                            ]
+                        ]
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:type ;
+                    rr:objectMap [ rr:constant "Q2221906" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:limit ;
+                    rr:objectMap [ rr:constant "1"]
+                ]
+            ]
+        ]
+    ] 
     .
