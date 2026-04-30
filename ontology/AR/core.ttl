@@ -288,3 +288,14 @@
     rdfs:comment "It is preferred to use core:holdsDuty and org:Post when a controlled vocabulary exists"@en,
         "É preferível utilizar core:holdsDuty e org:Post quando um vocabulário controlado existe"@pt ;
     rdfs:range xsd:string .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:PresidentOfTheAssemblyOfTheRepublic a ocd:membroGoverno, owl:NamedIndividual ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/core#> ;
+    rdf:type :PAR ;
+    rdfs:label "President of the Assembly of the Republic"@en, "Presidente da Assembleia da República"@pt ;
+    dct:description "The President of the Assembly of the Republic is the presiding officer of the Assembly of the Republic, responsible for chairing its sessions and representing it in external relations."@en,
+                    "O Presidente da Assembleia da República é o presidente da Assembleia da República, responsável por presidir às suas sessões e representá-la nas relações externas."@pt .

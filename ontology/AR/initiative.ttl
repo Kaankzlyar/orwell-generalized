@@ -44,12 +44,6 @@
 	dct:description ""@pt , ""@en ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> .
 
-:CitizenGroup rdf:type owl:Class ;
-    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
-	dct:description ""@pt , ""@en ;
-    rdfs:label "Citizen Group"@en ,
-               "Grupo de Cidadãos"@pt .
-
 :Initiative rdf:type owl:Class ;
     rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
 	dct:description ""@pt , ""@en ;
@@ -899,3 +893,13 @@
                "tipo de proponente"@pt ;
     rdfs:domain :Initiative ;
     rdfs:range xsd:string .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:CitizenGroup a foaf:Group, owl:NamedIndividual ;
+    rdfs:isDefinedBy <http://purl.org/polis/ar/initiatives#> ;
+	dct:description ""@pt , ""@en ;
+    rdfs:label "Citizen Group"@en ,
+               "Grupo de Cidadãos"@pt .
