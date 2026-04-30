@@ -213,3 +213,26 @@
         ]
     ] ;
     . 
+
+<#OriginatedFrom> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniciativasOrigem/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Initiative ;
+        rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
+    ] ;
+
+    # Grew Out Of
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:grewOutOf ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Initiative_{id}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    . 
