@@ -318,3 +318,153 @@
 
     # TODO: Adicionar Situation information à membership, cada situação terá uma data
     .
+
+
+# WorkingGroup
+<#WorkingGroupMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/OrganizacaoAR/GruposTrabalho/OrgaoBase/DetalheOrgao" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-core:WorkingGroup ;
+        rr:termType rr:IRI ;
+        rr:template "http://purl.org/polis/ar/graph#WorkingGroup_{idOrgao}" ;
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "idOrgao" ;
+            rr:datatype xsd:string
+        ] ;
+    ] ;
+
+    # Acronym
+    rr:predicateObjectMap [
+        rr:predicate qudt:acronym ;
+        rr:objectMap [ 
+            rml:reference "siglaOrgao" ;
+            rr:datatype xsd:string
+        ] ;
+    ] ;
+
+    # Name
+    rr:predicateObjectMap [
+        rr:predicate foaf:name ;
+        rr:objectMap [ 
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "nomeSigla" ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ] ;
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{siglaLegislatura}" ;
+            rr:termType rr:IRI ;
+        ] ;
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stripDecimal ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "numeroOrgao" ]
+                ]
+            ] ;
+            rr:datatype xsd:nonNegativeInteger
+        ] ;
+    ]
+    .
+
+<#ParliamentarianWorkingGroupMembershipMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/OrganizacaoAR/GruposTrabalho/OrgaoBase/HistoricoComposicao/pt_ar_wsgode_objectos_DadosOrgaoComposicaoHistorico" ;
+    ] ;
+
+    # Parliamentarian
+    rr:subjectMap [
+        rr:class m4s:Parliamentarian ;
+        rr:termType rr:IRI ;
+        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{depCadId}" ;
+    ] ;
+
+    # Has membership
+    rr:predicateObjectMap [
+        rr:predicate polis-core:hasMembership ;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#WorkingGroupMembershipMap> ;
+        ] ;
+    ] ;
+    .
+
+<#WorkingGroupMembershipMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/OrganizacaoAR/GruposTrabalho/OrgaoBase/HistoricoComposicao/pt_ar_wsgode_objectos_DadosOrgaoComposicaoHistorico" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:termType rr:IRI ;
+        rr:class polis-core:Membership ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:membership:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "orgId" ]
+            ] ;
+            # rr:predicateObjectMap [
+            #     rr:predicate pofn:elements ;
+            #     rr:objectMap [ rml:reference "depSituacao" ]
+            # ] ;
+        ] ;
+    ] ;
+
+    # WorkingGroup
+    rr:predicateObjectMap [
+        rr:predicate polis-core:isMemberOf ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#WorkingGroup_{orgId}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # TODO: Adicionar Situation information à membership, cada situação terá uma data
+    .
+
+
+# ARWorkingGroup
