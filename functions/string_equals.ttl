@@ -1,0 +1,42 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:stringEquals a fno:Function ;
+    fno:name "stringEquals" ;
+    fno:expects ( :string1Param :string2Param ) ;
+    fno:returns ( :booleanOutputParam ) .
+
+:string1Param a fno:Parameter ;
+    fno:predicate :string1 ;
+    fno:name "string1" ;
+    fno:description "First string to compare." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:string2Param a fno:Parameter ;
+    fno:predicate :string2 ;
+    fno:name "string2" ;
+    fno:description "Second string to compare." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:booleanOutputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "True if the strings are equal, false otherwise." ;
+    fno:type xsd:boolean .
+
+:stringEqualsImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.StringEquals" .
+
+:stringEqualsMapping a fno:Mapping ;
+    fno:function :stringEquals ;
+    fno:implementation :stringEqualsImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "stringEquals" ]
+.
