@@ -259,3 +259,27 @@
         ]
     ] ;
     .
+
+<#InitiativeProponentPartyMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorGruposParlamentares/pt_gov_ar_objectos_AutoresGruposParlamentaresOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Initiative ;
+        rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
+    ] ;
+
+    # Authored
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasProponent ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{GP}_of_{../../IniLeg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+    .
+
