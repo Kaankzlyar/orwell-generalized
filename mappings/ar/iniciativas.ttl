@@ -214,7 +214,7 @@
     ] ;
     . 
 
-<#OriginatedFrom> a rr:TriplesMap ;
+<#OriginatedFromInitiativeMap> a rr:TriplesMap ;
 
     rml:logicalSource [
         rml:source "data/" ;
