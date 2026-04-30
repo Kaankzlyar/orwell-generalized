@@ -100,9 +100,10 @@ polis-ini:InitiativeShape a sh:NodeShape ;
             [ sh:class ocd:governo ]
             [ sh:class polis-core:Commission ]
             [ sh:class polis-ini:RegionalLegislativeAssembly ]
-            [ sh:class polis-ini:CitizenGroup ]
+            [ sh:hasValue polis-ini:CitizenGroup ]
+            [ sh:hasValue polis-core:PresidentOfTheAssemblyOfTheRepublic ]
         ) ;
-        sh:message "An initiative proponent must be a polis-core:ParliamentaryGroup, m4s:Parliamentarian, ocd:governo, polis-core:Commission, polis-ini:RegionalLegislativeAssembly or polis-ini:CitizenGroup "@en
+        sh:message "An initiative proponent must be a polis-core:ParliamentaryGroup, m4s:Parliamentarian, ocd:governo, polis-core:Commission, polis-ini:RegionalLegislativeAssembly, polis-ini:CitizenGroup or polis-core:PresidentOfTheAssemblyOfTheRepublic"@en
     ] ;
     
     sh:property [
