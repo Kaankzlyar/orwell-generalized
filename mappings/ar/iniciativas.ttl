@@ -268,28 +268,6 @@
             ] ;
         ]
     ] ;
-
-    # Petition
-    rr:predicateObjectMap [
-        rr:predicate polis-ini:hasPetition ;
-        rr:objectMap [
-            rr:termType rr:IRI ;
-            fnml:functionValue [
-                rr:predicateObjectMap [
-                    rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:stringConcat ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate pofn:leftPart ;
-                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Petition_" ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate pofn:rightPart ;
-                    rr:objectMap [ rml:reference "Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut/id" ]
-                ]
-            ]
-        ]
-    ]
     .
 
 <#ContentMap> a rr:TriplesMap ;
@@ -694,6 +672,42 @@
         rr:objectMap [ 
             rr:template "http://purl.org/polis/ar/graph#Session_{sessao}_of_{legislatura}" ;
             rr:termType rr:IRI
+        ]
+    ]
+    .
+
+<#InitiativePetitionRelationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Initiative ;
+        rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
+    ] ;
+
+    # Petition
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasPetition ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Petition_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [ rml:reference "Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut/id" ]
+                ]
+            ]
         ]
     ]
     .
