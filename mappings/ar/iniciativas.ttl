@@ -212,7 +212,7 @@
                             ] ;
                             rr:predicateObjectMap [
                                 rr:predicate pofn:string2 ;
-                                rr:objectMap [ rr:constant "V" ]
+                                rr:objectMap [ rr:constant "V" ] # V is the sigla for the government in the IniAutorOutros field
                             ]
                         ]
                     ]
@@ -228,7 +228,7 @@
         ] ;
     ] ;
 
-    # Commission Proponent
+    # Other Proponent (Commission)
     rr:predicateObjectMap [
         rr:predicate polis-ini:hasProponent ;
         rr:objectMap [
@@ -268,6 +268,28 @@
             ] ;
         ]
     ] ;
+
+    # Petition
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasPetition ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Petition_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [ rml:reference "Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut/id" ]
+                ]
+            ]
+        ]
+    ]
     .
 
 <#ContentMap> a rr:TriplesMap ;
@@ -606,4 +628,72 @@
             ]
         ]
     ] 
+    .
+
+<#PetitionMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Petition ;
+        rr:template "http://purl.org/polis/ar/graph#Petition_{id}"
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "id" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [ 
+            rml:reference "numero" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+    ] ;
+
+    # Title
+    rr:predicateObjectMap [
+        rr:predicate dct:title ;
+        rr:objectMap [
+            rr:datatype xsd:string ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "assunto" ]
+                ]
+            ] ;
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{legislatura}" ;
+            rr:termType rr:IRI 
+        ]
+    ] ;
+
+    # Legislative Session
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislativeSession ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Session_{sessao}_of_{legislatura}" ;
+            rr:termType rr:IRI
+        ]
+    ]
     .
