@@ -371,6 +371,46 @@
             rr:termType rr:IRI ;
         ]
     ] ;
+
+    # Proponent (if IniAutorOutros/sigla is "D")
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasProponent ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:controls_if ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:bool_b ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:stringEquals ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:string1 ;
+                                rr:objectMap [ rml:reference "../../IniAutorOutros/sigla" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:string2 ;
+                                rr:objectMap [ rr:constant "D" ]
+                            ]
+                        ]
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:any_true ;
+                    rr:objectMap [
+                        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{idCadastro}.0" ;
+                        rr:termType rr:IRI
+                    ]
+                ]
+            ]
+        ]
+    ]
     .
 
 <#InitiativeProponentPartyMap> a rr:TriplesMap ;
