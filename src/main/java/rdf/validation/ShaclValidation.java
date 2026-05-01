@@ -29,6 +29,8 @@ public class ShaclValidation {
 
         Model data = RDFDataMgr.loadModel(Config.OUTPUT_PATH.toString());
 
+        System.out.println("Final graph size: " + data.size() + " triples");
+
         Model shapes = ModelFactory.createDefaultModel();
 
         try (var paths = Files.list(Config.SHACL_DIR)) {
