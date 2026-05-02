@@ -860,3 +860,115 @@
         ]
     ]
     .
+
+<#DARPublicationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//pt_gov_ar_objectos_PublicacoesOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:DARPublication ;
+        rr:termType rr:IRI ;
+        fnml:functionValue[
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:darPublication:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "URLDiario" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "idPag" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "pag" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "pubNr" ]
+            ] ;
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [ 
+            rml:reference "pubNr" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+    ] ;
+
+    # Date
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [ 
+            rml:reference "pubdt" ;
+            rr:datatype xsd:date
+        ]
+    ] ;
+
+    # URL
+    rr:predicateObjectMap [
+        rr:predicate schema:url ;
+        rr:objectMap [ 
+            rml:reference "URLDiario" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Code
+    rr:predicateObjectMap [
+        rr:predicate dbo:code ;
+        rr:objectMap [ 
+            rml:reference "pubTp" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Page
+    rr:predicateObjectMap [
+        rr:predicate schema:pagination ;
+        rr:objectMap [ 
+            rml:reference "pag/string" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Page Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:pagesIdentifier ;
+        rr:objectMap [ 
+            rml:reference "idPag" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#{pubLeg}" ;
+            rr:termType rr:IRI 
+        ]
+    ] ;
+
+    # Legislative Session
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislativeSession ;
+        rr:objectMap [ 
+            rr:template "http://purl.org/polis/ar/graph#Session_{pubSL}_of_{pubLeg}" ;
+            rr:termType rr:IRI
+        ]
+    ]
+    .
