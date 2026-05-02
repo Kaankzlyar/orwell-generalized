@@ -858,6 +858,40 @@
             rml:reference "autor" ;
             rr:datatype xsd:string
         ]
+    ] ;
+
+    # Published in DAR
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:isPublishedInDAR ;
+        rr:objectMap [ 
+            rr:termType rr:IRI ;
+            fnml:functionValue[
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:darPublication:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/URLDiario" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/idPag" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/pag" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/pubNr" ]
+                ] ;
+            ]
+        ]
     ]
     .
 
