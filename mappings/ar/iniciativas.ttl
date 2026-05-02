@@ -998,4 +998,26 @@
             rr:datatype xsd:string
         ]
     ] ;
+
+    # DAR Type
+    rr:predicateObjectMap [
+        rr:predicate rdf:type ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toClass ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:entityName ;
+                    rr:objectMap [ rml:reference "pubTp" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:className ;
+                    rr:objectMap [ rr:constant "darPublication" ]
+                ]
+            ]
+        ]
+    ]
     .

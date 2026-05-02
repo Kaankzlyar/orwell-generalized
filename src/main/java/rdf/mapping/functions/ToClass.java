@@ -116,21 +116,21 @@ public class ToClass {
     }
 
     private static void fillDarPublicationMap() {
-        darPublicationMap.put("dar ii serie a", POLIS_GRAPH_NS + "DARPublication"); // A
-        darPublicationMap.put("dar ii serie b", POLIS_GRAPH_NS + "DARPublication"); // B
-        darPublicationMap.put("dar ii serie c", POLIS_GRAPH_NS + "DARPublication"); // C
-        darPublicationMap.put("dar i serie", POLIS_GRAPH_NS + "DARPublication");    // D
-        darPublicationMap.put("dar ii serie e", POLIS_GRAPH_NS + "DARPublication"); // H
-        darPublicationMap.put("dar ii serie c-rc", POLIS_GRAPH_NS + "DARPublication"); // I
-        darPublicationMap.put("dar ii serie", POLIS_GRAPH_NS + "DARPublication");      // K
-        darPublicationMap.put("dr ii serie b", POLIS_GRAPH_NS + "DARPublication");     // L
-        darPublicationMap.put("dr i serie", POLIS_GRAPH_NS + "DARPublication");    // M
-        darPublicationMap.put("dar ii serie c gop-oe", POLIS_GRAPH_NS + "DARPublication"); // O
-        darPublicationMap.put("dar ii s c-oe", POLIS_GRAPH_NS + "DARPublication");  // Q
-        darPublicationMap.put("dr i serie a", POLIS_GRAPH_NS + "DARPublication"); // R
-        darPublicationMap.put("separata", POLIS_GRAPH_NS + "DARPublication"); // S
-        darPublicationMap.put("dar ii serie c cei", POLIS_GRAPH_NS + "DARPublication"); // T
-        darPublicationMap.put("dar ii s-oe", POLIS_GRAPH_NS + "DARPublication"); // V
+        darPublicationMap.put("a", POLIS_GRAPH_NS + "DARSeries2A"); 
+        darPublicationMap.put("b", POLIS_GRAPH_NS + "DARSeries2B"); 
+        darPublicationMap.put("c", POLIS_GRAPH_NS + "DARSeries2C"); 
+        darPublicationMap.put("d", POLIS_GRAPH_NS + "DARSeries1"); 
+        darPublicationMap.put("h", POLIS_GRAPH_NS + "DARSeries2E"); 
+        darPublicationMap.put("i", POLIS_GRAPH_NS + "DARSeries2CRC"); 
+        darPublicationMap.put("k", POLIS_GRAPH_NS + "DARSeries2"); 
+        darPublicationMap.put("l", POLIS_GRAPH_NS + "DARSeries2B"); 
+        darPublicationMap.put("m", POLIS_GRAPH_NS + "DARSeries1"); 
+        darPublicationMap.put("o", POLIS_GRAPH_NS + "DARSeries2CGOPOE"); 
+        darPublicationMap.put("q", POLIS_GRAPH_NS + "DARSeries2SCOE"); 
+        darPublicationMap.put("r", POLIS_GRAPH_NS + "DARSeries1A"); 
+        darPublicationMap.put("s", POLIS_GRAPH_NS + "DARSeparata"); 
+        darPublicationMap.put("t", POLIS_GRAPH_NS + "DARSeries2CCEI"); 
+        darPublicationMap.put("v", POLIS_GRAPH_NS + "DARSeries2SOE"); 
     }
 
     public static String toClass(String entityName, String className) {
