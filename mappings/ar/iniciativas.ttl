@@ -810,3 +810,53 @@
         ]
     ]
     .
+
+<#ChangeProposalMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//pt_gov_ar_objectos_iniciativas_PropostasAlteracaoOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:ChangeProposal ;
+        rr:template "http://purl.org/polis/ar/graph#ChangeProposal_{id}"
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [ 
+            rml:reference "id" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [ 
+            rml:reference "numero" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+    ] ;
+
+    # Type
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:changeProposalType ;
+        rr:objectMap [ 
+            rml:reference "tipo" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Proponent
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:proponent ;
+        rr:objectMap [ 
+            rml:reference "autor" ;
+            rr:datatype xsd:string
+        ]
+    ]
+    .
