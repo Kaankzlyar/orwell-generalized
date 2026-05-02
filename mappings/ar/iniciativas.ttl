@@ -120,7 +120,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{IniLeg}" ;
             rr:termType rr:IRI ;
         ]
@@ -129,7 +129,7 @@
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{IniSel}_of_{IniLeg}" ;
             rr:termType rr:IRI ;
         ]
@@ -138,7 +138,7 @@
     # Content
     rr:predicateObjectMap [
         rr:predicate polis-ini:hasContent ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -188,7 +188,7 @@
         ]
     ] ;
 
-    # Other Proponent (Government) 
+    # Other Proponent (Government)
     rr:predicateObjectMap [
         rr:predicate polis-ini:hasProponent ;
         rr:objectMap [
@@ -342,12 +342,12 @@
     # Led To
     rr:predicateObjectMap [
         rr:predicate polis-ini:ledTo ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Initiative_{id}" ;
             rr:termType rr:IRI ;
         ]
     ] ;
-    . 
+    .
 
 <#OriginatedFromInitiativeMap> a rr:TriplesMap ;
 
@@ -365,7 +365,7 @@
     # Grew Out Of
     rr:predicateObjectMap [
         rr:predicate polis-ini:grewOutOf ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Initiative_{id}" ;
             rr:termType rr:IRI ;
         ]
@@ -388,7 +388,7 @@
     # Authored
     rr:predicateObjectMap [
         rr:predicate polis-ini:hasAuthor ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{idCadastro}.0" ;
             rr:termType rr:IRI ;
         ]
@@ -451,7 +451,7 @@
     # Authored
     rr:predicateObjectMap [
         rr:predicate polis-ini:hasProponent ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{GP}_of_{../../IniLeg}" ;
             rr:termType rr:IRI ;
         ]
@@ -487,7 +487,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "nome" ;
             rr:datatype xsd:string ;
         ]
@@ -517,8 +517,8 @@
                             ] ;
                             rr:predicateObjectMap [
                                 rr:predicate pofn:inputString ;
-                                rr:objectMap [ 
-                                    rml:reference "nome" 
+                                rr:objectMap [
+                                    rml:reference "nome"
                                 ]
                             ]
                         ]
@@ -559,8 +559,8 @@
                         ] ;
                         rr:predicateObjectMap [
                             rr:predicate pofn:inputString ;
-                            rr:objectMap [ 
-                                rml:reference "nome" 
+                            rr:objectMap [
+                                rml:reference "nome"
                             ]
                         ]
                     ]
@@ -572,7 +572,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:datatype xsd:string ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -581,8 +581,8 @@
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate pofn:inputString ;
-                    rr:objectMap [ 
-                        rml:reference "nome" 
+                    rr:objectMap [
+                        rml:reference "nome"
                     ]
                 ]
             ]
@@ -601,7 +601,7 @@
                 ] ;
                 rr:predicateObjectMap [
                     rr:predicate pofn:query ;
-                    rr:objectMap [ 
+                    rr:objectMap [
                         rr:datatype xsd:string ;
                         fnml:functionValue [
                             rr:predicateObjectMap [
@@ -610,8 +610,8 @@
                             ] ;
                             rr:predicateObjectMap [
                                 rr:predicate pofn:inputString ;
-                                rr:objectMap [ 
-                                    rml:reference "nome" 
+                                rr:objectMap [
+                                    rml:reference "nome"
                                 ]
                             ]
                         ]
@@ -627,7 +627,7 @@
                 ]
             ]
         ]
-    ] 
+    ]
     .
 
 <#PetitionMap> a rr:TriplesMap ;
@@ -646,7 +646,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "id" ;
             rr:datatype xsd:string
         ]
@@ -655,7 +655,7 @@
     # Number
     rr:predicateObjectMap [
         rr:predicate dbo:number ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "numero" ;
             rr:datatype xsd:nonNegativeInteger
         ]
@@ -682,16 +682,16 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{legislatura}" ;
-            rr:termType rr:IRI 
+            rr:termType rr:IRI
         ]
     ] ;
 
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{sessao}_of_{legislatura}" ;
             rr:termType rr:IRI
         ]
@@ -786,7 +786,7 @@
     # URL
     rr:predicateObjectMap [
         rr:predicate schema:url ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:datatype xsd:string ;
             rml:reference "anexoFich";
         ]
@@ -849,7 +849,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "id" ;
             rr:datatype xsd:string
         ]
@@ -858,7 +858,7 @@
     # Number
     rr:predicateObjectMap [
         rr:predicate dbo:number ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "numero" ;
             rr:datatype xsd:nonNegativeInteger
         ]
@@ -867,7 +867,7 @@
     # Type
     rr:predicateObjectMap [
         rr:predicate polis-ini:changeProposalType ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "tipo" ;
             rr:datatype xsd:string
         ]
@@ -876,7 +876,7 @@
     # Proponent
     rr:predicateObjectMap [
         rr:predicate polis-ini:proponent ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "autor" ;
             rr:datatype xsd:string
         ]
@@ -885,7 +885,7 @@
     # Published in DAR
     rr:predicateObjectMap [
         rr:predicate polis-ini:isPublishedInDAR ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue[
                 rr:predicateObjectMap [
@@ -959,7 +959,7 @@
     # Number
     rr:predicateObjectMap [
         rr:predicate dbo:number ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "pubNr" ;
             rr:datatype xsd:nonNegativeInteger
         ]
@@ -968,7 +968,7 @@
     # Date
     rr:predicateObjectMap [
         rr:predicate dct:date ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "pubdt" ;
             rr:datatype xsd:date
         ]
@@ -977,7 +977,7 @@
     # URL
     rr:predicateObjectMap [
         rr:predicate schema:url ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "URLDiario" ;
             rr:datatype xsd:string
         ]
@@ -986,7 +986,7 @@
     # Code
     rr:predicateObjectMap [
         rr:predicate dbo:code ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "pubTp" ;
             rr:datatype xsd:string
         ]
@@ -995,7 +995,7 @@
     # Page
     rr:predicateObjectMap [
         rr:predicate schema:pagination ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "pag/string" ;
             rr:datatype xsd:string
         ]
@@ -1004,7 +1004,7 @@
     # Page Identifier
     rr:predicateObjectMap [
         rr:predicate polis-ini:pagesIdentifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "idPag" ;
             rr:datatype xsd:string
         ]
@@ -1013,16 +1013,16 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{pubLeg}" ;
-            rr:termType rr:IRI 
+            rr:termType rr:IRI
         ]
     ] ;
 
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{pubSL}_of_{pubLeg}" ;
             rr:termType rr:IRI
         ]
@@ -1031,7 +1031,7 @@
     # Observation
     rr:predicateObjectMap [
         rr:predicate polis-ini:observation ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "obs" ;
             rr:datatype xsd:string
         ]
@@ -1040,7 +1040,7 @@
     # Supplement
     rr:predicateObjectMap [
         rr:predicate polis-ini:publicationSupplement ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "supl" ;
             rr:datatype xsd:string
         ]
@@ -1049,7 +1049,7 @@
     # Final Supplement Page
     rr:predicateObjectMap [
         rr:predicate polis-ini:publicationSupplementFinalPage ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "pagFinalDiarioSupl" ;
             rr:datatype xsd:string
         ]
@@ -1077,3 +1077,84 @@
         ]
     ]
     .
+
+<#EventMap> a rr:TriplesMap ;
+
+  	rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut" ;
+    ] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "OevId" ]
+			] ;
+		]
+	] ;
+
+	# Identifier
+	rr:predicateObjectMap [
+		rr:predicate polis-core:identifier ;
+		rr:objectMap [
+			rml:reference "OevId" ;
+			rr:datatype xsd:string
+		]
+	] ;
+
+	# Type Identifier
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:typeId ;
+		rr:objectMap [
+			rml:reference "EvtId" ;
+			rr:datatype xsd:string
+		]
+	] ;
+
+	# Type/Phase
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:eventType ;
+		rr:objectMap [
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:trimSafe ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate grel:valueParameter ;
+					rr:objectMap [ rml:reference "Fase" ]
+				]
+			]
+		]
+	] ;
+
+	# Date
+	rr:predicateObjectMap [
+		rr:predicate dct:date ;
+		rr:objectMap [
+			rml:reference "DataFase" ;
+			rr:datatype xsd:date
+		]
+	] ;
+
+	# Code
+	rr:predicateObjectMap [
+		rr:predicate dbo:code ;
+		rr:objectMap [
+			rml:reference "CodigoFase" ;
+			rr:datatype xsd:string
+		]
+	]
+  	.
