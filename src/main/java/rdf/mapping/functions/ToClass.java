@@ -21,6 +21,7 @@ public class ToClass {
     private static final HashMap<String, String> requisitionMap = new HashMap<>();
     private static final HashMap<String, String> initiativeMap = new HashMap<>();
     private static final HashMap<String, String> otherProponentMap = new HashMap<>();
+    private static final HashMap<String, String> darPublicationMap = new HashMap<>();
 
     static {
         fillSituationMap();
@@ -32,6 +33,7 @@ public class ToClass {
         fillRequisitionMap();
         fillInitiativeMap();
         fillOtherProponentMap();
+        fillDarPublicationMap();
     }
 
     private static void fillSituationMap() {
@@ -113,6 +115,23 @@ public class ToClass {
         otherProponentMap.put("cidadaos", POLIS_INI_NS + "CitizenGroup");
     }
 
+    private static void fillDarPublicationMap() {
+        darPublicationMap.put("dar ii serie a", POLIS_GRAPH_NS + "DARPublication"); // A
+        darPublicationMap.put("dar ii serie b", POLIS_GRAPH_NS + "DARPublication"); // B
+        darPublicationMap.put("dar ii serie c", POLIS_GRAPH_NS + "DARPublication"); // C
+        darPublicationMap.put("dar i serie", POLIS_GRAPH_NS + "DARPublication");    // D
+        darPublicationMap.put("dar ii serie e", POLIS_GRAPH_NS + "DARPublication"); // H
+        darPublicationMap.put("dar ii serie c-rc", POLIS_GRAPH_NS + "DARPublication"); // I
+        darPublicationMap.put("dar ii serie", POLIS_GRAPH_NS + "DARPublication");      // K
+        darPublicationMap.put("dr ii serie b", POLIS_GRAPH_NS + "DARPublication");     // L
+        darPublicationMap.put("dr i serie", POLIS_GRAPH_NS + "DARPublication");    // M
+        darPublicationMap.put("dar ii serie c gop-oe", POLIS_GRAPH_NS + "DARPublication"); // O
+        darPublicationMap.put("dar ii s c-oe", POLIS_GRAPH_NS + "DARPublication");  // Q
+        darPublicationMap.put("dr i serie a", POLIS_GRAPH_NS + "DARPublication"); // R
+        darPublicationMap.put("separata", POLIS_GRAPH_NS + "DARPublication"); // S
+        darPublicationMap.put("dar ii serie c cei", POLIS_GRAPH_NS + "DARPublication"); // T
+        darPublicationMap.put("dar ii s-oe", POLIS_GRAPH_NS + "DARPublication"); // V
+    }
 
     public static String toClass(String entityName, String className) {
 
@@ -141,6 +160,8 @@ public class ToClass {
                 return initiativeMap.getOrDefault(normalizedInput, normalizedInput);
             case "otherProponent":
                 return otherProponentMap.getOrDefault(normalizedInput, null);
+            case "darPublication" :
+                    return darPublicationMap.getOrDefault(normalizedInput, null);
             case "regionalLegislativeAssembly":
 
                 // Get first 4 words and check if they match "assembleia legislativa da regiao"

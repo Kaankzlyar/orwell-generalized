@@ -970,5 +970,32 @@
             rr:template "http://purl.org/polis/ar/graph#Session_{pubSL}_of_{pubLeg}" ;
             rr:termType rr:IRI
         ]
-    ]
+    ] ;
+
+    # Observation
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:observation ;
+        rr:objectMap [ 
+            rml:reference "obs" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Supplement
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:publicationSupplement ;
+        rr:objectMap [ 
+            rml:reference "supl" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Final Supplement Page
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:publicationSupplementFinalPage ;
+        rr:objectMap [ 
+            rml:reference "pagFinalDiarioSupl" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
     .
