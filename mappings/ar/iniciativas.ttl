@@ -1078,6 +1078,29 @@
     ]
     .
 
+<#DiplomasMap> a rr:TriplesMap ;
+
+	rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/TextosAprovados" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class bibo:Legislation ;
+		rr:template "http://purl.org/polis/ar/graph#Diploma_{.}"
+	] ;
+
+	# Identifier
+	rr:predicateObjectMap [
+		rr:predicate polis-core:identifier ;
+		rr:objectMap [
+			rml:reference "." ;
+			rr:datatype xsd:string
+		]
+	] ;
+	.
+
 <#InitiativeEventRelationMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
@@ -1288,25 +1311,52 @@
 	]
 	.
 
-<#DiplomasMap> a rr:TriplesMap ;
+<#JointInitiativeMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-	    rml:source "data/" ;
-	    rml:referenceFormulation ql:XPath ;
-	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/TextosAprovados" ;
-	] ;
+		    rml:source "data/" ;
+		    rml:referenceFormulation ql:XPath ;
+		    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/IniciativasConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
+	 ] ;
 
 	rr:subjectMap [
-		rr:class bibo:Legislation ;
-		rr:template "http://purl.org/polis/ar/graph#Diploma_{.}"
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
 	] ;
 
-	# Identifier
+	# Joint Initiative
 	rr:predicateObjectMap [
-		rr:predicate polis-core:identifier ;
+		rr:predicate polis-ini:happensJointlyWithInitiative ;
 		rr:objectMap [
-			rml:reference "." ;
-			rr:datatype xsd:string
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:stringConcat ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:leftPart ;
+					rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Initiative_" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:rightPart ;
+					rr:objectMap [ rml:reference "id" ]
+				] ;
+			]
 		]
 	] ;
 	.

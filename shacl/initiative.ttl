@@ -524,11 +524,12 @@ polis-ini:EventShape a sh:NodeShape ;
         sh:message "An event must have at most one discussion and it must be of the class ocd:discussione"@en
     ] ;
 
-    sh:property [
-        sh:path polis-ini:happensJointlyWithInitiative ;
-        sh:class polis-ini:Initiative ;
-        sh:message "An event may happen jointly with initiatives and they must be of the type polis-ini:Initiative"@en
-    ] ;
+    # TODO: Uncomment quando lookup table guardar mapa de "className:id -> legislatura", para apontar para o URI correto (cada legislatura vai ter um URI)
+    # sh:property [
+    #     sh:path polis-ini:happensJointlyWithInitiative ;
+    #     sh:class polis-ini:Initiative ;
+    #     sh:message "An event may happen jointly with initiatives and they must be of the type polis-ini:Initiative"@en
+    # ] ;
 
     sh:property [
         sh:path polis-ini:discussedJointlyWith ;
