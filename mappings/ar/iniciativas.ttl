@@ -739,7 +739,7 @@
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
-        rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAnexos/pt_gov_ar_objectos_iniciativas_AnexosOut" ;
+        rml:iterator "//pt_gov_ar_objectos_iniciativas_AnexosOut" ;
     ] ;
 
     rr:subjectMap [
@@ -805,6 +805,60 @@
         rr:class polis-ini:Initiative ;
         rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
     ] ;
+
+    # Annex
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasAnnex ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:annex:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "anexoNome" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "anexoFich" ]
+                ]
+            ]
+        ]
+    ]
+    .
+
+<#EventAnnexRelationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//AnexosFase/pt_gov_ar_objectos_iniciativas_AnexosOut" ;
+    ] ;
+
+    rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
 
     # Annex
     rr:predicateObjectMap [
