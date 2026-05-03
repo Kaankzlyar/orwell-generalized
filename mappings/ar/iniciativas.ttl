@@ -1247,6 +1247,15 @@
 			]
 		]
 	] ;
+
+	# Appeal GP
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:receivedAppeal ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{RecursoGP/string}_of_{../../IniLeg}"
+		]
+	] ;
   	.
 
 <#EventDARPublicationRelationMap> a rr:TriplesMap ;
