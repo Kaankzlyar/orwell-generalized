@@ -1249,6 +1249,7 @@
 	] ;
 
 	# Appeal GP
+	# TODO: Use stringConcat to dodge warning about missing template variable
 	rr:predicateObjectMap [
 		rr:predicate polis-ini:receivedAppeal ;
 		rr:objectMap [
@@ -1323,9 +1324,9 @@
 <#JointInitiativeMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-		    rml:source "data/" ;
-		    rml:referenceFormulation ql:XPath ;
-		    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/IniciativasConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/IniciativasConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
 	 ] ;
 
 	rr:subjectMap [
