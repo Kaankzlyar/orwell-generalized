@@ -640,7 +640,7 @@
 
     rr:subjectMap [
         rr:class polis-ini:Petition ;
-        rr:template "http://purl.org/polis/ar/graph#Petition_{id}"
+        rr:template "http://purl.org/polis/ar/graph#Petition_{numero}"
     ] ;
 
     # Identifier
@@ -1355,6 +1355,56 @@
 				rr:predicateObjectMap [
 					rr:predicate pofn:rightPart ;
 					rr:objectMap [ rml:reference "id" ]
+				] ;
+			]
+		]
+	] ;
+	.
+
+<#JointPetitionMap> a rr:TriplesMap ;
+
+	rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/PeticoesConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
+	 ] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	# Joint Petition
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:discussedJointlyWith ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:stringConcat ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:leftPart ;
+					rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Petition_" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:rightPart ;
+					rr:objectMap [ rml:reference "nr" ]
 				] ;
 			]
 		]
