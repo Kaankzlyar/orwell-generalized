@@ -188,6 +188,7 @@
         ]
     ] ;
 
+    # TODO: Uncomment
     # Other Proponent (Government)
     # rr:predicateObjectMap [
     #     rr:predicate polis-ini:hasProponent ;
@@ -394,6 +395,7 @@
         ]
     ] ;
 
+    # TODO: Uncomment
     # Proponent (if IniAutorOutros/sigla is "D")
     # rr:predicateObjectMap [
     #     rr:predicate polis-ini:hasProponent ;
