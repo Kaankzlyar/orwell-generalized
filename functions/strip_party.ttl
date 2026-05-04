@@ -1,0 +1,34 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:stripParty a fno:Function ;
+    fno:name "stripParty" ;
+    fno:expects ( :stripPartyValueParam ) ;
+    fno:returns ( :stripPartyOutputParam ) .
+
+:stripPartyValueParam a fno:Parameter ;
+    fno:predicate grel:valueParameter ;
+    fno:name "value" ;
+    fno:description "String in format 'Name (Party)' to extract name from." ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:stripPartyOutputParam a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "Name without party suffix, or null if input is null." ;
+    fno:type xsd:string .
+
+:stripPartyImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.StripParty" .
+
+:stripPartyMapping a fno:Mapping ;
+    fno:function :stripParty ;
+    fno:implementation :stripPartyImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "stripParty" ] .
