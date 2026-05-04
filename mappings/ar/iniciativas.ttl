@@ -1516,3 +1516,84 @@
 		]
 	] ;
 	.
+
+<#ParliamentarianAppealMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/RecursoDeputados/string" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	# Appeal Parliamentarian
+	rr:predicateObjectMap [
+	    rr:predicate polis-ini:receivedAppeal ;
+		rr:objectMap [
+		    rr:termType rr:IRI ;
+			fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Parliamentarian_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+             			    rr:predicateObjectMap [
+             			        rr:predicate fno:executes ;
+             			        rr:objectMap [ rr:constant pofn:lookup ]
+             			    ] ;
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupTable ;
+             			        rr:objectMap [ rr:constant "ParliamentarianReconciliation" ]
+             			    ] ;
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "../../../../IniLeg" ]
+             			    ] ;
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [
+             			            fnml:functionValue [
+             			                rr:predicateObjectMap [
+             			                    rr:predicate fno:executes ;
+             			                    rr:objectMap [ rr:constant pofn:stripParty ]
+             			                ] ;
+             			                rr:predicateObjectMap [
+             			                    rr:predicate grel:valueParameter ;
+             			                    rr:objectMap [ rml:reference "." ]
+             			                ]
+             			            ]
+             			        ]
+             			    ] ;
+                        ]
+                    ]
+                ]
+			] ;
+		]
+	] ;
+
+	.
