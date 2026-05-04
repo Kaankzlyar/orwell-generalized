@@ -31,7 +31,7 @@
 
 
 <#CommissionMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -78,7 +78,7 @@
     .
 
 <#ParliamentarianRequisitionRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -100,7 +100,7 @@
     .
 
 <#RequisitionMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -137,7 +137,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -155,7 +155,7 @@
     # Number
     rr:predicateObjectMap [
         rr:predicate dbo:number ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ReqNr" ;
             rr:datatype xsd:nonNegativeInteger
         ]
@@ -164,7 +164,7 @@
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -200,7 +200,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{ReqLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -209,7 +209,7 @@
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{ReqSl}_of_{ReqLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -218,7 +218,7 @@
     # Public Entity
     rr:predicateObjectMap [
         rr:predicate polis-mpact:toPublicEntityType ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -239,7 +239,7 @@
     .
 
 <#ParliamentarianYPARelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -253,14 +253,14 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-mpact:didYouthParliamentActivity ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#YouthParliamentActivityMap> ;
         ]
     ] ;
     .
 
 <#YouthParliamentActivityMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -318,7 +318,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{Legislatura}" ;
             rr:termType rr:IRI ;
         ]
@@ -327,7 +327,7 @@
     # Meeting Type
     rr:predicateObjectMap [
         rr:predicate polis-mpact:meetingType ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -345,7 +345,7 @@
     # School
     rr:predicateObjectMap [
         rr:predicate polis-mpact:heldAt ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#SchoolMap> ;
         ]
     ] ;
@@ -386,7 +386,7 @@
     .
 
 <#SchoolMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -432,7 +432,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -485,7 +485,7 @@
     .
 
 <#ParliamentarianFriendshipParliamentaryGroupRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -499,14 +499,14 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#ParliamentarianFriendshipParliamentaryGroupMembershipMap> ;
         ]
     ] ;
     .
 
 <#ParliamentarianFriendshipParliamentaryGroupMembershipMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -610,7 +610,7 @@
     .
 
 <#FriendshipParliamentaryGroupMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -625,7 +625,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "GplId" ;
             rr:datatype xsd:string
         ]
@@ -634,7 +634,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -652,7 +652,7 @@
     # Leg
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{GplSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -660,7 +660,7 @@
     .
 
 <#ParliamentarianPublicAccountRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -674,7 +674,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-mpact:wasRapporteurIn ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -695,7 +695,7 @@
     .
 
 <#PublicAccountMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -725,7 +725,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActId" ;
             rr:datatype xsd:string
         ]
@@ -734,7 +734,7 @@
     # Civil Year
     rr:predicateObjectMap [
         rr:predicate polis-mpact:civilYear ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "anoCiv" ;
             rr:datatype xsd:gYear
         ]
@@ -743,7 +743,7 @@
     # Appointment Date
     rr:predicateObjectMap [
         rr:predicate dct:date ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "dtNom" ;
             rr:datatype xsd:date
         ]
@@ -752,7 +752,7 @@
     # Subject Matter
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -770,7 +770,7 @@
     # Legislature
     # rr:predicateObjectMap [
     #     rr:predicate polis-core:belongsToLegislature ;
-    #     rr:objectMap [ 
+    #     rr:objectMap [
     #         rr:template "http://purl.org/polis/ar/graph#{actSelLg}" ;
     #         rr:termType rr:IRI ;
     #     ]
@@ -778,7 +778,7 @@
     .
 
 <#ParliamentarianParliamentaryActivityRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -792,7 +792,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-core:didParliamentaryActivity ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -827,7 +827,7 @@
     .
 
 <#ParliamentaryActivityMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -870,7 +870,7 @@
     # Type
     rr:predicateObjectMap [
         rr:predicate rdf:type ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/mp-activity#{ActTp}" ;
             rr:termType rr:IRI
         ]
@@ -879,7 +879,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActId" ;
             rr:datatype xsd:string
         ]
@@ -888,7 +888,7 @@
     # Number
     rr:predicateObjectMap [
         rr:predicate dbo:number ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActNr" ;
             rr:datatype xsd:nonNegativeInteger
         ]
@@ -897,7 +897,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{ActSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -906,7 +906,7 @@
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{ActSelNr}_of_{ActSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -915,7 +915,7 @@
     # Entry Date
     rr:predicateObjectMap [
         rr:predicate dct:date ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -933,7 +933,7 @@
     # Debate Date
     rr:predicateObjectMap [
         rr:predicate polis-mpact:debateDate ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -951,7 +951,7 @@
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -968,7 +968,7 @@
     .
 
 <#ParliamentarianAuditionRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -982,7 +982,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1003,7 +1003,7 @@
     .
 
 <#AuditionMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1033,7 +1033,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActId" ;
             rr:datatype xsd:string
         ]
@@ -1042,7 +1042,7 @@
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1060,7 +1060,7 @@
     # Date
     rr:predicateObjectMap [
         rr:predicate dct:date ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "AccDtaud" ;
             rr:datatype xsd:date
         ]
@@ -1069,7 +1069,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -1077,7 +1077,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-mpact:relatedCommission ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1118,7 +1118,7 @@
     # Comission Identifier
     rr:predicateObjectMap [
         rr:predicate polis-mpact:commissionIdentifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActNr" ;
             rr:datatype xsd:string ;
         ]
@@ -1127,14 +1127,14 @@
     # Third Party Entity
     rr:predicateObjectMap [
         rr:predicate prov:wasAssociatedWith ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#AuditionThirdPartyEntityMap> ;
         ]
     ] ;
     .
 
 <#ParliamentarianHearingRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1148,7 +1148,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1169,7 +1169,7 @@
     .
 
 <#HearingMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1199,7 +1199,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActId" ;
             rr:datatype xsd:string
         ]
@@ -1208,7 +1208,7 @@
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1226,7 +1226,7 @@
     # Date
     rr:predicateObjectMap [
         rr:predicate dct:date ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "AccDtaud" ;
             rr:datatype xsd:date
         ]
@@ -1235,16 +1235,15 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
             rr:termType rr:IRI ;
         ]
     ] ;
 
-    # TODO: Related Commission
     rr:predicateObjectMap [
         rr:predicate polis-mpact:relatedCommission ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1285,7 +1284,7 @@
     # Comission Identifier
     rr:predicateObjectMap [
         rr:predicate polis-mpact:commissionIdentifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActNr" ;
             rr:datatype xsd:string ;
         ]
@@ -1294,14 +1293,14 @@
     # Third Party Entity
     rr:predicateObjectMap [
         rr:predicate prov:wasAssociatedWith ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#HearingThirdPartyEntityMap> ;
         ]
     ] ;
     .
 
 <#ParliamentarianVisitRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1315,7 +1314,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1336,7 +1335,7 @@
     .
 
 <#VisitMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1365,7 +1364,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActId" ;
             rr:datatype xsd:string
         ]
@@ -1374,7 +1373,7 @@
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1416,12 +1415,12 @@
             ] ;
         ]
     ] ;
-    
+
 
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -1430,16 +1429,15 @@
     # Location
     rr:predicateObjectMap [
         rr:predicate schema:location ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActLoc" ;
             rr:datatype xsd:string
         ]
     ] ;
 
-    # TODO: Related Commission
     rr:predicateObjectMap [
         rr:predicate polis-mpact:relatedCommission ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1479,7 +1477,7 @@
     .
 
 <#ParliamentarianEventRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1493,7 +1491,7 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-core:didCommissionActivity ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1514,7 +1512,7 @@
     .
 
 <#EventMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1542,7 +1540,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "ActId" ;
             rr:datatype xsd:string
         ]
@@ -1551,7 +1549,7 @@
     # Subject
     rr:predicateObjectMap [
         rr:predicate dct:subject ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1569,7 +1567,7 @@
     # Type
     rr:predicateObjectMap [
         rr:predicate rdf:type ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1596,12 +1594,12 @@
             rr:datatype xsd:date ;
         ]
     ] ;
-    
+
 
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{ActLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -1610,7 +1608,7 @@
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{ActSl}_of_{ActLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -1619,7 +1617,7 @@
     # Location
     rr:predicateObjectMap [
         rr:predicate schema:location ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1633,10 +1631,9 @@
         ]
     ] ;
 
-    # TODO: Related Commission
     rr:predicateObjectMap [
         rr:predicate polis-mpact:relatedCommission ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -1676,7 +1673,7 @@
     .
 
 <#AuditionThirdPartyEntityMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1715,7 +1712,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1732,7 +1729,7 @@
     .
 
 <#HearingThirdPartyEntityMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1771,7 +1768,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1788,7 +1785,7 @@
     .
 
 <#PermanentDelegationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1803,7 +1800,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "DepId" ;
             rr:datatype xsd:string
         ]
@@ -1812,7 +1809,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1826,11 +1823,11 @@
             rr:datatype xsd:string
         ]
     ] ;
-    
+
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{DepSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -1839,7 +1836,7 @@
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{DepSelNr}_of_{DepSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -1847,7 +1844,7 @@
     .
 
 <#PermanentDelegationMeetingRelationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1861,14 +1858,14 @@
 
     rr:predicateObjectMap [
         rr:predicate polis-mpact:hasPermanentDelegationMeeting ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#PermanentDelegationMeetingMap> ;
         ]
     ] ;
     .
 
 <#PermanentDelegationMeetingMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1909,7 +1906,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "RenTi" ;
             rr:datatype xsd:string
         ]
@@ -1918,7 +1915,7 @@
     # Location
     rr:predicateObjectMap [
         rr:predicate sem:hasPlace ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#PermanentDelegationMeetingPlaceMap> ;
         ]
     ] ;
@@ -1953,7 +1950,7 @@
     .
 
 <#TemporaryDelegationMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -1968,7 +1965,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "DevId" ;
             rr:datatype xsd:string
         ]
@@ -1977,7 +1974,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -1991,11 +1988,11 @@
             rr:datatype xsd:string
         ]
     ] ;
-    
+
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{DevSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -2004,7 +2001,7 @@
     # Legislative Session
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislativeSession ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Session_{DevSelNr}_of_{DevSelLg}" ;
             rr:termType rr:IRI ;
         ]
@@ -2059,7 +2056,7 @@
     # Location
     rr:predicateObjectMap [
         rr:predicate sem:hasPlace ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:parentTriplesMap <#PlaceMap> ;
         ]
     ] ;
@@ -2067,7 +2064,7 @@
     # Scope
     rr:predicateObjectMap [
         rr:predicate polis-mpact:hasDelegationScope ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
@@ -2084,11 +2081,11 @@
                 ] ;
             ]
         ]
-    ] ; 
+    ] ;
     .
 
 <#PlaceMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -2096,7 +2093,7 @@
     ] ;
 
     rr:subjectMap [
-        rr:class sem:Place ; 
+        rr:class sem:Place ;
         rr:termType rr:IRI ;
         fnml:functionValue [
             rr:predicateObjectMap [
@@ -2128,15 +2125,15 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "DevLoc" ;
             rr:datatype xsd:string
         ]
-    ] 
+    ]
     .
 
 <#PermanentDelegationMeetingPlaceMap> a rr:TriplesMap ;
-    
+
     rml:logicalSource [
         rml:source "data/" ;
         rml:referenceFormulation ql:XPath ;
@@ -2144,7 +2141,7 @@
     ] ;
 
     rr:subjectMap [
-        rr:class sem:Place ; 
+        rr:class sem:Place ;
         rr:termType rr:IRI ;
         fnml:functionValue [
             rr:predicateObjectMap [
@@ -2176,9 +2173,9 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "RenLoc" ;
             rr:datatype xsd:string
         ]
-    ] 
+    ]
     .
