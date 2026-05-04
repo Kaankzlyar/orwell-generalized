@@ -8,7 +8,6 @@ public class StripParty {
         }
         int idx = value.indexOf(" (");
         String name = idx > 0 ? value.substring(0, idx) : value;
-        System.out.println("Stripped party: " + name);
         return name;
     }
 }
