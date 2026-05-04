@@ -14,18 +14,15 @@ public class Lookup {
 
             keyBuilder.append(StringUtils.normalize(value)).append(":");
         }
+
+        if (keyBuilder.length() == 0) return null;
+
         // Remove the last :
         String key = keyBuilder.substring(0, keyBuilder.length() - 1);
-
-        //System.out.println(
-        //    Registry.getLookupTable().getOrDefault(lookupTable, Map.of())
-        //);
 
         String result = Registry.getLookupTable()
             .getOrDefault(lookupTable, Map.of())
             .getOrDefault(key, null);
-
-        System.out.println("Got result: " + result + " for key: " + key);
 
         return result;
     }
