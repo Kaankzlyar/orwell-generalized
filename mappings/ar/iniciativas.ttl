@@ -189,44 +189,44 @@
     ] ;
 
     # Other Proponent (Government)
-    rr:predicateObjectMap [
-        rr:predicate polis-ini:hasProponent ;
-        rr:objectMap [
-            rr:termType rr:IRI ;
-            fnml:functionValue [
-                rr:predicateObjectMap [
-                    rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:controls_if ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate grel:bool_b ;
-                    rr:objectMap [
-                        fnml:functionValue [
-                            rr:predicateObjectMap [
-                                rr:predicate fno:executes ;
-                                rr:objectMap [ rr:constant pofn:stringEquals ]
-                            ] ;
-                            rr:predicateObjectMap [
-                                rr:predicate pofn:string1 ;
-                                rr:objectMap [ rml:reference "IniAutorOutros/sigla" ]
-                            ] ;
-                            rr:predicateObjectMap [
-                                rr:predicate pofn:string2 ;
-                                rr:objectMap [ rr:constant "V" ] # V is the sigla for the government in the IniAutorOutros field
-                            ]
-                        ]
-                    ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate grel:any_true ;
-                    rr:objectMap [
-                        rr:template "http://purl.org/polis/ar/graph#Government_{IniLeg}" ;
-                        rr:termType rr:IRI
-                    ]
-                ]
-            ]
-        ] ;
-    ] ;
+    # rr:predicateObjectMap [
+    #     rr:predicate polis-ini:hasProponent ;
+    #     rr:objectMap [
+    #         rr:termType rr:IRI ;
+    #         fnml:functionValue [
+    #             rr:predicateObjectMap [
+    #                 rr:predicate fno:executes ;
+    #                 rr:objectMap [ rr:constant grel:controls_if ]
+    #             ] ;
+    #             rr:predicateObjectMap [
+    #                 rr:predicate grel:bool_b ;
+    #                 rr:objectMap [
+    #                     fnml:functionValue [
+    #                         rr:predicateObjectMap [
+    #                             rr:predicate fno:executes ;
+    #                             rr:objectMap [ rr:constant pofn:stringEquals ]
+    #                         ] ;
+    #                         rr:predicateObjectMap [
+    #                             rr:predicate pofn:string1 ;
+    #                             rr:objectMap [ rml:reference "IniAutorOutros/sigla" ]
+    #                         ] ;
+    #                         rr:predicateObjectMap [
+    #                             rr:predicate pofn:string2 ;
+    #                             rr:objectMap [ rr:constant "V" ] # V is the sigla for the government in the IniAutorOutros field
+    #                         ]
+    #                     ]
+    #                 ]
+    #             ] ;
+    #             rr:predicateObjectMap [
+    #                 rr:predicate grel:any_true ;
+    #                 rr:objectMap [
+    #                     rr:template "http://purl.org/polis/ar/graph#Government_{IniLeg}" ;
+    #                     rr:termType rr:IRI
+    #                 ]
+    #             ]
+    #         ]
+    #     ] ;
+    # ] ;
 
     # Other Proponent (Commission)
     rr:predicateObjectMap [
@@ -395,44 +395,44 @@
     ] ;
 
     # Proponent (if IniAutorOutros/sigla is "D")
-    rr:predicateObjectMap [
-        rr:predicate polis-ini:hasProponent ;
-        rr:objectMap [
-            rr:termType rr:IRI ;
-            fnml:functionValue [
-                rr:predicateObjectMap [
-                    rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant grel:controls_if ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate grel:bool_b ;
-                    rr:objectMap [
-                        fnml:functionValue [
-                            rr:predicateObjectMap [
-                                rr:predicate fno:executes ;
-                                rr:objectMap [ rr:constant pofn:stringEquals ]
-                            ] ;
-                            rr:predicateObjectMap [
-                                rr:predicate pofn:string1 ;
-                                rr:objectMap [ rml:reference "../../IniAutorOutros/sigla" ]
-                            ] ;
-                            rr:predicateObjectMap [
-                                rr:predicate pofn:string2 ;
-                                rr:objectMap [ rr:constant "D" ]
-                            ]
-                        ]
-                    ]
-                ] ;
-                rr:predicateObjectMap [
-                    rr:predicate grel:any_true ;
-                    rr:objectMap [
-                        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{idCadastro}.0" ;
-                        rr:termType rr:IRI
-                    ]
-                ]
-            ]
-        ]
-    ]
+    # rr:predicateObjectMap [
+    #     rr:predicate polis-ini:hasProponent ;
+    #     rr:objectMap [
+    #         rr:termType rr:IRI ;
+    #         fnml:functionValue [
+    #             rr:predicateObjectMap [
+    #                 rr:predicate fno:executes ;
+    #                 rr:objectMap [ rr:constant grel:controls_if ]
+    #             ] ;
+    #             rr:predicateObjectMap [
+    #                 rr:predicate grel:bool_b ;
+    #                 rr:objectMap [
+    #                     fnml:functionValue [
+    #                         rr:predicateObjectMap [
+    #                             rr:predicate fno:executes ;
+    #                             rr:objectMap [ rr:constant pofn:stringEquals ]
+    #                         ] ;
+    #                         rr:predicateObjectMap [
+    #                             rr:predicate pofn:string1 ;
+    #                             rr:objectMap [ rml:reference "../../IniAutorOutros/sigla" ]
+    #                         ] ;
+    #                         rr:predicateObjectMap [
+    #                             rr:predicate pofn:string2 ;
+    #                             rr:objectMap [ rr:constant "D" ]
+    #                         ]
+    #                     ]
+    #                 ]
+    #             ] ;
+    #             rr:predicateObjectMap [
+    #                 rr:predicate grel:any_true ;
+    #                 rr:objectMap [
+    #                     rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{idCadastro}.0" ;
+    #                     rr:termType rr:IRI
+    #                 ]
+    #             ]
+    #         ]
+    #     ]
+    # ]
     .
 
 <#InitiativeProponentPartyMap> a rr:TriplesMap ;
@@ -1596,4 +1596,126 @@
 		]
 	] ;
 
+	.
+
+<#EventVoteRelationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:hasVote ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:hashIri ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:prefix ;
+					rr:objectMap [ rr:constant "urn:vote:" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "id" ]
+				] ;
+			]
+		]
+	] ;
+	.
+
+<#VoteMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class ocd:votazione ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:vote:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "id" ]
+			] ;
+		]
+	] ;
+
+	# Identifer
+	rr:predicateObjectMap [
+		rr:predicate polis-core:identifier ;
+		rr:objectMap [
+		    rml:reference "id" ;
+		    rml:datatype xsd:string
+		]
+	] ;
+
+	# Result
+	rr:predicateObjectMap [
+		rr:predicate polis-core:result ;
+		rr:objectMap [
+		    rml:reference "resultado" ;
+		    rml:datatype xsd:string
+		]
+	] ;
+
+	# Reunion Number
+	rr:predicateObjectMap [
+		rr:predicate polis-core:reunionNumber ;
+		rr:objectMap [
+		    rml:reference "reuniao" ;
+		    rml:datatype xsd:integer
+		]
+	] ;
+
+	# Reunion Type
+	rr:predicateObjectMap [
+		rr:predicate polis-core:reunionType ;
+		rr:objectMap [
+		    rml:reference "tipoReuniao" ;
+		    rml:datatype xsd:string
+		]
+	] ;
+
+	# Date
+	rr:predicateObjectMap [
+		rr:predicate dct:date ;
+		rr:objectMap [
+		    rml:reference "data" ;
+		    rml:datatype xsd:date
+		]
+	] ;
 	.
