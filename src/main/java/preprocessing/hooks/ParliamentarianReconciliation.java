@@ -1,7 +1,5 @@
 package preprocessing.hooks;
 
-import preprocessing.Hook;
-import preprocessing.ProcessingContext;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,8 +7,12 @@ import java.util.stream.Stream;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
+import preprocessing.Hook;
+import preprocessing.ProcessingContext;
+import utils.StringUtils;
 
 public class ParliamentarianReconciliation extends Hook {
+
     @Override
     public void execute(ProcessingContext context) {
         try (Stream<Path> paths = streamDocuments("ar/informacaobase")) {
@@ -30,7 +32,10 @@ public class ParliamentarianReconciliation extends Hook {
         try (InputStream in = Files.newInputStream(xmlPath)) {
             XMLStreamReader reader = factory.createXMLStreamReader(in);
             factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-            factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+            factory.setProperty(
+                XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
+                false
+            );
 
             boolean inDetalheLegislatura = false;
             boolean inDeputado = false;
@@ -45,7 +50,11 @@ public class ParliamentarianReconciliation extends Hook {
                         inDetalheLegislatura = true;
                         continue;
                     }
-                    if (inDetalheLegislatura && name.equals("sigla") && legislature == null) {
+                    if (
+                        inDetalheLegislatura &&
+                        name.equals("sigla") &&
+                        legislature == null
+                    ) {
                         legislature = readElementText(reader);
                         continue;
                     }
@@ -69,8 +78,15 @@ public class ParliamentarianReconciliation extends Hook {
                         continue;
                     }
                     if (name.equals("DadosDeputadoOrgaoPlenario")) {
-                        if (legislature != null && depId != null && depName != null) {
-                            String key = legislature + ":" + depName.trim().toLowerCase();
+                        if (
+                            legislature != null &&
+                            depId != null &&
+                            depName != null
+                        ) {
+                            String key =
+                                legislature.toLowerCase() +
+                                ":" +
+                                StringUtils.normalize(depName);
                             registerLookupTable(context, key, depId.trim());
                         }
                         inDeputado = false;
@@ -78,7 +94,10 @@ public class ParliamentarianReconciliation extends Hook {
                 }
             }
         } catch (Exception e) {
-            throw new IllegalStateException("Failed to parse XML: " + xmlPath + ": " + e.getMessage(), e);
+            throw new IllegalStateException(
+                "Failed to parse XML: " + xmlPath + ": " + e.getMessage(),
+                e
+            );
         }
     }
 }
