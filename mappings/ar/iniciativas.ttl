@@ -1774,4 +1774,65 @@
             ]
         ]
     ] ;
+
+	.
+
+<#VoteDARPublicationRelationMap> a rr:TriplesMap ;
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/publicacao/pt_gov_ar_objectos_PublicacoesOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class ocd:votazione ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:vote:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "../../id" ]
+            ] ;
+        ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:isPublishedInDAR ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:darPublication:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "URLDiario" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "idPag" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "pag" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "pubNr" ]
+                ] ;
+            ]
+        ]
+    ]
 	.
