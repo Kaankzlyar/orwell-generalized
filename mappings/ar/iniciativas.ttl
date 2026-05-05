@@ -3,6 +3,7 @@
 @prefix ql:     <http://semweb.mmlab.be/ns/ql#> .
 @prefix fnml:   <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno:    <https://w3id.org/function/ontology#> .
+@prefix idlab: <https://w3id.org/imec/idlab/function#> .
 @prefix pofn:   <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> . # TODO: Update URI to match where the pofn file is hosted
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -1720,4 +1721,57 @@
 		    rml:datatype xsd:date
 		]
 	] ;
+
+	# Description
+	rr:predicateObjectMap [
+		rr:predicate dct:description ;
+		rr:objectMap [
+		    rml:reference "descricao" ;
+		    rml:datatype xsd:string
+		]
+	] ;
+
+	# Unanimous
+	rr:predicateObjectMap [
+        rr:predicate polis-ini:unanimous ;
+        rr:objectMap [
+            rr:datatype xsd:boolean ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant grel:controls_if ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:bool_b ;
+                    rr:objectMap [
+                        rr:datatype xsd:boolean ;
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant idlab:isNull ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate idlab:str ;
+                                rr:objectMap [ rml:reference "unanime" ]
+                            ] ;
+                        ]
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:any_true ;
+                    rr:objectMap [
+                        rr:constant "false" ;
+                        rr:datatype xsd:boolean
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:any_false ;
+                    rr:objectMap [
+                        rr:constant "true" ;
+                        rr:datatype xsd:boolean
+                    ]
+                ] ;
+            ]
+        ]
+    ] ;
 	.
