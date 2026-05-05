@@ -46,11 +46,11 @@ public class ExtractVoting extends Hook {
     @Override
     public void execute(ProcessingContext context) {
         try (Stream<Path> paths = streamDocuments("ar/iniciativas")) {
-            paths.parallel().forEach(this::processDocument);
+            paths.parallel().forEach(path -> processDocument(context, path));
         }
     }
 
-    private void processDocument(Path path) {
+    private void processDocument(ProcessingContext context, Path path) {
         try {
             String content = Files.readString(path);
 
@@ -63,7 +63,6 @@ public class ExtractVoting extends Hook {
                         .replace("&lt;", "<")
                         .replace("&gt;", ">")
                         .replace("&amp;", "&");
-                    System.out.println("DEBUG: " + detalheContent);
                     Map<String, List<String>> votes = extractVotes(
                         detalheContent
                     );
@@ -82,19 +81,45 @@ public class ExtractVoting extends Hook {
 
     private String buildVotingsXml(Map<String, List<String>> votes) {
         StringBuilder sb = new StringBuilder("<votings>");
+
+        // Parliamentary groups (single-word names)
+        sb.append("<parliamentaryGroup>");
         for (String category : CATEGORIES) {
             String elementName = elementNameForCategory(category);
             for (String vote : votes.getOrDefault(category, List.of())) {
-                sb
-                    .append("<")
-                    .append(elementName)
-                    .append(">")
-                    .append(vote)
-                    .append("</")
-                    .append(elementName)
-                    .append(">");
+                if (!vote.contains(" ")) {
+                    sb
+                        .append("<")
+                        .append(elementName)
+                        .append(">")
+                        .append(vote)
+                        .append("</")
+                        .append(elementName)
+                        .append(">");
+                }
             }
         }
+        sb.append("</parliamentaryGroup>");
+
+        // Parliamentarians (multi-word names)
+        sb.append("<parliamentarian>");
+        for (String category : CATEGORIES) {
+            String elementName = elementNameForCategory(category);
+            for (String vote : votes.getOrDefault(category, List.of())) {
+                if (vote.contains(" ")) {
+                    sb
+                        .append("<")
+                        .append(elementName)
+                        .append(">")
+                        .append(vote)
+                        .append("</")
+                        .append(elementName)
+                        .append(">");
+                }
+            }
+        }
+        sb.append("</parliamentarian>");
+
         sb.append("</votings>");
         return sb.toString();
     }
