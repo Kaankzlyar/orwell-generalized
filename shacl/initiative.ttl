@@ -649,8 +649,8 @@ polis-ini:VoteShape a sh:NodeShape ;
 
     sh:property [
         sh:path polis-ini:hasAbsentee ;
-        sh:class m4s:Parliamentarian ;
-        sh:message "A vote may only have absentees from the class m4s:Parliamentarian"@en
+        sh:class polis-core:ParliamentaryGroup ;
+        sh:message "A vote may only have absentees from the class polis-core:ParliamentaryGroup"@en
     ] ;
 
     sh:property [

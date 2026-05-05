@@ -1774,7 +1774,6 @@
             ]
         ]
     ] ;
-
 	.
 
 <#VoteDARPublicationRelationMap> a rr:TriplesMap ;
@@ -1836,3 +1835,83 @@
         ]
     ]
 	.
+
+<#VoteAbsenteeRelationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/ausencias/string" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class ocd:votazione ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:vote:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../id" ]
+			] ;
+		]
+	] ;
+
+    # Absentees
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasAbsentee ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#ParliamentaryGroup_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:stringConcat ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:leftPart ;
+                                rr:objectMap [ rml:reference "." ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:rightPart ;
+                                rr:objectMap [
+                                    fnml:functionValue [
+                                        rr:predicateObjectMap [
+                                            rr:predicate fno:executes ;
+                                            rr:objectMap [ rr:constant pofn:stringConcat ]
+                                        ] ;
+                                        rr:predicateObjectMap [
+                                            rr:predicate pofn:leftPart ;
+                                            rr:objectMap [ rr:constant "_of_" ]
+                                        ] ;
+                                        rr:predicateObjectMap [
+                                            rr:predicate pofn:rightPart ;
+                                            rr:objectMap [ rml:reference "../../../../../../IniLeg" ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+    .
