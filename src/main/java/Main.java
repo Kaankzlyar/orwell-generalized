@@ -1,13 +1,13 @@
+import static config.Config.*;
+
+import extraction.ARExtractor;
+import extraction.DataExtractor;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
-
-import static config.Config.*;
-import extraction.ARExtractor;
-import extraction.DataExtractor;
 import preprocessing.Registry;
 import preprocessing.hooks.*;
 import rdf.mapping.MappingPairPlanner;
@@ -24,17 +24,15 @@ public class Main {
     private static final String DISABLE_SHACL_FAILURE = "-ds";
     private static final String ENABLE_LOG_FLAG = "-l";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-
+    public static void main(String[] args)
+        throws IOException, InterruptedException {
         processArgs(args);
 
         Benchmark benchmark = new Benchmark();
 
         if (EXTRACTION_ENABLED) {
             benchmark.startTiming("Extraction");
-            List<DataExtractor> extractors = List.of(
-                    new ARExtractor()
-            );
+            List<DataExtractor> extractors = List.of(new ARExtractor());
 
             for (DataExtractor extractor : extractors) {
                 extractor.extract();
@@ -44,13 +42,14 @@ public class Main {
 
         benchmark.startTiming("Hooks");
         Registry.register(
-                new ParliamentarianReconciliation(),
-                new CommissionInformation()
+            new ParliamentarianReconciliation(),
+            new CommissionInformation(),
+            new ExtractVoting()
         );
         Registry.run();
         benchmark.endTiming();
         try {
-            if(MAPPING_ENABLED){
+            if (MAPPING_ENABLED) {
                 benchmark.startTiming("MappingPairPlanner");
                 MappingPairPlanner planner = new MappingPairPlanner();
                 List<Path> mappingFiles = planner.createMappingPairs();
@@ -62,22 +61,22 @@ public class Main {
                 benchmark.endTiming();
             }
 
-            if (SHACL_ENABLED){
+            if (SHACL_ENABLED) {
                 benchmark.startTiming("SHACL Validation");
                 ShaclValidation validator = new ShaclValidation();
                 validator.validate();
                 benchmark.endTiming();
             }
         } finally {
-            
             if (RECONCILIATION_ENABLED) {
                 WikidataReconciliationService.persistCache();
             }
 
-            if(DELETE_TMP){
+            if (DELETE_TMP) {
                 if (Files.exists(TMP_DIR)) {
                     try (var paths = Files.walk(TMP_DIR)) {
-                        paths.sorted(Comparator.reverseOrder())
+                        paths
+                            .sorted(Comparator.reverseOrder())
                             .forEach(path -> {
                                 try {
                                     Files.delete(path);
@@ -93,7 +92,7 @@ public class Main {
         benchmark.printTimingSummary();
     }
 
-    private static void processArgs(String[] args){
+    private static void processArgs(String[] args) {
         for (String arg : args) {
             switch (arg) {
                 case DISABLE_RECONCILIATION_FLAG:
@@ -118,12 +117,18 @@ public class Main {
                     break;
                 default:
                     throw new IllegalArgumentException(
-                            "Unknown argument: " + arg + ". Supported flags: "
-                                    + DISABLE_EXTRACTION_FLAG + ", "
-                                    + DISABLE_RECONCILIATION_FLAG + ", "
-                                    + DISABLE_SHACL_FAILURE + ", "
-                                    + DISABLE_MAPPING_FLAG + ", "
-                                    + ENABLE_LOG_FLAG
+                        "Unknown argument: " +
+                            arg +
+                            ". Supported flags: " +
+                            DISABLE_EXTRACTION_FLAG +
+                            ", " +
+                            DISABLE_RECONCILIATION_FLAG +
+                            ", " +
+                            DISABLE_SHACL_FAILURE +
+                            ", " +
+                            DISABLE_MAPPING_FLAG +
+                            ", " +
+                            ENABLE_LOG_FLAG
                     );
             }
         }

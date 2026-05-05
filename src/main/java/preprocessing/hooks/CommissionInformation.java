@@ -4,16 +4,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
-
 import preprocessing.Hook;
 import preprocessing.ProcessingContext;
 import utils.StringUtils;
 
 // This class was created because the "atividadedeputado" dataset does not contain the commission ID, but only the name and legislature.
 public class CommissionInformation extends Hook {
+
     @Override
     public void execute(ProcessingContext context) {
         try (Stream<Path> paths = streamDocuments("ar/composicaodeorgaos")) {
@@ -33,7 +32,10 @@ public class CommissionInformation extends Hook {
         try (InputStream in = Files.newInputStream(xmlPath)) {
             XMLStreamReader reader = factory.createXMLStreamReader(in);
             factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-            factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+            factory.setProperty(
+                XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
+                false
+            );
 
             boolean inComissoes = false;
             String legislature = null;
@@ -60,17 +62,27 @@ public class CommissionInformation extends Hook {
                         comissaoNome = readElementText(reader);
                         continue;
                     }
-                    if (name.equals("siglaLegislatura") && legislature == null) {
+                    if (
+                        name.equals("siglaLegislatura") && legislature == null
+                    ) {
                         legislature = readElementText(reader);
                         continue;
                     }
                 } else if (event == XMLStreamReader.END_ELEMENT) {
                     String name = reader.getLocalName();
                     if (inComissoes && name.equals("OrgaoBase")) {
-                        if (comissaoId != null && comissaoNome != null && legislature != null) {
-                            String normalizedName = StringUtils.normalize(comissaoNome);
-                            String normalizedLegislature = legislature.toLowerCase();
-                            String key = normalizedName + ":" + normalizedLegislature;
+                        if (
+                            comissaoId != null &&
+                            comissaoNome != null &&
+                            legislature != null
+                        ) {
+                            String normalizedName = StringUtils.normalize(
+                                comissaoNome
+                            );
+                            String normalizedLegislature =
+                                legislature.toLowerCase();
+                            String key =
+                                normalizedName + ":" + normalizedLegislature;
                             registerLookupTable(context, key, comissaoId);
                         }
                     }
@@ -79,10 +91,11 @@ public class CommissionInformation extends Hook {
                     }
                 }
             }
-        }
-        catch (Exception e) {
-            throw new IllegalStateException("Failed to parse XML: " + xmlPath + ": " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new IllegalStateException(
+                "Failed to parse XML: " + xmlPath + ": " + e.getMessage(),
+                e
+            );
         }
     }
-
 }
