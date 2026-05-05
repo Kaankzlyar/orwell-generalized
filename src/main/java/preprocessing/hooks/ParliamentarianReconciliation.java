@@ -16,7 +16,7 @@ public class ParliamentarianReconciliation extends Hook {
     @Override
     public void execute(ProcessingContext context) {
         try (Stream<Path> paths = streamDocuments("ar/informacaobase")) {
-            paths.forEach(path -> processDocument(context, path));
+            paths.parallel().forEach(path -> processDocument(context, path));
         }
     }
 
