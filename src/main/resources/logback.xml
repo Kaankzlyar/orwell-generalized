@@ -3,14 +3,17 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern
-            >%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
     <logger
         name="be.ugent.idlab.knows.functions.agent.dataType.DefaultDataTypeConverter"
         level="ERROR"
+    />
+    <logger
+        name="be.ugent.idlab.knows.functions.agent.functionModelProvider.fno.FnOFunctionModelProvider"
+        level="WARN"
     />
 
     <root level="INFO">
