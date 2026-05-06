@@ -28,14 +28,14 @@ public class CommissionInformation extends Hook {
     // Maps a commission name and legislature to its unique ID
     private void processDocument(ProcessingContext context, Path xmlPath) {
         XMLInputFactory factory = XMLInputFactory.newInstance();
+        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        factory.setProperty(
+            XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
+            false
+        );
 
         try (InputStream in = Files.newInputStream(xmlPath)) {
             XMLStreamReader reader = factory.createXMLStreamReader(in);
-            factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-            factory.setProperty(
-                XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
-                false
-            );
 
             boolean inComissoes = false;
             String legislature = null;

@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.*;
 import java.util.stream.Stream;
-import javax.xml.stream.XMLInputFactory;
 import preprocessing.Hook;
 import preprocessing.ProcessingContext;
 
@@ -26,17 +25,6 @@ public class ExtractVoting extends Hook {
         "Contra",
         "Abstenção"
     );
-
-    private static final XMLInputFactory INPUT_FACTORY =
-        XMLInputFactory.newInstance();
-
-    static {
-        INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-        INPUT_FACTORY.setProperty(
-            XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
-            false
-        );
-    }
 
     @Override
     public String getName() {

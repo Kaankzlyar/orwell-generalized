@@ -27,14 +27,14 @@ public class ParliamentarianReconciliation extends Hook {
 
     private void processDocument(ProcessingContext context, Path xmlPath) {
         XMLInputFactory factory = XMLInputFactory.newInstance();
+        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        factory.setProperty(
+            XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
+            false
+        );
         String legislature = null;
 
         try (InputStream in = Files.newInputStream(xmlPath)) {
-            factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-            factory.setProperty(
-                XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,
-                false
-            );
             XMLStreamReader reader = factory.createXMLStreamReader(in);
 
             boolean inDetalheLegislatura = false;
