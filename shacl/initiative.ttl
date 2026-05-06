@@ -710,19 +710,9 @@ polis-ini:InterventionShape a sh:NodeShape ;
     sh:targetClass ocd:intervento ;
 
     sh:property [
-        sh:path polis-core:identifier ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:datatype xsd:string ;
-        sh:message "An intervento must have one and only one identifier and the identifier must be xsd:string"@en
-    ] ;
-
-    sh:property [
         sh:path schema:url ;
         sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "An intervento must have one and only one url and the type must be xsd:string"@en
+        sh:message "An intervento's video url must be of the type xsd:string"@en
     ] ;
 
     sh:property [
