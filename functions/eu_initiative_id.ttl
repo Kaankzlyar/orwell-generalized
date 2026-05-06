@@ -1,0 +1,35 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+# TODO: Update URI to match where this function is hosted
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:getEuInitiativeURI a fno:Function ;
+    fno:name "getEuInitiativeURI" ;
+    fno:expects ( :inputUrlParam ) ;
+    fno:returns ( :euInitiativeURIParam ) .
+
+:inputUrlParam a fno:Parameter ;
+    fno:predicate :inputUrl ;
+    fno:name "inputUrl" ;
+    fno:description "European Initiative's URL" ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:euInitiativeURIParam a fno:Output ;
+    fno:predicate :euInitiativeURI ;
+    fno:name "euInitiativeURI" ;
+    fno:description "The European Initiative's URI" ;
+    fno:type xsd:string .
+
+:getEuIniURIImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.EuropeanInitiativeURI" .
+
+:getEuInitiativeURIMapping a fno:Mapping ;
+    fno:function :getEuInitiativeURI ;
+    fno:implementation :getEuIniURIImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "getURI" ]
+.
