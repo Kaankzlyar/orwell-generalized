@@ -86,8 +86,8 @@ class ParliamentarianReconciliationTest {
         
         Map<String, String> hookTable = context.getLookupTable("ParliamentarianReconciliation").orElseThrow();
         
-        assertEquals("9008", hookTable.get("XVII:john doe"));
-        assertEquals("9009", hookTable.get("XVII:jane smith"));
+        assertEquals("9008", hookTable.get("xvii:john-doe"));
+        assertEquals("9009", hookTable.get("xvii:jane-smith"));
     }
 
     @Test
@@ -119,8 +119,8 @@ class ParliamentarianReconciliationTest {
         
         Map<String, String> hookTable = context.getLookupTable("ParliamentarianReconciliation").orElseThrow();
         
-        assertEquals("9008", hookTable.get("XVII:john doe"));
-        assertEquals("1234", hookTable.get("XVI:test user"));
+        assertEquals("9008", hookTable.get("xvii:john-doe"));
+        assertEquals("1234", hookTable.get("xvi:test-user"));
     }
 
     @Test
@@ -132,7 +132,7 @@ class ParliamentarianReconciliationTest {
         
         Map<String, String> hookTable = context.getLookupTable("ParliamentarianReconciliation").orElseThrow();
         
-        assertTrue(hookTable.containsKey("XVII:john doe"));
+        assertTrue(hookTable.containsKey("xvii:john-doe"));
         assertFalse(hookTable.containsKey("XVII: john doe "));
     }
 

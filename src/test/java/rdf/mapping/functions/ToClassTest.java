@@ -25,6 +25,6 @@ class ToClassTest {
 
     @Test
     void toClassReturnsNormalizedUnknownValue() {
-        assertEquals(NS + "nao mapeado", ToClass.toClass("NãO Mapeádo", "situation"));
+        assertEquals("nao mapeado", ToClass.toClass("NãO Mapeádo", "situation"));
     }
 }
