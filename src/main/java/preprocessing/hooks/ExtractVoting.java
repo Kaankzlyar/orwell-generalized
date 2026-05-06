@@ -50,6 +50,30 @@ public class ExtractVoting extends Hook {
         }
     }
 
+    // TODO: IGNORE VOTINGS WITH NUMBER LIKE 6-PSD
+    public Map<String, List<String>> extractVotes(String text) {
+        Map<String, List<String>> voteResults = new HashMap<>();
+        Matcher matcher = CATEGORY_PATTERN.matcher(text);
+        while (matcher.find()) {
+            String category = matcher.group(1).trim();
+            if (CATEGORIES.contains(category)) {
+                String parties = matcher.group(2);
+                Matcher nameMatcher = NAME_PATTERN.matcher(parties);
+                List<String> names = new ArrayList<>();
+                while (nameMatcher.find()) {
+                    String name = nameMatcher
+                        .group(1)
+                        .trim()
+                        .replaceAll("\\s*\\(.*?\\)\\s*$", "")
+                        .trim();
+                    names.add(name);
+                }
+                voteResults.put(category, names);
+            }
+        }
+        return voteResults;
+    }
+
     private void processDocument(ProcessingContext context, Path path) {
         try {
             String content = Files.readString(path);
@@ -88,6 +112,12 @@ public class ExtractVoting extends Hook {
             String elementName = elementNameForCategory(category);
             for (String vote : votes.getOrDefault(category, List.of())) {
                 if (!vote.contains(" ")) {
+                    // Check if it has a '-' and if so, split it into two parts and check if left side is a number
+                    // If it is a number, don't create the element
+                    String[] parts = vote.split("-");
+                    if (parts.length == 2 && parts[0].matches("\\d+")) {
+                        continue;
+                    }
                     sb
                         .append("<")
                         .append(elementName)
@@ -133,28 +163,5 @@ public class ExtractVoting extends Hook {
                 "Unknown voting category: " + category
             );
         };
-    }
-
-    public Map<String, List<String>> extractVotes(String text) {
-        Map<String, List<String>> voteResults = new HashMap<>();
-        Matcher matcher = CATEGORY_PATTERN.matcher(text);
-        while (matcher.find()) {
-            String category = matcher.group(1).trim();
-            if (CATEGORIES.contains(category)) {
-                String parties = matcher.group(2);
-                Matcher nameMatcher = NAME_PATTERN.matcher(parties);
-                List<String> names = new ArrayList<>();
-                while (nameMatcher.find()) {
-                    String name = nameMatcher
-                        .group(1)
-                        .trim()
-                        .replaceAll("\\s*\\(Ninsc\\)\\s*$", "")
-                        .trim();
-                    names.add(name);
-                }
-                voteResults.put(category, names);
-            }
-        }
-        return voteResults;
     }
 }
