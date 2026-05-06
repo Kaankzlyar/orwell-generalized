@@ -1943,7 +1943,6 @@
 		]
 	] ;
 
-	# In Favour
 	rr:predicateObjectMap [
         rr:predicate polis-ini:hasVoteInFavourFrom ;
         rr:objectMap [
@@ -1980,7 +1979,6 @@
 		]
 	] ;
 
-		# In Favour
 	rr:predicateObjectMap [
         rr:predicate polis-ini:hasVoteAgainstFrom ;
         rr:objectMap [
@@ -2017,12 +2015,221 @@
 		]
 	] ;
 
-	# In Favour
 	rr:predicateObjectMap [
         rr:predicate polis-ini:hasAbstentionFrom ;
         rr:objectMap [
             rr:termType rr:IRI ;
             rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../../../../../IniLeg}"
         ]
+    ] ;
+	.
+
+<#ParliamentarianVoteInFavorMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentarian/aFavor" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class ocd:votazione ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:vote:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../../id" ]
+			] ;
+		]
+	] ;
+
+	rr:predicateObjectMap [
+        rr:predicate polis-ini:hasVoteInFavourFrom ;
+        rr:objectMap [
+		    rr:termType rr:IRI ;
+			fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Parliamentarian_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+             			    rr:predicateObjectMap [
+             			        rr:predicate fno:executes ;
+             			        rr:objectMap [ rr:constant pofn:lookup ]
+             			    ] ;
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupTable ;
+             			        rr:objectMap [ rr:constant "ParliamentarianReconciliation" ]
+             			    ] ;
+                            # Legislature
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "../../../../../../../IniLeg" ]
+             			    ] ;
+                            # Parliamentarian's Name
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "."]
+             			    ] ;
+                        ]
+                    ]
+                ]
+			] ;
+		]
+    ] ;
+	.
+
+<#ParliamentarianVoteAgainstMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentarian/contra" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class ocd:votazione ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:vote:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../../id" ]
+			] ;
+		]
+	] ;
+
+	rr:predicateObjectMap [
+        rr:predicate polis-ini:hasVoteAgainstFrom ;
+        rr:objectMap [
+		    rr:termType rr:IRI ;
+			fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Parliamentarian_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+             			    rr:predicateObjectMap [
+             			        rr:predicate fno:executes ;
+             			        rr:objectMap [ rr:constant pofn:lookup ]
+             			    ] ;
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupTable ;
+             			        rr:objectMap [ rr:constant "ParliamentarianReconciliation" ]
+             			    ] ;
+                            # Legislature
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "../../../../../../../IniLeg" ]
+             			    ] ;
+                            # Parliamentarian's Name
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "."]
+             			    ] ;
+                        ]
+                    ]
+                ]
+			] ;
+		]
+    ] ;
+	.
+
+<#ParliamentarianVoteAbstentionMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentarian/abstencao" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class ocd:votazione ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:vote:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../../id" ]
+			] ;
+		]
+	] ;
+
+	rr:predicateObjectMap [
+        rr:predicate polis-ini:hasAbstentionFrom ;
+        rr:objectMap [
+		    rr:termType rr:IRI ;
+			fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Parliamentarian_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+             			    rr:predicateObjectMap [
+             			        rr:predicate fno:executes ;
+             			        rr:objectMap [ rr:constant pofn:lookup ]
+             			    ] ;
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupTable ;
+             			        rr:objectMap [ rr:constant "ParliamentarianReconciliation" ]
+             			    ] ;
+                            # Legislature
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "../../../../../../../IniLeg" ]
+             			    ] ;
+                            # Parliamentarian's Name
+             			    rr:predicateObjectMap [
+             			        rr:predicate pofn:lookupValue ;
+             			        rr:objectMap [ rml:reference "."]
+             			    ] ;
+                        ]
+                    ]
+                ]
+			] ;
+		]
     ] ;
 	.
