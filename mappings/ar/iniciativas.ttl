@@ -405,6 +405,38 @@
     ] ;
     .
 
+<#OriginatedFromEuropeanInitiativeMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//IniciativasEuropeias/string" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:Initiative ;
+        rr:template "http://purl.org/polis/ar/graph#Initiative_{../../IniId}"
+    ] ;
+
+    # Grew Out Of
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:grewOutOf ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:getEuInitiativeURI ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputUrl ;
+                    rr:objectMap [ rml:reference "." ]
+                ] ;
+            ]
+        ]
+    ] ;
+    .
+
 <#InitiativeAuthorParliamentarianMap> a rr:TriplesMap ;
 
     rml:logicalSource [
