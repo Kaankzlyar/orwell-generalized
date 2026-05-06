@@ -16,7 +16,7 @@ public class CommissionInformation extends Hook {
     @Override
     public void execute(ProcessingContext context) {
         try (Stream<Path> paths = streamDocuments("ar/composicaodeorgaos")) {
-            paths.parallel().forEach(path -> processDocument(context, path));
+            paths.forEach(path -> processDocument(context, path));
         }
     }
 

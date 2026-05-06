@@ -46,7 +46,7 @@ public class ExtractVoting extends Hook {
     @Override
     public void execute(ProcessingContext context) {
         try (Stream<Path> paths = streamDocuments("ar/iniciativas")) {
-            paths.parallel().forEach(path -> processDocument(context, path));
+            paths.forEach(path -> processDocument(context, path));
         }
     }
 
