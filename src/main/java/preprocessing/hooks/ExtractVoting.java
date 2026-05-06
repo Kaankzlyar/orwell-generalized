@@ -50,7 +50,6 @@ public class ExtractVoting extends Hook {
         }
     }
 
-    // TODO: IGNORE VOTINGS WITH NUMBER LIKE 6-PSD
     public Map<String, List<String>> extractVotes(String text) {
         Map<String, List<String>> voteResults = new HashMap<>();
         Matcher matcher = CATEGORY_PATTERN.matcher(text);
