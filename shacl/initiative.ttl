@@ -520,8 +520,7 @@ polis-ini:EventShape a sh:NodeShape ;
     sh:property [
         sh:path polis-ini:hasDiscussion ;
         sh:class ocd:discussione ;
-        sh:maxCount 1 ;
-        sh:message "An event must have at most one discussion and it must be of the class ocd:discussione"@en
+        sh:message "An event's discussion must be of the class ocd:discussione"@en
     ] ;
 
     # TODO: Uncomment quando lookup table guardar mapa de "className:id -> legislatura", para apontar para o URI correto (cada legislatura vai ter um URI)
