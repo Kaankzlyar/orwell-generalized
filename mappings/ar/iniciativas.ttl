@@ -2296,3 +2296,44 @@
 		]
     ] ;
 	.
+
+<#DiscussionMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "data/" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Intervencoesdebates/pt_gov_ar_objectos_IntervencoesOut" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class ocd:discussione;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:discussion:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "dataReuniaoPlenaria" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "oradores" ]
+            ] ;
+        ]
+	] ;
+
+	rr:predicateObjectMap [
+		rr:predicate dct:date ;
+		rr:objectMap [
+		    rr:datatype xsd:date ;
+		    rml:reference "dataReuniaoPlenaria" ;
+		]
+	] ;
+
+	.
