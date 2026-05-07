@@ -2328,12 +2328,31 @@
         ]
 	] ;
 
+	# Date
 	rr:predicateObjectMap [
 		rr:predicate dct:date ;
 		rr:objectMap [
 		    rr:datatype xsd:date ;
 		    rml:reference "dataReuniaoPlenaria" ;
 		]
+	] ;
+
+	# Summary
+	rr:predicateObjectMap [
+		rr:predicate dct:abstract ;
+		rr:objectMap [
+            rr:datatype xsd:string ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "oradores/pt_gov_ar_objectos_peticoes_OradoresOut/sumario" ]
+                ]
+            ]
+        ]
 	] ;
 	.
 
@@ -2441,6 +2460,40 @@
 			rml:reference "linkVideo/pt_gov_ar_objectos_peticoes_LinksVideos/link" ;
 		]
 	] ;
+
+	# Published in DAR
+	rr:predicateObjectMap [
+        rr:predicate polis-ini:isPublishedInDAR ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:darPublication:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/URLDiario" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/idPag" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/pag" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "publicacao/pt_gov_ar_objectos_PublicacoesOut/pubNr" ]
+                ] ;
+            ]
+        ]
+    ]
 	.
 
 <#DiscussionInterventionMap> a rr:TriplesMap ;
