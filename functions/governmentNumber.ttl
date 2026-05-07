@@ -1,0 +1,35 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+:governmentNumber a fno:Function ;
+    fno:name "governmentNumber" ;
+    fno:expects ( :governmentInputParam ) ;
+    fno:returns ( :governmentOutput ) .
+
+:governmentInputParam a fno:Parameter ;
+    fno:predicate grel:valueParameter ;
+    fno:name "inputString" ;
+    fno:description "Input string containing the government's name/number" ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean .
+
+:governmentOutput a fno:Output ;
+    fno:predicate :output ;
+    fno:name "output" ;
+    fno:description "Decimal representation of the roman numeral in the first word" ;
+    fno:type xsd:nonNegativeInteger .
+
+:governmentNumberImpl a fnoi:JavaClass ;
+    doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+    fnoi:class-name "rdf.mapping.functions.GovernmentNumber" .
+
+:governmentNumberMapping a fno:Mapping ;
+    fno:function :governmentNumber ;
+    fno:implementation :governmentNumberImpl ;
+    fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "governmentNumber" ]
+.

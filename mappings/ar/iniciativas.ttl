@@ -29,6 +29,47 @@
 @prefix polis-core:   <http://purl.org/polis/ar/core#> .
 @prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
+<#GovernmentMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//governo" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class ocd:governo ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:normalize ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:inputString ;
+                rr:objectMap [ rml:reference "." ]
+            ]
+        ] ;
+    ] ;
+
+    # Number (converts first word from roman numeral to decimal)
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [
+            rr:datatype xsd:nonNegativeInteger ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:governmentNumber ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "." ]
+                ]
+            ] ;
+        ]
+    ] .
+
 <#InitiativeMap> a rr:TriplesMap ;
 
     rml:logicalSource [
