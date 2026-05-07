@@ -718,8 +718,7 @@ polis-ini:InterventionShape a sh:NodeShape ;
     sh:property [
         sh:path polis-ini:isPublishedInDAR ;
         sh:class polis-ini:DARPublication ;
-        sh:maxCount 1 ;
-        sh:message "An intervento must have at most one publication in the DAR must be of the class polis-ini:DARPublication"@en
+        sh:message "An intervento's DARPublication must be of the class polis-ini:DARPublication"@en
     ] ;
 
     sh:property [
