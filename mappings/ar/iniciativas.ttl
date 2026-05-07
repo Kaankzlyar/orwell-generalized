@@ -32,7 +32,7 @@
 <#GovernmentMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//governo" ;
     ] ;
@@ -73,7 +73,7 @@
 <#InitiativeMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut" ;
     ] ;
@@ -338,7 +338,7 @@
 <#EuropeanInitiativeMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//IniciativasEuropeias/string" ;
     ] ;
@@ -369,7 +369,7 @@
 <#ContentMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniLinkTexto" ;
     ] ;
@@ -403,7 +403,7 @@
 <#OriginatedMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniciativasOriginadas/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
     ] ;
@@ -426,7 +426,7 @@
 <#OriginatedFromInitiativeMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniciativasOrigem/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
     ] ;
@@ -449,7 +449,7 @@
 <#OriginatedFromEuropeanInitiativeMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//IniciativasEuropeias/string" ;
     ] ;
@@ -481,7 +481,7 @@
 <#InitiativeAuthorParliamentarianMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorDeputados/pt_gov_ar_objectos_iniciativas_AutoresDeputadosOut" ;
     ] ;
@@ -545,7 +545,7 @@
 <#InitiativeProponentPartyMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorGruposParlamentares/pt_gov_ar_objectos_AutoresGruposParlamentaresOut" ;
     ] ;
@@ -568,7 +568,7 @@
 <#RegionalLegislativeAssemblyMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorOutros" ;
     ] ;
@@ -639,7 +639,7 @@
 <#PlaceMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAutorOutros" ;
     ] ;
@@ -740,7 +740,7 @@
 <#PetitionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
     ] ;
@@ -808,7 +808,7 @@
 <#InitiativePetitionRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut" ;
     ] ;
@@ -844,7 +844,7 @@
 <#AnnexMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//pt_gov_ar_objectos_iniciativas_AnexosOut" ;
     ] ;
@@ -903,7 +903,7 @@
 <#InitiativeAnnexRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniAnexos/pt_gov_ar_objectos_iniciativas_AnexosOut" ;
     ] ;
@@ -943,7 +943,7 @@
 <#EventAnnexRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//AnexosFase/pt_gov_ar_objectos_iniciativas_AnexosOut" ;
     ] ;
@@ -997,7 +997,7 @@
 <#ChangeProposalMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//pt_gov_ar_objectos_iniciativas_PropostasAlteracaoOut" ;
     ] ;
@@ -1081,7 +1081,7 @@
 <#DARPublicationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//pt_gov_ar_objectos_PublicacoesOut" ;
     ] ;
@@ -1242,7 +1242,7 @@
 <#DiplomasMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/TextosAprovados" ;
 	] ;
@@ -1265,7 +1265,7 @@
 <#InitiativeEventRelationMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-		    rml:source "data/" ;
+		    rml:source "iniciativas" ;
 		    rml:referenceFormulation ql:XPath ;
 		    rml:iterator "/ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut/IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut" ;
 	] ;
@@ -1301,7 +1301,7 @@
 <#EventMap> a rr:TriplesMap ;
 
   	rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut" ;
     ] ;
@@ -1465,7 +1465,7 @@
 <#EventDARPublicationRelationMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/PublicacaoFase/pt_gov_ar_objectos_PublicacoesOut" ;
 	] ;
@@ -1527,7 +1527,7 @@
 <#JointInitiativeMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/IniciativasConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
 	 ] ;
@@ -1577,7 +1577,7 @@
 <#JointPetitionMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/PeticoesConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
 	 ] ;
@@ -1627,7 +1627,7 @@
 <#ParliamentarianAppealMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/RecursoDeputados/string" ;
 	] ;
@@ -1708,7 +1708,7 @@
 <#EventVoteRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut" ;
 	] ;
@@ -1757,7 +1757,7 @@
 <#VoteMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut" ;
 	] ;
@@ -1882,7 +1882,7 @@
 
 <#VoteDARPublicationRelationMap> a rr:TriplesMap ;
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "iniciativas" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/publicacao/pt_gov_ar_objectos_PublicacoesOut" ;
     ] ;
@@ -1943,7 +1943,7 @@
 <#VoteAbsenteeRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/ausencias/string" ;
 	] ;
@@ -2023,7 +2023,7 @@
 <#PartyVoteInFavorMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentaryGroup/aFavor" ;
 	] ;
@@ -2059,7 +2059,7 @@
 <#PartyVoteAgainstMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-		    rml:source "data/" ;
+		    rml:source "iniciativas" ;
 		    rml:referenceFormulation ql:XPath ;
 		    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentaryGroup/contra" ;
 		] ;
@@ -2095,7 +2095,7 @@
 <#PartyVoteAbstentionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-			    rml:source "data/" ;
+			    rml:source "iniciativas" ;
 			    rml:referenceFormulation ql:XPath ;
 			    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentaryGroup/abstencao" ;
 			] ;
@@ -2131,7 +2131,7 @@
 <#ParliamentarianVoteInFavorMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentarian/aFavor" ;
 	] ;
@@ -2201,7 +2201,7 @@
 <#ParliamentarianVoteAgainstMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentarian/contra" ;
 	] ;
@@ -2271,7 +2271,7 @@
 <#ParliamentarianVoteAbstentionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut/votings/parliamentarian/abstencao" ;
 	] ;
@@ -2341,7 +2341,7 @@
 <#DiscussionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Intervencoesdebates/pt_gov_ar_objectos_IntervencoesOut" ;
 	] ;
@@ -2400,7 +2400,7 @@
 <#EventDiscussionRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Intervencoesdebates/pt_gov_ar_objectos_IntervencoesOut" ;
 	] ;
@@ -2453,7 +2453,7 @@
 <#InterventionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-	    rml:source "data/" ;
+	    rml:source "iniciativas" ;
 	    rml:referenceFormulation ql:XPath ;
 	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Intervencoesdebates/pt_gov_ar_objectos_IntervencoesOut/oradores/pt_gov_ar_objectos_peticoes_OradoresOut" ;
 	] ;
@@ -2540,7 +2540,7 @@
 <#DiscussionInterventionMap> a rr:TriplesMap ;
 
 	rml:logicalSource [
-		rml:source "data/" ;
+		rml:source "iniciativas" ;
 		rml:referenceFormulation ql:XPath ;
 		rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Intervencoesdebates/pt_gov_ar_objectos_IntervencoesOut/oradores/pt_gov_ar_objectos_peticoes_OradoresOut" ;
 	] ;

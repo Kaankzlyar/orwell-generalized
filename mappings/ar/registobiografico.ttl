@@ -28,7 +28,7 @@
 <#ParliamentarianMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico"
     ] ;
@@ -86,7 +86,7 @@
 <#ParliamentarianRoleRelationMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadCargosFuncoes/DadosCargosFuncoes"
     ] ;
@@ -107,7 +107,7 @@
 <#RoleMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadCargosFuncoes/DadosCargosFuncoes"
     ] ;
@@ -188,7 +188,7 @@
 <#ParliamentarianTitleRelationMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadTitulos/DadosTitulos"
     ] ;
@@ -209,7 +209,7 @@
 <#TitleMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadTitulos/DadosTitulos"
     ] ;
@@ -269,7 +269,7 @@
 <#ParliamentarianAwardRelationMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadCondecoracoes/DadosCondecoracoes"
     ] ;
@@ -290,7 +290,7 @@
 <#AwardMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadCondecoracoes/DadosCondecoracoes"
     ] ;
@@ -350,7 +350,7 @@
 <#ParliamentarianPublishedWorkMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadObrasPublicadas/DadosObrasPublicadas"
     ] ;
@@ -371,7 +371,7 @@
 <#PublishedWorkMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadObrasPublicadas/DadosObrasPublicadas"
     ] ;
@@ -431,7 +431,7 @@
 <#ParliamentarianHabilitationRelationMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadHabilitacoes/DadosHabilitacoes"
     ] ;
@@ -453,7 +453,7 @@
 <#HabilitationMap>
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "registobiografico" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfDadosRegistoBiografico/DadosRegistoBiografico/CadHabilitacoes/DadosHabilitacoes"
     ] ;

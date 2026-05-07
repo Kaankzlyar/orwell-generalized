@@ -33,7 +33,7 @@
 <#CommissionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Cms/ComissoesOut" ;
     ] ;
@@ -80,7 +80,7 @@
 <#ParliamentarianRequisitionRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Req/RequerimentosAtivDepOut" ;
     ] ;
@@ -102,7 +102,7 @@
 <#RequisitionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Req/RequerimentosAtivDepOut" ;
     ] ;
@@ -241,7 +241,7 @@
 <#ParliamentarianYPARelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
     ] ;
@@ -262,7 +262,7 @@
 <#YouthParliamentActivityMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
     ] ;
@@ -388,7 +388,7 @@
 <#SchoolMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ParlamentoJovens/DadosDeputado" ;
     ] ;
@@ -487,7 +487,7 @@
 <#ParliamentarianFriendshipParliamentaryGroupRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Gpa/GruposParlamentaresAmizadeOut" ;
     ] ;
@@ -508,7 +508,7 @@
 <#ParliamentarianFriendshipParliamentaryGroupMembershipMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Gpa/GruposParlamentaresAmizadeOut" ;
     ] ;
@@ -612,7 +612,7 @@
 <#FriendshipParliamentaryGroupMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Gpa/GruposParlamentaresAmizadeOut" ;
     ] ;
@@ -662,7 +662,7 @@
 <#ParliamentarianPublicAccountRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Rel/RelatoresContasPublicas/RelatoresContasPublicasOut" ;
     ] ;
@@ -697,7 +697,7 @@
 <#PublicAccountMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Rel/RelatoresContasPublicas/RelatoresContasPublicasOut" ;
     ] ;
@@ -780,7 +780,7 @@
 <#ParliamentarianParliamentaryActivityRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ActP/ActividadesParlamentaresOut" ;
     ] ;
@@ -829,7 +829,7 @@
 <#ParliamentaryActivityMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ActP/ActividadesParlamentaresOut" ;
     ] ;
@@ -970,7 +970,7 @@
 <#ParliamentarianAuditionRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audiencias/ActividadesComissaoOut" ;
     ] ;
@@ -1005,7 +1005,7 @@
 <#AuditionMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audiencias/ActividadesComissaoOut" ;
     ] ;
@@ -1136,7 +1136,7 @@
 <#ParliamentarianHearingRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audicoes/ActividadesComissaoOut" ;
     ] ;
@@ -1171,7 +1171,7 @@
 <#HearingMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audicoes/ActividadesComissaoOut" ;
     ] ;
@@ -1302,7 +1302,7 @@
 <#ParliamentarianVisitRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Deslocacoes/ActividadesComissaoOut" ;
     ] ;
@@ -1337,7 +1337,7 @@
 <#VisitMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Deslocacoes/ActividadesComissaoOut" ;
     ] ;
@@ -1479,7 +1479,7 @@
 <#ParliamentarianEventRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Eventos/ActividadesComissaoOut" ;
     ] ;
@@ -1514,7 +1514,7 @@
 <#EventMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Eventos/ActividadesComissaoOut" ;
     ] ;
@@ -1675,7 +1675,7 @@
 <#AuditionThirdPartyEntityMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audiencias/ActividadesComissaoOut" ;
     ] ;
@@ -1731,7 +1731,7 @@
 <#HearingThirdPartyEntityMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/Audicoes/ActividadesComissaoOut" ;
     ] ;
@@ -1787,7 +1787,7 @@
 <#PermanentDelegationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlP/DelegacoesPermanentesOut" ;
     ] ;
@@ -1846,7 +1846,7 @@
 <#PermanentDelegationMeetingRelationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlP/DelegacoesPermanentesOut/DepReunioes/ReunioesDelegacoesPermanentes" ;
     ] ;
@@ -1867,7 +1867,7 @@
 <#PermanentDelegationMeetingMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlP/DelegacoesPermanentesOut/DepReunioes/ReunioesDelegacoesPermanentes" ;
     ] ;
@@ -1952,7 +1952,7 @@
 <#TemporaryDelegationMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlE/DelegacoesEventuaisOut" ;
     ] ;
@@ -2087,7 +2087,7 @@
 <#PlaceMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlE/DelegacoesEventuaisOut" ;
     ] ;
@@ -2135,7 +2135,7 @@
 <#PermanentDelegationMeetingPlaceMap> a rr:TriplesMap ;
 
     rml:logicalSource [
-        rml:source "data/" ;
+        rml:source "atividadedeputado" ;
         rml:referenceFormulation ql:XPath ;
         rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/DlP/DelegacoesPermanentesOut/DepReunioes/ReunioesDelegacoesPermanentes" ;
     ] ;

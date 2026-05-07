@@ -29,7 +29,7 @@
 <#LegislatureMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/DetalheLegislatura"
   ] ;
@@ -110,7 +110,7 @@
 <#LegislativeSessionMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/SessoesLegislativas/pt_gov_ar_objectos_SessaoLegislativaOut"
   ] ;
@@ -171,7 +171,7 @@
 <#ConstituencyMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/CirculosEleitorais/pt_ar_wsgode_objectos_DadosCirculoEleitoralList"
   ] ;
@@ -288,7 +288,7 @@
 <#PartyMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/GruposParlamentares/pt_gov_ar_objectos_GPOut"
   ] ;
@@ -337,7 +337,7 @@
 <#ParliamentaryGroupMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/GruposParlamentares/pt_gov_ar_objectos_GPOut"
   ] ;
@@ -398,7 +398,7 @@
 <#ParliamentarianMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario"
   ] ;
@@ -456,7 +456,7 @@
 
 <#MandateMap>
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario"
   ] ;
@@ -530,7 +530,7 @@
 <#MandateMembershipRelationMap>
 
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP"
   ] ;
@@ -551,7 +551,7 @@
 
 <#PGMembershipMap>
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepGP/pt_ar_wsgode_objectos_DadosSituacaoGP"
   ] ;
@@ -624,7 +624,7 @@
 
 <#MandateSituationRelationMap>
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepSituacao/pt_ar_wsgode_objectos_DadosSituacaoDeputado"
   ] ;
@@ -644,7 +644,7 @@
 
 <#SituationMap>
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepSituacao/pt_ar_wsgode_objectos_DadosSituacaoDeputado"
   ] ;
@@ -761,7 +761,7 @@
 
 <#MandateDutyRelationMap>
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepCargo/pt_ar_wsgode_objectos_DadosCargoDeputado"
   ] ;
@@ -781,7 +781,7 @@
 
 <#DutyMap>
   rml:logicalSource [
-    rml:source "data/" ;
+    rml:source "informacaobase" ;
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/Legislatura/Deputados/DadosDeputadoOrgaoPlenario/DepCargo/pt_ar_wsgode_objectos_DadosCargoDeputado"
   ] ;
