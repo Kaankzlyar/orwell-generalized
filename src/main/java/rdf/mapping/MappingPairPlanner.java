@@ -4,8 +4,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import lombok.Getter;
@@ -21,7 +27,7 @@ public class MappingPairPlanner {
 
     private static final String XML_EXTENSION = ".xml";
     private static final String TTL_EXTENSION = ".ttl";
-    private static final String SOURCE_PATTERN = "rml:source\\s+\"[^\"]*\"\\s*;";
+    private static final Pattern SOURCE_PATTERN = Pattern.compile("rml:source\\s+\"([^\"]+)\"\\s*;");
 
     public List<Path> createMappingPairs() throws IOException {
         validateDirectories();
@@ -61,25 +67,53 @@ public class MappingPairPlanner {
     private List<Path> createPairsForMapping(Path mappingFile, Path tmpMappingsDir, String extractorName) throws IOException {
         List<Path> createdMappings = new ArrayList<>();
         String mappingName = stripExtension(mappingFile.getFileName().toString());
-        Path mappingDataDir = Config.DATA_DIR.resolve(extractorName).resolve(mappingName);
-
-        if (!Files.isDirectory(mappingDataDir)) {
-            System.out.println("Skipping mapping " + mappingName + ": no data directory at " + mappingDataDir);
-            return createdMappings;
-        }
-
-        List<Path> xmlFiles = listFilesWithExtension(mappingDataDir, XML_EXTENSION);
-        if (xmlFiles.isEmpty()) {
-            System.out.println("Skipping mapping " + mappingName + ": no XML files in " + mappingDataDir);
-            return createdMappings;
-        }
-
         String mappingTemplate = Files.readString(mappingFile);
+
+        List<String> sourceNames = extractSourceNames(mappingTemplate);
+        if (sourceNames.isEmpty()) {
+            System.out.println("Skipping mapping " + mappingName + ": no rml:source declarations found");
+            return createdMappings;
+        }
+
+        Map<String, Map<String, Path>> filesBySource = new LinkedHashMap<>();
+        for (String sourceName : sourceNames) {
+            Path dataDir = Config.DATA_DIR.resolve(extractorName).resolve(sourceName);
+            if (!Files.isDirectory(dataDir)) {
+                System.out.println("Skipping mapping " + mappingName + ": data directory not found at " + dataDir);
+                return createdMappings;
+            }
+            List<Path> xmlFiles = listFilesWithExtension(dataDir, XML_EXTENSION);
+            if (xmlFiles.isEmpty()) {
+                System.out.println("Skipping mapping " + mappingName + ": no XML files in " + dataDir);
+                return createdMappings;
+            }
+            Map<String, Path> filesByName = new LinkedHashMap<>();
+            for (Path file : xmlFiles) {
+                filesByName.put(stripExtension(file.getFileName().toString()), file);
+            }
+            filesBySource.put(sourceName, filesByName);
+        }
+
+        Set<String> commonNames = new TreeSet<>(filesBySource.get(sourceNames.get(0)).keySet());
+        for (int i = 1; i < sourceNames.size(); i++) {
+            commonNames.retainAll(filesBySource.get(sourceNames.get(i)).keySet());
+        }
+
+        if (commonNames.isEmpty()) {
+            System.out.println("Skipping mapping " + mappingName + ": no common XML filenames across source directories");
+            return createdMappings;
+        }
+
         Path tempMappingSubDir = tmpMappingsDir.resolve(extractorName).resolve(mappingName);
         Files.createDirectories(tempMappingSubDir);
 
-        for (Path xmlPath : xmlFiles) {
-            Path createdMapping = createMappingFile(mappingName, mappingTemplate, xmlPath, tempMappingSubDir, extractorName);
+        for (String baseName : commonNames) {
+            Map<String, String> replacements = new LinkedHashMap<>();
+            for (String sourceName : sourceNames) {
+                Path xmlPath = filesBySource.get(sourceName).get(baseName);
+                replacements.put(sourceName, xmlPath.toAbsolutePath().normalize().toString().replace("\\", "/"));
+            }
+            Path createdMapping = createMappingFile(mappingName, mappingTemplate, replacements, tempMappingSubDir, extractorName, baseName);
             createdMappings.add(createdMapping);
             System.out.println("Created mapping file: " + createdMapping);
         }
@@ -89,18 +123,17 @@ public class MappingPairPlanner {
     private Path createMappingFile(
         String mappingName,
         String mappingTemplate,
-        Path xmlPath,
+        Map<String, String> sourceReplacements,
         Path tempMappingSubDir,
-        String extractorName
+        String extractorName,
+        String baseName
     ) throws IOException {
-        String xmlFileName = xmlPath.getFileName().toString();
-        String baseName = stripExtension(xmlFileName);
-
-        String xmlSource = xmlPath.toAbsolutePath().normalize().toString().replace("\\", "/");
-        String mappingContent = mappingTemplate.replaceAll(
-            SOURCE_PATTERN,
-            Matcher.quoteReplacement("rml:source \"" + xmlSource + "\" ;")
-        );
+        String mappingContent = mappingTemplate;
+        for (Map.Entry<String, String> entry : sourceReplacements.entrySet()) {
+            String literal = "rml:source \"" + entry.getKey() + "\" ;";
+            String replacement = "rml:source \"" + entry.getValue() + "\" ;";
+            mappingContent = mappingContent.replace(literal, replacement);
+        }
         mappingContent = applyUniqueBase(mappingContent, extractorName, mappingName, baseName);
 
         Path tempMappingPath = tempMappingSubDir.resolve(baseName + TTL_EXTENSION);
@@ -113,6 +146,15 @@ public class MappingPairPlanner {
         String baseLine = "@base <" + uniqueBase + "> .";
         String withoutBase = mappingContent.replaceAll("(?m)^@base\\s+<[^>]+>\\s*\\.\\s*$\\R?", "");
         return baseLine + System.lineSeparator() + withoutBase;
+    }
+
+    private List<String> extractSourceNames(String mappingTemplate) {
+        List<String> names = new ArrayList<>();
+        Matcher matcher = SOURCE_PATTERN.matcher(mappingTemplate);
+        while (matcher.find()) {
+            names.add(matcher.group(1));
+        }
+        return names.stream().distinct().collect(Collectors.toList());
     }
 
     private List<Path> listFilesWithExtension(Path dir, String extension) throws IOException {
