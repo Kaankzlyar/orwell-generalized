@@ -1,6 +1,8 @@
 import static config.Config.*;
 import static rdf.validation.ShaclValidation.*;
 
+import cli.CliParser;
+import cli.Options;
 import extraction.ARExtractor;
 import extraction.DataExtractor;
 import java.io.IOException;
@@ -21,35 +23,25 @@ import utils.Benchmark;
 
 public class Main {
 
-    private static final String DISABLE_RECONCILIATION_FLAG = "-dr";
-    private static final String DISABLE_EXTRACTION_FLAG = "-de";
-    private static final String DISABLE_MAPPING_FLAG = "-dm";
-    private static final String DISABLE_SHACL_FAILURE = "-df";
-    private static final String DISABLE_SHACL_FLAG = "-ds";
-    private static final String DISABLE_SHACL_REPORT_FLAG = "-r";
-    private static final String ENABLE_LOG = "-l";
-
     public static void main(String[] args)
         throws IOException, InterruptedException {
-        processArgs(args);
+        Options options = CliParser.parse(args);
+        applyOptions(options);
 
         Benchmark benchmark = new Benchmark();
 
-        // Extraction
-        if (EXTRACTION_ENABLED) {
+        if (options.extractionEnabled()) {
             benchmark.startTiming("Extraction");
             extract();
             benchmark.endTiming();
         }
 
-        // Preprocessing
         benchmark.startTiming("Preprocessing");
         preprocess();
         benchmark.endTiming();
 
         try {
-            // Mapping
-            if (MAPPING_ENABLED) {
+            if (options.mappingEnabled()) {
                 benchmark.startTiming("MappingPairPlanner");
                 var mappingGroups = planMapping();
                 benchmark.endTiming();
@@ -59,19 +51,17 @@ public class Main {
                 benchmark.endTiming();
             }
 
-            // Load Model
             benchmark.startTiming("Load Model");
             Model finalGraph = GraphLoader.loadGraph();
             benchmark.endTiming();
 
-            // SHACL Validation
-            if (SHACL_ENABLED) {
+            if (options.shaclEnabled()) {
                 benchmark.startTiming("SHACL Validation");
                 validate(finalGraph);
                 benchmark.endTiming();
             }
         } finally {
-            if (RECONCILIATION_ENABLED) {
+            if (options.reconciliationEnabled()) {
                 WikidataReconciliationService.persistCache();
             }
 
@@ -83,58 +73,14 @@ public class Main {
         benchmark.printTimingSummary();
     }
 
-    private static void processArgs(String[] args) {
-        for (String arg : args) {
-            switch (arg) {
-                case DISABLE_RECONCILIATION_FLAG:
-                    RECONCILIATION_ENABLED = false;
-                    System.out.println("Reconciliation disabled.");
-                    break;
-                case DISABLE_EXTRACTION_FLAG:
-                    EXTRACTION_ENABLED = false;
-                    System.out.println("Extraction disabled.");
-                    break;
-                case DISABLE_SHACL_FAILURE:
-                    THROW_ON_SHACL_UNCONFORM = false;
-                    System.out.println("SHACL throwing on unconform disabled.");
-                    break;
-                case DISABLE_MAPPING_FLAG:
-                    MAPPING_ENABLED = false;
-                    System.out.println("Mapping disabled.");
-                    break;
-                case DISABLE_SHACL_REPORT_FLAG:
-                    PRINT_SHACL_REPORT = false;
-                    System.out.println("Print SHACL report disabled.");
-                    break;
-                case DISABLE_SHACL_FLAG:
-                    SHACL_ENABLED = false;
-                    System.out.println("SHACL disabled.");
-                    break;
-                case ENABLE_LOG:
-                    LOG_ENABLED = true;
-                    System.out.println("Reconciliation logging enabled.");
-                    break;
-                default:
-                    throw new IllegalArgumentException(
-                        "Unknown argument: " +
-                            arg +
-                            ". Supported flags: " +
-                            DISABLE_EXTRACTION_FLAG +
-                            ", " +
-                            DISABLE_RECONCILIATION_FLAG +
-                            ", " +
-                            DISABLE_SHACL_FAILURE +
-                            ", " +
-                            DISABLE_MAPPING_FLAG +
-                            ", " +
-                            DISABLE_SHACL_REPORT_FLAG +
-                            ", " +
-                            DISABLE_SHACL_FLAG +
-                            ", " +
-                            ENABLE_LOG
-                    );
-            }
-        }
+    private static void applyOptions(Options options) {
+        RECONCILIATION_ENABLED = options.reconciliationEnabled();
+        EXTRACTION_ENABLED = options.extractionEnabled();
+        MAPPING_ENABLED = options.mappingEnabled();
+        SHACL_ENABLED = options.shaclEnabled();
+        THROW_ON_SHACL_UNCONFORM = options.throwOnShaclUnconform();
+        PRINT_SHACL_REPORT = options.printShaclReport();
+        LOG_ENABLED = options.logEnabled();
     }
 
     private static void extract() {
