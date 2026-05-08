@@ -18,12 +18,16 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix org:    <http://www.w3.org/ns/org#> .
+@prefix prov:   <https://www.w3.org/ns/prov-o#> .
 @prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
 @prefix qudt:   <http://qudt.org/schema/qudt/> .
 @prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
 @prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
 @prefix polis-core:   <http://purl.org/polis/ar/core#> .
+@prefix polis-mpact:  <http://purl.org/polis/ar/mp-activity#> .
+@prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
 <#HabilitationMap>
 

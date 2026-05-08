@@ -194,14 +194,14 @@
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant grel:array_join ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate grel:p_array_a ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#School_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate grel:p_array_a ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [
                     fnml:functionValue [
                         rr:predicateObjectMap [
@@ -216,10 +216,6 @@
                     rr:datatype xsd:string
                 ]
             ] ;
-            rr:predicateObjectMap [
-                rr:predicate grel:p_string_sep ;
-                rr:objectMap [ rr:constant "" ]
-            ]
         ] ;
     ] ;
 
@@ -244,36 +240,36 @@
     # School Type
     rr:predicateObjectMap [
         rr:predicate polis-mpact:isSchoolType ;
+        rr:termType rr:IRI ;
         rr:objectMap [
-        fnml:functionValue [
-            rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ rr:constant pofn:toClass ]
-            ] ;
-            rr:predicateObjectMap [
-            rr:predicate pofn:entityName ;
-            rr:objectMap [
-                fnml:functionValue [
+            fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
-                    rr:objectMap [ rr:constant pofn:trimSafe ]
+                    rr:objectMap [ rr:constant pofn:toClass ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate grel:valueParameter ;
-                    rr:objectMap [ rml:reference "Sessao" ]
+                    rr:predicate pofn:entityName ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:trimSafe ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate grel:valueParameter ;
+                                rr:objectMap [ rml:reference "Sessao" ]
+                            ]
+                        ]
+                    ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:className ;
+                    rr:objectMap [
+                        rr:constant "schoolType" ;
+                        rr:datatype xsd:string
+                    ]
                 ]
-                ]
-            ]
             ] ;
-            rr:predicateObjectMap [
-            rr:predicate pofn:className ;
-            rr:objectMap [
-                rr:constant "schoolType" ;
-                rr:datatype xsd:string
-            ]
-            ]
-        ] ;
-        rr:termType rr:IRI
         ]
     ] ;
     .

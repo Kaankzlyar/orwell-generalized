@@ -41,14 +41,14 @@
         fnml:functionValue [
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant grel:array_join ]
+                rr:objectMap [ rr:constant pofn:stringConcat ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate grel:p_array_a ;
+                rr:predicate pofn:leftPart ;
                 rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Constituency_" ]
             ] ;
             rr:predicateObjectMap [
-                rr:predicate grel:p_array_a ;
+                rr:predicate pofn:rightPart ;
                 rr:objectMap [
                     fnml:functionValue [
                         rr:predicateObjectMap [
@@ -63,10 +63,6 @@
                     rr:datatype xsd:string
                 ]
             ] ;
-            rr:predicateObjectMap [
-                rr:predicate grel:p_string_sep ;
-                rr:objectMap [ rr:constant "" ]
-            ]
         ] ;
     ] ;
 

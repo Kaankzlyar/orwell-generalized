@@ -29,7 +29,7 @@
 @prefix polis-mpact:  <http://purl.org/polis/ar/mp-activity#> .
 @prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
-<#EventMap> a rr:TriplesMap ;
+<#EventActivityMap> a rr:TriplesMap ;
 
     rml:logicalSource [
         rml:source "atividadedeputado" ;
@@ -38,6 +38,7 @@
     ] ;
 
     rr:subjectMap [
+        rr:class polis-mpact:Event ;
         rr:termType rr:IRI ;
         fnml:functionValue [
             rr:predicateObjectMap [

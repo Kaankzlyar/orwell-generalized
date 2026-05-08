@@ -1,5 +1,7 @@
 legislatures:
-  - code: xv
-    enabled: false
-  - code: xiv
-    enabled: false
+    - code: xv
+      enabled: false
+    - code: xiv
+      enabled: false
+    - code: xvi
+      enabled: false
