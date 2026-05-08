@@ -1,5 +1,8 @@
 package extraction;
 
+import config.Config;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -7,7 +10,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +20,19 @@ class ARExtractorTest {
 
     @TempDir
     Path tempDir;
+
+    private Set<String> originalDisabledLegislatures;
+
+    @BeforeEach
+    void setUp() {
+        originalDisabledLegislatures = Config.DISABLED_LEGISLATURES;
+        Config.DISABLED_LEGISLATURES = Collections.emptySet();
+    }
+
+    @AfterEach
+    void tearDown() {
+        Config.DISABLED_LEGISLATURES = originalDisabledLegislatures;
+    }
 
     @Test
     void parseSourcesParsesNestedStructure() throws IOException {

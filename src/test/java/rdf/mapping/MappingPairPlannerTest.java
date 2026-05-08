@@ -6,9 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -266,6 +269,146 @@ class MappingPairPlannerTest {
         assertTrue(result.containsKey("a"));
         assertTrue(result.containsKey("b"));
         assertTrue(result.containsKey("c"));
+    }
+
+    @Test
+    void createMappingPairsPreservesMappingSubdirectories() throws Exception {
+        String mappingContent = """
+            @prefix rr: <http://www.w3.org/ns/r2rml#> .
+            @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+            @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+
+            <#TestMap>
+              rml:logicalSource [
+                rml:source "test" ;
+                rml:referenceFormulation ql:XPath ;
+                rml:iterator "/root/item"
+              ] ;
+              rr:subjectMap [
+                rr:template "http://example.org/{id}" ;
+                rr:class <http://example.org/Test>
+              ] .
+            """;
+
+        Path mappingFile = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve("nested").resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(mappingFile.getParent());
+        Files.writeString(mappingFile, mappingContent);
+
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
+        Files.createDirectories(dataDir);
+        Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
+
+        MappingPairPlanner planner = new MappingPairPlanner();
+        Map<String, List<Path>> result = planner.createMappingPairs();
+
+        Path expectedPath = Config.TMP_DIR
+            .resolve(Config.MAPPINGS_DIR.getFileName())
+            .resolve(EXTRACTOR_NAME)
+            .resolve("nested")
+            .resolve(MAPPING_NAME)
+            .resolve("data1.ttl");
+        assertEquals(expectedPath, result.get("data1").get(0));
+    }
+
+    @Test
+    void createMappingPairsKeepsDuplicateMappingNamesInDifferentSubdirectories() throws Exception {
+        String mappingContent = """
+            @prefix rr: <http://www.w3.org/ns/r2rml#> .
+            @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+            @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+
+            <#TestMap>
+              rml:logicalSource [
+                rml:source "test" ;
+                rml:referenceFormulation ql:XPath ;
+                rml:iterator "/root/item"
+              ] ;
+              rr:subjectMap [
+                rr:template "http://example.org/{id}" ;
+                rr:class <http://example.org/Test>
+              ] .
+            """;
+
+        Path firstMapping = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve("first").resolve(MAPPING_NAME + ".ttl");
+        Path secondMapping = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve("second").resolve(MAPPING_NAME + ".ttl");
+        Files.createDirectories(firstMapping.getParent());
+        Files.createDirectories(secondMapping.getParent());
+        Files.writeString(firstMapping, mappingContent);
+        Files.writeString(secondMapping, mappingContent);
+
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
+        Files.createDirectories(dataDir);
+        Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
+
+        MappingPairPlanner planner = new MappingPairPlanner();
+        Map<String, List<Path>> result = planner.createMappingPairs();
+
+        Path firstExpectedPath = Config.TMP_DIR
+            .resolve(Config.MAPPINGS_DIR.getFileName())
+            .resolve(EXTRACTOR_NAME)
+            .resolve("first")
+            .resolve(MAPPING_NAME)
+            .resolve("data1.ttl");
+        Path secondExpectedPath = Config.TMP_DIR
+            .resolve(Config.MAPPINGS_DIR.getFileName())
+            .resolve(EXTRACTOR_NAME)
+            .resolve("second")
+            .resolve(MAPPING_NAME)
+            .resolve("data1.ttl");
+        assertEquals(2, result.get("data1").size());
+        assertTrue(result.get("data1").contains(firstExpectedPath));
+        assertTrue(result.get("data1").contains(secondExpectedPath));
+    }
+
+    @Test
+    void createMappingPairsSkipsDisabledLegislaturesWithoutRepeatingSkipLogs() throws Exception {
+        Config.DISABLED_LEGISLATURES = Set.of("xv");
+        String mappingContent = """
+            @prefix rr: <http://www.w3.org/ns/r2rml#> .
+            @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+            @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+
+            <#TestMap>
+              rml:logicalSource [
+                rml:source "test" ;
+                rml:referenceFormulation ql:XPath ;
+                rml:iterator "/root/item"
+              ] ;
+              rr:subjectMap [
+                rr:template "http://example.org/{id}" ;
+                rr:class <http://example.org/Test>
+              ] .
+            """;
+
+        Path firstMapping = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve("first.ttl");
+        Path secondMapping = Config.MAPPINGS_DIR.resolve(EXTRACTOR_NAME).resolve("second.ttl");
+        Files.createDirectories(firstMapping.getParent());
+        Files.writeString(firstMapping, mappingContent);
+        Files.writeString(secondMapping, mappingContent);
+
+        Path dataDir = Config.DATA_DIR.resolve(EXTRACTOR_NAME).resolve(MAPPING_NAME);
+        Files.createDirectories(dataDir);
+        Files.writeString(dataDir.resolve("xv.xml"), "<root><item><id>15</id></item></root>");
+        Files.writeString(dataDir.resolve("xvi.xml"), "<root><item><id>16</id></item></root>");
+
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        try {
+            System.setOut(new PrintStream(output, true, StandardCharsets.UTF_8));
+
+            MappingPairPlanner planner = new MappingPairPlanner();
+            Map<String, List<Path>> result = planner.createMappingPairs();
+
+            assertFalse(result.containsKey("xv"));
+            assertTrue(result.containsKey("xvi"));
+            assertEquals(2, result.get("xvi").size());
+        } finally {
+            System.setOut(originalOut);
+        }
+
+        String logs = output.toString(StandardCharsets.UTF_8);
+        assertEquals(1, logs.split("Disabled legislatures:", -1).length - 1);
+        assertFalse(logs.contains("Skipping disabled legislature"));
     }
 
     @Test
