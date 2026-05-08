@@ -71,7 +71,7 @@ public class Main {
             }
 
             // Delete temporary files
-            if (Options.deleteTmp()) {
+            if (!Options.keepTmp()) {
                 deleteTmpDir();
             }
         }

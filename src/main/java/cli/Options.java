@@ -8,8 +8,8 @@ public final class Options {
     private static boolean shaclEnabled = true;
     private static boolean throwOnShaclUnconform = true;
     private static boolean printShaclReport = true;
-    private static boolean logEnabled = true;
-    private static boolean deleteTmp = false;
+    private static boolean logEnabled = false;
+    private static boolean keepTmp = false;
 
     private Options() {}
 
@@ -41,8 +41,8 @@ public final class Options {
         return logEnabled;
     }
 
-    public static boolean deleteTmp() {
-        return deleteTmp;
+    public static boolean keepTmp() {
+        return keepTmp;
     }
 
     public static void parse(String[] args) {
@@ -68,7 +68,7 @@ public final class Options {
                 case DISABLE_SHACL_FAILURE -> throwOnShaclUnconform = false;
                 case DISABLE_SHACL_REPORT -> printShaclReport = false;
                 case ENABLE_LOG -> logEnabled = true;
-                case DELETE_TMP -> deleteTmp = true;
+                case KEEP_TMP -> keepTmp = true;
                 case HELP -> {
                 }
             }
@@ -89,7 +89,7 @@ public final class Options {
         shaclEnabled = true;
         throwOnShaclUnconform = true;
         printShaclReport = true;
-        logEnabled = true;
-        deleteTmp = true;
+        logEnabled = false;
+        keepTmp = false;
     }
 }

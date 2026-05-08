@@ -28,7 +28,7 @@ public enum Flag {
         "Do not print the SHACL validation report"
     ),
     ENABLE_LOG("l", "enable-log", "Enable reconciliation request logging"),
-    DELETE_TMP("t", "delete-tmp", "Delete temporary files after processing"),
+    KEEP_TMP("t", "keep-tmp", "Keep temporary files after processing"),
     HELP("h", "help", "Show this help message and exit");
 
     private static final Map<String, Flag> BY_LONG = new HashMap<>();
