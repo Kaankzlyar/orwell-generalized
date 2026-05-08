@@ -107,7 +107,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
         rr:objectMap [
-            rr:parentTriplesMap <#CommissionMembershipMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:membership:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "orgId" ]
+                ]
+            ]
         ] ;
     ] ;
     .
@@ -131,7 +145,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
         rr:objectMap [
-            rr:parentTriplesMap <#SubcommissionMembershipMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:membership:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "orgId" ]
+                ]
+            ]
         ] ;
     ] ;
     .
@@ -155,7 +183,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
         rr:objectMap [
-            rr:parentTriplesMap <#WorkingGroupMembershipMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:membership:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "orgId" ]
+                ]
+            ]
         ] ;
     ] ;
     .
@@ -179,7 +221,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
         rr:objectMap [
-            rr:parentTriplesMap <#ARWorkingGroupMembershipMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:membership:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "orgId" ]
+                ]
+            ]
         ] ;
     ] ;
     .

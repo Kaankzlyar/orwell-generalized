@@ -167,7 +167,6 @@
         rr:termType rr:IRI ;
         rr:class dbo:School ;
         fnml:functionValue [
-            rr:termType rr:IRI ;
             rr:predicateObjectMap [
                 rr:predicate fno:executes ;
                 rr:objectMap [ rr:constant grel:array_join ]

@@ -99,7 +99,8 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasRole ;
         rr:objectMap [
-            rr:parentTriplesMap <#RoleMap> ;
+            rr:template "http://purl.org/polis/ar/graph#role-{FunId}" ;
+            rr:termType rr:IRI
         ]
     ] ;
     .
@@ -120,7 +121,8 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasTitle ;
         rr:objectMap [
-            rr:parentTriplesMap <#TitleMap> ;
+            rr:template "http://purl.org/polis/ar/graph#title-{TitId}" ;
+            rr:termType rr:IRI
         ]
     ] ;
     .
@@ -141,7 +143,8 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:authorOf ;
         rr:objectMap [
-            rr:parentTriplesMap <#PublishedWorkMap> ;
+            rr:template "http://purl.org/polis/ar/graph#publishedwork-{PubId}" ;
+            rr:termType rr:IRI
         ]
     ] ;
     .
@@ -162,7 +165,8 @@
     rr:predicateObjectMap [
         rr:predicate dbo:award ;
         rr:objectMap [
-            rr:parentTriplesMap <#AwardMap> ;
+            rr:template "http://purl.org/polis/ar/graph#award-{CodId}" ;
+            rr:termType rr:IRI
         ]
     ] ;
     .
@@ -227,7 +231,41 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:didYouthParliamentActivity ;
         rr:objectMap [
-            rr:parentTriplesMap <#YouthParliamentActivityMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:ypa:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "Legislatura" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "Data" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "TipoReuniao" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "Estabelecimento" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "CirculoEleitoral" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "Sessao" ]
+                ]
+            ]
         ]
     ] ;
     .

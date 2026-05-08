@@ -116,7 +116,29 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
         rr:objectMap [
-        rr:parentTriplesMap <#PGMembershipMap> ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:membership:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "gpSigla" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "gpDtInicio" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "gpDtFim" ]
+            ]
+        ]
         ]
     ] ;
     .
@@ -136,7 +158,29 @@
     rr:predicateObjectMap [
         rr:predicate ocd:tipoProclamazione ;
         rr:objectMap [
-        rr:parentTriplesMap <#SituationMap> ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:situation:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "sioDes" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "sioDtInicio" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "sioDtFim" ]
+            ]
+        ]
         ]
     ] ;
     .
@@ -157,7 +201,29 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:holdsDuty ;
         rr:objectMap [
-        rr:parentTriplesMap <#DutyMap> ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:duty:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "carDes" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "carDtInicio" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "carDtFim" ]
+            ]
+        ]
         ]
     ] ;
     .

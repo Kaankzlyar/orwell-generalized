@@ -35,8 +35,7 @@
 
     # URI
     rr:subjectMap [
-        rr:termType rr:BlankNode ;
-        rr:template "publishedwork-{PubId}" ;
+        rr:template "http://purl.org/polis/ar/graph#publishedwork-{PubId}" ;
         rr:class polis-bio:PublishedWork
     ] ;
 

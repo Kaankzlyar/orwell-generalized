@@ -35,8 +35,7 @@
 
     # URI
     rr:subjectMap [
-        rr:template "role-{FunId}" ;
-        rr:termType rr:BlankNode ;
+        rr:template "http://purl.org/polis/ar/graph#role-{FunId}" ;
         rr:class polis-bio:Role
     ] ;
 
