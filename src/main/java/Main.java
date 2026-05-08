@@ -28,41 +28,49 @@ public class Main {
 
         Benchmark benchmark = new Benchmark();
 
+        // Extract data
         if (Options.extractionEnabled()) {
             benchmark.startTiming("Extraction");
             extract();
             benchmark.endTiming();
         }
 
+        // Preprocess data
         benchmark.startTiming("Preprocessing");
         preprocess();
         benchmark.endTiming();
 
         try {
             if (Options.mappingEnabled()) {
+                // Plan mapping pairs
                 benchmark.startTiming("MappingPairPlanner");
                 var mappingGroups = planMapping();
                 benchmark.endTiming();
 
+                // Map data
                 benchmark.startTiming("RDFMapper");
                 map(mappingGroups);
                 benchmark.endTiming();
             }
 
+            // Load model
             benchmark.startTiming("Load Model");
             Model finalGraph = GraphLoader.loadGraph();
             benchmark.endTiming();
 
             if (Options.shaclEnabled()) {
+                // SHACL validation
                 benchmark.startTiming("SHACL Validation");
                 validate(finalGraph);
                 benchmark.endTiming();
             }
         } finally {
+            // Persist reconciliation cache
             if (Options.reconciliationEnabled()) {
                 WikidataReconciliationService.persistCache();
             }
 
+            // Delete temporary files
             if (Options.deleteTmp()) {
                 deleteTmpDir();
             }
@@ -111,6 +119,7 @@ public class Main {
                     " -> " +
                     outputPath
             );
+            // TODO: This can be parallelized
             RDFMapper mapper = new RDFMapper(mappingFiles, outputPath);
             mapper.map();
         }
