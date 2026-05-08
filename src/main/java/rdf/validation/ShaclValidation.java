@@ -1,5 +1,8 @@
 package rdf.validation;
 
+import static cli.Options.printShaclReport;
+import static cli.Options.throwOnShaclUnconform;
+
 import config.Config;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +23,6 @@ public class ShaclValidation {
             );
         }
 
-        // Load SHACL shapes from the SHACL directory
         Model shapes = ModelFactory.createDefaultModel();
         try (var paths = Files.list(Config.SHACL_DIR)) {
             paths.forEach(path -> {
@@ -37,7 +39,6 @@ public class ShaclValidation {
             );
         }
 
-        // Validate the graph against the loaded SHACL shapes
         ValidationReport report = ShaclValidator.get().validate(
             shapes.getGraph(),
             graph.getGraph()
@@ -45,12 +46,11 @@ public class ShaclValidation {
 
         System.out.println("[SHACL Validation] SHACL validation completed");
 
-        if (Config.PRINT_SHACL_REPORT) {
+        if (printShaclReport()) {
             ShLib.printReport(report);
         }
 
-        // Check if the report indicates a non-conforming graph
-        if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
+        if (throwOnShaclUnconform() && !report.conforms()) {
             throw new IllegalStateException(
                 "[SHACL Validation] SHACL validation failed for union graph"
             );

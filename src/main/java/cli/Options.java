@@ -1,34 +1,95 @@
 package cli;
 
-public record Options(
-    boolean reconciliationEnabled,
-    boolean extractionEnabled,
-    boolean mappingEnabled,
-    boolean shaclEnabled,
-    boolean throwOnShaclUnconform,
-    boolean printShaclReport,
-    boolean logEnabled
-) {
-    public static Options defaults() {
-        return new Builder().build();
+public final class Options {
+
+    private static boolean reconciliationEnabled = true;
+    private static boolean extractionEnabled = true;
+    private static boolean mappingEnabled = true;
+    private static boolean shaclEnabled = true;
+    private static boolean throwOnShaclUnconform = true;
+    private static boolean printShaclReport = true;
+    private static boolean logEnabled = true;
+    private static boolean deleteTmp = false;
+
+    private Options() {}
+
+    public static boolean reconciliationEnabled() {
+        return reconciliationEnabled;
     }
 
-    public static final class Builder {
-        boolean reconciliationEnabled = true;
-        boolean extractionEnabled = true;
-        boolean mappingEnabled = true;
-        boolean shaclEnabled = true;
-        boolean throwOnShaclUnconform = true;
-        boolean printShaclReport = true;
-        boolean logEnabled = false;
+    public static boolean extractionEnabled() {
+        return extractionEnabled;
+    }
 
-        Builder() {}
+    public static boolean mappingEnabled() {
+        return mappingEnabled;
+    }
 
-        public Options build() {
-            return new Options(
-                reconciliationEnabled, extractionEnabled, mappingEnabled,
-                shaclEnabled, throwOnShaclUnconform, printShaclReport, logEnabled
+    public static boolean shaclEnabled() {
+        return shaclEnabled;
+    }
+
+    public static boolean throwOnShaclUnconform() {
+        return throwOnShaclUnconform;
+    }
+
+    public static boolean printShaclReport() {
+        return printShaclReport;
+    }
+
+    public static boolean logEnabled() {
+        return logEnabled;
+    }
+
+    public static boolean deleteTmp() {
+        return deleteTmp;
+    }
+
+    public static void parse(String[] args) {
+        reset();
+
+        for (String arg : args) {
+            if (arg.equals("-h") || arg.equals("--help")) {
+                System.out.print(Flag.usage());
+                System.exit(0);
+            }
+
+            Flag flag = Flag.fromArg(arg).orElseThrow(() ->
+                new IllegalArgumentException(
+                    "Unknown flag: " + arg + "\n\n" + Flag.usage()
+                )
+            );
+
+            switch (flag) {
+                case DISABLE_RECONCILIATION -> reconciliationEnabled = false;
+                case DISABLE_EXTRACTION -> extractionEnabled = false;
+                case DISABLE_MAPPING -> mappingEnabled = false;
+                case DISABLE_SHACL -> shaclEnabled = false;
+                case DISABLE_SHACL_FAILURE -> throwOnShaclUnconform = false;
+                case DISABLE_SHACL_REPORT -> printShaclReport = false;
+                case ENABLE_LOG -> logEnabled = true;
+                case DELETE_TMP -> deleteTmp = true;
+                case HELP -> {
+                }
+            }
+
+            String label = flag.longName().replace('-', ' ');
+            System.out.println(
+                Character.toUpperCase(label.charAt(0)) +
+                    label.substring(1) +
+                    "."
             );
         }
+    }
+
+    private static void reset() {
+        reconciliationEnabled = true;
+        extractionEnabled = true;
+        mappingEnabled = true;
+        shaclEnabled = true;
+        throwOnShaclUnconform = true;
+        printShaclReport = true;
+        logEnabled = true;
+        deleteTmp = true;
     }
 }

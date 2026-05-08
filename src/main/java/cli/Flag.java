@@ -3,49 +3,33 @@ package cli;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public enum Flag {
     DISABLE_RECONCILIATION(
-        "dr", "disable-reconciliation",
-        "Disable reconciliation with Wikidata",
-        b -> b.reconciliationEnabled = false
+        "dr",
+        "disable-reconciliation",
+        "Disable reconciliation with Wikidata"
     ),
     DISABLE_EXTRACTION(
-        "de", "disable-extraction",
-        "Disable the data extraction phase",
-        b -> b.extractionEnabled = false
+        "de",
+        "disable-extraction",
+        "Disable the data extraction phase"
     ),
-    DISABLE_MAPPING(
-        "dm", "disable-mapping",
-        "Disable the RDF mapping phase",
-        b -> b.mappingEnabled = false
-    ),
-    DISABLE_SHACL(
-        "ds", "disable-shacl",
-        "Disable SHACL validation entirely",
-        b -> b.shaclEnabled = false
-    ),
+    DISABLE_MAPPING("dm", "disable-mapping", "Disable the RDF mapping phase"),
+    DISABLE_SHACL("ds", "disable-shacl", "Disable SHACL validation entirely"),
     DISABLE_SHACL_FAILURE(
-        "df", "disable-shacl-failure",
-        "Do not throw on SHACL violation",
-        b -> b.throwOnShaclUnconform = false
+        "df",
+        "disable-shacl-failure",
+        "Do not throw on SHACL violation"
     ),
     DISABLE_SHACL_REPORT(
-        "r", "disable-shacl-report",
-        "Do not print the SHACL validation report",
-        b -> b.printShaclReport = false
+        "r",
+        "disable-shacl-report",
+        "Do not print the SHACL validation report"
     ),
-    ENABLE_LOG(
-        "l", "enable-log",
-        "Enable reconciliation request logging",
-        b -> b.logEnabled = true
-    ),
-    HELP(
-        "h", "help",
-        "Show this help message and exit",
-        b -> {}
-    );
+    ENABLE_LOG("l", "enable-log", "Enable reconciliation request logging"),
+    DELETE_TMP("t", "delete-tmp", "Delete temporary files after processing"),
+    HELP("h", "help", "Show this help message and exit");
 
     private static final Map<String, Flag> BY_LONG = new HashMap<>();
     private static final Map<String, Flag> BY_SHORT = new HashMap<>();
@@ -60,17 +44,23 @@ public enum Flag {
     private final String shortName;
     private final String longName;
     private final String description;
-    private final Consumer<Options.Builder> action;
 
-    public String shortName() { return shortName; }
-    public String longName() { return longName; }
-    public String description() { return description; }
+    public String shortName() {
+        return shortName;
+    }
 
-    Flag(String shortName, String longName, String description, Consumer<Options.Builder> action) {
+    public String longName() {
+        return longName;
+    }
+
+    public String description() {
+        return description;
+    }
+
+    Flag(String shortName, String longName, String description) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
-        this.action = action;
     }
 
     public static Optional<Flag> fromArg(String arg) {
@@ -83,13 +73,23 @@ public enum Flag {
         var sb = new StringBuilder("Usage: orwell [options]\n\nOptions:\n");
         for (Flag f : values()) {
             if (f == HELP) continue;
-            sb.append(String.format("  -%s, --%-28s %s%n", f.shortName, f.longName, f.description));
+            sb.append(
+                String.format(
+                    "  -%s, --%-28s %s%n",
+                    f.shortName,
+                    f.longName,
+                    f.description
+                )
+            );
         }
-        sb.append(String.format("  -%s, --%-28s %s%n", HELP.shortName, HELP.longName, HELP.description));
+        sb.append(
+            String.format(
+                "  -%s, --%-28s %s%n",
+                HELP.shortName,
+                HELP.longName,
+                HELP.description
+            )
+        );
         return sb.toString();
-    }
-
-    public void applyTo(Options.Builder builder) {
-        action.accept(builder);
     }
 }

@@ -1,47 +1,49 @@
 package reconciliation;
 
+import static config.Config.LOG_PATH;
+
+import cli.Options;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.StandardOpenOption;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 
-import static config.Config.LOG_ENABLED;
-import static config.Config.LOG_PATH;
-import static config.Config.RECONCILIATION_ENABLED;;
+public class WikidataReconciliationService {
 
-public class WikidataReconciliationService{
-    
     private static final int DEFAULT_LIMIT = 1;
     private static final String WIKIDATA_ENTITY = "Q35120"; // Q35120 represents anything in Wikidata
     private static final String BASE_URI = "http://www.wikidata.org/entity/";
-    
+
     private static final ReconciliationCache CACHE = new ReconciliationCache();
     private static final Object LOG_LOCK = new Object();
 
-            
-    public static String reconciliate(String entityCandidate, String entityType){
-        if(!RECONCILIATION_ENABLED) return entityCandidate;
-
+    public static String reconciliate(
+        String entityCandidate,
+        String entityType
+    ) {
         return reconciliate(entityCandidate, entityType, null);
     }
 
-    public static String reconciliate(String entityCandidate, String entityType, String entityLimit){
-        if(!RECONCILIATION_ENABLED) return entityCandidate;
+    public static String reconciliate(
+        String entityCandidate,
+        String entityType,
+        String entityLimit
+    ) {
+        if (!Options.reconciliationEnabled()) return entityCandidate;
 
         //System.out.println("Reconciliating:" + entityCandidate);
 
         if (entityCandidate == null) {
             return null;
         }
-        
+
         String query = entityCandidate.trim();
         if (query.isEmpty()) {
             return null;
@@ -50,10 +52,14 @@ public class WikidataReconciliationService{
         String type = entityType == null ? WIKIDATA_ENTITY : entityType;
         int limit = parseLimit(entityLimit);
 
-
         Optional<String> cachedId = CACHE.get(query);
         if (cachedId.isPresent()) {
-            ReconciliationResult cachedResult = new ReconciliationResult(cachedId.get(), "", "", "");
+            ReconciliationResult cachedResult = new ReconciliationResult(
+                cachedId.get(),
+                "",
+                "",
+                ""
+            );
             //System.out.println("Found result for query in cache: " + query);
             logReconciliation(query, type, limit, cachedResult);
             return BASE_URI + cachedId.get();
@@ -83,20 +89,33 @@ public class WikidataReconciliationService{
         }
     }
 
-    private static ReconciliationResult fetchEntity(String query, String type, int limit) {
+    private static ReconciliationResult fetchEntity(
+        String query,
+        String type,
+        int limit
+    ) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpClient httpClient = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(10))
-                    .followRedirects(HttpClient.Redirect.NORMAL)
-                    .build();
+                .connectTimeout(Duration.ofSeconds(10))
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
 
-            ReconciliationRequest reconciliationRequest = new ReconciliationRequest(query, type, limit);
-            HttpRequest request = reconciliationRequest.toHttpRequest(objectMapper);
+            ReconciliationRequest reconciliationRequest =
+                new ReconciliationRequest(query, type, limit);
+            HttpRequest request = reconciliationRequest.toHttpRequest(
+                objectMapper
+            );
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(
+                request,
+                HttpResponse.BodyHandlers.ofString()
+            );
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
-                System.err.println("Wikidata reconciliation request failed with status " + response.statusCode());
+                System.err.println(
+                    "Wikidata reconciliation request failed with status " +
+                        response.statusCode()
+                );
                 return null;
             }
 
@@ -119,13 +138,20 @@ public class WikidataReconciliationService{
             String matched = firstResult.path("match").asText("");
             return new ReconciliationResult(id, name, score, matched);
         } catch (Exception e) {
-            System.err.println("Wikidata reconciliation call failed: " + e.getMessage());
+            System.err.println(
+                "Wikidata reconciliation call failed: " + e.getMessage()
+            );
             return null;
         }
     }
 
-    private static void logReconciliation(String query, String type, int limit, ReconciliationResult result) {
-        if (!LOG_ENABLED) {
+    private static void logReconciliation(
+        String query,
+        String type,
+        int limit,
+        ReconciliationResult result
+    ) {
+        if (!Options.logEnabled()) {
             return;
         }
 
@@ -133,7 +159,9 @@ public class WikidataReconciliationService{
         String name = result == null ? "" : safe(result.name());
         String score = result == null ? "" : safe(result.score());
 
-        String line = String.join("\t",
+        String line =
+            String.join(
+                "\t",
                 Instant.now().toString(),
                 "query=" + safe(query),
                 "type=" + safe(type),
@@ -142,19 +170,22 @@ public class WikidataReconciliationService{
                 "id=" + id,
                 "score=" + score,
                 "name=" + name
-        ) + System.lineSeparator();
+            ) +
+            System.lineSeparator();
 
         synchronized (LOG_LOCK) {
             try {
                 Files.writeString(
-                        LOG_PATH,
-                        line,
-                        StandardCharsets.UTF_8,
-                        StandardOpenOption.CREATE,
-                        StandardOpenOption.APPEND
+                    LOG_PATH,
+                    line,
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
                 );
             } catch (Exception e) {
-                System.err.println("Failed to write reconciliation log: " + e.getMessage());
+                System.err.println(
+                    "Failed to write reconciliation log: " + e.getMessage()
+                );
             }
         }
     }

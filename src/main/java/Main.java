@@ -1,7 +1,6 @@
 import static config.Config.*;
 import static rdf.validation.ShaclValidation.*;
 
-import cli.CliParser;
 import cli.Options;
 import extraction.ARExtractor;
 import extraction.DataExtractor;
@@ -25,12 +24,11 @@ public class Main {
 
     public static void main(String[] args)
         throws IOException, InterruptedException {
-        Options options = CliParser.parse(args);
-        applyOptions(options);
+        Options.parse(args);
 
         Benchmark benchmark = new Benchmark();
 
-        if (options.extractionEnabled()) {
+        if (Options.extractionEnabled()) {
             benchmark.startTiming("Extraction");
             extract();
             benchmark.endTiming();
@@ -41,7 +39,7 @@ public class Main {
         benchmark.endTiming();
 
         try {
-            if (options.mappingEnabled()) {
+            if (Options.mappingEnabled()) {
                 benchmark.startTiming("MappingPairPlanner");
                 var mappingGroups = planMapping();
                 benchmark.endTiming();
@@ -55,32 +53,22 @@ public class Main {
             Model finalGraph = GraphLoader.loadGraph();
             benchmark.endTiming();
 
-            if (options.shaclEnabled()) {
+            if (Options.shaclEnabled()) {
                 benchmark.startTiming("SHACL Validation");
                 validate(finalGraph);
                 benchmark.endTiming();
             }
         } finally {
-            if (options.reconciliationEnabled()) {
+            if (Options.reconciliationEnabled()) {
                 WikidataReconciliationService.persistCache();
             }
 
-            if (DELETE_TMP) {
+            if (Options.deleteTmp()) {
                 deleteTmpDir();
             }
         }
 
         benchmark.printTimingSummary();
-    }
-
-    private static void applyOptions(Options options) {
-        RECONCILIATION_ENABLED = options.reconciliationEnabled();
-        EXTRACTION_ENABLED = options.extractionEnabled();
-        MAPPING_ENABLED = options.mappingEnabled();
-        SHACL_ENABLED = options.shaclEnabled();
-        THROW_ON_SHACL_UNCONFORM = options.throwOnShaclUnconform();
-        PRINT_SHACL_REPORT = options.printShaclReport();
-        LOG_ENABLED = options.logEnabled();
     }
 
     private static void extract() {

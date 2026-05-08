@@ -23,24 +23,20 @@ class ShaclValidationTest {
 
     private Path originalOutputDir;
     private Path originalShaclDir;
-    private boolean originalThrowOnShaclUnconform;
 
     @BeforeEach
     void setUp() {
         originalOutputDir = Config.OUTPUT_DIR;
         originalShaclDir = Config.SHACL_DIR;
-        originalThrowOnShaclUnconform = Config.THROW_ON_SHACL_UNCONFORM;
 
         Config.OUTPUT_DIR = tempDir.resolve("output");
         Config.SHACL_DIR = tempDir.resolve("shacl");
-        Config.THROW_ON_SHACL_UNCONFORM = true;
     }
 
     @AfterEach
     void tearDown() {
         Config.OUTPUT_DIR = originalOutputDir;
         Config.SHACL_DIR = originalShaclDir;
-        Config.THROW_ON_SHACL_UNCONFORM = originalThrowOnShaclUnconform;
     }
 
     @Test

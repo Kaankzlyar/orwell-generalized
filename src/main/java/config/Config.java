@@ -24,15 +24,6 @@ public final class Config {
     public static Path CACHE_PATH = Path.of("reconciliation-cache.properties");
     public static Path LOG_PATH = Path.of("log.txt");
 
-    public static boolean EXTRACTION_ENABLED = true;
-    public static boolean MAPPING_ENABLED = true;
-    public static boolean RECONCILIATION_ENABLED = true;
-    public static boolean SHACL_ENABLED = true;
-    public static boolean THROW_ON_SHACL_UNCONFORM = true;
-    public static boolean DELETE_TMP = true;
-    public static boolean PRINT_SHACL_REPORT = true;
-    public static boolean LOG_ENABLED = true;
-
     public static Set<String> DISABLED_LEGISLATURES =
         ConfigParser.parseDisabledLegislatures();
 }
