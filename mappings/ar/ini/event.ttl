@@ -1,0 +1,593 @@
+@prefix rr:     <http://www.w3.org/ns/r2rml#> .
+@prefix rml:    <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql:     <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml:   <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno:    <https://w3id.org/function/ontology#> .
+@prefix idlab: <https://w3id.org/imec/idlab/function#> .
+@prefix pofn:   <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> . # TODO: Update URI to match where the pofn file is hosted
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:    <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbo:    <http://dbpedia.org/ontology/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann:   <http://purl.org/vocab/vann/> .
+@prefix ocd:    <http://dati.camera.it/ocd/> .
+@prefix m4s:    <http://purl.org/map4scrutiny-core#> .
+@prefix schema: <https://schema.org/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix org:    <http://www.w3.org/ns/org#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
+@prefix polis-core:   <http://purl.org/polis/ar/core#> .
+@prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
+
+<#EventMap> a rr:TriplesMap ;
+
+  	rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut" ;
+    ] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "OevId" ]
+			] ;
+		]
+	] ;
+
+	# Identifier
+	rr:predicateObjectMap [
+		rr:predicate polis-core:identifier ;
+		rr:objectMap [
+			rml:reference "OevId" ;
+			rr:datatype xsd:string
+		]
+	] ;
+
+	# Type Identifier
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:typeId ;
+		rr:objectMap [
+			rml:reference "EvtId" ;
+			rr:datatype xsd:string
+		]
+	] ;
+
+	# Type/Phase
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:eventType ;
+		rr:objectMap [
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:trimSafe ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate grel:valueParameter ;
+					rr:objectMap [ rml:reference "Fase" ]
+				]
+			]
+		]
+	] ;
+
+	# Date
+	rr:predicateObjectMap [
+		rr:predicate dct:date ;
+		rr:objectMap [
+			rml:reference "DataFase" ;
+			rr:datatype xsd:date
+		]
+	] ;
+
+	# Code
+	rr:predicateObjectMap [
+		rr:predicate dbo:code ;
+		rr:objectMap [
+			rml:reference "CodigoFase" ;
+			rr:datatype xsd:string
+		]
+	] ;
+
+	# Observation
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:observation ;
+		rr:objectMap [
+			rml:reference "ObsFase" ;
+			rr:datatype xsd:string
+		]
+	] ;
+
+	# Approves Diploma
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:approvesDiploma ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:stringConcat ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:leftPart ;
+					rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Diploma_" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:rightPart ;
+					rr:objectMap [ rml:reference "TextosAprovados" ]
+				] ;
+			]
+		]
+	] ;
+
+	# Appeal GP
+	rr:predicateObjectMap [
+        rr:predicate polis-ini:receivedAppeal ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#ParliamentaryGroup_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:stringConcat ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:leftPart ;
+                                rr:objectMap [ rml:reference "RecursoGP/string" ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:rightPart ;
+                                rr:objectMap [
+                                    fnml:functionValue [
+                                        rr:predicateObjectMap [
+                                            rr:predicate fno:executes ;
+                                            rr:objectMap [ rr:constant pofn:stringConcat ]
+                                        ] ;
+                                        rr:predicateObjectMap [
+                                            rr:predicate pofn:leftPart ;
+                                            rr:objectMap [ rr:constant "_of_" ]
+                                        ] ;
+                                        rr:predicateObjectMap [
+                                            rr:predicate pofn:rightPart ;
+                                            rr:objectMap [ rml:reference "../../IniLeg" ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ] ;
+  	.
+
+<#EventDARPublicationRelationMap> a rr:TriplesMap ;
+
+	rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/PublicacaoFase/pt_gov_ar_objectos_PublicacoesOut" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	# DAR Publication
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:isPublishedInDAR ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:hashIri ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:prefix ;
+					rr:objectMap [ rr:constant "urn:darPublication:" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "URLDiario" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "idPag" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "pag" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "pubNr" ]
+				] ;
+			]
+		]
+	]
+	.
+
+<#EventAnnexRelationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "iniciativas" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//AnexosFase/pt_gov_ar_objectos_iniciativas_AnexosOut" ;
+    ] ;
+
+    rr:subjectMap [
+			rr:class polis-ini:Event ;
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:hashIri ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:prefix ;
+					rr:objectMap [ rr:constant "urn:event:" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "../../OevId" ]
+				] ;
+			]
+		] ;
+
+    # Annex
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:hasAnnex ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:annex:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "anexoNome" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "anexoFich" ]
+                ]
+            ]
+        ]
+    ]
+    .
+
+<#EventVoteRelationMap> a rr:TriplesMap ;
+
+        rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Votacao/pt_gov_ar_objectos_VotacaoOut" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:hasVote ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:hashIri ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:prefix ;
+					rr:objectMap [ rr:constant "urn:vote:" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:elements ;
+					rr:objectMap [ rml:reference "id" ]
+				] ;
+			]
+		]
+	] ;
+	.
+
+<#EventJointInitiativeMap> a rr:TriplesMap ;
+
+	rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/IniciativasConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
+	 ] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	# Joint Initiative
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:happensJointlyWithInitiative ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:stringConcat ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:leftPart ;
+					rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Initiative_" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:rightPart ;
+					rr:objectMap [ rml:reference "id" ]
+				] ;
+			]
+		]
+	] ;
+	.
+
+<#EventJointPetitionMap> a rr:TriplesMap ;
+
+	rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/PeticoesConjuntas/pt_gov_ar_objectos_iniciativas_DiscussaoConjuntaOut" ;
+	 ] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	# Joint Petition
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:discussedJointlyWith ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:stringConcat ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:leftPart ;
+					rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Petition_" ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:rightPart ;
+					rr:objectMap [ rml:reference "nr" ]
+				] ;
+			]
+		]
+	] ;
+	.
+
+<#EventDiscussionRelationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/Intervencoesdebates/pt_gov_ar_objectos_IntervencoesOut" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	rr:predicateObjectMap [
+		rr:predicate polis-ini:hasDiscussion ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:discussion:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "dataReuniaoPlenaria" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "oradores" ]
+            ] ;
+        ]
+		]
+	] ;
+	.
+
+<#EventParliamentarianAppealMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+	    rml:source "iniciativas" ;
+	    rml:referenceFormulation ql:XPath ;
+	    rml:iterator "//IniEventos/Pt_gov_ar_objectos_iniciativas_EventosOut/RecursoDeputados/string" ;
+	] ;
+
+	rr:subjectMap [
+		rr:class polis-ini:Event ;
+		rr:termType rr:IRI ;
+		fnml:functionValue [
+			rr:predicateObjectMap [
+				rr:predicate fno:executes ;
+				rr:objectMap [ rr:constant pofn:hashIri ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:prefix ;
+				rr:objectMap [ rr:constant "urn:event:" ]
+			] ;
+			rr:predicateObjectMap [
+				rr:predicate pofn:elements ;
+				rr:objectMap [ rml:reference "../../OevId" ]
+			] ;
+		]
+	] ;
+
+	# Appeal Parliamentarian
+	rr:predicateObjectMap [
+	    rr:predicate polis-ini:receivedAppeal ;
+		rr:objectMap [
+		    rr:termType rr:IRI ;
+			fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:stringConcat ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:leftPart ;
+                rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Parliamentarian_" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:rightPart ;
+                rr:objectMap [
+                    fnml:functionValue [
+         			    rr:predicateObjectMap [
+         			        rr:predicate fno:executes ;
+         			        rr:objectMap [ rr:constant pofn:lookup ]
+         			    ] ;
+         			    rr:predicateObjectMap [
+         			        rr:predicate pofn:lookupTable ;
+         			        rr:objectMap [ rr:constant "ParliamentarianReconciliation" ]
+         			    ] ;
+         			    rr:predicateObjectMap [
+         			        rr:predicate pofn:lookupValue ;
+         			        rr:objectMap [ rml:reference "../../../../IniLeg" ]
+         			    ] ;
+         			    rr:predicateObjectMap [
+         			        rr:predicate pofn:lookupValue ;
+         			        rr:objectMap [
+         			            fnml:functionValue [
+         			                rr:predicateObjectMap [
+         			                    rr:predicate fno:executes ;
+         			                    rr:objectMap [ rr:constant pofn:stripParty ]
+         			                ] ;
+         			                rr:predicateObjectMap [
+         			                    rr:predicate grel:valueParameter ;
+         			                    rr:objectMap [ rml:reference "." ]
+         			                ]
+         			            ]
+         			        ]
+         			    ] ;
+                    ]
+                ]
+            ]
+			] ;
+		]
+	] ;
+
+	.

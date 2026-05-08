@@ -1,0 +1,191 @@
+@prefix rr:     <http://www.w3.org/ns/r2rml#> .
+@prefix rml:    <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql:     <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml:   <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno:    <https://w3id.org/function/ontology#> .
+@prefix idlab: <https://w3id.org/imec/idlab/function#> .
+@prefix pofn:   <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> . # TODO: Update URI to match where the pofn file is hosted
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:    <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbo:    <http://dbpedia.org/ontology/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann:   <http://purl.org/vocab/vann/> .
+@prefix ocd:    <http://dati.camera.it/ocd/> .
+@prefix m4s:    <http://purl.org/map4scrutiny-core#> .
+@prefix schema: <https://schema.org/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix org:    <http://www.w3.org/ns/org#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
+@prefix polis-core:   <http://purl.org/polis/ar/core#> .
+@prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
+
+<#DARPublicationMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "iniciativas" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "//pt_gov_ar_objectos_PublicacoesOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:class polis-ini:DARPublication ;
+        rr:termType rr:IRI ;
+        fnml:functionValue[
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:darPublication:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "URLDiario" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "idPag" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "pag" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "pubNr" ]
+            ] ;
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [
+            rml:reference "pubNr" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+    ] ;
+
+    # Date
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [
+            rml:reference "pubdt" ;
+            rr:datatype xsd:date
+        ]
+    ] ;
+
+    # URL
+    rr:predicateObjectMap [
+        rr:predicate schema:url ;
+        rr:objectMap [
+            rml:reference "URLDiario" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Code
+    rr:predicateObjectMap [
+        rr:predicate dbo:code ;
+        rr:objectMap [
+            rml:reference "pubTp" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Page
+    rr:predicateObjectMap [
+        rr:predicate schema:pagination ;
+        rr:objectMap [
+            rml:reference "pag/string" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Page Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:pagesIdentifier ;
+        rr:objectMap [
+            rml:reference "idPag" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [
+            rr:template "http://purl.org/polis/ar/graph#{pubLeg}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+
+    # Legislative Session
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislativeSession ;
+        rr:objectMap [
+            rr:template "http://purl.org/polis/ar/graph#Session_{pubSL}_of_{pubLeg}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+
+    # Observation
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:observation ;
+        rr:objectMap [
+            rml:reference "obs" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Supplement
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:publicationSupplement ;
+        rr:objectMap [
+            rml:reference "supl" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Final Supplement Page
+    rr:predicateObjectMap [
+        rr:predicate polis-ini:publicationSupplementFinalPage ;
+        rr:objectMap [
+            rml:reference "pagFinalDiarioSupl" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # DAR Type
+    rr:predicateObjectMap [
+        rr:predicate rdf:type ;
+        rr:objectMap [
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toClass ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:entityName ;
+                    rr:objectMap [ rml:reference "pubTp" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:className ;
+                    rr:objectMap [ rr:constant "darPublication" ]
+                ]
+            ]
+        ]
+    ]
+    .

@@ -1,0 +1,171 @@
+@prefix rr:     <http://www.w3.org/ns/r2rml#> .
+@prefix rml:    <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql:     <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml:   <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno:    <https://w3id.org/function/ontology#> .
+@prefix pofn:   <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> . # TODO: Update URI to match where the pofn file is hosted
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:    <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbo:    <http://dbpedia.org/ontology/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann:   <http://purl.org/vocab/vann/> .
+@prefix ocd:    <http://dati.camera.it/ocd/> .
+@prefix m4s:    <http://purl.org/map4scrutiny-core#> .
+@prefix schema: <https://schema.org/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix org:    <http://www.w3.org/ns/org#> .
+@prefix prov:   <https://www.w3.org/ns/prov-o#> .
+@prefix pe:     <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix polis-ini:    <http://purl.org/polis/ar/initiatives#> .
+@prefix polis-bio:    <http://purl.org/polis/ar/biographic#> .
+@prefix polis-core:   <http://purl.org/polis/ar/core#> .
+@prefix polis-mpact:  <http://purl.org/polis/ar/mp-activity#> .
+@prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
+
+<#ParliamentaryActivityMap> a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "atividadedeputado" ;
+        rml:referenceFormulation ql:XPath ;
+        rml:iterator "/ArrayOfAtividadeDeputado/AtividadeDeputado/AtividadeDeputadoList/ActividadeOut/ActP/ActividadesParlamentaresOut" ;
+    ] ;
+
+    rr:subjectMap [
+        rr:termType rr:IRI ;
+        rr:class polis-mpact:ParliamentaryActivity;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:paract:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [
+                    rml:reference "ActTp" ;
+                ]
+            ]  ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [
+                    rml:reference "ActId" ;
+                ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [
+                    rml:reference "ActSelLg" ;
+                ]
+            ] ;
+        ]
+    ] ;
+
+    # Type
+    rr:predicateObjectMap [
+        rr:predicate rdf:type ;
+        rr:objectMap [
+            rr:template "http://purl.org/polis/ar/mp-activity#{ActTp}" ;
+            rr:termType rr:IRI
+        ]
+    ] ;
+
+    # Identifier
+    rr:predicateObjectMap [
+        rr:predicate polis-core:identifier ;
+        rr:objectMap [
+            rml:reference "ActId" ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+
+    # Number
+    rr:predicateObjectMap [
+        rr:predicate dbo:number ;
+        rr:objectMap [
+            rml:reference "ActNr" ;
+            rr:datatype xsd:nonNegativeInteger
+        ]
+    ] ;
+
+    # Legislature
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislature ;
+        rr:objectMap [
+            rr:template "http://purl.org/polis/ar/graph#{ActSelLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Legislative Session
+    rr:predicateObjectMap [
+        rr:predicate polis-core:belongsToLegislativeSession ;
+        rr:objectMap [
+            rr:template "http://purl.org/polis/ar/graph#Session_{ActSelNr}_of_{ActSelLg}" ;
+            rr:termType rr:IRI ;
+        ]
+    ] ;
+
+    # Entry Date
+    rr:predicateObjectMap [
+        rr:predicate dct:date ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toXsdDate ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputDate ;
+                    rr:objectMap [ rml:reference "ActDtent" ]
+                ]
+            ] ;
+            rr:datatype xsd:date
+        ]
+    ] ;
+
+    # Debate Date
+    rr:predicateObjectMap [
+        rr:predicate polis-mpact:debateDate ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:toXsdDateTime ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:inputDateTime ;
+                    rr:objectMap [ rml:reference "ActDtdeb" ]
+                ]
+            ] ;
+            rr:datatype xsd:dateTime
+        ]
+    ] ;
+
+    # Subject
+    rr:predicateObjectMap [
+        rr:predicate dct:subject ;
+        rr:objectMap [
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:trimSafe ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate grel:valueParameter ;
+                    rr:objectMap [ rml:reference "ActAs" ]
+                ]
+            ] ;
+            rr:datatype xsd:string
+        ]
+    ] ;
+    .

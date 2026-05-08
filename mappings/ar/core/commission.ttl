@@ -46,7 +46,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "idOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -55,7 +55,7 @@
     # Acronym
     rr:predicateObjectMap [
         rr:predicate qudt:acronym ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "siglaOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -64,7 +64,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -82,7 +82,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{siglaLegislatura}" ;
             rr:termType rr:IRI ;
         ] ;
@@ -105,30 +105,6 @@
             rr:datatype xsd:nonNegativeInteger
         ] ;
     ]
-    .
-
-<#ParliamentarianCommissionMembershipMap> a rr:TriplesMap ;
-
-    rml:logicalSource [
-        rml:source "composicaodeorgaos" ;
-        rml:referenceFormulation ql:XPath ;
-        rml:iterator "/OrganizacaoAR/Comissoes/OrgaoBase/HistoricoComposicao/pt_ar_wsgode_objectos_DadosOrgaoComposicaoHistorico" ;
-    ] ;
-
-    # Parliamentarian
-    rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
-        rr:termType rr:IRI ;
-        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{depCadId}" ;
-    ] ;
-
-    # Has membership
-    rr:predicateObjectMap [
-        rr:predicate polis-core:hasMembership ;
-        rr:objectMap [ 
-            rr:parentTriplesMap <#CommissionMembershipMap> ;
-        ] ;
-    ] ;
     .
 
 <#CommissionMembershipMap> a rr:TriplesMap ;
@@ -165,7 +141,7 @@
     # Commission
     rr:predicateObjectMap [
         rr:predicate polis-core:isMemberOf ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Commission_{orgId}" ;
             rr:termType rr:IRI ;
         ]
@@ -191,7 +167,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "idOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -200,7 +176,7 @@
     # Acronym
     rr:predicateObjectMap [
         rr:predicate qudt:acronym ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "siglaOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -209,7 +185,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -227,7 +203,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{siglaLegislatura}" ;
             rr:termType rr:IRI ;
         ] ;
@@ -250,30 +226,6 @@
             rr:datatype xsd:nonNegativeInteger
         ] ;
     ]
-    .
-
-<#ParliamentarianSubcommissionMembershipMap> a rr:TriplesMap ;
-
-    rml:logicalSource [
-        rml:source "composicaodeorgaos" ;
-        rml:referenceFormulation ql:XPath ;
-        rml:iterator "/OrganizacaoAR/SubComissoes/OrgaoBase/HistoricoComposicao/pt_ar_wsgode_objectos_DadosOrgaoComposicaoHistorico" ;
-    ] ;
-
-    # Parliamentarian
-    rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
-        rr:termType rr:IRI ;
-        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{depCadId}" ;
-    ] ;
-
-    # Has membership
-    rr:predicateObjectMap [
-        rr:predicate polis-core:hasMembership ;
-        rr:objectMap [ 
-            rr:parentTriplesMap <#SubcommissionMembershipMap> ;
-        ] ;
-    ] ;
     .
 
 <#SubcommissionMembershipMap> a rr:TriplesMap ;
@@ -310,7 +262,7 @@
     # Subcommission
     rr:predicateObjectMap [
         rr:predicate polis-core:isMemberOf ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#Commission_{orgId}" ;
             rr:termType rr:IRI ;
         ]
@@ -319,8 +271,6 @@
     # TODO: Adicionar Situation information à membership, cada situação terá uma data
     .
 
-
-# WorkingGroup
 <#WorkingGroupMap> a rr:TriplesMap ;
 
     rml:logicalSource [
@@ -338,7 +288,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "idOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -347,7 +297,7 @@
     # Acronym
     rr:predicateObjectMap [
         rr:predicate qudt:acronym ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "siglaOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -356,7 +306,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -374,7 +324,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{siglaLegislatura}" ;
             rr:termType rr:IRI ;
         ] ;
@@ -397,30 +347,6 @@
             rr:datatype xsd:nonNegativeInteger
         ] ;
     ]
-    .
-
-<#ParliamentarianWorkingGroupMembershipMap> a rr:TriplesMap ;
-
-    rml:logicalSource [
-        rml:source "composicaodeorgaos" ;
-        rml:referenceFormulation ql:XPath ;
-        rml:iterator "/OrganizacaoAR/GruposTrabalho/OrgaoBase/HistoricoComposicao/pt_ar_wsgode_objectos_DadosOrgaoComposicaoHistorico" ;
-    ] ;
-
-    # Parliamentarian
-    rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
-        rr:termType rr:IRI ;
-        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{depCadId}" ;
-    ] ;
-
-    # Has membership
-    rr:predicateObjectMap [
-        rr:predicate polis-core:hasMembership ;
-        rr:objectMap [ 
-            rr:parentTriplesMap <#WorkingGroupMembershipMap> ;
-        ] ;
-    ] ;
     .
 
 <#WorkingGroupMembershipMap> a rr:TriplesMap ;
@@ -457,7 +383,7 @@
     # WorkingGroup
     rr:predicateObjectMap [
         rr:predicate polis-core:isMemberOf ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#WorkingGroup_{orgId}" ;
             rr:termType rr:IRI ;
         ]
@@ -465,9 +391,6 @@
 
     # TODO: Adicionar Situation information à membership, cada situação terá uma data
     .
-
-
-# ARWorkingGroup
 
 <#ARWorkingGroupMap> a rr:TriplesMap ;
 
@@ -486,7 +409,7 @@
     # Identifier
     rr:predicateObjectMap [
         rr:predicate polis-core:identifier ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "idOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -495,7 +418,7 @@
     # Acronym
     rr:predicateObjectMap [
         rr:predicate qudt:acronym ;
-        rr:objectMap [ 
+        rr:objectMap [
             rml:reference "siglaOrgao" ;
             rr:datatype xsd:string
         ] ;
@@ -504,7 +427,7 @@
     # Name
     rr:predicateObjectMap [
         rr:predicate foaf:name ;
-        rr:objectMap [ 
+        rr:objectMap [
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
@@ -522,7 +445,7 @@
     # Legislature
     rr:predicateObjectMap [
         rr:predicate polis-core:belongsToLegislature ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#{siglaLegislatura}" ;
             rr:termType rr:IRI ;
         ] ;
@@ -545,30 +468,6 @@
             rr:datatype xsd:nonNegativeInteger
         ] ;
     ]
-    .
-
-<#ARParliamentarianWorkingGroupMembershipMap> a rr:TriplesMap ;
-
-    rml:logicalSource [
-        rml:source "composicaodeorgaos" ;
-        rml:referenceFormulation ql:XPath ;
-        rml:iterator "/OrganizacaoAR/GruposTrabalhoAR/OrgaoBase/HistoricoComposicao/pt_ar_wsgode_objectos_DadosOrgaoComposicaoHistorico" ;
-    ] ;
-
-    # Parliamentarian
-    rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
-        rr:termType rr:IRI ;
-        rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{depCadId}" ;
-    ] ;
-
-    # Has membership
-    rr:predicateObjectMap [
-        rr:predicate polis-core:hasMembership ;
-        rr:objectMap [ 
-            rr:parentTriplesMap <#ARWorkingGroupMembershipMap> ;
-        ] ;
-    ] ;
     .
 
 <#ARWorkingGroupMembershipMap> a rr:TriplesMap ;
@@ -605,7 +504,7 @@
     # ARWorkingGroup
     rr:predicateObjectMap [
         rr:predicate polis-core:isMemberOf ;
-        rr:objectMap [ 
+        rr:objectMap [
             rr:template "http://purl.org/polis/ar/graph#ARWorkingGroup_{orgId}" ;
             rr:termType rr:IRI ;
         ]
@@ -613,5 +512,3 @@
 
     # TODO: Adicionar Situation information à membership, cada situação terá uma data
     .
-
-
