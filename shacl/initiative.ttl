@@ -454,7 +454,7 @@ polis-ini:PetitionShape a sh:NodeShape ;
     sh:property [
         sh:path polis-core:belongsToLegislativeSession ;
         sh:class ocd:sessioneLegislatura ;
-        sh:message "A petition must belong to a legislaturive session of the type ocd:sessioneLegislatura"@en
+        sh:message "A petition must belong to a legislative session of the type ocd:sessioneLegislatura"@en
     ] .
 
 #################################################################
