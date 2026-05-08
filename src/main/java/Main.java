@@ -10,8 +10,10 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
 import preprocessing.hooks.*;
+import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import reconciliation.WikidataReconciliationService;
@@ -22,7 +24,10 @@ public class Main {
     private static final String DISABLE_RECONCILIATION_FLAG = "-dr";
     private static final String DISABLE_EXTRACTION_FLAG = "-de";
     private static final String DISABLE_MAPPING_FLAG = "-dm";
-    private static final String DISABLE_SHACL_FAILURE = "-ds";
+    private static final String DISABLE_SHACL_FAILURE = "-df";
+    private static final String DISABLE_SHACL_FLAG = "-ds";
+    private static final String DISABLE_SHACL_REPORT_FLAG = "-r";
+    private static final String ENABLE_LOG = "-l";
 
     public static void main(String[] args)
         throws IOException, InterruptedException {
@@ -54,10 +59,15 @@ public class Main {
                 benchmark.endTiming();
             }
 
+            // Load Model
+            benchmark.startTiming("Load Model");
+            Model finalGraph = GraphLoader.loadGraph();
+            benchmark.endTiming();
+
             // SHACL Validation
             if (SHACL_ENABLED) {
                 benchmark.startTiming("SHACL Validation");
-                validate();
+                validate(finalGraph);
                 benchmark.endTiming();
             }
         } finally {
@@ -92,6 +102,18 @@ public class Main {
                     MAPPING_ENABLED = false;
                     System.out.println("Mapping disabled.");
                     break;
+                case DISABLE_SHACL_REPORT_FLAG:
+                    PRINT_SHACL_REPORT = false;
+                    System.out.println("Print SHACL report disabled.");
+                    break;
+                case DISABLE_SHACL_FLAG:
+                    SHACL_ENABLED = false;
+                    System.out.println("SHACL disabled.");
+                    break;
+                case ENABLE_LOG:
+                    LOG_ENABLED = true;
+                    System.out.println("Reconciliation logging enabled.");
+                    break;
                 default:
                     throw new IllegalArgumentException(
                         "Unknown argument: " +
@@ -103,7 +125,13 @@ public class Main {
                             ", " +
                             DISABLE_SHACL_FAILURE +
                             ", " +
-                            DISABLE_MAPPING_FLAG
+                            DISABLE_MAPPING_FLAG +
+                            ", " +
+                            DISABLE_SHACL_REPORT_FLAG +
+                            ", " +
+                            DISABLE_SHACL_FLAG +
+                            ", " +
+                            ENABLE_LOG
                     );
             }
         }
