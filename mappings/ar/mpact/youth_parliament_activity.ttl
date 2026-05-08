@@ -240,8 +240,8 @@
     # School Type
     rr:predicateObjectMap [
         rr:predicate polis-mpact:isSchoolType ;
-        rr:termType rr:IRI ;
         rr:objectMap [
+            rr:termType rr:IRI ;
             fnml:functionValue [
                 rr:predicateObjectMap [
                     rr:predicate fno:executes ;
