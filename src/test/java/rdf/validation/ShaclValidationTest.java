@@ -8,6 +8,9 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,13 +21,13 @@ class ShaclValidationTest {
     @TempDir
     Path tempDir;
 
-    private Path originalOutputPath;
+    private Path originalOutputDir;
     private Path originalShaclDir;
     private boolean originalThrowOnShaclUnconform;
 
     @BeforeEach
     void setUp() {
-        originalOutputPath = Config.OUTPUT_PATH;
+        originalOutputDir = Config.OUTPUT_DIR;
         originalShaclDir = Config.SHACL_DIR;
         originalThrowOnShaclUnconform = Config.THROW_ON_SHACL_UNCONFORM;
 
@@ -35,37 +38,31 @@ class ShaclValidationTest {
 
     @AfterEach
     void tearDown() {
-        Config.OUTPUT_DIR = originalOutputPath;
+        Config.OUTPUT_DIR = originalOutputDir;
         Config.SHACL_DIR = originalShaclDir;
         Config.THROW_ON_SHACL_UNCONFORM = originalThrowOnShaclUnconform;
     }
 
     @Test
-    void validateLoadsAllOutputGraphsIntoOneModel() throws Exception {
-        Files.createDirectories(tempDir.resolve(Config.OUTPUT_DIR));
-        Files.createDirectories(tempDir.resolve(Config.SHACL_DIR));
+    void validateValidatesGraphAgainstShaclShapes() throws Exception {
+        Files.createDirectories(Config.SHACL_DIR);
 
-        Path currentGraph = tempDir
-            .resolve(Config.OUTPUT_DIR)
-            .resolve("graph-xvii.ttl");
-        Path previousGraph = tempDir
-            .resolve(Config.OUTPUT_DIR)
-            .resolve("graph-xvi.ttl");
-
+        Path shapeFile = Config.SHACL_DIR.resolve("test-shape.ttl");
         Files.writeString(
-            currentGraph,
+            shapeFile,
             """
+            @prefix sh: <http://www.w3.org/ns/shacl#> .
             @prefix ex: <http://example.org/> .
-            ex:current a ex:Source ;
-                ex:ref ex:sharedTarget .
+            ex:TestShape a sh:NodeShape ;
+                sh:targetClass ex:Source .
             """
         );
-        Files.writeString(
-            previousGraph,
-            """
-            @prefix ex: <http://example.org/> .
-            ex:previous ex:p ex:o .
-            """
+
+        Model graph = ModelFactory.createDefaultModel();
+        graph.add(
+            graph.createResource("http://example.org/s1"),
+            ResourceFactory.createProperty("http://example.org/type"),
+            graph.createResource("http://example.org/Source")
         );
 
         PrintStream originalOut = System.out;
@@ -74,20 +71,15 @@ class ShaclValidationTest {
             System.setOut(
                 new PrintStream(output, true, StandardCharsets.UTF_8)
             );
-            ShaclValidation.validate();
+            ShaclValidation.validate(graph);
         } finally {
             System.setOut(originalOut);
         }
 
         String logs = output.toString(StandardCharsets.UTF_8);
         assertTrue(
-            logs.contains(
-                "Loading graph for SHACL validation: " + previousGraph
-            )
+            logs.contains("[SHACL Validation] Reading SHACL shapes from: " + shapeFile)
         );
-        assertTrue(
-            logs.contains("Loading graph for SHACL validation: " + currentGraph)
-        );
-        assertTrue(logs.contains("SHACL validation completed for union graph"));
+        assertTrue(logs.contains("[SHACL Validation] SHACL validation completed"));
     }
 }
