@@ -23,7 +23,6 @@ public class Main {
     private static final String DISABLE_EXTRACTION_FLAG = "-de";
     private static final String DISABLE_MAPPING_FLAG = "-dm";
     private static final String DISABLE_SHACL_FAILURE = "-ds";
-    private static final String ENABLE_LOG_FLAG = "-l";
 
     public static void main(String[] args)
         throws IOException, InterruptedException {
@@ -93,10 +92,6 @@ public class Main {
                     MAPPING_ENABLED = false;
                     System.out.println("Mapping disabled.");
                     break;
-                case ENABLE_LOG_FLAG:
-                    LOG_ENABLED = true;
-                    System.out.println("Logging enabled.");
-                    break;
                 default:
                     throw new IllegalArgumentException(
                         "Unknown argument: " +
@@ -108,9 +103,7 @@ public class Main {
                             ", " +
                             DISABLE_SHACL_FAILURE +
                             ", " +
-                            DISABLE_MAPPING_FLAG +
-                            ", " +
-                            ENABLE_LOG_FLAG
+                            DISABLE_MAPPING_FLAG
                     );
             }
         }
