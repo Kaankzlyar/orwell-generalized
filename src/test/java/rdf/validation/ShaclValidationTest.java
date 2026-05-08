@@ -74,7 +74,7 @@ class ShaclValidationTest {
             System.setOut(
                 new PrintStream(output, true, StandardCharsets.UTF_8)
             );
-            new ShaclValidation().validate();
+            ShaclValidation.validate();
         } finally {
             System.setOut(originalOut);
         }
