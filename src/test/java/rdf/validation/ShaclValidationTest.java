@@ -42,11 +42,15 @@ class ShaclValidationTest {
 
     @Test
     void validateLoadsAllOutputGraphsIntoOneModel() throws Exception {
-        Files.createDirectories(Config.OUTPUT_DIR);
-        Files.createDirectories(Config.SHACL_DIR);
+        Files.createDirectories(tempDir.resolve(Config.OUTPUT_DIR));
+        Files.createDirectories(tempDir.resolve(Config.SHACL_DIR));
 
-        Path currentGraph = Config.OUTPUT_DIR.resolve("graph-xvii.ttl");
-        Path previousGraph = Config.OUTPUT_DIR.resolve("graph-xvi.ttl");
+        Path currentGraph = tempDir
+            .resolve(Config.OUTPUT_DIR)
+            .resolve("graph-xvii.ttl");
+        Path previousGraph = tempDir
+            .resolve(Config.OUTPUT_DIR)
+            .resolve("graph-xvi.ttl");
 
         Files.writeString(
             currentGraph,
