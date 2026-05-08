@@ -99,8 +99,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasRole ;
         rr:objectMap [
-            rr:template "http://purl.org/polis/ar/graph#role-{FunId}" ;
-            rr:termType rr:IRI
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:role:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "FunId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -121,8 +134,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasTitle ;
         rr:objectMap [
-            rr:template "http://purl.org/polis/ar/graph#title-{TitId}" ;
-            rr:termType rr:IRI
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:title:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "TitId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -143,8 +169,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:authorOf ;
         rr:objectMap [
-            rr:template "http://purl.org/polis/ar/graph#publishedwork-{PubId}" ;
-            rr:termType rr:IRI
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:publishedwork:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "PubId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -165,8 +204,21 @@
     rr:predicateObjectMap [
         rr:predicate dbo:award ;
         rr:objectMap [
-            rr:template "http://purl.org/polis/ar/graph#award-{CodId}" ;
-            rr:termType rr:IRI
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:award:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "CodId" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -187,8 +239,21 @@
     rr:predicateObjectMap [
         rr:predicate polis-bio:hasHabilitation ;
         rr:objectMap [
-            rr:template "http://purl.org/polis/ar/graph#habilitation-{HabId}" ;
             rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:habilitation:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "HabId" ]
+                ]
+            ]
         ]
     ] ;
     .

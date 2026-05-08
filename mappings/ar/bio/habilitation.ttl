@@ -35,9 +35,22 @@
 
     # URI
     rr:subjectMap [
-        #rr:termType rr:BlankNode ;
-        rr:template "http://purl.org/polis/ar/graph#habilitation-{HabId}" ;
-        rr:class polis-bio:Habilitation
+        rr:class polis-bio:Habilitation ;
+        rr:termType rr:IRI ;
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant pofn:hashIri ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:prefix ;
+                rr:objectMap [ rr:constant "urn:habilitation:" ]
+            ] ;
+            rr:predicateObjectMap [
+                rr:predicate pofn:elements ;
+                rr:objectMap [ rml:reference "HabId" ]
+            ]
+        ]
     ] ;
 
     # Identifier
