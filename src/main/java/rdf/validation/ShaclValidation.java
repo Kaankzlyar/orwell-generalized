@@ -14,7 +14,7 @@ import org.apache.jena.shacl.lib.ShLib;
 
 public class ShaclValidation {
 
-    public void validate() {
+    public static void validate() {
         if (!Files.isDirectory(Config.OUTPUT_DIR)) {
             System.out.println(
                 "Output directory not found: " + Config.OUTPUT_DIR

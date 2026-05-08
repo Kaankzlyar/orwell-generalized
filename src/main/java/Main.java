@@ -1,4 +1,5 @@
 import static config.Config.*;
+import static rdf.validation.ShaclValidation.*;
 
 import extraction.ARExtractor;
 import extraction.DataExtractor;
@@ -13,7 +14,6 @@ import preprocessing.Registry;
 import preprocessing.hooks.*;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
-import rdf.validation.ShaclValidation;
 import reconciliation.WikidataReconciliationService;
 import utils.Benchmark;
 
@@ -31,46 +31,34 @@ public class Main {
 
         Benchmark benchmark = new Benchmark();
 
+        // Extraction
         if (EXTRACTION_ENABLED) {
             benchmark.startTiming("Extraction");
-            List<DataExtractor> extractors = List.of(new ARExtractor());
-
-            for (DataExtractor extractor : extractors) {
-                extractor.extract();
-            }
+            extract();
             benchmark.endTiming();
         }
 
-        benchmark.startTiming("Hooks");
-        Registry.register(
-            new ParliamentarianReconciliation(),
-            new CommissionInformation(),
-            new ExtractVoting()
-        );
-        Registry.run();
+        // Preprocessing
+        benchmark.startTiming("Preprocessing");
+        preprocess();
         benchmark.endTiming();
+
         try {
+            // Mapping
             if (MAPPING_ENABLED) {
                 benchmark.startTiming("MappingPairPlanner");
-                MappingPairPlanner planner = new MappingPairPlanner();
-                Map<String, List<Path>> mappingGroups = planner.createMappingPairs();
+                var mappingGroups = planMapping();
                 benchmark.endTiming();
 
                 benchmark.startTiming("RDFMapper");
-                for (Map.Entry<String, List<Path>> entry : mappingGroups.entrySet()) {
-                    String legislature = entry.getKey();
-                    List<Path> mappingFiles = entry.getValue();
-                    Path outputPath = legislatureOutputPath(legislature);
-                    System.out.println("Generating graph for legislature: " + legislature + " -> " + outputPath);
-                    RDFMapper mapper = new RDFMapper(mappingFiles, outputPath);
-                    mapper.map();
-                }
+                map(mappingGroups);
                 benchmark.endTiming();
             }
 
+            // SHACL Validation
             if (SHACL_ENABLED) {
                 benchmark.startTiming("SHACL Validation");
-                new ShaclValidation().validate();
+                validate();
                 benchmark.endTiming();
             }
         } finally {
@@ -79,19 +67,7 @@ public class Main {
             }
 
             if (DELETE_TMP) {
-                if (Files.exists(TMP_DIR)) {
-                    try (var paths = Files.walk(TMP_DIR)) {
-                        paths
-                            .sorted(Comparator.reverseOrder())
-                            .forEach(path -> {
-                                try {
-                                    Files.delete(path);
-                                } catch (IOException e) {
-                                    throw new UncheckedIOException(e);
-                                }
-                            });
-                    }
-                }
+                deleteTmpDir();
             }
         }
 
@@ -140,13 +116,64 @@ public class Main {
         }
     }
 
-    public static Path legislatureOutputPath(String legislature) {
-        return Path.of(
-            "output",
-            "graph-" +
-                legislature +
-                "." +
-                OUTPUT_FORMAT.getDefaultFileExtension()
+    private static void extract() {
+        List<DataExtractor> extractors = List.of(new ARExtractor());
+
+        for (DataExtractor extractor : extractors) {
+            extractor.extract();
+        }
+    }
+
+    private static void preprocess() {
+        Registry.register(
+            new ParliamentarianReconciliation(),
+            new CommissionInformation(),
+            new ExtractVoting()
         );
+        Registry.run();
+    }
+
+    private static Map<String, List<Path>> planMapping() throws IOException {
+        MappingPairPlanner planner = new MappingPairPlanner();
+        return planner.createMappingPairs();
+    }
+
+    private static void map(Map<String, List<Path>> mappingGroups)
+        throws IOException, InterruptedException {
+        for (Map.Entry<String, List<Path>> entry : mappingGroups.entrySet()) {
+            String legislature = entry.getKey();
+            List<Path> mappingFiles = entry.getValue();
+            Path outputPath = Path.of(
+                OUTPUT_DIR.toString(),
+                "graph-" +
+                    legislature +
+                    "." +
+                    OUTPUT_FORMAT.getDefaultFileExtension()
+            );
+            System.out.println(
+                "Generating graph for legislature: " +
+                    legislature +
+                    " -> " +
+                    outputPath
+            );
+            RDFMapper mapper = new RDFMapper(mappingFiles, outputPath);
+            mapper.map();
+        }
+    }
+
+    private static void deleteTmpDir() throws IOException {
+        if (Files.exists(TMP_DIR)) {
+            try (var paths = Files.walk(TMP_DIR)) {
+                paths
+                    .sorted(Comparator.reverseOrder())
+                    .forEach(path -> {
+                        try {
+                            Files.delete(path);
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                    });
+            }
+        }
     }
 }
