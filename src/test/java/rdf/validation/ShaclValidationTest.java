@@ -1,6 +1,5 @@
 package rdf.validation;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import config.Config;
@@ -9,7 +8,6 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,49 +28,62 @@ class ShaclValidationTest {
         originalShaclDir = Config.SHACL_DIR;
         originalThrowOnShaclUnconform = Config.THROW_ON_SHACL_UNCONFORM;
 
-        Config.OUTPUT_PATH = tempDir.resolve("output").resolve("graph.ttl");
+        Config.OUTPUT_DIR = tempDir.resolve("output");
         Config.SHACL_DIR = tempDir.resolve("shacl");
         Config.THROW_ON_SHACL_UNCONFORM = true;
     }
 
     @AfterEach
     void tearDown() {
-        Config.OUTPUT_PATH = originalOutputPath;
+        Config.OUTPUT_DIR = originalOutputPath;
         Config.SHACL_DIR = originalShaclDir;
         Config.THROW_ON_SHACL_UNCONFORM = originalThrowOnShaclUnconform;
     }
 
     @Test
-    void validateOnlyUsesProvidedGraphPaths() throws Exception {
-        Files.createDirectories(Config.OUTPUT_PATH.getParent());
+    void validateLoadsAllOutputGraphsIntoOneModel() throws Exception {
+        Files.createDirectories(Config.OUTPUT_DIR);
         Files.createDirectories(Config.SHACL_DIR);
 
-        Path currentGraph = Config.OUTPUT_PATH.getParent().resolve("graph-xvii.ttl");
-        Path staleGraph = Config.OUTPUT_PATH.getParent().resolve("graph-xvi.ttl");
-        Files.writeString(
-            Config.SHACL_DIR.resolve("empty.ttl"),
-            "@prefix sh: <http://www.w3.org/ns/shacl#> .\n"
-        );
+        Path currentGraph = Config.OUTPUT_DIR.resolve("graph-xvii.ttl");
+        Path previousGraph = Config.OUTPUT_DIR.resolve("graph-xvi.ttl");
+
         Files.writeString(
             currentGraph,
-            "@prefix ex: <http://example.org/> .\nex:current ex:p ex:o .\n"
+            """
+            @prefix ex: <http://example.org/> .
+            ex:current a ex:Source ;
+                ex:ref ex:sharedTarget .
+            """
         );
         Files.writeString(
-            staleGraph,
-            "@prefix ex: <http://example.org/> .\nex:stale ex:p ex:o .\n"
+            previousGraph,
+            """
+            @prefix ex: <http://example.org/> .
+            ex:previous ex:p ex:o .
+            """
         );
 
         PrintStream originalOut = System.out;
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         try {
-            System.setOut(new PrintStream(output, true, StandardCharsets.UTF_8));
-            new ShaclValidation().validate(List.of(currentGraph));
+            System.setOut(
+                new PrintStream(output, true, StandardCharsets.UTF_8)
+            );
+            new ShaclValidation().validate();
         } finally {
             System.setOut(originalOut);
         }
 
         String logs = output.toString(StandardCharsets.UTF_8);
-        assertTrue(logs.contains("Validating graph: " + currentGraph));
-        assertFalse(logs.contains("Validating graph: " + staleGraph));
+        assertTrue(
+            logs.contains(
+                "Loading graph for SHACL validation: " + previousGraph
+            )
+        );
+        assertTrue(
+            logs.contains("Loading graph for SHACL validation: " + currentGraph)
+        );
+        assertTrue(logs.contains("SHACL validation completed for union graph"));
     }
 }

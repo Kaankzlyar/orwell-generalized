@@ -14,9 +14,11 @@ import org.apache.jena.shacl.lib.ShLib;
 
 public class ShaclValidation {
 
-    public void validate(List<Path> graphPaths) {
-        if (graphPaths.isEmpty()) {
-            System.out.println("No graph files selected for SHACL validation.");
+    public void validate() {
+        if (!Files.isDirectory(Config.OUTPUT_DIR)) {
+            System.out.println(
+                "Output directory not found: " + Config.OUTPUT_DIR
+            );
             return;
         }
         if (!Files.isDirectory(Config.SHACL_DIR)) {
@@ -25,7 +27,6 @@ public class ShaclValidation {
             );
         }
 
-        // Load the SHACL shapes from the SHACL directory
         Model shapes = ModelFactory.createDefaultModel();
         try (var paths = Files.list(Config.SHACL_DIR)) {
             paths.forEach(path -> {
@@ -39,29 +40,42 @@ public class ShaclValidation {
             );
         }
 
-        // Validate each graph against the loaded SHACL shapes
+        List<Path> graphPaths;
+        try (var paths = Files.list(Config.OUTPUT_DIR)) {
+            graphPaths = paths.toList();
+        } catch (IOException e) {
+            throw new RuntimeException(
+                "Failed to list output directory: " + Config.OUTPUT_DIR,
+                e
+            );
+        }
+
+        if (graphPaths.isEmpty()) {
+            System.out.println("No graph files found for SHACL validation.");
+            return;
+        }
+
+        Model data = ModelFactory.createDefaultModel();
         graphPaths.forEach(graphPath -> {
-            System.out.println("Validating graph: " + graphPath);
-
-            Model data = RDFDataMgr.loadModel(graphPath.toString());
-
-            System.out.println("Graph size: " + data.size() + " triples");
-
-            ValidationReport report = ShaclValidator.get().validate(
-                shapes.getGraph(),
-                data.getGraph()
-            );
-
             System.out.println(
-                "SHACL validation completed for: " + graphPath.getFileName()
+                "Loading graph for SHACL validation: " + graphPath
             );
-
-            ShLib.printReport(report);
-            if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
-                throw new IllegalStateException(
-                    "SHACL validation failed for: " + graphPath
-                );
-            }
+            RDFDataMgr.read(data, graphPath.toString());
         });
+
+        System.out.println("Union graph size: " + data.size() + " triples");
+
+        ValidationReport report = ShaclValidator.get().validate(
+            shapes.getGraph(),
+            data.getGraph()
+        );
+
+        System.out.println("SHACL validation completed for union graph");
+        ShLib.printReport(report);
+        if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
+            throw new IllegalStateException(
+                "SHACL validation failed for union graph"
+            );
+        }
     }
 }

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,6 @@ public class Main {
         processArgs(args);
 
         Benchmark benchmark = new Benchmark();
-        List<Path> generatedGraphPaths = new ArrayList<>();
 
         if (EXTRACTION_ENABLED) {
             benchmark.startTiming("Extraction");
@@ -66,14 +64,13 @@ public class Main {
                     System.out.println("Generating graph for legislature: " + legislature + " -> " + outputPath);
                     RDFMapper mapper = new RDFMapper(mappingFiles, outputPath);
                     mapper.map();
-                    generatedGraphPaths.add(outputPath);
                 }
                 benchmark.endTiming();
             }
 
             if (SHACL_ENABLED) {
                 benchmark.startTiming("SHACL Validation");
-                new ShaclValidation().validate(generatedGraphPaths);
+                new ShaclValidation().validate();
                 benchmark.endTiming();
             }
         } finally {
