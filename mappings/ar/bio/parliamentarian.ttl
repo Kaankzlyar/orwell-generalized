@@ -351,7 +351,33 @@
     rr:predicateObjectMap [
         rr:predicate polis-core:hasMembership ;
         rr:objectMap [
-            rr:parentTriplesMap <#ParliamentarianFriendshipParliamentaryGroupMembershipMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:membership:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "GplId" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "CgaDtini" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "CgaDtfim" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "CgaCrg" ]
+                ]
+            ]
         ]
     ] ;
     .

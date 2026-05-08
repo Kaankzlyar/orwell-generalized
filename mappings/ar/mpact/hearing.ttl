@@ -155,7 +155,32 @@
     rr:predicateObjectMap [
         rr:predicate prov:wasAssociatedWith ;
         rr:objectMap [
-            rr:parentTriplesMap <#HearingThirdPartyEntityMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#ThirdPartyEntity_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:normalize ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ rml:reference "NomeEntidadeExterna" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ]
         ]
     ] ;
     .

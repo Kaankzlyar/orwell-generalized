@@ -104,7 +104,33 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:hasPermanentDelegationMeeting ;
         rr:objectMap [
-            rr:parentTriplesMap <#PermanentDelegationMeetingMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:hashIri ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:prefix ;
+                    rr:objectMap [ rr:constant "urn:pdm:" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "RenLoc" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "RenDtIni" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "RenDtFim" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:elements ;
+                    rr:objectMap [ rml:reference "RenTi" ]
+                ]
+            ]
         ]
     ] ;
     .
@@ -161,7 +187,32 @@
     rr:predicateObjectMap [
         rr:predicate sem:hasPlace ;
         rr:objectMap [
-            rr:parentTriplesMap <#PermanentDelegationMeetingPlaceMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Place_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:normalize ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ rml:reference "RenLoc" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ]
         ]
     ] ;
 
@@ -302,7 +353,32 @@
     rr:predicateObjectMap [
         rr:predicate sem:hasPlace ;
         rr:objectMap [
-            rr:parentTriplesMap <#PlaceMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Place_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:normalize ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ rml:reference "DevLoc" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ]
         ]
     ] ;
 

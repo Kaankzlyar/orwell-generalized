@@ -116,7 +116,32 @@
     rr:predicateObjectMap [
         rr:predicate polis-mpact:heldAt ;
         rr:objectMap [
-            rr:parentTriplesMap <#SchoolMap> ;
+            rr:termType rr:IRI ;
+            fnml:functionValue [
+                rr:predicateObjectMap [
+                    rr:predicate fno:executes ;
+                    rr:objectMap [ rr:constant pofn:stringConcat ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:leftPart ;
+                    rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#School_" ]
+                ] ;
+                rr:predicateObjectMap [
+                    rr:predicate pofn:rightPart ;
+                    rr:objectMap [
+                        fnml:functionValue [
+                            rr:predicateObjectMap [
+                                rr:predicate fno:executes ;
+                                rr:objectMap [ rr:constant pofn:normalize ]
+                            ] ;
+                            rr:predicateObjectMap [
+                                rr:predicate pofn:inputString ;
+                                rr:objectMap [ rml:reference "Estabelecimento" ]
+                            ]
+                        ] ;
+                    ]
+                ]
+            ]
         ]
     ] ;
 
