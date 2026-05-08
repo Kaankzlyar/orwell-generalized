@@ -9,7 +9,10 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,16 +27,19 @@ class MappingPairPlannerTest {
     private Path originalDataDir;
     private Path originalMappingsDir;
     private Path originalTmpDir;
+    private Set<String> originalDisabledLegislatures;
 
     @BeforeEach
     void setUp() {
         originalDataDir = Config.DATA_DIR;
         originalMappingsDir = Config.MAPPINGS_DIR;
         originalTmpDir = Config.TMP_DIR;
+        originalDisabledLegislatures = Config.DISABLED_LEGISLATURES;
         
         Config.DATA_DIR = tempDir.resolve("data");
         Config.MAPPINGS_DIR = tempDir.resolve("mappings");
         Config.TMP_DIR = tempDir.resolve("tmp");
+        Config.DISABLED_LEGISLATURES = Collections.emptySet();
         
         try {
             Files.createDirectories(Config.DATA_DIR);
@@ -48,6 +54,7 @@ class MappingPairPlannerTest {
         Config.DATA_DIR = originalDataDir;
         Config.MAPPINGS_DIR = originalMappingsDir;
         Config.TMP_DIR = originalTmpDir;
+        Config.DISABLED_LEGISLATURES = originalDisabledLegislatures;
     }
 
     @Test
@@ -140,10 +147,12 @@ class MappingPairPlannerTest {
         Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
         
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
         
         assertEquals(1, result.size());
-        assertTrue(result.get(0).getFileName().toString().equals("data1.ttl"));
+        assertTrue(result.containsKey("data1"));
+        assertEquals(1, result.get("data1").size());
+        assertEquals("data1.ttl", result.get("data1").get(0).getFileName().toString());
     }
 
     @Test
@@ -176,9 +185,10 @@ class MappingPairPlannerTest {
         Files.writeString(xmlFile, "<root><item><id>1</id></item></root>");
         
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
         
-        String createdContent = Files.readString(result.get(0));
+        Path createdPath = result.get("data1").get(0);
+        String createdContent = Files.readString(createdPath);
         assertTrue(createdContent.contains(xmlFile.toAbsolutePath().normalize().toString().replace("\\", "/")));
         assertFalse(createdContent.contains("rml:source \"test\" ;"));
     }
@@ -212,9 +222,9 @@ class MappingPairPlannerTest {
         Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
         
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
         
-        String createdContent = Files.readString(result.get(0));
+        String createdContent = Files.readString(result.get("data1").get(0));
         assertTrue(createdContent.contains("@base <http://example.org/mappings/" + EXTRACTOR_NAME + "/" + MAPPING_NAME + "/data1/>"));
         assertFalse(createdContent.contains("http://example.org/old/"));
     }
@@ -250,9 +260,12 @@ class MappingPairPlannerTest {
         Files.writeString(dataDir.resolve("c.xml"), "<root><item><id>c</id></item></root>");
         
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
         
         assertEquals(3, result.size());
+        assertTrue(result.containsKey("a"));
+        assertTrue(result.containsKey("b"));
+        assertTrue(result.containsKey("c"));
     }
 
     @Test
@@ -283,10 +296,11 @@ class MappingPairPlannerTest {
         Files.writeString(dataDir.resolve("data1.xml"), "<root><item><id>1</id></item></root>");
 
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
 
         assertEquals(1, result.size());
-        assertTrue(result.get(0).getFileName().toString().equals("data1.ttl"));
+        assertTrue(result.containsKey("data1"));
+        assertEquals("data1.ttl", result.get("data1").get(0).getFileName().toString());
     }
 
     @Test
@@ -328,10 +342,11 @@ class MappingPairPlannerTest {
         Files.writeString(dataDir.resolve("data1.xml"), "<root><items/><extras/></root>");
 
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
 
         assertEquals(1, result.size());
-        String content = Files.readString(result.get(0));
+        assertTrue(result.containsKey("data1"));
+        String content = Files.readString(result.get("data1").get(0));
         assertTrue(content.contains("<#MapOne>"));
         assertTrue(content.contains("<#MapTwo>"));
     }
@@ -380,11 +395,12 @@ class MappingPairPlannerTest {
         Files.writeString(xmlB, "<root><b><id>B</id></b></root>");
 
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
 
         assertEquals(1, result.size());
-        assertEquals("data1.ttl", result.get(0).getFileName().toString());
-        String content = Files.readString(result.get(0));
+        assertTrue(result.containsKey("data1"));
+        assertEquals("data1.ttl", result.get("data1").get(0).getFileName().toString());
+        String content = Files.readString(result.get("data1").get(0));
         assertTrue(content.contains(xmlA.toAbsolutePath().normalize().toString().replace("\\", "/")));
         assertTrue(content.contains(xmlB.toAbsolutePath().normalize().toString().replace("\\", "/")));
         assertFalse(content.contains("rml:source \"sourceA\" ;"));
@@ -446,11 +462,12 @@ class MappingPairPlannerTest {
         Files.writeString(xmlB, "<root><b><id>B</id></b></root>");
 
         MappingPairPlanner planner = new MappingPairPlanner();
-        List<Path> result = planner.createMappingPairs();
+        Map<String, List<Path>> result = planner.createMappingPairs();
 
         assertEquals(1, result.size());
-        assertEquals("data1.ttl", result.get(0).getFileName().toString());
-        String content = Files.readString(result.get(0));
+        assertTrue(result.containsKey("data1"));
+        assertEquals("data1.ttl", result.get("data1").get(0).getFileName().toString());
+        String content = Files.readString(result.get("data1").get(0));
         assertTrue(content.contains(xmlA.toAbsolutePath().normalize().toString().replace("\\", "/")));
         assertTrue(content.contains(xmlB.toAbsolutePath().normalize().toString().replace("\\", "/")));
         assertFalse(content.contains("rml:source \"sourceA\" ;"));

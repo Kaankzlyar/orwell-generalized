@@ -2,6 +2,9 @@ package rdf.validation;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
@@ -10,29 +13,20 @@ import org.apache.jena.shacl.ValidationReport;
 import org.apache.jena.shacl.lib.ShLib;
 
 import config.Config;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-@AllArgsConstructor
-@Getter
-@Setter
 public class ShaclValidation {
 
     public void validate() {
-        if (!Files.isRegularFile(Config.OUTPUT_PATH)) {
-            throw new IllegalStateException("Data graph not found: " + Config.OUTPUT_PATH);
+        Path outputDir = Config.OUTPUT_PATH.getParent();
+        if (!Files.isDirectory(outputDir)) {
+            System.out.println("Output directory not found: " + outputDir);
+            return;
         }
         if (!Files.isDirectory(Config.SHACL_DIR)) {
             throw new IllegalStateException("SHACL directory not found: " + Config.SHACL_DIR);
         }
 
-        Model data = RDFDataMgr.loadModel(Config.OUTPUT_PATH.toString());
-
-        System.out.println("Final graph size: " + data.size() + " triples");
-
         Model shapes = ModelFactory.createDefaultModel();
-
         try (var paths = Files.list(Config.SHACL_DIR)) {
             paths
                 .filter(path -> path.getFileName().toString().toLowerCase().endsWith(Config.OUTPUT_FORMAT.getDefaultFileExtension()))
@@ -45,12 +39,23 @@ public class ShaclValidation {
             throw new RuntimeException("Failed to read SHACL shapes from: " + Config.SHACL_DIR, e);
         }
 
-        ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph());
-        System.out.println("SHACL validation completed.");
-        ShLib.printReport(report);
-
-        if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
-            throw new IllegalStateException("SHACL validation failed");
+        try (Stream<Path> graphFiles = Files.list(outputDir)) {
+            graphFiles
+                .filter(path -> path.getFileName().toString().toLowerCase().endsWith(Config.OUTPUT_FORMAT.getDefaultFileExtension()))
+                .sorted()
+                .forEach(graphPath -> {
+                    System.out.println("Validating graph: " + graphPath);
+                    Model data = RDFDataMgr.loadModel(graphPath.toString());
+                    System.out.println("Graph size: " + data.size() + " triples");
+                    ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph());
+                    System.out.println("SHACL validation completed for: " + graphPath.getFileName());
+                    ShLib.printReport(report);
+                    if (Config.THROW_ON_SHACL_UNCONFORM && !report.conforms()) {
+                        throw new IllegalStateException("SHACL validation failed for: " + graphPath);
+                    }
+                });
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to list graph files from: " + outputDir, e);
         }
     }
 }

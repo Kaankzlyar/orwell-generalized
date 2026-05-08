@@ -9,6 +9,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.Config;
+
 public class ARExtractor extends DataExtractor {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -37,6 +39,12 @@ public class ARExtractor extends DataExtractor {
                 List<SourceNode> children = new ArrayList<>();
                 value.properties().forEach(item -> {
                     String legislature = item.getKey();
+
+                    if (Config.DISABLED_LEGISLATURES.contains(legislature)) {
+                        System.out.println("[ARExtractor] Skipping disabled legislature: " + legislature);
+                        return;
+                    }
+
                     JsonNode urlNode = item.getValue();
 
                     if (!urlNode.isTextual()) {

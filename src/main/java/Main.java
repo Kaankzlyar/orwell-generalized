@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import preprocessing.Registry;
 import preprocessing.hooks.*;
 import rdf.mapping.MappingPairPlanner;
@@ -52,19 +53,24 @@ public class Main {
             if (MAPPING_ENABLED) {
                 benchmark.startTiming("MappingPairPlanner");
                 MappingPairPlanner planner = new MappingPairPlanner();
-                List<Path> mappingFiles = planner.createMappingPairs();
+                Map<String, List<Path>> mappingGroups = planner.createMappingPairs();
                 benchmark.endTiming();
 
                 benchmark.startTiming("RDFMapper");
-                RDFMapper mapper = new RDFMapper(mappingFiles);
-                mapper.map();
+                for (Map.Entry<String, List<Path>> entry : mappingGroups.entrySet()) {
+                    String legislature = entry.getKey();
+                    List<Path> mappingFiles = entry.getValue();
+                    Path outputPath = legislatureOutputPath(legislature);
+                    System.out.println("Generating graph for legislature: " + legislature + " -> " + outputPath);
+                    RDFMapper mapper = new RDFMapper(mappingFiles, outputPath);
+                    mapper.map();
+                }
                 benchmark.endTiming();
             }
 
             if (SHACL_ENABLED) {
                 benchmark.startTiming("SHACL Validation");
-                ShaclValidation validator = new ShaclValidation();
-                validator.validate();
+                new ShaclValidation().validate();
                 benchmark.endTiming();
             }
         } finally {
@@ -132,5 +138,15 @@ public class Main {
                     );
             }
         }
+    }
+
+    public static Path legislatureOutputPath(String legislature) {
+        return Path.of(
+            "output",
+            "graph-" +
+                legislature +
+                "." +
+                OUTPUT_FORMAT.getDefaultFileExtension()
+        );
     }
 }

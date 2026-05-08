@@ -30,16 +30,19 @@ import config.Config;
 public class RDFMapper {
     
     private List<Path> mappingFiles;
+    private Path outputPath;
     private static final String WIKIDATA_PREFIX = "wd";
     private static final String WIKIDATA_NAMESPACE = "http://www.wikidata.org/entity/";
 
     public void map() throws IOException, InterruptedException {
-        if (mappingFiles.isEmpty()) {
+        if (mappingFiles == null || mappingFiles.isEmpty()) {
             throw new IllegalStateException("No mapping files provided to RDFMapper.");
         }
 
-        if (Config.OUTPUT_PATH.getParent() != null) {
-            Files.createDirectories(Config.OUTPUT_PATH.getParent());
+        Path targetPath = outputPath != null ? outputPath : Config.OUTPUT_PATH;
+
+        if (targetPath.getParent() != null) {
+            Files.createDirectories(targetPath.getParent());
         }
 
         String cwd = System.getProperty("user.dir");
@@ -68,14 +71,14 @@ public class RDFMapper {
             outputStore.copyNameSpaces(rmlStore);
             outputStore.addNameSpace(WIKIDATA_PREFIX, WIKIDATA_NAMESPACE);
 
-            try (OutputStream out = Files.newOutputStream(Config.OUTPUT_PATH)) {
+            try (OutputStream out = Files.newOutputStream(targetPath)) {
                 outputStore.write(out, Config.OUTPUT_FORMAT.getName().toLowerCase());
             }
         } catch (Exception e) {
             throw new IOException("RMLMapper execution failed: " + e.getMessage(), e);
         }
 
-        System.out.println("RMLMapper finished successfully.\nOutput graph: " + Config.OUTPUT_PATH);
+        System.out.println("RMLMapper finished successfully.\nOutput graph: " + targetPath);
     }
 
     private Agent createFunctionAgent() throws Exception {

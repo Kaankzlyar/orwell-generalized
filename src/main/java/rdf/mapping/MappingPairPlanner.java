@@ -29,12 +29,12 @@ public class MappingPairPlanner {
     private static final String TTL_EXTENSION = ".ttl";
     private static final Pattern SOURCE_PATTERN = Pattern.compile("rml:source\\s+\"([^\"]+)\"\\s*;");
 
-    public List<Path> createMappingPairs() throws IOException {
+    public Map<String, List<Path>> createMappingPairs() throws IOException {
         validateDirectories();
         Files.createDirectories(Config.TMP_DIR);
         Path tmpMappingsDir = Files.createDirectories(Config.TMP_DIR.resolve(Config.MAPPINGS_DIR));
 
-        List<Path> createdMappings = new ArrayList<>();
+        Map<String, List<Path>> mappingGroups = new LinkedHashMap<>();
         List<Path> extractorDirs = listExtractorDirectories(Config.MAPPINGS_DIR);
         if (extractorDirs.isEmpty()) {
             throw new IllegalStateException("No extractor directories found in: " + Config.MAPPINGS_DIR);
@@ -45,14 +45,17 @@ public class MappingPairPlanner {
             List<Path> mappingFiles = listFilesWithExtension(extractorDir, TTL_EXTENSION);
 
             for (Path mappingFile : mappingFiles) {
-                createdMappings.addAll(createPairsForMapping(mappingFile, tmpMappingsDir, extractorName));
+                for (var entry : createPairsForMapping(mappingFile, tmpMappingsDir, extractorName).entrySet()) {
+                    String legislature = entry.getKey();
+                    mappingGroups.computeIfAbsent(legislature, k -> new ArrayList<>()).addAll(entry.getValue());
+                }
             }
         }
 
-        if (createdMappings.isEmpty()) {
+        if (mappingGroups.isEmpty()) {
             throw new IllegalStateException("No temporary mapping files were created in: " + tmpMappingsDir);
         }
-        return createdMappings;
+        return mappingGroups;
     }
 
     private void validateDirectories() {
@@ -64,15 +67,15 @@ public class MappingPairPlanner {
         }
     }
 
-    private List<Path> createPairsForMapping(Path mappingFile, Path tmpMappingsDir, String extractorName) throws IOException {
-        List<Path> createdMappings = new ArrayList<>();
+    private Map<String, List<Path>> createPairsForMapping(Path mappingFile, Path tmpMappingsDir, String extractorName) throws IOException {
+        Map<String, List<Path>> mappingGroups = new LinkedHashMap<>();
         String mappingName = stripExtension(mappingFile.getFileName().toString());
         String mappingTemplate = Files.readString(mappingFile);
 
         List<String> sourceNames = extractSourceNames(mappingTemplate);
         if (sourceNames.isEmpty()) {
             System.out.println("Skipping mapping " + mappingName + ": no rml:source declarations found");
-            return createdMappings;
+            return mappingGroups;
         }
 
         Map<String, Map<String, Path>> filesBySource = new LinkedHashMap<>();
@@ -80,12 +83,12 @@ public class MappingPairPlanner {
             Path dataDir = Config.DATA_DIR.resolve(extractorName).resolve(sourceName);
             if (!Files.isDirectory(dataDir)) {
                 System.out.println("Skipping mapping " + mappingName + ": data directory not found at " + dataDir);
-                return createdMappings;
+                return mappingGroups;
             }
             List<Path> xmlFiles = listFilesWithExtension(dataDir, XML_EXTENSION);
             if (xmlFiles.isEmpty()) {
                 System.out.println("Skipping mapping " + mappingName + ": no XML files in " + dataDir);
-                return createdMappings;
+                return mappingGroups;
             }
             Map<String, Path> filesByName = new LinkedHashMap<>();
             for (Path file : xmlFiles) {
@@ -101,23 +104,28 @@ public class MappingPairPlanner {
 
         if (commonNames.isEmpty()) {
             System.out.println("Skipping mapping " + mappingName + ": no common XML filenames across source directories");
-            return createdMappings;
+            return mappingGroups;
         }
 
         Path tempMappingSubDir = tmpMappingsDir.resolve(extractorName).resolve(mappingName);
         Files.createDirectories(tempMappingSubDir);
 
         for (String baseName : commonNames) {
+            if (Config.DISABLED_LEGISLATURES.contains(baseName)) {
+                System.out.println("Skipping disabled legislature: " + baseName);
+                continue;
+            }
+
             Map<String, String> replacements = new LinkedHashMap<>();
             for (String sourceName : sourceNames) {
                 Path xmlPath = filesBySource.get(sourceName).get(baseName);
                 replacements.put(sourceName, xmlPath.toAbsolutePath().normalize().toString().replace("\\", "/"));
             }
             Path createdMapping = createMappingFile(mappingName, mappingTemplate, replacements, tempMappingSubDir, extractorName, baseName);
-            createdMappings.add(createdMapping);
+            mappingGroups.computeIfAbsent(baseName, k -> new ArrayList<>()).add(createdMapping);
             System.out.println("Created mapping file: " + createdMapping);
         }
-        return createdMappings;
+        return mappingGroups;
     }
 
     private Path createMappingFile(
@@ -159,7 +167,7 @@ public class MappingPairPlanner {
 
     private List<Path> listFilesWithExtension(Path dir, String extension) throws IOException {
         List<Path> files = new ArrayList<>();
-        try (Stream<Path> stream = Files.list(dir)) {
+        try (Stream<Path> stream = Files.walk(dir)) {
             stream
                 .filter(Files::isRegularFile)
                 .filter(path -> path.getFileName().toString().toLowerCase().endsWith(extension))
