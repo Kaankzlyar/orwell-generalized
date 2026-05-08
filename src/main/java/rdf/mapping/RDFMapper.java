@@ -136,12 +136,7 @@ public class RDFMapper {
         }
 
         try (Stream<Path> stream = Files.list(Config.FUNCTIONS_DIR)) {
-            stream
-                .filter(Files::isRegularFile)
-                .filter(path ->
-                    path.getFileName().toString().toLowerCase().endsWith(".ttl")
-                )
-                .forEach(list::add);
+            stream.forEach(list::add);
         } catch (IOException e) {
             throw new RuntimeException(
                 "Failed to read function files from " + Config.FUNCTIONS_DIR,
