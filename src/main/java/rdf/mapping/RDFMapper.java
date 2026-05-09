@@ -36,7 +36,7 @@ public class RDFMapper {
     public void map() throws IOException, InterruptedException {
         if (mappingFiles == null || mappingFiles.isEmpty()) {
             throw new IllegalStateException(
-                "No mapping files provided to RDFMapper."
+                "[RDFMapper] No mapping files provided to RDFMapper."
             );
         }
 
@@ -95,13 +95,14 @@ public class RDFMapper {
             }
         } catch (Exception e) {
             throw new IOException(
-                "RMLMapper execution failed: " + e.getMessage(),
+                "[RDFMapper] RMLMapper execution failed: " + e.getMessage(),
                 e
             );
         }
 
         System.out.println(
-            "RMLMapper finished successfully.\nOutput graph: " + targetPath
+            "[RDFMapper] RMLMapper finished successfully.\nOutput graph: " +
+                targetPath
         );
     }
 
@@ -139,7 +140,8 @@ public class RDFMapper {
             stream.forEach(list::add);
         } catch (IOException e) {
             throw new RuntimeException(
-                "Failed to read function files from " + Config.FUNCTIONS_DIR,
+                "[RDFMapper] Failed to read function files from " +
+                    Config.FUNCTIONS_DIR,
                 e
             );
         }

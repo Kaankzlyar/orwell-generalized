@@ -114,7 +114,7 @@ public class Main {
                     OUTPUT_FORMAT.getDefaultFileExtension()
             );
             System.out.println(
-                "Generating graph for legislature: " +
+                "[RDFMapper] Generating graph for legislature: " +
                     legislature +
                     " -> " +
                     outputPath

@@ -16,7 +16,7 @@ public enum Flag {
         "Disable the data extraction phase"
     ),
     DISABLE_MAPPING("dm", "disable-mapping", "Disable the RDF mapping phase"),
-    DISABLE_SHACL("ds", "disable-shacl", "Disable SHACL validation entirely"),
+    DISABLE_SHACL("ds", "disable-shacl", "Disable SHACL validation"),
     DISABLE_SHACL_FAILURE(
         "df",
         "disable-shacl-failure",
