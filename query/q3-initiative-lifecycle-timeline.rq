@@ -1,0 +1,33 @@
+# Q3: Initiative Lifecycle Timeline
+#
+# Advantage: Path traversal over ordered event chains
+#
+# Follows a single initiative through all its lifecycle events:
+# submission, committee review, plenary debate, vote, and publication.
+# Shows the sequential pathway from proposal to outcome in a way
+# that a relational model would require recursive queries or
+# multiple self-joins across event tables.
+#
+# Path: Initiative → hasEvent → Event → eventType + date
+#                               → hasVote → Vote → result
+#
+# Replace the FILTER with any initiative URI of interest.
+#
+PREFIX polis-ini: <http://purl.org/polis/ar/initiatives#>
+PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT ?eventDate ?eventType ?eventCode ?voteResult
+WHERE {
+  ?initiative polis-ini:hasEvent ?event .
+  ?event dct:date ?eventDate ;
+         polis-ini:eventType ?eventType ;
+         dbo:code ?eventCode .
+  OPTIONAL {
+    ?event polis-ini:hasVote ?vote .
+    ?vote polis-ini:result ?voteResult .
+  }
+  FILTER (?initiative = polis-graph:Initiative_315031)
+}
+ORDER BY ?eventDate

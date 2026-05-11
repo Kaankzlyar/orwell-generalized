@@ -1,0 +1,30 @@
+# Q2: MP Commission Activity Profile
+#
+# Advantage: Cross-domain querying (heterogeneous data types)
+#
+# Ranks MPs by how many commission activities (hearings, auditions,
+# visits, events) they participated in, broken down by commission.
+# Combines data from the core, mp-activity, and person ontologies in
+# a single query — something that requires multiple UNION queries in SQL.
+#
+# Path: MP → didCommissionActivity → Activity
+#         → relatedCommission → Commission
+#
+PREFIX m4s: <http://purl.org/map4scrutiny-core#>
+PREFIX polis-core: <http://purl.org/polis/ar/core#>
+PREFIX polis-mpact: <http://purl.org/polis/ar/mp-activity#>
+PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+
+SELECT ?mpName ?commissionAcronym ?commissionName (COUNT(?activity) AS ?activityCount)
+WHERE {
+  ?mp a m4s:Parliamentarian ; foaf:name ?mpName .
+  ?mp polis-core:didCommissionActivity ?activity .
+
+  ?activity polis-mpact:relatedCommission ?commission .
+  ?commission foaf:name ?commissionName ; qudt:acronym ?commissionAcronym .
+}
+GROUP BY ?mpName ?commissionAcronym ?commissionName
+ORDER BY DESC(?activityCount)
+LIMIT 30

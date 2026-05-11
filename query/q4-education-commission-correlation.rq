@@ -1,0 +1,34 @@
+# Q4: Education–Commission Correlation
+#
+# Advantage: Multi-ontology join across three ontology modules
+#
+# Cross-references MPs' educational background (biographic ontology)
+# with their commission assignments (core + mp-activity ontologies).
+# Reveals patterns like whether law graduates cluster on constitutional
+# affairs or whether engineers dominate infrastructure commissions.
+# Schema-flexible graph joins make this straightforward — the ontology
+# does not need a pre-defined "education" column on the commission table.
+#
+# Path: MP → hasHabilitation → Habilitation → isHabilitationLevel → Level
+#       MP → didCommissionActivity → Activity → relatedCommission → Commission
+#
+PREFIX m4s: <http://purl.org/map4scrutiny-core#>
+PREFIX polis-bio: <http://purl.org/polis/ar/biographic#>
+PREFIX polis-core: <http://purl.org/polis/ar/core#>
+PREFIX polis-mpact: <http://purl.org/polis/ar/mp-activity#>
+PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?commissionName ?commissionAcronym ?habilitationLevel (COUNT(DISTINCT ?mp) AS ?mpCount)
+WHERE {
+  ?mp a m4s:Parliamentarian ;
+      polis-core:didCommissionActivity [ polis-mpact:relatedCommission ?commission ] ;
+      polis-bio:hasHabilitation [ polis-bio:isHabilitationLevel ?habLevel ] .
+  ?commission foaf:name ?commissionName ; qudt:acronym ?commissionAcronym .
+  ?habLevel rdfs:label ?habilitationLevel .
+  FILTER (LANG(?habilitationLevel) = "en" || LANG(?habilitationLevel) = "")
+}
+GROUP BY ?commissionName ?commissionAcronym ?habilitationLevel
+ORDER BY ?commissionAcronym ?habilitationLevel

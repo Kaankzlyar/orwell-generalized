@@ -1,0 +1,38 @@
+# Q5: Linked Data Enrichment via Wikidata
+#
+# Advantage: Linked Data federation across the open Web
+#
+# The POLIS graph already contains owl:sameAs links from constituencies
+# to Wikidata entities (e.g., owl:sameAs wd:Q59193855). This query:
+# 1. Reads constituency names and their Wikidata identifiers from the graph
+# 2. Uses SERVICE to federate to Wikidata's SPARQL endpoint
+# 3. Enriches constituencies with population, area, and administrative info
+#
+# This is the core promise of Linked Data: your local graph contains
+# just the key identifiers, and you discover more through links to
+# the global Web of Data.
+#
+PREFIX polis-core: <http://purl.org/polis/ar/core#>
+PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
+PREFIX pe: <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+
+SELECT ?constituencyName ?population ?area ?adminEntity
+WHERE {
+  ?constituency a pe:ConstituencyArea ;
+                foaf:name ?constituencyName ;
+                owl:sameAs ?wikidataId .
+  FILTER (STRSTARTS(STR(?wikidataId), "http://www.wikidata.org/entity/"))
+
+  SERVICE <https://query.wikidata.org/sparql> {
+    BIND (IRI(?wikidataId) AS ?wdEntity)
+    OPTIONAL { ?wdEntity wdt:P1082 ?population . }
+    OPTIONAL { ?wdEntity wdt:P2046 ?area . }
+    OPTIONAL { ?wdEntity wdt:P131 ?adminEntity . }
+  }
+}
+ORDER BY ?constituencyName

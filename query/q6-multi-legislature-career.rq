@@ -1,0 +1,44 @@
+# Q6: Multi-Legislature Career Tracking
+#
+# Advantage: Temporal graph traversal across multiple named graphs
+#
+# Traces a single MP's career across multiple legislatures (XIV, XV, XVI,
+# XVII), showing their party, constituency, and status in each term.
+# In a relational model this requires the MP's key to be consistent across
+# databases or tables; in the graph, the same URI (foaf:Person) is linked
+# to all legislatures via belongsToLegislature. Loading all graph files
+# into one dataset enables cross-legislature queries.
+#
+# Run this with all graph-*.ttl files loaded into the same dataset.
+# Example with Apache Jena: tdbloader --loc=tdb output/graph-*.ttl
+#
+# Path per legislature:
+#   MP → rif_mandatoCamera → Mandate → hasMembership → Membership → isMemberOf → Party
+#                                      → inConstituency → Constituency
+#                                      → tipoProclamazione → Situation
+#
+PREFIX m4s: <http://purl.org/map4scrutiny-core#>
+PREFIX polis-core: <http://purl.org/polis/ar/core#>
+PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
+PREFIX ocd: <http://dati.camera.it/ocd/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT ?legislature ?parliamentaryName ?partyAcronym ?constituency ?situation ?situationDate
+WHERE {
+  ?mp a m4s:Parliamentarian ; foaf:name "Pedro Filipe dos Santos Alves" ;
+      polis-core:belongsToLegislature ?legislature ;
+      ocd:rif_mandatoCamera ?mandate .
+  ?mandate polis-core:parliamentaryName ?parliamentaryName ;
+           polis-core:hasMembership [ polis-core:isMemberOf ?party ] ;
+           polis-core:inConstituency [ foaf:name ?constituency ] .
+  ?party qudt:acronym ?partyAcronym .
+  OPTIONAL {
+    ?mandate ocd:tipoProclamazione ?situationNode .
+    ?situationNode rdfs:label ?situation ;
+                   dct:date ?situationDate .
+  }
+}
+ORDER BY ?legislature
