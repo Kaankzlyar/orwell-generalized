@@ -10,6 +10,7 @@ public final class Options {
     private static boolean printShaclReport = true;
     private static boolean logEnabled = false;
     private static boolean keepTmp = false;
+    private static boolean queriesEnabled = false;
 
     private Options() {}
 
@@ -45,6 +46,10 @@ public final class Options {
         return keepTmp;
     }
 
+    public static boolean queriesEnabled() {
+        return queriesEnabled;
+    }
+
     public static void parse(String[] args) {
         reset();
 
@@ -69,6 +74,7 @@ public final class Options {
                 case DISABLE_SHACL_REPORT -> printShaclReport = false;
                 case ENABLE_LOG -> logEnabled = true;
                 case KEEP_TMP -> keepTmp = true;
+                case ENABLE_QUERIES -> queriesEnabled = true;
                 case HELP -> {
                 }
             }
@@ -91,5 +97,6 @@ public final class Options {
         printShaclReport = true;
         logEnabled = false;
         keepTmp = false;
+        queriesEnabled = false;
     }
 }

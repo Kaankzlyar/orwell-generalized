@@ -16,6 +16,7 @@ public final class Config {
     public static Path GENERATED_MAPPINGS_BASE_DIR = Path.of("tmp", "mappings");
     public static Path SHACL_DIR = Path.of("shacl");
     public static Path OUTPUT_DIR = Path.of("output");
+    public static Path QUERY_DIR = Path.of("query");
 
     public static Path OUTPUT_PATH = Path.of(
         OUTPUT_DIR.toString(),

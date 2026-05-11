@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
+import query.QueryRunner;
 import preprocessing.hooks.*;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
@@ -62,6 +63,13 @@ public class Main {
                 // SHACL validation
                 benchmark.startTiming("SHACL Validation");
                 validate(finalGraph);
+                benchmark.endTiming();
+            }
+
+            if (Options.queriesEnabled() && finalGraph != null) {
+                benchmark.startTiming("SPARQL Queries");
+                QueryRunner.execute(finalGraph, Path.of(QUERY_DIR.toString(), "q1-cross-party-coauthorship.rq"));
+                //QueryRunner.executeAll(finalGraph, QUERY_DIR);
                 benchmark.endTiming();
             }
         } finally {
