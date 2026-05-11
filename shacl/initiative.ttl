@@ -523,7 +523,7 @@ polis-ini:EventShape a sh:NodeShape ;
         sh:message "An event's discussion must be of the class ocd:discussione"@en
     ] ;
 
-    # TODO: Uncomment quando lookup table guardar mapa de "className:id -> legislatura", para apontar para o URI correto (cada legislatura vai ter um URI)
+    # TODO: Uncomment quando gerar os grafos das iniciativas de legislaturas antigas
     # sh:property [
     #     sh:path polis-ini:happensJointlyWithInitiative ;
     #     sh:class polis-ini:Initiative ;
