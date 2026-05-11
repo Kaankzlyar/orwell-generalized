@@ -61,34 +61,34 @@
 		rr:predicate polis-core:identifier ;
 		rr:objectMap [
 		    rml:reference "id" ;
-		    rml:datatype xsd:string
+		    rr:datatype xsd:string
 		]
 	] ;
 
 	# Result
 	rr:predicateObjectMap [
-		rr:predicate polis-core:result ;
+		rr:predicate polis-ini:result ;
 		rr:objectMap [
 		    rml:reference "resultado" ;
-		    rml:datatype xsd:string
+		    rr:datatype xsd:string
 		]
 	] ;
 
 	# Reunion Number
 	rr:predicateObjectMap [
-		rr:predicate polis-core:reunionNumber ;
+		rr:predicate polis-ini:reunionNumber ;
 		rr:objectMap [
 		    rml:reference "reuniao" ;
-		    rml:datatype xsd:integer
+		    rr:datatype xsd:int
 		]
 	] ;
 
 	# Reunion Type
 	rr:predicateObjectMap [
-		rr:predicate polis-core:reunionType ;
+		rr:predicate polis-ini:reunionType ;
 		rr:objectMap [
 		    rml:reference "tipoReuniao" ;
-		    rml:datatype xsd:string
+		    rr:datatype xsd:string
 		]
 	] ;
 
@@ -97,7 +97,7 @@
 		rr:predicate dct:date ;
 		rr:objectMap [
 		    rml:reference "data" ;
-		    rml:datatype xsd:date
+		    rr:datatype xsd:date
 		]
 	] ;
 
@@ -106,7 +106,7 @@
 		rr:predicate dct:description ;
 		rr:objectMap [
 		    rml:reference "descricao" ;
-		    rml:datatype xsd:string
+		    rr:datatype xsd:string
 		]
 	] ;
 
