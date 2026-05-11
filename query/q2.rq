@@ -23,6 +23,7 @@ WHERE {
   ?mp polis-core:didCommissionActivity ?activity .
 
   ?activity polis-mpact:relatedCommission ?commission .
+  # NEED TO UPDATE ACRONYM
   ?commission foaf:name ?commissionName ; qudt:acronym ?commissionAcronym .
 }
 GROUP BY ?mpName ?commissionAcronym ?commissionName

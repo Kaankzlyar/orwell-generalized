@@ -21,6 +21,7 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
+# TODO: Devo precisar de dar load à ontologia para o modelo, porque assim no grafo não existe o nó "polis-bio:Bachelor" p.e
 SELECT ?commissionName ?commissionAcronym ?habilitationLevel (COUNT(DISTINCT ?mp) AS ?mpCount)
 WHERE {
   ?mp a m4s:Parliamentarian ;

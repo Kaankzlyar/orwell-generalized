@@ -35,4 +35,4 @@ WHERE {
 }
 GROUP BY ?mp1Name ?mp2Name ?party1Acronym ?party2Acronym
 ORDER BY DESC(?coauthoredInitiatives)
-LIMIT 20
+LIMIT 30
