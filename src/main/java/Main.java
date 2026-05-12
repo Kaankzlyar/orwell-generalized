@@ -11,10 +11,11 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import org.apache.jena.http.sys.RegistryRequestModifier;
 import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
-import query.QueryRunner;
 import preprocessing.hooks.*;
+import query.QueryRunner;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
@@ -67,8 +68,14 @@ public class Main {
             }
 
             if (Options.queriesEnabled() && finalGraph != null) {
+                // Configure HTTP for SPARQL SERVICE calls (User-Agent required by Wikidata)
+                configureServiceHttp();
+
                 benchmark.startTiming("SPARQL Queries");
-                QueryRunner.execute(finalGraph, Path.of(QUERY_DIR.toString(), "q1-cross-party-coauthorship.rq"));
+                QueryRunner.execute(
+                    finalGraph,
+                    Path.of(QUERY_DIR.toString(), "q5.rq")
+                );
                 //QueryRunner.executeAll(finalGraph, QUERY_DIR);
                 benchmark.endTiming();
             }
@@ -85,6 +92,17 @@ public class Main {
         }
 
         benchmark.printTimingSummary();
+    }
+
+    private static void configureServiceHttp() {
+        RegistryRequestModifier.get().addPrefix(
+            "https://query.wikidata.org/",
+            (params, headers) ->
+                headers.put(
+                    "User-Agent",
+                    "Orwell/1.0 (https://github.com/politrackpt/orwell)"
+                )
+        );
     }
 
     private static void extract() {

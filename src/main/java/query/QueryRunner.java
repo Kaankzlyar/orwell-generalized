@@ -20,16 +20,22 @@ public class QueryRunner {
         }
     }
 
-    public static void executeAll(Model model, Path queryDir) throws IOException {
+    public static void executeAll(Model model, Path queryDir)
+        throws IOException {
         try (var files = Files.list(queryDir)) {
-            files.filter(p -> p.toString().endsWith(".rq")).sorted().forEach(p -> {
-                try {
-                    System.out.println("\n=== Query: " + p.getFileName() + " ===");
-                    execute(model, p);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            files
+                .filter(p -> p.toString().endsWith(".rq"))
+                .sorted()
+                .forEach(p -> {
+                    try {
+                        System.out.println(
+                            "\n=== Query: " + p.getFileName() + " ==="
+                        );
+                        execute(model, p);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
         }
     }
 }
