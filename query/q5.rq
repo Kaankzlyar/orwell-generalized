@@ -12,8 +12,8 @@
 # WHY IT MATTERS:
 #   Although Portugal uses the D'Hondt method to allocate seats
 #   proportionally to electorate size, the allocation is not perfectly
-#   linear. Smaller constituencies (e.g. Portalegre, 2 seats) end up
-#   with far fewer voters per seat than larger ones (e.g. Porto, 40 seats),
+#   linear. Smaller constituencies (e.g. Viana do Castelo, 6 seats) end up
+#   with far fewer voters per seat than larger ones (e.g. Braga, 19 seats),
 #   meaning a vote in a small constituency is worth significantly more
 #   than a vote in a large one.
 #
@@ -41,7 +41,6 @@ PREFIX wikibase: <http://wikiba.se/ontology#>
 SELECT ?constituencyName
   (STR(?electorate) AS ?electorateStr)
   (STR(?seats) AS ?seatsStr)
-  (STR(?population) AS ?populationStr)
   (ROUND(?electorate / ?seats) AS ?electoratePerSeat)
 WHERE {
   ?constituency a pe:ConstituencyArea ;
@@ -51,10 +50,6 @@ WHERE {
   SERVICE <https://query.wikidata.org/sparql> {
         OPTIONAL { ?wd wdt:P1831 ?electorate } .
         OPTIONAL { ?wd wdt:P1410 ?seats } .
-        OPTIONAL {
-          ?wd wdt:P131 ?region .
-          ?region wdt:P1082 ?population .
-        } .
   }
 }
 ORDER BY DESC(?electoratePerSeat)
