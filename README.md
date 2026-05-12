@@ -45,7 +45,9 @@ All flags accept both short (`-dr`) and long (`--disable-reconciliation`) forms.
 | `-df` | `--disable-shacl-failure` | Don't throw on SHACL violation |
 | `-r` | `--disable-shacl-report` | Suppress SHACL validation report |
 | `-l` | `--enable-log` | Log reconciliation requests to `log.txt` |
-| `-t` | `--delete-tmp` | Delete temporary files after processing |
+| `-t` | `--keep-tmp` | Keep temporary files after processing |
+| `-q` | `--enable-queries` | Run SPARQL queries on the final graph |
+| `-f` | `--enable-fuseki` | Push final graph to a Fuseki server |
 | `-h` | `--help` | Show usage and exit |
 
 Example:
@@ -54,6 +56,8 @@ Example:
 ./gradlew run --args="-dr"                        # disable reconciliation
 ./gradlew run --args="-de --disable-mapping"       # extraction + mapping off
 ./gradlew run --args="--help"                      # print usage
+./gradlew run --args="-f"                          # push to Fuseki after pipeline
+FUSEKI_URL=http://host:3030/ds ./gradlew run --args="-f"   # custom Fuseki target
 ```
 
 ## Configuration
@@ -78,6 +82,20 @@ legislatures:
 
 Set `enabled: false` to skip a legislature without removing its data.
 
+### Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `FUSEKI_URL` | `http://localhost:3030/ds` | Fuseki dataset endpoint for `--enable-fuseki` |
+| `FUSEKI_PORT` | `3030` | Fuseki server port for `--enable-fuseki` |
+
+Set them inline or via a `.env` file:
+
+```sh
+export ORWELL_FUSEKI_URL=http://server:3030/mydataset
+./gradlew run --args="--enable-fuseki"
+```
+
 ### Data sources (`sources/`)
 
 Each JSON file defines source URLs per legislature:
@@ -98,6 +116,7 @@ Each JSON file defines source URLs per legislature:
 3. **Mapping** — RMLMapper processes Turtle mapping files from `mappings/` against extracted data. Supports FnO/FnML functions in `functions/` and Wikidata reconciliation.
 4. **Graph assembly** — Loads per-legislature graphs into a unified model.
 5. **SHACL validation** — Validates the final graph against shapes in `shacl/`.
+6. **Fuseki push** *(optional)* — Loads the model into a running Apache Jena Fuseki server (`--enable-fuseki`).
 
 ## Data Extraction
 
@@ -132,3 +151,36 @@ rr:objectMap [
 - **Cache:** `reconciliation-cache.properties` (persisted across runs)
 - **Log:** `log.txt` (when `-l` is enabled)
 - **Temp files:** `tmp/` (cleaned up on success)
+
+## Fuseki
+
+The `--enable-fuseki` flag pushes the final graph into an Apache Jena Fuseki server for interactive SPARQL querying.
+
+### Setup
+
+Download and start Fuseki:
+
+```sh
+wget https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-6.1.0.tar.gz
+tar xzf apache-jena-fuseki-6.1.0.tar.gz
+cd apache-jena-fuseki-6.1.0
+./fuseki-server --mem /ds
+```
+
+Then in another terminal:
+
+```sh
+cd /path/to/orwell
+./gradlew run --args="--enable-fuseki"
+```
+
+### Server deployment
+
+Set `ORWELL_FUSEKI_URL` to point to a remote Fuseki instance:
+
+```sh
+export ORWELL_FUSEKI_URL=http://your-server:3030/mydataset
+./gradlew run --args="--enable-fuseki"
+```
+
+The web UI is available at `http://your-server:3030` and the SPARQL endpoint at `http://your-server:3030/mydataset/sparql`.
