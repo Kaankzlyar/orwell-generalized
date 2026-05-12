@@ -38,9 +38,10 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 
-SELECT ?constituencyName 
+SELECT ?constituencyName
   (STR(?electorate) AS ?electorateStr)
   (STR(?seats) AS ?seatsStr)
+  (STR(?population) AS ?populationStr)
   (ROUND(?electorate / ?seats) AS ?electoratePerSeat)
 WHERE {
   ?constituency a pe:ConstituencyArea ;
@@ -50,6 +51,10 @@ WHERE {
   SERVICE <https://query.wikidata.org/sparql> {
         OPTIONAL { ?wd wdt:P1831 ?electorate } .
         OPTIONAL { ?wd wdt:P1410 ?seats } .
+        OPTIONAL {
+          ?wd wdt:P131 ?region .
+          ?region wdt:P1082 ?population .
+        } .
   }
 }
 ORDER BY DESC(?electoratePerSeat)

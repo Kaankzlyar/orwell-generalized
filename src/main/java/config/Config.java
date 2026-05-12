@@ -25,6 +25,19 @@ public final class Config {
     public static Path CACHE_PATH = Path.of("reconciliation-cache.properties");
     public static Path LOG_PATH = Path.of("log.txt");
 
+    public static String FUSEKI_URL = envOrDefault(
+        "ORWELL_FUSEKI_URL",
+        String.format(
+            "http://localhost:%s/ds",
+            envOrDefault("ORWELL_FUSEKI_PORT", "3030")
+        )
+    );
+
+    private static String envOrDefault(String key, String fallback) {
+        String val = System.getenv(key);
+        return val != null && !val.isBlank() ? val : fallback;
+    }
+
     public static Set<String> DISABLED_LEGISLATURES =
         ConfigParser.parseDisabledLegislatures();
 }

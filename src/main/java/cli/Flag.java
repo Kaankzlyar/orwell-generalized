@@ -29,7 +29,12 @@ public enum Flag {
     ),
     ENABLE_LOG("l", "enable-log", "Enable reconciliation request logging"),
     KEEP_TMP("t", "keep-tmp", "Keep temporary files after processing"),
-    ENABLE_QUERIES("q", "enable-queries", "Run SPARQL queries on the final graph"),
+    ENABLE_QUERIES(
+        "q",
+        "enable-queries",
+        "Run SPARQL queries on the final graph"
+    ),
+    ENABLE_FUSEKI("f", "enable-fuseki", "Push final graph to Fuseki"),
     HELP("h", "help", "Show this help message and exit");
 
     private static final Map<String, Flag> BY_LONG = new HashMap<>();

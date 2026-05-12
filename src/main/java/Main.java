@@ -1,5 +1,8 @@
-import static config.Config.*;
-import static rdf.validation.ShaclValidation.*;
+import static config.Config.OUTPUT_DIR;
+import static config.Config.OUTPUT_FORMAT;
+import static config.Config.QUERY_DIR;
+import static config.Config.TMP_DIR;
+import static rdf.validation.ShaclValidation.validate;
 
 import cli.Options;
 import extraction.ARExtractor;
@@ -14,7 +17,9 @@ import java.util.Map;
 import org.apache.jena.http.sys.RegistryRequestModifier;
 import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
-import preprocessing.hooks.*;
+import preprocessing.hooks.CommissionInformation;
+import preprocessing.hooks.ExtractVoting;
+import preprocessing.hooks.ParliamentarianReconciliation;
 import query.QueryRunner;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
@@ -78,6 +83,10 @@ public class Main {
                 );
                 //QueryRunner.executeAll(finalGraph, QUERY_DIR);
                 benchmark.endTiming();
+            }
+
+            if (Options.fusekiEnabled() && finalGraph != null) {
+                GraphLoader.pushToFuseki(finalGraph);
             }
         } finally {
             // Persist reconciliation cache

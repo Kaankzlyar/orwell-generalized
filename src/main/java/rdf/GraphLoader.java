@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.List;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.riot.RDFDataMgr;
 
 public class GraphLoader {
@@ -48,5 +49,25 @@ public class GraphLoader {
         );
 
         return finalGraph;
+    }
+
+    public static void pushToFuseki(Model model) {
+        String url = Config.FUSEKI_URL;
+        System.out.println("\n[Fuseki] Pushing model to " + url + " ...");
+        try (RDFConnection conn = RDFConnection.connect(url)) {
+            conn.load(model);
+            System.out.println(
+                "[Fuseki] Done. SPARQL endpoint: " + url + "/sparql"
+            );
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            System.err.println(
+                "[Fuseki] ERROR: " +
+                    (msg != null ? msg : e.getClass().getSimpleName())
+            );
+            System.err.println(
+                "[Fuseki] Override the URL with: export ORWELL_FUSEKI_URL=http://your-server:PORT/ds"
+            );
+        }
     }
 }

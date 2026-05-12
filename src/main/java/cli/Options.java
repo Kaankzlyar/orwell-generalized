@@ -11,6 +11,7 @@ public final class Options {
     private static boolean logEnabled = false;
     private static boolean keepTmp = false;
     private static boolean queriesEnabled = false;
+    private static boolean fusekiEnabled = false;
 
     private Options() {}
 
@@ -50,6 +51,10 @@ public final class Options {
         return queriesEnabled;
     }
 
+    public static boolean fusekiEnabled() {
+        return fusekiEnabled;
+    }
+
     public static void parse(String[] args) {
         reset();
 
@@ -75,6 +80,7 @@ public final class Options {
                 case ENABLE_LOG -> logEnabled = true;
                 case KEEP_TMP -> keepTmp = true;
                 case ENABLE_QUERIES -> queriesEnabled = true;
+                case ENABLE_FUSEKI -> fusekiEnabled = true;
                 case HELP -> {
                 }
             }
@@ -98,5 +104,6 @@ public final class Options {
         logEnabled = false;
         keepTmp = false;
         queriesEnabled = false;
+        fusekiEnabled = false;
     }
 }

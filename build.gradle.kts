@@ -16,6 +16,7 @@ dependencies {
     implementation("be.ugent.idlab.knows:function-agent-java:1.3.0")
     implementation("org.eclipse.rdf4j:rdf4j-rio-api:5.1.0")
     implementation("org.apache.jena:jena-shacl:5.2.0")
+    implementation("org.apache.jena:jena-rdfconnection:5.2.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
     implementation("org.apache.pdfbox:pdfbox:3.0.4")
     implementation("org.yaml:snakeyaml:2.2")
