@@ -4,13 +4,6 @@
 #
 # Traces a single MP's career across multiple legislatures (XIV, XV, XVI,
 # XVII), showing their party, constituency, and status in each term.
-# In a relational model this requires the MP's key to be consistent across
-# databases or tables; in the graph, the same URI (foaf:Person) is linked
-# to all legislatures via belongsToLegislature. Loading all graph files
-# into one dataset enables cross-legislature queries.
-#
-# Run this with all graph-*.ttl files loaded into the same dataset.
-# Example with Apache Jena: tdbloader --loc=tdb output/graph-*.ttl
 #
 # Path per legislature:
 #   MP → rif_mandatoCamera → Mandate → hasMembership → Membership → isMemberOf → Party

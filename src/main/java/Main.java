@@ -74,7 +74,7 @@ public class Main {
                 benchmark.startTiming("SPARQL Queries");
                 QueryRunner.execute(
                     finalGraph,
-                    Path.of(QUERY_DIR.toString(), "q5.rq")
+                    Path.of(QUERY_DIR.toString(), "q6.rq")
                 );
                 //QueryRunner.executeAll(finalGraph, QUERY_DIR);
                 benchmark.endTiming();

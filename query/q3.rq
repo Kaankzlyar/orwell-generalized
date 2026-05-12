@@ -18,7 +18,7 @@ PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 
-SELECT ?eventDate ?eventType ?eventCode ?voteResult
+SELECT (STR(?eventDate) AS ?eventDateStr) ?eventType ?eventCode ?voteResult
 WHERE {
   ?initiative polis-ini:hasEvent ?event .
   ?event dct:date ?eventDate ;
