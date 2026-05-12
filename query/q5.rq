@@ -1,17 +1,34 @@
-# Q5: Linked Data Enrichment via Wikidata
+# Q5: Electoral Representation Analysis via Wikidata Federation
 #
-# Advantage: Linked Data federation across the open Web
+# This query computes the electorate-per-seat ratio for each Portuguese
+# Assembly of the Republic constituency, using data federated from Wikidata.
 #
-# The POLIS graph already contains owl:sameAs links from constituencies
-# to Wikidata entities (e.g., owl:sameAs wd:Q59193855). This query:
-# 1. Reads constituency names and their Wikidata identifiers from the graph
-# 2. Uses SERVICE to federate to Wikidata's SPARQL endpoint
-# 3. Enriches constituencies with population, area, and administrative info
+# WHAT IT MEASURES:
+#   Electorate / Seats = how many voters share a single MP
 #
-# This is the core promise of Linked Data: your local graph contains
-# just the key identifiers, and you discover more through links to
-# the global Web of Data.
+#   - HIGH ratio → many voters per MP → each vote carries LESS weight
+#   - LOW ratio  → few voters per MP  → each vote carries MORE weight
 #
+# WHY IT MATTERS:
+#   Although Portugal uses the D'Hondt method to allocate seats
+#   proportionally to electorate size, the allocation is not perfectly
+#   linear. Smaller constituencies (e.g. Portalegre, 2 seats) end up
+#   with far fewer voters per seat than larger ones (e.g. Porto, 40 seats),
+#   meaning a vote in a small constituency is worth significantly more
+#   than a vote in a large one.
+#
+#   Ordering DESC reveals the most underrepresented constituencies first —
+#   those where individual voters have the least influence.
+#   This distortion is a well-known critique of the Portuguese electoral
+#   system and a recurring topic in electoral reform debates.
+#
+# LINKED DATA TECHNIQUE:
+#   The POLIS graph stores owl:sameAs links from local constituency
+#   resources to Wikidata entities. The SERVICE clause federates to
+#   Wikidata's SPARQL endpoint to retrieve electorate (P1831) and
+#   seat count (P1410) — data that lives in the open Web of Data
+#   rather than in our local graph.
+
 PREFIX polis-core: <http://purl.org/polis/ar/core#>
 PREFIX polis-graph: <http://purl.org/polis/ar/graph#>
 PREFIX pe: <https://ukparliament.github.io/ontologies/election/election-ontology.ttl#>
@@ -21,18 +38,18 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 
-SELECT ?constituencyName ?population ?area ?adminEntity
+SELECT ?constituencyName 
+  (STR(?electorate) AS ?electorateStr)
+  (STR(?seats) AS ?seatsStr)
+  (ROUND(?electorate / ?seats) AS ?electoratePerSeat)
 WHERE {
   ?constituency a pe:ConstituencyArea ;
                 foaf:name ?constituencyName ;
-                owl:sameAs ?wikidataId .
-  FILTER (STRSTARTS(STR(?wikidataId), "http://www.wikidata.org/entity/"))
+                owl:sameAs ?wd .
 
   SERVICE <https://query.wikidata.org/sparql> {
-    BIND (IRI(?wikidataId) AS ?wdEntity)
-    OPTIONAL { ?wdEntity wdt:P1082 ?population . }
-    OPTIONAL { ?wdEntity wdt:P2046 ?area . }
-    OPTIONAL { ?wdEntity wdt:P131 ?adminEntity . }
+        OPTIONAL { ?wd wdt:P1831 ?electorate } .
+        OPTIONAL { ?wd wdt:P1410 ?seats } .
   }
 }
-ORDER BY ?constituencyName
+ORDER BY DESC(?electoratePerSeat)
