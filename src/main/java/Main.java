@@ -19,7 +19,7 @@ import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
 import preprocessing.hooks.CommissionInformation;
 import preprocessing.hooks.ExtractVoting;
-import preprocessing.hooks.ParliamentarianReconciliation;
+import preprocessing.hooks.ParliamentarianIdentification;
 import query.QueryRunner;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
@@ -124,7 +124,7 @@ public class Main {
 
     private static void preprocess() {
         Registry.register(
-            new ParliamentarianReconciliation(),
+            new ParliamentarianIdentification(),
             new CommissionInformation(),
             new ExtractVoting()
         );

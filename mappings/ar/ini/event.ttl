@@ -562,7 +562,7 @@
          			    ] ;
          			    rr:predicateObjectMap [
          			        rr:predicate pofn:lookupTable ;
-         			        rr:objectMap [ rr:constant "ParliamentarianReconciliation" ]
+         			        rr:objectMap [ rr:constant "ParliamentarianIdentification" ]
          			    ] ;
          			    rr:predicateObjectMap [
          			        rr:predicate pofn:lookupValue ;
