@@ -26,18 +26,18 @@ public final class Config {
     public static Path LOG_PATH = Path.of("log.txt");
 
     public static String FUSEKI_URL = envOrDefault(
-        "ORWELL_FUSEKI_URL",
+        "FUSEKI_URL",
         String.format(
             "http://localhost:%s/ds",
-            envOrDefault("ORWELL_FUSEKI_PORT", "3030")
+            envOrDefault("FUSEKI_PORT", "3030")
         )
     );
+
+    public static Set<String> DISABLED_LEGISLATURES =
+        ConfigParser.parseDisabledLegislatures();
 
     private static String envOrDefault(String key, String fallback) {
         String val = System.getenv(key);
         return val != null && !val.isBlank() ? val : fallback;
     }
-
-    public static Set<String> DISABLED_LEGISLATURES =
-        ConfigParser.parseDisabledLegislatures();
 }
