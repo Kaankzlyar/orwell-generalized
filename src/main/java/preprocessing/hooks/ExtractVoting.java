@@ -101,6 +101,9 @@ public class ExtractVoting extends Hook {
                 if (!vote.contains(" ")) {
                     // Check if it has a '-' and if so, split it into two parts and check if left side is a number
                     // If it is a number, don't create the element
+                    // We need to check if the left side is a number because there are some parties with "-" in their name, such as CDS-PP
+                    // This is due to cases such as "6-PS", which means 6 MPs from PS voted in a different way than the rest of PS
+                    // When this happens, the individual MPS are also represented in the voting, meaning we can ignore this weird case, since the same information is more explicit by listing the individual MPS
                     String[] parts = vote.split("-");
                     if (parts.length == 2 && parts[0].matches("\\d+")) {
                         continue;
