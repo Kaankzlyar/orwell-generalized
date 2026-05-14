@@ -20,7 +20,7 @@
 
 @base <http://purl.org/polis/ar/mp-activity#> .
 
-:	
+:
 	a                           	<http://purl.org/vocommons/voaf#Vocabulary> , owl:Ontology ;
 	dct:title                   	"Portuguese Political Structures Ontology";
 	dct:description             	"";
@@ -328,6 +328,42 @@
 	rdfs:comment "A colloquium."@en, "Um colóquio."@pt ;
 	rdfs:subClassOf :Event .
 
+:Exhibitions a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Exhibitions"@en, "Exposições"@pt ;
+	rdfs:comment "Exhibitions."@en, "Exposições."@pt ;
+	rdfs:subClassOf :Event .
+
+:PublicAudition a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Public Audition"@en, "Audição Pública"@pt ;
+	rdfs:comment "A public audition."@en, "Uma audição pública."@pt ;
+	rdfs:subClassOf :Event .
+
+:Seminar a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Seminar"@en, "Seminário"@pt ;
+	rdfs:comment "A seminar."@en, "Um seminário."@pt ;
+	rdfs:subClassOf :Event .
+
+:Congress a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Congress"@en, "Congresso"@pt ;
+	rdfs:comment "A congress."@en, "Um congresso."@pt ;
+	rdfs:subClassOf :Event .
+
+:SolemnSession a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Solemn Session"@en, "Sessão Solene"@pt ;
+	rdfs:comment "A solemn session."@en, "Uma sessão solene."@pt ;
+	rdfs:subClassOf :Event .
+
+:Journeys a owl:Class ;
+	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
+	rdfs:label "Journeys"@en, "Jornadas"@pt ;
+	rdfs:comment "Journeys."@en, "Jornadas."@pt ;
+	rdfs:subClassOf :Event .
+
 :Others a owl:Class ;
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "Others"@en, "Outros"@pt ;
@@ -350,7 +386,7 @@
 #    Data Properties
 ##################################################################
 
-:debateDate a owl:DatatypeProperty, 
+:debateDate a owl:DatatypeProperty,
 				owl:FunctionalProperty ;
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "debate date"@en, "data de debate"@pt ;
@@ -358,7 +394,7 @@
 	rdfs:domain prov:Activity ;
 	rdfs:range xsd:date .
 
-:meetingType a owl:DatatypeProperty, 
+:meetingType a owl:DatatypeProperty,
 				owl:FunctionalProperty ;
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "meeting type"@en, "tipo de reunião"@pt ;
@@ -366,12 +402,12 @@
 	rdfs:domain :YouthParliamentActivity ;
 	rdfs:range xsd:string .
 
-:commissionIdentifier a owl:DatatypeProperty, 
+:commissionIdentifier a owl:DatatypeProperty,
 				owl:FunctionalProperty ;
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "commission identifier"@en, "identificador de comissão"@pt ;
 	rdfs:comment "The identifier of a commission activity in hearings and auditions. The format is 'N-X-L', where N is an identifying number, X is the acronym for the committee, and L is the acronym for the legislature."@en, "O identificador de uma atividade de comissão em audiências e audições. O formato é 'N-X-L', onde N é um número identificativo, X é a sigla da comissão, e L é a sigla da legislatura."@pt ;
-	rdfs:domain [ rdf:type owl:Class ; 
+	rdfs:domain [ rdf:type owl:Class ;
 					owl:unionOf (:Hearing :Audition)
                 ] ;
 	rdfs:range xsd:string .
@@ -448,7 +484,7 @@
 	rdfs:domain prov:Activity ;
 	rdfs:range foaf:Organization .
 
-:isSchoolType a owl:ObjectProperty , 
+:isSchoolType a owl:ObjectProperty ,
 				owl:FunctionalProperty ;
 	rdfs:isDefinedBy <http://purl.org/polis/ar/mp-activity#> ;
 	rdfs:label "is school type"@en, "é tipo de escola"@pt ;

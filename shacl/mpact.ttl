@@ -81,11 +81,11 @@ polis-mpact:RequisitionShape a sh:NodeShape ;
     sh:property [
         sh:path polis-mpact:toPublicEntityType ;
         sh:in (
-            polis-mpact:AC 
-            polis-mpact:AL 
-            polis-mpact:AR 
-            polis-mpact:EI 
-            polis-mpact:RA  
+            polis-mpact:AC
+            polis-mpact:AL
+            polis-mpact:AR
+            polis-mpact:EI
+            polis-mpact:RA
         ) ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -106,7 +106,7 @@ polis-mpact:ParliamentaryActivityShape a sh:NodeShape ;
     sh:targetClass polis-mpact:DPR ;
     sh:targetClass polis-mpact:EGP ;
     sh:targetClass polis-mpact:EVN ;
-    sh:targetClass polis-mpact:GOD ; 
+    sh:targetClass polis-mpact:GOD ;
     sh:targetClass polis-mpact:IMU ;
     sh:targetClass polis-mpact:INI ;
     sh:targetClass polis-mpact:ITG ;
@@ -233,7 +233,7 @@ polis-mpact:PublicAccountsShape a sh:NodeShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:message "A Public Accounts must have exactly one civil year and the civil year must be a xsd:gYear"@en
-    ] ; 
+    ] ;
 
     sh:property [
         sh:path dct:date ;
@@ -331,7 +331,7 @@ polis-mpact:TemporaryDelegationShape a sh:NodeShape ;
         sh:path polis-mpact:hasDelegationScope ;
         sh:in (
             polis-mpact:NationalDelegation
-            polis-mpact:InternationalDelegation 
+            polis-mpact:InternationalDelegation
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -437,6 +437,12 @@ polis-mpact:CommissionActivityShape a sh:NodeShape ;
     sh:targetClass polis-mpact:Cerimony ;
     sh:targetClass polis-mpact:Conference ;
     sh:targetClass polis-mpact:Colloquium ;
+    sh:targetClass polis-mpact:Exhibitions ;
+    sh:targetClass polis-mpact:PublicAudition ;
+    sh:targetClass polis-mpact:Seminar ;
+    sh:targetClass polis-mpact:Congress ;
+    sh:targetClass polis-mpact:SolemnSession ;
+    sh:targetClass polis-mpact:Journeys ;
     sh:targetClass polis-mpact:Others ;
     sh:targetClass polis-mpact:Visit ;
     sh:targetClass polis-mpact:Hearing ;
@@ -486,7 +492,7 @@ polis-mpact:CommissionActivityShape a sh:NodeShape ;
     #     sh:minCount 1 ;
     #     sh:maxCount 1 ;
     #     sh:message "A Commission Activity must have exactly one related commission and the related commission must be a polis-core:Commission"@en
-    # ] 
+    # ]
     .
 
 polis-mpact:AuditionHearingShape a sh:NodeShape ;
