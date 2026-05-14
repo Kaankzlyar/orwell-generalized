@@ -6,15 +6,18 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static config.Config.*;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public abstract class DataExtractor {
-    // TODO: The work done in this class can very well be parallelized.
 
     public void extract() {
         Path sourcePath = SOURCE_PATH();
@@ -30,45 +33,51 @@ public abstract class DataExtractor {
 
     private void storeData(List<SourceNode> sources) {
         try {
-            Path sourceDir = Path.of(DATA_DIR.toString(), getName());
+            Path sourceDir = Path.of(DATA_DIR.toString(), getName().toLowerCase());
             Files.createDirectories(sourceDir);
+
+            List<DownloadTask> tasks = collectDownloads(sourceDir, sources);
+
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
                     .build();
 
-            for (SourceNode node : sources) {
-                storeNode(httpClient, sourceDir, node);
+            try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+                List<Future<?>> futures = new ArrayList<>();
+                for (DownloadTask task : tasks) {
+                    futures.add(executor.submit(() -> {
+                        try {
+                       		System.out.println('[' + getName() + " Extractor] Downloading: " + task.target() + task.key());
+                            HttpResponse<byte[]> response = fetchData(httpClient, task.uri());
+                            String format = inferFormat(response);
+                            Files.write(task.target().resolve(task.key() + format), response.body());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }));
+                }
+                for (var future : futures) {
+                    future.get();
+                }
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to store data: " + e.getMessage(), e);
         }
     }
 
-    /**
-     * Creates a directory if the node is an object, downloads the file if the node is a key - value pair.
-     * @param httpClient
-     * @param parentDir
-     * @param node
-     * @throws Exception
-     */
-    private void storeNode(HttpClient httpClient, Path parentDir, SourceNode node) throws Exception {
-        switch (node) {
-            case SourceNode.SourceValue sourceValue -> {
-                // Download the file
-                HttpResponse<byte[]> response = fetchData(httpClient, sourceValue.uri());
-                String format = inferFormat(response);
-                Path target = parentDir.resolve(sourceValue.key() + format);
-                Files.write(target, response.body());
-            }
-            case SourceNode.SourceObject sourceObject -> {
-                // Create a directory
-                Path dir = parentDir.resolve(sourceObject.key());
-                Files.createDirectories(dir);
-                for (SourceNode child : sourceObject.children()) {
-                    storeNode(httpClient, dir, child);
+    private List<DownloadTask> collectDownloads(Path parentDir, List<SourceNode> nodes) throws IOException {
+        List<DownloadTask> tasks = new ArrayList<>();
+        for (SourceNode node : nodes) {
+            switch (node) {
+                case SourceNode.SourceValue sv -> tasks.add(new DownloadTask(parentDir, sv.key(), sv.uri()));
+                case SourceNode.SourceObject so -> {
+                    Path dir = parentDir.resolve(so.key());
+                    Files.createDirectories(dir);
+                    tasks.addAll(collectDownloads(dir, so.children()));
                 }
             }
         }
+        return tasks;
     }
 
     /**
@@ -89,7 +98,7 @@ public abstract class DataExtractor {
     private static HttpResponse<byte[]> fetchData(HttpClient httpClient, URI uri) {
         try {
             HttpRequest request = HttpRequest.newBuilder(uri)
-                    .timeout(Duration.ofSeconds(60))
+                    .timeout(Duration.ofSeconds(90))
                     .GET()
                     .build();
 
