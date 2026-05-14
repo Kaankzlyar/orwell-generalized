@@ -20,7 +20,7 @@ public class ARExtractor extends DataExtractor {
     }
 
     protected String getName(){
-        return "ar";
+        return "AR";
     }
 
     protected List<SourceNode> parseSources(Path sourcePath) {
