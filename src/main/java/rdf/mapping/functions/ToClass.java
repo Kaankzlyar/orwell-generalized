@@ -71,6 +71,12 @@ public class ToClass {
         eventTypeMap.put("conferencia", POLIS_MPACT_NS + "Conference");
         eventTypeMap.put("debate", POLIS_MPACT_NS + "Debate");
         eventTypeMap.put("coloquio", POLIS_MPACT_NS + "Colloquium");
+        eventTypeMap.put("exposicoes", POLIS_MPACT_NS + "Exhibitions");
+        eventTypeMap.put("audicao publica", POLIS_MPACT_NS + "PublicAudition");
+        eventTypeMap.put("seminario", POLIS_MPACT_NS + "Seminar");
+        eventTypeMap.put("congresso", POLIS_MPACT_NS + "Congress");
+        eventTypeMap.put("sessao solene", POLIS_MPACT_NS + "SolemnSession");
+        eventTypeMap.put("jornadas", POLIS_MPACT_NS + "Journeys");
         eventTypeMap.put("outros", POLIS_MPACT_NS + "Others");
     }
 
@@ -116,21 +122,21 @@ public class ToClass {
     }
 
     private static void fillDarPublicationMap() {
-        darPublicationMap.put("a", POLIS_GRAPH_NS + "DARSeries2A"); 
-        darPublicationMap.put("b", POLIS_GRAPH_NS + "DARSeries2B"); 
-        darPublicationMap.put("c", POLIS_GRAPH_NS + "DARSeries2C"); 
-        darPublicationMap.put("d", POLIS_GRAPH_NS + "DARSeries1"); 
-        darPublicationMap.put("h", POLIS_GRAPH_NS + "DARSeries2E"); 
-        darPublicationMap.put("i", POLIS_GRAPH_NS + "DARSeries2CRC"); 
-        darPublicationMap.put("k", POLIS_GRAPH_NS + "DARSeries2"); 
-        darPublicationMap.put("l", POLIS_GRAPH_NS + "DARSeries2B"); 
-        darPublicationMap.put("m", POLIS_GRAPH_NS + "DARSeries1"); 
-        darPublicationMap.put("o", POLIS_GRAPH_NS + "DARSeries2CGOPOE"); 
-        darPublicationMap.put("q", POLIS_GRAPH_NS + "DARSeries2SCOE"); 
-        darPublicationMap.put("r", POLIS_GRAPH_NS + "DARSeries1A"); 
-        darPublicationMap.put("s", POLIS_GRAPH_NS + "DARSeparata"); 
-        darPublicationMap.put("t", POLIS_GRAPH_NS + "DARSeries2CCEI"); 
-        darPublicationMap.put("v", POLIS_GRAPH_NS + "DARSeries2SOE"); 
+        darPublicationMap.put("a", POLIS_GRAPH_NS + "DARSeries2A");
+        darPublicationMap.put("b", POLIS_GRAPH_NS + "DARSeries2B");
+        darPublicationMap.put("c", POLIS_GRAPH_NS + "DARSeries2C");
+        darPublicationMap.put("d", POLIS_GRAPH_NS + "DARSeries1");
+        darPublicationMap.put("h", POLIS_GRAPH_NS + "DARSeries2E");
+        darPublicationMap.put("i", POLIS_GRAPH_NS + "DARSeries2CRC");
+        darPublicationMap.put("k", POLIS_GRAPH_NS + "DARSeries2");
+        darPublicationMap.put("l", POLIS_GRAPH_NS + "DARSeries2B");
+        darPublicationMap.put("m", POLIS_GRAPH_NS + "DARSeries1");
+        darPublicationMap.put("o", POLIS_GRAPH_NS + "DARSeries2CGOPOE");
+        darPublicationMap.put("q", POLIS_GRAPH_NS + "DARSeries2SCOE");
+        darPublicationMap.put("r", POLIS_GRAPH_NS + "DARSeries1A");
+        darPublicationMap.put("s", POLIS_GRAPH_NS + "DARSeparata");
+        darPublicationMap.put("t", POLIS_GRAPH_NS + "DARSeries2CCEI");
+        darPublicationMap.put("v", POLIS_GRAPH_NS + "DARSeries2SOE");
     }
 
     public static String toClass(String entityName, String className) {
@@ -175,7 +181,7 @@ public class ToClass {
                     String regionName = words[words.length - 1];
                     return POLIS_GRAPH_NS + "RegionalLegislativeAssembly_" + regionName;
                 }
-                
+
                 return null;
             default:
                 System.out.println("Unknown className: " + className + " for entityName: " + entityName);
