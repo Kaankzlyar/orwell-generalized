@@ -41,7 +41,7 @@ public class ARExtractor extends DataExtractor {
                     String legislature = item.getKey();
 
                     if (Config.DISABLED_LEGISLATURES.contains(legislature)) {
-                        System.out.println("[ARExtractor] Skipping disabled legislature: " + legislature);
+                        System.out.println("[AR Extractor] Skipping disabled legislature: " + legislature);
                         return;
                     }
 
