@@ -47,7 +47,7 @@ public abstract class DataExtractor {
                 for (DownloadTask task : tasks) {
                     futures.add(executor.submit(() -> {
                         try {
-                       		System.out.println('[' + getName() + " Extractor] Downloading: " + task.target() + task.key());
+                            System.out.println('[' + getName() + " Extractor] Downloading: " + task.target() + task.key());
                             HttpResponse<byte[]> response = fetchData(httpClient, task.uri());
                             String format = inferFormat(response);
                             Files.write(task.target().resolve(task.key() + format), response.body());
@@ -57,7 +57,14 @@ public abstract class DataExtractor {
                     }));
                 }
                 for (var future : futures) {
-                    future.get();
+                    try {
+                        future.get();
+                    } catch (Exception e) {
+                        for (var f : futures) {
+                            f.cancel(true);
+                        }
+                        throw e;
+                    }
                 }
             }
         } catch (Exception e) {
