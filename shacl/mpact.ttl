@@ -398,9 +398,9 @@ polis-mpact:YouthParliamentActivityShape a sh:NodeShape ;
     sh:property [
         sh:path polis-core:inConstituency ;
         sh:class pe:ConstituencyArea ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:message "A Youth Parliament Activity must have exactly one constituency and the constituency must be a pe:ConstituencyArea"@en
+        sh:message "A Youth Parliament Activity must have at most one constituency and the constituency must be a pe:ConstituencyArea"@en
     ] ;
 
     sh:property [
