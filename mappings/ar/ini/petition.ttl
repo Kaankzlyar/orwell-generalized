@@ -39,7 +39,7 @@
 
     rr:subjectMap [
         rr:class polis-ini:Petition ;
-        rr:template "http://purl.org/polis/ar/graph#Petition_{numero}"
+        rr:template "http://purl.org/polis/ar/graph#Petition_{id}"
     ] ;
 
     # Identifier
