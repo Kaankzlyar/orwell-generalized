@@ -65,6 +65,11 @@ public class Main {
 	            if (Options.reconciliationEnabled()) {
 	                WikidataReconciliationService.persistCache();
 	            }
+
+				// Delete temporary files
+		        if (!Options.keepTmp()) {
+		            deleteTmpDir();
+		        }
 	        }
         }
 
@@ -100,11 +105,6 @@ public class Main {
         }
 
         benchmark.printTimingSummary();
-
-        // Delete temporary files
-        if (!Options.keepTmp()) {
-            deleteTmpDir();
-        }
     }
 
     private static void configureServiceHttp() {
