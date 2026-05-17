@@ -118,25 +118,26 @@ polis-ini:InitiativeShape a sh:NodeShape ;
         sh:message "An initiative annex must be of the class bibo:Document"@en
     ] ;
 
-    sh:property [
-        sh:path polis-ini:grewOutOf ;
-        sh:or (
-            [sh:class polis-ini:Initiative]
-            [sh:class polis-ini:EuropeanInitiative]
-            [ sh:class polis-ini:ConstitutionalRevisionProject ]
-            [ sh:class polis-ini:DeliberationProject ]
-            [ sh:class polis-ini:LawProject ]
-            [ sh:class polis-ini:LawProposal ]
-            [ sh:class polis-ini:ParliamentaryAppreciation ]
-            [ sh:class polis-ini:ParliamentaryInquiry ]
-            [ sh:class polis-ini:PopularReferendumInitiative ]
-            [ sh:class polis-ini:Ratification ]
-            [ sh:class polis-ini:ResolutionProject ]
-            [ sh:class polis-ini:ResolutionProposal ]
-            [ sh:class polis-ini:RulesOfProcedureProject ]
-        ) ;
-        sh:message "An initiative must grow out of a polis-ini:Initiative or a polis-ini:EuropeanInitiative"@en
-    ] ;
+    # TODO: Uncomment eventually. Much like with discussedJointlyWith and happensJointlyWithInitiative, there are many initiatives that have a grewOutOf relation with initiatives that are not present in the data. These initiatives are visible on the website, but they are missing from the XML files. Once these initiatives are mapped, this constraint can be uncommented.
+    # sh:property [
+    #     sh:path polis-ini:grewOutOf ;
+    #     sh:or (
+    #         [sh:class polis-ini:Initiative]
+    #         [sh:class polis-ini:EuropeanInitiative]
+    #         [ sh:class polis-ini:ConstitutionalRevisionProject ]
+    #         [ sh:class polis-ini:DeliberationProject ]
+    #         [ sh:class polis-ini:LawProject ]
+    #         [ sh:class polis-ini:LawProposal ]
+    #         [ sh:class polis-ini:ParliamentaryAppreciation ]
+    #         [ sh:class polis-ini:ParliamentaryInquiry ]
+    #         [ sh:class polis-ini:PopularReferendumInitiative ]
+    #         [ sh:class polis-ini:Ratification ]
+    #         [ sh:class polis-ini:ResolutionProject ]
+    #         [ sh:class polis-ini:ResolutionProposal ]
+    #         [ sh:class polis-ini:RulesOfProcedureProject ]
+    #     ) ;
+    #     sh:message "An initiative must grow out of a polis-ini:Initiative or a polis-ini:EuropeanInitiative"@en
+    # ] ;
 
     sh:property [
         sh:path polis-ini:ledTo ;
@@ -445,7 +446,7 @@ polis-ini:PetitionShape a sh:NodeShape ;
         sh:message "An petition must have one and only one title and the title must be xsd:string"@en
     ] ;
 
-    # TODO: Uncomment eventually
+    # TODO: Uncomment when older legislatures have been mapped
     # sh:property [
     #     sh:path polis-core:belongsToLegislature ;
     #     sh:class ocd:legislatura ;
@@ -525,18 +526,18 @@ polis-ini:EventShape a sh:NodeShape ;
         sh:message "An event's discussion must be of the class ocd:discussione"@en
     ] ;
 
-    # TODO: Uncomment quando gerar os grafos das iniciativas de legislaturas antigas
+    # TODO: Many initiatives have a relation with initiatives that are not present in the data. These initiatives are visible on the website, but they are missing from the XML files. Once these initiatives are mapped, this constraint can be uncommented.
     # sh:property [
     #     sh:path polis-ini:happensJointlyWithInitiative ;
     #     sh:class polis-ini:Initiative ;
     #     sh:message "An event may happen jointly with initiatives and they must be of the type polis-ini:Initiative"@en
     # ] ;
 
-    sh:property [
-        sh:path polis-ini:discussedJointlyWith ;
-        sh:class polis-ini:Petition ;
-        sh:message "An event may be discussed jointly with petitions and they must be of the type polis-ini:Petition"@en
-    ] ;
+    # sh:property [
+    #     sh:path polis-ini:discussedJointlyWith ;
+    #     sh:class polis-ini:Petition ;
+    #     sh:message "An event may be discussed jointly with petitions and they must be of the type polis-ini:Petition"@en
+    # ] ;
 
     sh:property [
         sh:path polis-ini:hasAnnex ;
