@@ -17,8 +17,10 @@ import java.util.Map;
 import org.apache.jena.http.sys.RegistryRequestModifier;
 import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
+import preprocessing.hooks.AddLegislatureToVotes;
 import preprocessing.hooks.CommissionInformation;
 import preprocessing.hooks.ExtractVoting;
+import preprocessing.hooks.LegislatureInformation;
 import preprocessing.hooks.ParliamentarianIdentification;
 import query.QueryRunner;
 import rdf.GraphLoader;
@@ -42,13 +44,13 @@ public class Main {
             benchmark.endTiming();
         }
 
-        // Preprocess data
-        benchmark.startTiming("Preprocessing");
-        preprocess();
-        benchmark.endTiming();
+        if (Options.mappingEnabled()){
+        	// Preprocess data
+	        benchmark.startTiming("Preprocessing");
+	        preprocess();
+	        benchmark.endTiming();
 
-        try {
-            if (Options.mappingEnabled()) {
+			try {
                 // Plan mapping pairs
                 benchmark.startTiming("MappingPairPlanner");
                 var mappingGroups = planMapping();
@@ -58,49 +60,51 @@ public class Main {
                 benchmark.startTiming("RDFMapper");
                 map(mappingGroups);
                 benchmark.endTiming();
-            }
+	        } finally {
+	            // Persist reconciliation cache
+	            if (Options.reconciliationEnabled()) {
+	                WikidataReconciliationService.persistCache();
+	            }
+	        }
+        }
 
-            // Load model
-            benchmark.startTiming("Load Model");
-            Model finalGraph = GraphLoader.loadGraph();
+        // Load model
+        benchmark.startTiming("Load Model");
+        Model finalGraph = GraphLoader.loadGraph();
+        benchmark.endTiming();
+
+        // SHACL validation
+        if (Options.shaclEnabled()) {
+            benchmark.startTiming("SHACL Validation");
+            validate(finalGraph);
             benchmark.endTiming();
+        }
 
-            if (Options.shaclEnabled()) {
-                // SHACL validation
-                benchmark.startTiming("SHACL Validation");
-                validate(finalGraph);
-                benchmark.endTiming();
-            }
+        // Querying
+        if (Options.queriesEnabled() && finalGraph != null) {
+            // Configure HTTP for SPARQL SERVICE calls (User-Agent required by Wikidata)
+            configureServiceHttp();
 
-            if (Options.queriesEnabled() && finalGraph != null) {
-                // Configure HTTP for SPARQL SERVICE calls (User-Agent required by Wikidata)
-                configureServiceHttp();
+            benchmark.startTiming("SPARQL Queries");
+            QueryRunner.execute(
+                finalGraph,
+                Path.of(QUERY_DIR.toString(), "q6.rq")
+            );
+            //QueryRunner.executeAll(finalGraph, QUERY_DIR);
+            benchmark.endTiming();
+        }
 
-                benchmark.startTiming("SPARQL Queries");
-                QueryRunner.execute(
-                    finalGraph,
-                    Path.of(QUERY_DIR.toString(), "q6.rq")
-                );
-                //QueryRunner.executeAll(finalGraph, QUERY_DIR);
-                benchmark.endTiming();
-            }
-
-            if (Options.fusekiEnabled() && finalGraph != null) {
-                GraphLoader.pushToFuseki(finalGraph);
-            }
-        } finally {
-            // Persist reconciliation cache
-            if (Options.reconciliationEnabled()) {
-                WikidataReconciliationService.persistCache();
-            }
-
-            // Delete temporary files
-            if (!Options.keepTmp()) {
-                deleteTmpDir();
-            }
+        // Push to Fuseki
+        if (Options.fusekiEnabled() && finalGraph != null) {
+            GraphLoader.pushToFuseki(finalGraph);
         }
 
         benchmark.printTimingSummary();
+
+        // Delete temporary files
+        if (!Options.keepTmp()) {
+            deleteTmpDir();
+        }
     }
 
     private static void configureServiceHttp() {
@@ -126,7 +130,9 @@ public class Main {
         Registry.register(
             new ParliamentarianIdentification(),
             new CommissionInformation(),
-            new ExtractVoting()
+            new LegislatureInformation(),
+            new ExtractVoting(),
+            new AddLegislatureToVotes()
         );
         Registry.run();
     }
