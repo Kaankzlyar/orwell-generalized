@@ -445,17 +445,19 @@ polis-ini:PetitionShape a sh:NodeShape ;
         sh:message "An petition must have one and only one title and the title must be xsd:string"@en
     ] ;
 
-    sh:property [
-        sh:path polis-core:belongsToLegislature ;
-        sh:class ocd:legislatura ;
-        sh:message "A petition must belong a legislature of the type ocd:legislatura"@en
-    ] ;
+    # TODO: Uncomment eventually
+    # sh:property [
+    #     sh:path polis-core:belongsToLegislature ;
+    #     sh:class ocd:legislatura ;
+    #     sh:message "A petition must belong a legislature of the type ocd:legislatura"@en
+    # ] ;
 
-    sh:property [
-        sh:path polis-core:belongsToLegislativeSession ;
-        sh:class ocd:sessioneLegislatura ;
-        sh:message "A petition must belong to a legislative session of the type ocd:sessioneLegislatura"@en
-    ] .
+    # sh:property [
+    #     sh:path polis-core:belongsToLegislativeSession ;
+    #     sh:class ocd:sessioneLegislatura ;
+    #     sh:message "A petition must belong to a legislative session of the type ocd:sessioneLegislatura"@en
+    # ]
+    .
 
 #################################################################
 # Event

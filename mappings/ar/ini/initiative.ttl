@@ -610,9 +610,39 @@
                     rr:objectMap [ rr:constant "http://purl.org/polis/ar/graph#Petition_" ]
                 ] ;
                 rr:predicateObjectMap [
-                    rr:predicate pofn:rightPart ;
-                    rr:objectMap [ rml:reference "Peticoes/pt_gov_ar_objectos_iniciativas_DadosGeraisOut/id" ]
-                ]
+					rr:predicate pofn:rightPart ;
+					rr:objectMap [
+					 	fnml:functionValue [
+							rr:predicateObjectMap [
+								rr:predicate fno:executes ;
+								rr:objectMap [ rr:constant pofn:stringConcat ]
+							] ;
+							rr:predicateObjectMap [
+								rr:predicate pofn:leftPart ;
+								rr:objectMap [ rml:reference "numero" ]
+							] ;
+							rr:predicateObjectMap [
+								rr:predicate pofn:rightPart ;
+								rr:objectMap [
+									fnml:functionValue [
+										rr:predicateObjectMap [
+											rr:predicate fno:executes ;
+											rr:objectMap [ rr:constant pofn:stringConcat ]
+										] ;
+										rr:predicateObjectMap [
+											rr:predicate pofn:leftPart ;
+											rr:objectMap [ rr:constant "_of_" ]
+										] ;
+										rr:predicateObjectMap [
+											rr:predicate pofn:rightPart ;
+											rr:objectMap [ rml:reference "legislatura" ]
+										]
+									]
+								]
+							]
+						]
+					]
+				] ;
             ]
         ]
     ]

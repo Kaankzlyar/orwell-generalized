@@ -105,7 +105,7 @@ public class ExtractVoting extends Hook {
                     // This is due to cases such as "6-PS", which means 6 MPs from PS voted in a different way than the rest of PS
                     // When this happens, the individual MPS are also represented in the voting, meaning we can ignore this weird case, since the same information is more explicit by listing the individual MPS
                     String[] parts = vote.split("-");
-                    if (parts.length == 2 && parts[0].matches("\\d+")) {
+                    if (parts[0].matches("\\d+")) {
                         continue;
                     }
                     sb
