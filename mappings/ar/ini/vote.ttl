@@ -282,7 +282,7 @@
                                         ] ;
                                         rr:predicateObjectMap [
                                             rr:predicate pofn:rightPart ;
-                                            rr:objectMap [ rml:reference "../../../../../../IniLeg" ]
+                                            rr:objectMap [ rml:reference "../../legislatura" ]
                                         ]
                                     ]
                                 ]
@@ -326,7 +326,7 @@
         rr:predicate polis-ini:hasVoteInFavourFrom ;
         rr:objectMap [
             rr:termType rr:IRI ;
-            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../../../../../IniLeg}"
+            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../legislatura}"
         ]
     ] ;
 	.
@@ -362,7 +362,7 @@
         rr:predicate polis-ini:hasVoteAgainstFrom ;
         rr:objectMap [
             rr:termType rr:IRI ;
-            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../../../../../IniLeg}"
+            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../legislatura}"
         ]
     ] ;
 	.
@@ -398,7 +398,7 @@
         rr:predicate polis-ini:hasAbstentionFrom ;
         rr:objectMap [
             rr:termType rr:IRI ;
-            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../../../../../IniLeg}"
+            rr:template "http://purl.org/polis/ar/graph#ParliamentaryGroup_{.}_of_{../../../legislatura}"
         ]
     ] ;
 	.
@@ -458,7 +458,7 @@
                             # Legislature
              			    rr:predicateObjectMap [
              			        rr:predicate pofn:lookupValue ;
-             			        rr:objectMap [ rml:reference "../../../../../../../IniLeg" ]
+             			        rr:objectMap [ rml:reference "../../../legislatura" ]
              			    ] ;
                             # Parliamentarian's Name
              			    rr:predicateObjectMap [
@@ -528,7 +528,7 @@
                             # Legislature
              			    rr:predicateObjectMap [
              			        rr:predicate pofn:lookupValue ;
-             			        rr:objectMap [ rml:reference "../../../../../../../IniLeg" ]
+             			        rr:objectMap [ rml:reference "../../../legislatura" ]
              			    ] ;
                             # Parliamentarian's Name
              			    rr:predicateObjectMap [
@@ -598,7 +598,7 @@
                             # Legislature
              			    rr:predicateObjectMap [
              			        rr:predicate pofn:lookupValue ;
-             			        rr:objectMap [ rml:reference "../../../../../../../IniLeg" ]
+             			        rr:objectMap [ rml:reference "../../../legislatura" ]
              			    ] ;
                             # Parliamentarian's Name
              			    rr:predicateObjectMap [
