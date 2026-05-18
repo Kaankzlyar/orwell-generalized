@@ -58,5 +58,6 @@ tmp/
 log.txt
 reconciliation-cache.properties
 *.log
+benchmarks/results/
 
 .env
