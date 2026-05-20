@@ -7,11 +7,19 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import static config.Config.*;
 import lombok.NoArgsConstructor;
@@ -40,6 +48,7 @@ public abstract class DataExtractor {
 
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(20))
+                    .sslContext(trustAllSslContext())
                     .build();
 
             try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
@@ -100,6 +109,26 @@ public abstract class DataExtractor {
             case String ct when ct.contains("application/json") -> ".json";
             default -> "";
         };
+    }
+
+    /**
+    * Trusts all SSL certificates so it can run on the FEUP network§
+    * @return
+ */
+    private static SSLContext trustAllSslContext() {
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[] {
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+                }
+            }, new SecureRandom());
+            return sslContext;
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            throw new RuntimeException("Failed to create trust-all SSLContext", e);
+        }
     }
 
     private static HttpResponse<byte[]> fetchData(HttpClient httpClient, URI uri) {

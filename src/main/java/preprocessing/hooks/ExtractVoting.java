@@ -2,7 +2,11 @@ package preprocessing.hooks;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Set;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.*;
 import java.util.stream.Stream;
 import preprocessing.Hook;
