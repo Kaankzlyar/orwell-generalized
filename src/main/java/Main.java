@@ -5,13 +5,11 @@ import static config.Config.TMP_DIR;
 import static rdf.validation.ShaclValidation.validate;
 
 import cli.Options;
+import config.Config;
 import extraction.ARExtractor;
 import extraction.DataExtractor;
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import org.apache.jena.http.sys.RegistryRequestModifier;
@@ -28,6 +26,7 @@ import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.RDFMapper;
 import reconciliation.WikidataReconciliationService;
 import utils.Benchmark;
+import utils.FileUtils;
 
 public class Main {
 
@@ -37,18 +36,21 @@ public class Main {
 
         Benchmark benchmark = new Benchmark();
 
+        Path originalDataDir = Config.DATA_DIR;
+        
         // Extract data
         if (Options.extractionEnabled()) {
             benchmark.startTiming("Extraction");
             extract();
             benchmark.endTiming();
+            Config.DATA_DIR = TMP_DIR.resolve(Path.of("data"));
         }
 
         if (Options.mappingEnabled()){
-        	// Preprocess data
-	        benchmark.startTiming("Preprocessing");
-	        preprocess();
-	        benchmark.endTiming();
+            // Preprocess data
+            benchmark.startTiming("Preprocessing");
+            preprocess();
+            benchmark.endTiming();
 
 			try {
                 // Plan mapping pairs
@@ -60,17 +62,14 @@ public class Main {
                 benchmark.startTiming("RDFMapper");
                 map(mappingGroups);
                 benchmark.endTiming();
-	        } finally {
-	            // Persist reconciliation cache
-	            if (Options.reconciliationEnabled()) {
-	                WikidataReconciliationService.persistCache();
-	            }
-
-				// Delete temporary files
-		        if (!Options.keepTmp()) {
-		            deleteTmpDir();
-		        }
-	        }
+            } finally {
+                
+                if (Options.reconciliationEnabled())
+                    WikidataReconciliationService.persistCache();
+                
+                if (!Options.keepTmp())
+                    FileUtils.deleteTmpDir();
+            }
         }
 
         // Load model
@@ -79,10 +78,16 @@ public class Main {
         benchmark.endTiming();
 
         // SHACL validation
+        boolean conforms = false;
         if (Options.shaclEnabled()) {
             benchmark.startTiming("SHACL Validation");
-            validate(finalGraph);
+            conforms = validate(finalGraph);
             benchmark.endTiming();
+        }
+
+        // Move data from tmp to real data directory if SHACL validation passed (or if SHACL validation is disabled)
+        if(conforms || !Options.shaclEnabled()) {
+            FileUtils.moveTmpDataToData(originalDataDir);
         }
 
         // Querying
@@ -95,7 +100,6 @@ public class Main {
                 finalGraph,
                 Path.of(QUERY_DIR.toString(), "q6.rq")
             );
-            //QueryRunner.executeAll(finalGraph, QUERY_DIR);
             benchmark.endTiming();
         }
 
@@ -105,7 +109,7 @@ public class Main {
         }
 
         benchmark.printTimingSummary();
-    }
+    } 
 
     private static void configureServiceHttp() {
         RegistryRequestModifier.get().addPrefix(
@@ -166,19 +170,4 @@ public class Main {
         }
     }
 
-    private static void deleteTmpDir() throws IOException {
-        if (Files.exists(TMP_DIR)) {
-            try (var paths = Files.walk(TMP_DIR)) {
-                paths
-                    .sorted(Comparator.reverseOrder())
-                    .forEach(path -> {
-                        try {
-                            Files.delete(path);
-                        } catch (IOException e) {
-                            throw new UncheckedIOException(e);
-                        }
-                    });
-            }
-        }
-    }
 }

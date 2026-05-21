@@ -15,7 +15,7 @@ import org.apache.jena.shacl.lib.ShLib;
 
 public class ShaclValidation {
 
-    public static void validate(Model graph) {
+    public static boolean validate(Model graph) {
         if (!Files.isDirectory(Config.SHACL_DIR)) {
             throw new IllegalStateException(
                 "[SHACL Validation] SHACL directory not found: " +
@@ -50,10 +50,14 @@ public class ShaclValidation {
             ShLib.printReport(report);
         }
 
+        // If the option to throw on SHACL unconformity is enabled and the report indicates non-conformity, throw an exception
         if (throwOnShaclUnconform() && !report.conforms()) {
             throw new IllegalStateException(
                 "[SHACL Validation] SHACL validation failed for union graph"
             );
         }
+
+        // Otherwise, return whether the data conforms to the SHACL shapes, to be used for conditionals of subsequent steps (e.g. moving data from tmp to real data directory)
+        return report.conforms();
     }
 }

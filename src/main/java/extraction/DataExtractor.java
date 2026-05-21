@@ -41,7 +41,7 @@ public abstract class DataExtractor {
 
     private void storeData(List<SourceNode> sources) {
         try {
-            Path sourceDir = Path.of(DATA_DIR.toString(), getName().toLowerCase());
+            Path sourceDir = TMP_DIR.resolve(DATA_DIR).resolve(getName().toLowerCase());
             Files.createDirectories(sourceDir);
 
             List<DownloadTask> tasks = collectDownloads(sourceDir, sources);

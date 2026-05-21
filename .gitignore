@@ -50,6 +50,7 @@ lib/
 
 # Local Data
 data/
+backup/
 sources.json
 
 # Output
