@@ -55,10 +55,10 @@ public final class MappingRunner {
     }
 
     /**
-    * Dispatch the RDFMapper with a group of mappings
-    * @param legislature
-    * @param mappingFiles
-    * @param mapperFactory
+    * Dispatch the RDFMapper for a mapping group
+    * @param legislature the group identifier used to derive the output graph file name
+    * @param mappingFiles the mapping definition files to process for this group
+    * @param mapperFactory the factory used to create a mapper for the given input files and output path
  */
     private static void mapGroup(String legislature, List<Path> mappingFiles, MapperFactory mapperFactory) {
         Path outputPath = outputPathForGroup(legislature);

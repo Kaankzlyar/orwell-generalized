@@ -144,8 +144,7 @@ public class Main {
         return planner.createMappingPairs();
     }
 
-    private static void map(Map<String, List<Path>> mappingGroups)
-        throws IOException, InterruptedException {
+    private static void map(Map<String, List<Path>> mappingGroups) {
         MappingRunner.dispatch(mappingGroups, Options.parallelMappingEnabled());
     }
 
