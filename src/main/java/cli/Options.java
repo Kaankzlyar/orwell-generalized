@@ -12,6 +12,7 @@ public final class Options {
     private static boolean keepTmp = false;
     private static boolean queriesEnabled = false;
     private static boolean fusekiEnabled = false;
+    private static boolean parallelMappingEnabled = false;
 
     private Options() {}
 
@@ -55,6 +56,10 @@ public final class Options {
         return fusekiEnabled;
     }
 
+    public static boolean parallelMappingEnabled() {
+        return parallelMappingEnabled;
+    }
+
     public static void parse(String[] args) {
         reset();
 
@@ -81,6 +86,7 @@ public final class Options {
                 case KEEP_TMP -> keepTmp = true;
                 case ENABLE_QUERIES -> queriesEnabled = true;
                 case ENABLE_FUSEKI -> fusekiEnabled = true;
+                case PARALLEL_MAPPING -> parallelMappingEnabled = true;
                 case HELP -> {
                 }
             }
@@ -105,5 +111,6 @@ public final class Options {
         keepTmp = false;
         queriesEnabled = false;
         fusekiEnabled = false;
+        parallelMappingEnabled = false;
     }
 }

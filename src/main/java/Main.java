@@ -1,5 +1,3 @@
-import static config.Config.OUTPUT_DIR;
-import static config.Config.OUTPUT_FORMAT;
 import static config.Config.QUERY_DIR;
 import static config.Config.TMP_DIR;
 import static rdf.validation.ShaclValidation.validate;
@@ -23,7 +21,7 @@ import preprocessing.hooks.ParliamentarianIdentification;
 import query.QueryRunner;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
-import rdf.mapping.RDFMapper;
+import rdf.mapping.MappingRunner;
 import reconciliation.WikidataReconciliationService;
 import utils.Benchmark;
 import utils.FileUtils;
@@ -37,7 +35,7 @@ public class Main {
         Benchmark benchmark = new Benchmark();
 
         Path originalDataDir = Config.DATA_DIR;
-        
+
         // Extract data
         if (Options.extractionEnabled()) {
             benchmark.startTiming("Extraction");
@@ -63,10 +61,10 @@ public class Main {
                 map(mappingGroups);
                 benchmark.endTiming();
             } finally {
-                
+
                 if (Options.reconciliationEnabled())
                     WikidataReconciliationService.persistCache();
-                
+
                 if (!Options.keepTmp())
                     FileUtils.deleteTmpDir();
             }
@@ -109,7 +107,7 @@ public class Main {
         }
 
         benchmark.printTimingSummary();
-    } 
+    }
 
     private static void configureServiceHttp() {
         RegistryRequestModifier.get().addPrefix(
@@ -148,26 +146,7 @@ public class Main {
 
     private static void map(Map<String, List<Path>> mappingGroups)
         throws IOException, InterruptedException {
-        for (Map.Entry<String, List<Path>> entry : mappingGroups.entrySet()) {
-            String legislature = entry.getKey();
-            List<Path> mappingFiles = entry.getValue();
-            Path outputPath = Path.of(
-                OUTPUT_DIR.toString(),
-                "graph-" +
-                    legislature +
-                    "." +
-                    OUTPUT_FORMAT.getDefaultFileExtension()
-            );
-            System.out.println(
-                "[RDFMapper] Generating graph for legislature: " +
-                    legislature +
-                    " -> " +
-                    outputPath
-            );
-            // TODO: This can be parallelized
-            RDFMapper mapper = new RDFMapper(mappingFiles, outputPath);
-            mapper.map();
-        }
+        MappingRunner.dispatch(mappingGroups, Options.parallelMappingEnabled());
     }
 
 }

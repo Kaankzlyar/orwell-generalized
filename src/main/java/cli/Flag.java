@@ -35,6 +35,11 @@ public enum Flag {
         "Run SPARQL queries on the final graph"
     ),
     ENABLE_FUSEKI("f", "enable-fuseki", "Push final graph to Fuseki"),
+    PARALLEL_MAPPING(
+        "p",
+        "parallel-mapping",
+        "Run RDF mapping groups in parallel"
+    ),
     HELP("h", "help", "Show this help message and exit");
 
     private static final Map<String, Flag> BY_LONG = new HashMap<>();
