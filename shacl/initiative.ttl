@@ -333,8 +333,7 @@ polis-ini:DARPublicationShape a sh:NodeShape ;
     sh:property [
         sh:path polis-ini:observation ;
         sh:datatype xsd:string ;
-        sh:maxCount 1 ;
-        sh:message "A DAR publication must have at most one observation and it must be of the type xsd:string"@en
+        sh:message "A DAR publication's observation must be of the type xsd:string"@en
     ] ;
 
     sh:property [
@@ -350,7 +349,7 @@ polis-ini:DARPublicationShape a sh:NodeShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:class ocd:sessioneLegislatura ;
-        sh:message "A DAR publication must belong to one and only one legislaturive session"@en
+        sh:message "A DAR publication must belong to one and only one legislative session"@en
     ] .
 
 #################################################################
