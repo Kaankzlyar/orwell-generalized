@@ -21,10 +21,10 @@ PREFIX dct: <http://purl.org/dc/terms/>
 
 SELECT ?legislature ?parliamentaryName ?partyAcronym ?constituency ?situation ?situationDate
 WHERE {
-  ?mp a m4s:Parliamentarian ; foaf:name "Pedro Filipe dos Santos Alves" ;
-      polis-core:belongsToLegislature ?legislature ;
+  ?mp a m4s:Parliamentarian ; foaf:name "José Luís Pereira Carneiro" ;
       ocd:rif_mandatoCamera ?mandate .
-  ?mandate polis-core:parliamentaryName ?parliamentaryName ;
+  ?mandate polis-core:belongsToLegislature ?legislature ;
+           polis-core:parliamentaryName ?parliamentaryName ;
            polis-core:hasMembership [ polis-core:isMemberOf ?party ] ;
            polis-core:inConstituency [ foaf:name ?constituency ] .
   ?party qudt:acronym ?partyAcronym .
@@ -34,4 +34,3 @@ WHERE {
                    dct:date ?situationDate .
   }
 }
-ORDER BY ?legislature

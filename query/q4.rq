@@ -22,14 +22,13 @@ PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 # TODO: Devo precisar de dar load à ontologia para o modelo, porque assim no grafo não existe o nó "polis-bio:Bachelor" p.e
-SELECT ?commissionName ?commissionAcronym ?habilitationLevel (COUNT(DISTINCT ?mp) AS ?mpCount)
+SELECT (SUBSTR(?commissionFullName, 1, 40) AS ?commissionName) ?habilitationLevel (COUNT(DISTINCT ?mp) AS ?mpCount)
 WHERE {
   ?mp a m4s:Parliamentarian ;
       polis-core:didCommissionActivity [ polis-mpact:relatedCommission ?commission ] ;
-      polis-bio:hasHabilitation [ polis-bio:isHabilitationLevel ?habLevel ] .
-  ?commission foaf:name ?commissionName ; qudt:acronym ?commissionAcronym .
-  ?habLevel rdfs:label ?habilitationLevel .
-  FILTER (LANG(?habilitationLevel) = "en" || LANG(?habilitationLevel) = "")
+      polis-bio:hasHabilitation [ polis-bio:isHabilitationLevel ?habilitationLevel ] .
+  ?commission foaf:name ?commissionFullName .
 }
-GROUP BY ?commissionName ?commissionAcronym ?habilitationLevel
-ORDER BY ?commissionAcronym ?habilitationLevel
+GROUP BY ?commissionFullName ?commissionAcronym ?habilitationLevel
+ORDER BY DESC(?mpCount)
+LIMIT 10
