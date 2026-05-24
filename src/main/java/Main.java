@@ -18,6 +18,7 @@ import preprocessing.hooks.CommissionInformation;
 import preprocessing.hooks.ExtractVoting;
 import preprocessing.hooks.LegislatureInformation;
 import preprocessing.hooks.ParliamentarianIdentification;
+import preprocessing.hooks.RemoveEmptyXmlElements;
 import query.QueryRunner;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
@@ -130,6 +131,7 @@ public class Main {
 
     private static void preprocess() {
         Registry.register(
+            new RemoveEmptyXmlElements(),
             new ParliamentarianIdentification(),
             new CommissionInformation(),
             new LegislatureInformation(),
