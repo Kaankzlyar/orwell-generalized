@@ -72,5 +72,31 @@
           ]
         ]
       ]
-    ]
-  .
+    ] ;
+
+    # Reconciliation with Wikidata (Q7278)
+    rr:predicateObjectMap [
+    	rr:predicate owl:sameAs ;
+		rr:objectMap [
+			rr:termType rr:IRI ;
+			fnml:functionValue [
+				rr:predicateObjectMap [
+					rr:predicate fno:executes ;
+					rr:objectMap [ rr:constant pofn:reconciliate ]
+				] ;
+				rr:predicateObjectMap [
+					rr:predicate pofn:query ;
+					rr:objectMap [ rr:template "{nome} Portugal"; rr:datatype xsd:string ]
+			    ] ;
+				rr:predicateObjectMap [
+			        rr:predicate pofn:type ;
+			        rr:objectMap [ rr:constant "Q7278" ]
+			    ] ;
+				rr:predicateObjectMap [
+			        rr:predicate pofn:limit ;
+			        rr:objectMap [ rr:constant "1" ]
+			    ] ;
+			]
+		]
+	]
+    .
