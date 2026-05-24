@@ -51,5 +51,5 @@ tasks.named("clean") {
 
 application {
     mainClass.set("Main")
-    applicationDefaultJvmArgs = listOf("-Xmx4g")
+    applicationDefaultJvmArgs = listOf("-Xmx5g")
 }
