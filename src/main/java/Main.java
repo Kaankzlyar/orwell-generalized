@@ -1,4 +1,3 @@
-import static config.Config.QUERY_DIR;
 import static config.Config.TMP_DIR;
 import static rdf.validation.ShaclValidation.validate;
 
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import org.apache.jena.http.sys.RegistryRequestModifier;
 import org.apache.jena.rdf.model.Model;
 import preprocessing.Registry;
 import preprocessing.hooks.AddLegislatureToVotes;
@@ -19,7 +17,6 @@ import preprocessing.hooks.ExtractVoting;
 import preprocessing.hooks.LegislatureInformation;
 import preprocessing.hooks.ParliamentarianIdentification;
 import preprocessing.hooks.RemoveEmptyXmlElements;
-import query.QueryRunner;
 import rdf.GraphLoader;
 import rdf.mapping.MappingPairPlanner;
 import rdf.mapping.MappingRunner;
@@ -89,36 +86,12 @@ public class Main {
             FileUtils.moveTmpDataToData(originalDataDir);
         }
 
-        // Querying
-        if (Options.queriesEnabled() && finalGraph != null) {
-            // Configure HTTP for SPARQL SERVICE calls (User-Agent required by Wikidata)
-            configureServiceHttp();
-
-            benchmark.startTiming("SPARQL Queries");
-            QueryRunner.execute(
-                finalGraph,
-                Path.of(QUERY_DIR.toString(), "q6.rq")
-            );
-            benchmark.endTiming();
-        }
-
         // Push to Fuseki
         if (Options.fusekiEnabled() && finalGraph != null) {
             GraphLoader.pushToFuseki(finalGraph);
         }
 
         benchmark.printTimingSummary();
-    }
-
-    private static void configureServiceHttp() {
-        RegistryRequestModifier.get().addPrefix(
-            "https://query.wikidata.org/",
-            (params, headers) ->
-                headers.put(
-                    "User-Agent",
-                    "Orwell/1.0 (https://github.com/politrackpt/orwell)"
-                )
-        );
     }
 
     private static void extract() {

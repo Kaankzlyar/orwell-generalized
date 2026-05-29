@@ -10,7 +10,6 @@ public final class Options {
     private static boolean printShaclReport = true;
     private static boolean logEnabled = false;
     private static boolean keepTmp = false;
-    private static boolean queriesEnabled = false;
     private static boolean fusekiEnabled = false;
     private static boolean parallelMappingEnabled = false;
 
@@ -48,10 +47,6 @@ public final class Options {
         return keepTmp;
     }
 
-    public static boolean queriesEnabled() {
-        return queriesEnabled;
-    }
-
     public static boolean fusekiEnabled() {
         return fusekiEnabled;
     }
@@ -84,7 +79,6 @@ public final class Options {
                 case DISABLE_SHACL_REPORT -> printShaclReport = false;
                 case ENABLE_LOG -> logEnabled = true;
                 case KEEP_TMP -> keepTmp = true;
-                case ENABLE_QUERIES -> queriesEnabled = true;
                 case ENABLE_FUSEKI -> fusekiEnabled = true;
                 case PARALLEL_MAPPING -> parallelMappingEnabled = true;
                 case HELP -> {
@@ -109,7 +103,6 @@ public final class Options {
         printShaclReport = true;
         logEnabled = false;
         keepTmp = false;
-        queriesEnabled = false;
         fusekiEnabled = false;
         parallelMappingEnabled = false;
     }

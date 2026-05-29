@@ -29,11 +29,6 @@ public enum Flag {
     ),
     ENABLE_LOG("l", "enable-log", "Enable reconciliation request logging"),
     KEEP_TMP("t", "keep-tmp", "Keep temporary files after processing"),
-    ENABLE_QUERIES(
-        "q",
-        "enable-queries",
-        "Run SPARQL queries on the final graph"
-    ),
     ENABLE_FUSEKI("f", "enable-fuseki", "Push final graph to Fuseki"),
     PARALLEL_MAPPING(
         "p",

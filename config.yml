@@ -2,10 +2,10 @@ legislatures:
     - code: xiii
       enabled: true
     - code: xiv
-      enabled: true
+      enabled: false
     - code: xv
-      enabled: true
+      enabled: false
     - code: xvi
-      enabled: true
+      enabled: false
     - code: xvii
-      enabled: true
+      enabled: false

@@ -29,6 +29,7 @@
 @prefix polis-core:   <http://purl.org/polis/ar/core#> .
 @prefix polis-graph:  <http://purl.org/polis/ar/graph#> .
 
+# TODO: Initiatives currently don't link to these nodes, but they should in the future.
 <#RegionalLegislativeAssemblyMap> a rr:TriplesMap ;
 
     rml:logicalSource [
