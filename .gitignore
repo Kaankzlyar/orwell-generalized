@@ -62,3 +62,4 @@ reconciliation-cache.properties
 benchmarks/results/
 
 .env
+CLAUDE.md
