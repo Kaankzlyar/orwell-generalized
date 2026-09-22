@@ -2,7 +2,10 @@ package preprocessing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import config.Config;
+import core.config.Config;
+import core.preprocessing.ProcessingContext;
+import core.preprocessing.hooks.ParliamentarianIdentification;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -10,7 +13,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import preprocessing.hooks.ParliamentarianIdentification;
 
 class ParliamentarianIdentificationTest {
 

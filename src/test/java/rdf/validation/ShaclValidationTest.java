@@ -2,7 +2,9 @@ package rdf.validation;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import config.Config;
+import core.config.Config;
+import core.rdf.validation.ShaclValidation;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;

@@ -2,6 +2,9 @@ package utils;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+
+import core.utils.LegislatureUtils;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

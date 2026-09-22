@@ -8,9 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import config.Config;
-import preprocessing.hooks.AddLegislatureToVotes;
-import preprocessing.hooks.LegislatureInformation;
+import core.config.Config;
+import core.preprocessing.ProcessingContext;
+import core.preprocessing.hooks.AddLegislatureToVotes;
+import core.preprocessing.hooks.LegislatureInformation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

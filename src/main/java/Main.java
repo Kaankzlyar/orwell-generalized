@@ -1,28 +1,29 @@
-import static config.Config.TMP_DIR;
-import static rdf.validation.ShaclValidation.validate;
+import static core.config.Config.TMP_DIR;
+import static core.rdf.validation.ShaclValidation.validate;
 
-import cli.Options;
-import config.Config;
-import extraction.ARExtractor;
-import extraction.DataExtractor;
+import core.cli.Options;
+import core.config.Config;
+import core.extraction.ARExtractor;
+import core.extraction.DataExtractor;
+import core.preprocessing.Registry;
+import core.preprocessing.hooks.AddLegislatureToVotes;
+import core.preprocessing.hooks.CommissionInformation;
+import core.preprocessing.hooks.ExtractVoting;
+import core.preprocessing.hooks.LegislatureInformation;
+import core.preprocessing.hooks.ParliamentarianIdentification;
+import core.preprocessing.hooks.RemoveEmptyXmlElements;
+import core.rdf.GraphLoader;
+import core.rdf.mapping.MappingPairPlanner;
+import core.rdf.mapping.MappingRunner;
+import core.reconciliation.WikidataReconciliationService;
+import core.utils.Benchmark;
+import core.utils.FileUtils;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import org.apache.jena.rdf.model.Model;
-import preprocessing.Registry;
-import preprocessing.hooks.AddLegislatureToVotes;
-import preprocessing.hooks.CommissionInformation;
-import preprocessing.hooks.ExtractVoting;
-import preprocessing.hooks.LegislatureInformation;
-import preprocessing.hooks.ParliamentarianIdentification;
-import preprocessing.hooks.RemoveEmptyXmlElements;
-import rdf.GraphLoader;
-import rdf.mapping.MappingPairPlanner;
-import rdf.mapping.MappingRunner;
-import reconciliation.WikidataReconciliationService;
-import utils.Benchmark;
-import utils.FileUtils;
 
 public class Main {
 

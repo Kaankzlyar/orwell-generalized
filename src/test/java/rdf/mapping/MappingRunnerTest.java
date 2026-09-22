@@ -2,7 +2,9 @@ package rdf.mapping;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import config.Config;
+import core.config.Config;
+import core.rdf.mapping.MappingRunner;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

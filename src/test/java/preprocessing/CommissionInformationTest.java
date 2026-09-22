@@ -9,8 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import config.Config;
-import preprocessing.hooks.CommissionInformation;
+import core.config.Config;
+import core.preprocessing.ProcessingContext;
+import core.preprocessing.hooks.CommissionInformation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

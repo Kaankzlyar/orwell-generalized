@@ -2,7 +2,9 @@ package rdf.mapping;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import config.Config;
+import core.config.Config;
+import core.rdf.mapping.MappingPairPlanner;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
