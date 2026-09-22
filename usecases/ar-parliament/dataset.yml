@@ -1,0 +1,45 @@
+# Manifest for the Portuguese Parliament (AR) use case.
+# This is the information a use case supplies to run through the generalized
+# pipeline without changing any code under src/main/java/core.
+
+useCase: ar-parliament
+domain: ar
+partitionKey: legislature
+
+source:
+  kind: http-file # only kind implemented today; see core.extraction.HttpFileSourceAdapter
+  format: xpath
+  sourcesFile: sources/ar.json
+
+partitions:
+  - code: xiii
+    enabled: true
+  - code: xiv
+    enabled: false
+  - code: xv
+    enabled: false
+  - code: xvi
+    enabled: false
+  - code: xvii
+    enabled: false
+
+preprocessing:
+  - RemoveEmptyXmlElements
+  - ParliamentarianIdentification
+  - CommissionInformation
+  - LegislatureInformation
+  - ExtractVoting
+  - AddLegislatureToVotes
+
+mappingDir: mappings
+functionsDir: functions
+ontologyDir: ontology
+shaclDir: shacl
+
+reconciliation:
+  provider: wikidata
+  enabled: true
+
+output:
+  namingTemplate: "graph-{partition}.ttl"
+  format: turtle
