@@ -1,4 +1,4 @@
-package core.utils;
+package usecase.arparliament.util;
 
 import java.util.Map;
 

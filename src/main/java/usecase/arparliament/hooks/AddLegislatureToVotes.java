@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import core.preprocessing.Hook;
 import core.preprocessing.ProcessingContext;
-import core.utils.LegislatureUtils;
+import usecase.arparliament.util.LegislatureUtils;
 
 public class AddLegislatureToVotes extends Hook {
 
