@@ -1,4 +1,4 @@
-package core.rdf.mapping.functions;
+package usecase.arparliament.functions;
 
 import java.net.URI;
 import java.util.Arrays;

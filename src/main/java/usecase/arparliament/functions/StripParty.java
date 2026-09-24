@@ -1,4 +1,4 @@
-package core.rdf.mapping.functions;
+package usecase.arparliament.functions;
 
 public class StripParty {
 

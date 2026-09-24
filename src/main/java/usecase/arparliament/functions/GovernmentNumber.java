@@ -1,4 +1,6 @@
-package core.rdf.mapping.functions;
+package usecase.arparliament.functions;
+
+import core.rdf.mapping.functions.RomanNumeralConverter;
 
 public class GovernmentNumber {
 
