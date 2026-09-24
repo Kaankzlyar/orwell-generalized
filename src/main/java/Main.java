@@ -9,18 +9,13 @@ import core.extraction.ARExtractor;
 import core.extraction.DataExtractor;
 import core.preprocessing.Hook;
 import core.preprocessing.Registry;
-import core.preprocessing.hooks.AddLegislatureToVotes;
-import core.preprocessing.hooks.CommissionInformation;
-import core.preprocessing.hooks.ExtractVoting;
-import core.preprocessing.hooks.LegislatureInformation;
-import core.preprocessing.hooks.ParliamentarianIdentification;
-import core.preprocessing.hooks.RemoveEmptyXmlElements;
 import core.rdf.GraphLoader;
 import core.rdf.mapping.MappingPairPlanner;
 import core.rdf.mapping.MappingRunner;
 import core.reconciliation.WikidataReconciliationService;
 import core.utils.Benchmark;
 import core.utils.FileUtils;
+import usecase.arparliament.hooks.UseCaseHookFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,9 +25,10 @@ import org.apache.jena.rdf.model.Model;
 
 /**
  * Entry point for the generalized pipeline. The only use-case-specific code
- * left here is the two small switches in {@link #extract(UseCaseManifest)}
- * and {@link #resolveHooks(String, List)} — everything else is generic and
- * driven entirely by the active use case's {@code dataset.yml}.
+ * left here is the switch in {@link #extract(UseCaseManifest)} — hook
+ * resolution is delegated to the active use case's own factory, and
+ * everything else is generic and driven entirely by the active use case's
+ * {@code dataset.yml}.
  */
 public class Main {
 
@@ -60,7 +56,7 @@ public class Main {
         if (Options.mappingEnabled()){
             // Preprocess data
             benchmark.startTiming("Preprocessing");
-            preprocess(useCaseId, manifest);
+            preprocess(manifest);
             benchmark.endTiming();
 
 			try {
@@ -119,29 +115,10 @@ public class Main {
         extractor.extract();
     }
 
-    private static void preprocess(String useCaseId, UseCaseManifest manifest) {
-        List<Hook> hooks = resolveHooks(useCaseId, manifest.preprocessing());
+    private static void preprocess(UseCaseManifest manifest) {
+        List<Hook> hooks = UseCaseHookFactory.resolve(manifest.preprocessing());
         Registry.register(hooks.toArray(new Hook[0]));
         Registry.run();
-    }
-
-    private static List<Hook> resolveHooks(String useCaseId, List<String> hookNames) {
-        return switch (useCaseId) {
-            case "ar-parliament" -> hookNames.stream().map(Main::arParliamentHook).toList();
-            default -> throw new IllegalStateException("Unsupported use case: " + useCaseId);
-        };
-    }
-
-    private static Hook arParliamentHook(String name) {
-        return switch (name) {
-            case "RemoveEmptyXmlElements" -> new RemoveEmptyXmlElements();
-            case "ParliamentarianIdentification" -> new ParliamentarianIdentification();
-            case "CommissionInformation" -> new CommissionInformation();
-            case "LegislatureInformation" -> new LegislatureInformation();
-            case "ExtractVoting" -> new ExtractVoting();
-            case "AddLegislatureToVotes" -> new AddLegislatureToVotes();
-            default -> throw new IllegalStateException("Unknown hook: " + name);
-        };
     }
 
     private static Map<String, List<Path>> planMapping() throws IOException {
