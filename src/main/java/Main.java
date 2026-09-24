@@ -1,34 +1,45 @@
-import static config.Config.TMP_DIR;
-import static rdf.validation.ShaclValidation.validate;
+import static core.config.Config.TMP_DIR;
+import static core.rdf.validation.ShaclValidation.validate;
 
-import cli.Options;
-import config.Config;
-import extraction.ARExtractor;
-import extraction.DataExtractor;
+import core.cli.Options;
+import core.config.Config;
+import core.config.ManifestLoader;
+import core.config.UseCaseManifest;
+import core.extraction.DataExtractor;
+import core.extraction.HttpFileSourceAdapter;
+import core.preprocessing.Hook;
+import core.preprocessing.Registry;
+import core.rdf.GraphLoader;
+import core.rdf.mapping.MappingPairPlanner;
+import core.rdf.mapping.MappingRunner;
+import core.reconciliation.WikidataReconciliationService;
+import core.utils.Benchmark;
+import core.utils.FileUtils;
+import usecase.arparliament.hooks.UseCaseHookFactory;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import org.apache.jena.rdf.model.Model;
-import preprocessing.Registry;
-import preprocessing.hooks.AddLegislatureToVotes;
-import preprocessing.hooks.CommissionInformation;
-import preprocessing.hooks.ExtractVoting;
-import preprocessing.hooks.LegislatureInformation;
-import preprocessing.hooks.ParliamentarianIdentification;
-import preprocessing.hooks.RemoveEmptyXmlElements;
-import rdf.GraphLoader;
-import rdf.mapping.MappingPairPlanner;
-import rdf.mapping.MappingRunner;
-import reconciliation.WikidataReconciliationService;
-import utils.Benchmark;
-import utils.FileUtils;
 
+/**
+ * Entry point for the generalized pipeline. The only use-case-specific code
+ * left here is the switch in {@link #extract(UseCaseManifest)} — hook
+ * resolution is delegated to the active use case's own factory, and
+ * everything else is generic and driven entirely by the active use case's
+ * {@code dataset.yml}.
+ */
 public class Main {
 
     public static void main(String[] args)
         throws IOException, InterruptedException {
         Options.parse(args);
+
+        String useCaseId = System.getenv().getOrDefault("ORWELL_USECASE", "ar-parliament");
+        Path useCaseRoot = Path.of("usecases", useCaseId);
+        UseCaseManifest manifest = ManifestLoader.load(useCaseRoot);
+        ManifestLoader.applyTo(useCaseRoot, manifest);
 
         Benchmark benchmark = new Benchmark();
 
@@ -37,7 +48,7 @@ public class Main {
         // Extract data
         if (Options.extractionEnabled()) {
             benchmark.startTiming("Extraction");
-            extract();
+            extract(manifest);
             benchmark.endTiming();
             Config.DATA_DIR = TMP_DIR.resolve(Path.of("data"));
         }
@@ -45,7 +56,7 @@ public class Main {
         if (Options.mappingEnabled()){
             // Preprocess data
             benchmark.startTiming("Preprocessing");
-            preprocess();
+            preprocess(manifest);
             benchmark.endTiming();
 
 			try {
@@ -94,23 +105,22 @@ public class Main {
         benchmark.printTimingSummary();
     }
 
-    private static void extract() {
-        List<DataExtractor> extractors = List.of(new ARExtractor());
-
-        for (DataExtractor extractor : extractors) {
-            extractor.extract();
-        }
+    private static void extract(UseCaseManifest manifest) {
+        DataExtractor extractor = switch (manifest.source().kind()) {
+            case "http-file" -> new HttpFileSourceAdapter(
+                Path.of(manifest.source().sourcesFile()),
+                manifest.domain()
+            );
+            default -> throw new IllegalStateException(
+                "Unsupported source kind: " + manifest.source().kind()
+            );
+        };
+        extractor.extract();
     }
 
-    private static void preprocess() {
-        Registry.register(
-            new RemoveEmptyXmlElements(),
-            new ParliamentarianIdentification(),
-            new CommissionInformation(),
-            new LegislatureInformation(),
-            new ExtractVoting(),
-            new AddLegislatureToVotes()
-        );
+    private static void preprocess(UseCaseManifest manifest) {
+        List<Hook> hooks = UseCaseHookFactory.resolve(manifest.preprocessing());
+        Registry.register(hooks.toArray(new Hook[0]));
         Registry.run();
     }
 

@@ -2,6 +2,8 @@ package rdf.mapping.functions;
 
 import org.junit.jupiter.api.Test;
 
+import core.rdf.mapping.functions.ToXsdDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

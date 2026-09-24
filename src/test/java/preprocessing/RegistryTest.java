@@ -3,7 +3,11 @@ package preprocessing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import config.Config;
+
+import core.config.Config;
+import core.preprocessing.Hook;
+import core.preprocessing.ProcessingContext;
+import core.preprocessing.Registry;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

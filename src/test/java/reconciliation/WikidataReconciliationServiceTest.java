@@ -2,6 +2,8 @@ package reconciliation;
 
 import org.junit.jupiter.api.Test;
 
+import core.reconciliation.WikidataReconciliationService;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
