@@ -11,16 +11,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import core.config.Config;
 
-public class ARExtractor extends DataExtractor {
+public class HttpFileSourceAdapter extends DataExtractor {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Path sourcesFile;
+    private final String domain;
+
+    public HttpFileSourceAdapter(Path sourcesFile, String domain) {
+        this.sourcesFile = sourcesFile;
+        this.domain = domain;
+    }
 
     protected Path SOURCE_PATH() {
-        return Path.of("sources", "ar.json");
+        return sourcesFile;
     }
 
     protected String getName(){
-        return "AR";
+        return domain;
     }
 
     protected List<SourceNode> parseSources(Path sourcePath) {
@@ -38,10 +45,10 @@ public class ARExtractor extends DataExtractor {
 
                 List<SourceNode> children = new ArrayList<>();
                 value.properties().forEach(item -> {
-                    String legislature = item.getKey();
+                    String partition = item.getKey();
 
-                    if (Config.DISABLED_PARTITIONS.contains(legislature)) {
-                        System.out.println("[AR Extractor] Skipping disabled partition: " + legislature);
+                    if (Config.DISABLED_PARTITIONS.contains(partition)) {
+                        System.out.println("[" + getName() + " Extractor] Skipping disabled partition: " + partition);
                         return;
                     }
 
@@ -49,16 +56,16 @@ public class ARExtractor extends DataExtractor {
 
                     if (!urlNode.isTextual()) {
                         throw new IllegalStateException(
-                                "Invalid source config: expected URL string for " + dataset + "/" + legislature
+                                "Invalid source config: expected URL string for " + dataset + "/" + partition
                         );
                     }
                     String url = urlNode.asText().trim();
                     if (url.isEmpty()) {
                         throw new IllegalStateException(
-                                "Invalid source config: empty URL for " + dataset + "/" + legislature
+                                "Invalid source config: empty URL for " + dataset + "/" + partition
                         );
                     }
-                    children.add(new SourceNode.SourceValue(legislature, URI.create(url)));
+                    children.add(new SourceNode.SourceValue(partition, URI.create(url)));
                 });
 
                 config.add(new SourceNode.SourceObject(dataset, children));

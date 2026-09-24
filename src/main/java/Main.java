@@ -5,8 +5,8 @@ import core.cli.Options;
 import core.config.Config;
 import core.config.ManifestLoader;
 import core.config.UseCaseManifest;
-import core.extraction.ARExtractor;
 import core.extraction.DataExtractor;
+import core.extraction.HttpFileSourceAdapter;
 import core.preprocessing.Hook;
 import core.preprocessing.Registry;
 import core.rdf.GraphLoader;
@@ -107,7 +107,10 @@ public class Main {
 
     private static void extract(UseCaseManifest manifest) {
         DataExtractor extractor = switch (manifest.source().kind()) {
-            case "http-file" -> new ARExtractor();
+            case "http-file" -> new HttpFileSourceAdapter(
+                Path.of(manifest.source().sourcesFile()),
+                manifest.domain()
+            );
             default -> throw new IllegalStateException(
                 "Unsupported source kind: " + manifest.source().kind()
             );
