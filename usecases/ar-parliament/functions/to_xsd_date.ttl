@@ -25,7 +25,7 @@
 
 :toXsdDateImpl a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.ToXsdDate" .
+    fnoi:class-name "usecase.arparliament.functions.ToXsdDate" .
 
 :toXsdDateMapping a fno:Mapping ;
     fno:function :toXsdDate ;

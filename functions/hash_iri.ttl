@@ -34,7 +34,7 @@
 
 :hashIriImpl a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.HashIri" .
+    fnoi:class-name "core.rdf.mapping.functions.HashIri" .
 
 :hashIriMapping a fno:Mapping ;
     fno:function :hashIri ;

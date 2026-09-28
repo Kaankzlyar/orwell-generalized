@@ -26,7 +26,7 @@
 
 :toBooleanImpl a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.ToBoolean" .
+    fnoi:class-name "usecase.arparliament.functions.ToBoolean" .
 
 :toBooleanMapping a fno:Mapping ;
     fno:function :toBoolean ;

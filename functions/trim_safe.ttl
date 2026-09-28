@@ -26,7 +26,7 @@
 
 :trimSafeImpl a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.TrimSafe" .
+    fnoi:class-name "core.rdf.mapping.functions.TrimSafe" .
 
 :trimSafeMapping a fno:Mapping ;
     fno:function :trimSafe ;

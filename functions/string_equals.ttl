@@ -33,7 +33,7 @@
 
 :stringEqualsImpl a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.StringEquals" .
+    fnoi:class-name "core.rdf.mapping.functions.StringEquals" .
 
 :stringEqualsMapping a fno:Mapping ;
     fno:function :stringEquals ;
