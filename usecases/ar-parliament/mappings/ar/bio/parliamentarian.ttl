@@ -38,9 +38,11 @@
     ] ;
 
     # URI
+    # No rr:class here: m4s:Parliamentarian is asserted by core/person.ttl from
+    # informacaobase. The biographic register also lists people who did not sit
+    # in this legislature, and typing them here would fail ParliamentarianShape.
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{CadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     # Birth Date
@@ -96,7 +98,6 @@
     ] ;
 
     rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
     ] ;
 
@@ -131,7 +132,6 @@
     ] ;
 
     rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
     ] ;
 
@@ -166,7 +166,6 @@
     ] ;
 
     rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
     ] ;
 
@@ -201,7 +200,6 @@
     ] ;
 
     rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
     ] ;
 
@@ -236,7 +234,6 @@
     ] ;
 
     rr:subjectMap [
-        rr:class m4s:Parliamentarian ;
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../CadId}" ;
     ] ;
 
@@ -272,7 +269,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -294,7 +290,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -349,7 +344,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -500,7 +494,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -535,7 +528,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -584,7 +576,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -619,7 +610,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -654,7 +644,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
@@ -689,7 +678,6 @@
 
     rr:subjectMap [
         rr:template "http://purl.org/polis/ar/graph#Parliamentarian_{../../../../Deputado/DepCadId}" ;
-        rr:class m4s:Parliamentarian
     ] ;
 
     rr:predicateObjectMap [
