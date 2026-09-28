@@ -113,9 +113,9 @@ Each JSON file defines source URLs per legislature:
 
 1. **Extraction** — Downloads source files from configured URLs into `data/`.
 2. **Preprocessing** — Runs registered hooks (parliamentarian reconciliation, commission info, voting extraction).
-3. **Mapping** — RMLMapper processes Turtle mapping files from `mappings/` against extracted data. Supports FnO/FnML functions in `functions/` and Wikidata reconciliation.
+3. **Mapping** — RMLMapper processes Turtle mapping files from `usecases/<id>/mappings/` against extracted data. Supports FnO/FnML functions in `functions/` and Wikidata reconciliation.
 4. **Graph assembly** — Loads per-legislature graphs into a unified model.
-5. **SHACL validation** — Validates the final graph against shapes in `shacl/`.
+5. **SHACL validation** — Validates the final graph against shapes in `usecases/<id>/shacl/`.
 6. **Fuseki push** *(optional)* — Loads the model into a running Apache Jena Fuseki server (`--enable-fuseki`).
 
 ## Data Extraction
