@@ -39,7 +39,7 @@ fno:type xsd:string .
 
 :reconciliationService a fnoi:JavaClass ;
 doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-fnoi:class-name "reconciliation.WikidataReconciliationService" .
+fnoi:class-name "core.reconciliation.WikidataReconciliationService" .
 
 :reconciliateMapping a fno:Mapping ;
 fno:function :reconciliate ;

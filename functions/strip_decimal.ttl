@@ -26,7 +26,7 @@
 
 :stripDecimalImpl a fnoi:JavaClass ;
     doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
-    fnoi:class-name "rdf.mapping.functions.StripDecimal" .
+    fnoi:class-name "core.rdf.mapping.functions.StripDecimal" .
 
 :stripDecimalMapping a fno:Mapping ;
     fno:function :stripDecimal ;
