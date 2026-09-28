@@ -10,9 +10,8 @@
 
 - `src/main/java/`: Core Java sources. Entry point is `Main.java`.
 - `src/test/java/`: JUnit tests (currently `*Test.java`).
-- `mappings/`: Turtle mapping files used by the RML pipeline.
-- `functions/`: FnO/FnML functions referenced by mappings.
-- `ontology/`, `shacl/`: Ontology and SHACL validation assets.
+- `usecases/<id>/`: One folder per use case: `dataset.yml` manifest plus its `mappings/`, `ontology/` and `shacl/`.
+- `functions/`: Shared FnO/FnML functions referenced by mappings.
 - `data/`: Input data used during mapping.
 - `output/`: Generated RDF output (e.g., `output/graph.ttl`).
 - `tmp/`: Temporary mappings generated at runtime (cleaned on success).
