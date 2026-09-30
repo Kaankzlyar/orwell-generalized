@@ -47,7 +47,9 @@ public class HttpFileSourceAdapter extends DataExtractor {
                 value.properties().forEach(item -> {
                     String partition = item.getKey();
 
-                    if (Config.DISABLED_PARTITIONS.contains(partition)) {
+                    // Datasets read by reference mappings are needed for every partition
+                    if (Config.DISABLED_PARTITIONS.contains(partition)
+                            && !Config.REFERENCE_SOURCES.contains(dataset)) {
                         System.out.println("[" + getName() + " Extractor] Skipping disabled partition: " + partition);
                         return;
                     }

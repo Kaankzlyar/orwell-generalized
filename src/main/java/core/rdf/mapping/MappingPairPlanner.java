@@ -148,9 +148,19 @@ public class MappingPairPlanner {
             .resolve(mappingId);
         Files.createDirectories(tempMappingSubDir);
 
+        boolean isReference = Config.REFERENCE_MAPPINGS.contains(
+            domainName + "/" + mappingId
+        );
+
         for (String baseName : commonNames) {
+            // Reference mappings also run for disabled partitions, into their
+            // own group so they never mix with an enabled partition's graph.
+            String groupName = baseName;
             if (Config.DISABLED_PARTITIONS.contains(baseName)) {
-                continue;
+                if (!isReference) {
+                    continue;
+                }
+                groupName = "reference-" + baseName;
             }
 
             Map<String, String> replacements = sourceReplacements(
@@ -167,7 +177,7 @@ public class MappingPairPlanner {
                 baseName
             );
             mappingGroups
-                .computeIfAbsent(baseName, k -> new ArrayList<>())
+                .computeIfAbsent(groupName, k -> new ArrayList<>())
                 .add(createdMapping);
             System.out.println(
                 "[Mapping Pair Planner] Created mapping file: " + createdMapping
@@ -308,7 +318,16 @@ public class MappingPairPlanner {
         return baseLine + System.lineSeparator() + withoutBase;
     }
 
-    private List<String> extractSourceNames(String mappingTemplate) {
+    /** The distinct rml:source names declared in a mapping file. */
+    public static List<String> sourceNames(Path mappingFile) {
+        try {
+            return extractSourceNames(Files.readString(mappingFile));
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to read mapping: " + mappingFile, e);
+        }
+    }
+
+    private static List<String> extractSourceNames(String mappingTemplate) {
         List<String> names = new ArrayList<>();
         Matcher matcher = SOURCE_PATTERN.matcher(mappingTemplate);
         while (matcher.find()) {

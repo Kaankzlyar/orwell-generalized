@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
 
+import core.rdf.mapping.MappingPairPlanner;
+
 public final class ManifestLoader {
     
     @SuppressWarnings("unchecked")
@@ -69,6 +71,7 @@ public final class ManifestLoader {
               (String) root.get("functionsDir"),
               (String) root.get("ontologyDir"),
               (String) root.get("shaclDir"),
+              (List<String>) root.getOrDefault("referenceMappings", List.of()),
               reconciliation,
               output
           );
@@ -89,6 +92,24 @@ public final class ManifestLoader {
               }
           }
           Config.DISABLED_PARTITIONS = disabled;
+
+          Set<String> referenceMappings = new HashSet<>();
+          Set<String> referenceSources = new HashSet<>();
+          for (String mapping : manifest.referenceMappings()) {
+              Path mappingFile = Config.MAPPINGS_DIR.resolve(mapping);
+              if (!Files.isRegularFile(mappingFile)) {
+                  throw new IllegalStateException("Reference mapping does not exist: " + mappingFile);
+              }
+              referenceMappings.add(stripExtension(mapping.replace("\\", "/")));
+              referenceSources.addAll(MappingPairPlanner.sourceNames(mappingFile));
+          }
+          Config.REFERENCE_MAPPINGS = referenceMappings;
+          Config.REFERENCE_SOURCES = referenceSources;
+      }
+
+      private static String stripExtension(String path) {
+          int dot = path.lastIndexOf('.');
+          return dot == -1 ? path : path.substring(0, dot);
       }
   }
 

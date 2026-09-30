@@ -17,6 +17,7 @@ public record UseCaseManifest(
     String functionsDir,
     String ontologyDir,
     String shaclDir,
+    List<String> referenceMappings,
     ReconciliationSpec reconciliation,
     OutputSpec output
 ) {
