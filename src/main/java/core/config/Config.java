@@ -35,6 +35,11 @@ public final class Config {
     );
     public static Set<String> DISABLED_PARTITIONS = Collections.emptySet();
 
+    // Mappings (as "<domain>/<mapping id>", e.g. "ar/core/legislature") that run
+    // for every partition, and the source datasets they read. See dataset.yml.
+    public static Set<String> REFERENCE_MAPPINGS = Collections.emptySet();
+    public static Set<String> REFERENCE_SOURCES = Collections.emptySet();
+
     private static String envOrDefault(String key, String fallback) {
         String val = System.getenv(key);
         return val != null && !val.isBlank() ? val : fallback;

@@ -47,15 +47,23 @@ public abstract class Hook {
         }
     }
 
+    private static String partitionOf(Path file) {
+        String name = file.getFileName().toString();
+        return name.substring(0, name.length() - XML_EXTENSION.length());
+    }
+
     protected Stream<Path> streamDocuments(String resourceName) {
         Path resourceDir = Config.DATA_DIR.resolve(resourceName);
         if (!Files.isDirectory(resourceDir)) {
             throw new IllegalStateException("Resource directory not found: " + resourceDir);
         }
         try {
+            // Disabled partitions are only present for reference mappings; hooks
+            // must not see them, or they would change enabled partitions' output.
             return Files.list(resourceDir)
                 .filter(Files::isRegularFile)
-                .filter(path -> path.getFileName().toString().endsWith(XML_EXTENSION));
+                .filter(path -> path.getFileName().toString().endsWith(XML_EXTENSION))
+                .filter(path -> !Config.DISABLED_PARTITIONS.contains(partitionOf(path)));
         } catch (Exception e) {
             throw new IllegalStateException("Failed to list XML files from: " + resourceDir + ": " + e.getMessage(), e);
         }

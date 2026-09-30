@@ -36,6 +36,13 @@ functionsDir: functions
 ontologyDir: ontology
 shaclDir: shacl
 
+# Mappings (relative to mappingDir) that also run for disabled partitions,
+# because enabled partitions link to what they produce. Data from other
+# legislatures (e.g. DAR publications of XIV initiatives appearing in XV)
+# points to legislatures and sessions outside the enabled ones.
+referenceMappings:
+  - ar/core/legislature.ttl
+
 reconciliation:
   provider: wikidata
   enabled: true
