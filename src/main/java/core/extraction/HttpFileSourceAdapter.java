@@ -30,6 +30,11 @@ public class HttpFileSourceAdapter extends DataExtractor {
         return domain;
     }
 
+    /** Turns a location from the sources file into the URI to fetch. */
+    protected URI toUri(String location) {
+        return URI.create(location);
+    }
+
     protected List<SourceNode> parseSources(Path sourcePath) {
         if (!Files.exists(sourcePath)) {
             throw new IllegalStateException("Sources file does not exist: " + sourcePath);
@@ -67,7 +72,7 @@ public class HttpFileSourceAdapter extends DataExtractor {
                                 "Invalid source config: empty URL for " + dataset + "/" + partition
                         );
                     }
-                    children.add(new SourceNode.SourceValue(partition, URI.create(url)));
+                    children.add(new SourceNode.SourceValue(partition, toUri(url)));
                 });
 
                 config.add(new SourceNode.SourceObject(dataset, children));
