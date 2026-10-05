@@ -1,0 +1,88 @@
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+  @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+  @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+  @prefix dcterms: <http://purl.org/dc/terms/> .
+  @prefix schema:  <http://schema.org/> .
+  @prefix geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+  @prefix crm:     <http://www.cidoc-crm.org/cidoc-crm/> .
+  @prefix edm:     <http://www.europeana.eu/schemas/edm/> .
+  @prefix wdt:     <http://www.wikidata.org/prop/direct/> .
+  @prefix wd:      <http://www.wikidata.org/entity/> .
+  @prefix unescot: <http://vocabularies.unesco.org/thesaurus/> .
+  @prefix tgn:     <http://vocab.getty.edu/tgn/> .
+  @prefix whs:     <https://w3id.org/whs/> .
+  @prefix whs-sh:  <https://w3id.org/whs/shape/> .
+
+
+wsh-sh:SiteShape a sh:NodeShape ;
+    sh:targetClass crm:E18_Physical_Thing ;
+    
+    sh:property [
+          sh:path dcterms:identifier ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:datatype xsd:integer ;
+          sh:message "A site must have exactly one integer identifier"@en
+      ] ;
+
+    sh:property [
+          sh:path schema:version ;
+          sh:maxCount 1 ;
+          sh:datatype xsd:integer ;
+          sh:minInclusive 1 ;
+          sh:message "A site may have at most one version, an integer >= 1"@en
+      ] ;
+    
+    sh:property [
+          sh:path dcterms:title ;
+          sh:minCount 1 ;
+          sh:datatype rdf:langString ;
+          sh:uniqueLang true ;
+          sh:message "A site needs at least one language-tagged title, at most one per language"@en
+      ] ;
+
+    sh:property [
+          sh:path dcterms:dateAccepted ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:pattern "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" ;
+          sh:message "dateAccepted must be YYYY, YYYY-MM or YYYY-MM-DD"@en
+      ] ;
+
+    sh:property [
+          sh:path geo:lat ;
+          sh:maxCount 1 ;
+          sh:datatype xsd:decimal ;
+          sh:minInclusive -90 ;
+          sh:maxInclusive 90 ;
+          sh:message "Latitude must be a single decimal between -90 and 90"@en
+      ] ;
+      
+    sh:property [
+          sh:path wdt:P2614 ;
+          sh:minCount 1 ;
+          sh:nodeKind sh:IRI ;
+          sh:in ( wd:Q15911738 wd:Q23038976 wd:Q23038977
+                  wd:Q23038978 wd:Q23038979 wd:Q23038980
+                  wd:Q23038981 wd:Q23038983 wd:Q23038985
+                  wd:Q23038986 ) ;
+          sh:message "A site needs at least one criterion from the 10 UNESCO criteria"@en
+      ] ;
+
+
+       sh:property [
+          sh:path edm:country ;
+          sh:minCount 1 ;
+          sh:nodeKind sh:IRI ;
+          sh:pattern "^http://vocab.getty.edu/tgn/" ;
+          sh:message "Country must be a Getty TGN IRI"@en
+      ] ;
+
+       sh:property [
+          sh:path dcterms:spatial ;
+          sh:minCount 1 ;
+          sh:nodeKind sh:IRI ;
+          sh:pattern "^http://vocabularies.unesco.org/thesaurus/" ;
+          sh:message "Region must be a UNESCO Thesaurus IRI"@en
+      ] ;
+
