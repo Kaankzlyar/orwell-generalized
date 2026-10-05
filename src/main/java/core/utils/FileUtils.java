@@ -8,6 +8,7 @@ import static core.config.Config.*;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class FileUtils {
@@ -36,22 +37,27 @@ public class FileUtils {
         deleteDirectory(TMP_DIR);
     }
 
-    /**
-     * Moves the temporary data directory to the real data directory atomically.
-     * @param realDataDir the target directory (e.g. the original value of Config.DATA_DIR)
-     * @throws IOException if an I/O error occurs
-     */
+     /**
+       * Moves each domain folder of the temporary data directory into the real
+       * data directory, replacing that domain's previous data. Folders of other
+       * domains (e.g. another use case's data) are left untouched.
+       * @param realDataDir the target directory (e.g. the original value of Config.DATA_DIR)
+       * @throws IOException if an I/O error occurs
+       */
     public static void moveTmpDataToData(Path realDataDir) throws IOException {
         Path tmpDataDir = TMP_DIR.resolve("data");
         if (!Files.exists(tmpDataDir)) return;
 
-        Path stagingDir = TMP_DIR.resolve("data.staging");
-        if (Files.exists(stagingDir))
-            deleteDirectory(stagingDir);
-        Files.move(tmpDataDir, stagingDir);
-
-        if (Files.exists(realDataDir))
-            deleteDirectory(realDataDir);
-        Files.move(stagingDir, realDataDir);
+        Files.createDirectories(realDataDir);
+        List<Path> domainDirs;
+        try (var paths = Files.list(tmpDataDir)) {
+            domainDirs = paths.filter(Files::isDirectory).toList();
+        }
+        for (Path domainDir : domainDirs) {
+            Path target = realDataDir.resolve(domainDir.getFileName());
+            if (Files.exists(target))
+                deleteDirectory(target);
+            Files.move(domainDir, target);
+        }
     }
 }
