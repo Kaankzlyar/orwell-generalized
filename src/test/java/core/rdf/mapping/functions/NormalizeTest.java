@@ -1,4 +1,4 @@
-package rdf.mapping.functions;
+package core.rdf.mapping.functions;
 
 import org.junit.jupiter.api.Test;
 

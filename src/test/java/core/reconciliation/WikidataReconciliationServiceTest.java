@@ -1,4 +1,4 @@
-package reconciliation;
+package core.reconciliation;
 
 import org.junit.jupiter.api.Test;
 

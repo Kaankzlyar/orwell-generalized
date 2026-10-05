@@ -1,4 +1,4 @@
-package rdf.mapping.functions;
+package usecase.arparliament.functions;
 
 import org.junit.jupiter.api.Test;
 

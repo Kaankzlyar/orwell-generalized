@@ -1,4 +1,4 @@
-package preprocessing;
+package usecase.arparliament.hooks;
 
 import static org.junit.jupiter.api.Assertions.*;
 

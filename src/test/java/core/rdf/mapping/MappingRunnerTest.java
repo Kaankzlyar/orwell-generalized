@@ -1,4 +1,4 @@
-package rdf.mapping;
+package core.rdf.mapping;
 
 import static org.junit.jupiter.api.Assertions.*;
 

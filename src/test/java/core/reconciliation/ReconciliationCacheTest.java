@@ -1,4 +1,4 @@
-package reconciliation;
+package core.reconciliation;
 
 import core.config.Config;
 import core.reconciliation.WikidataReconciliationService;
