@@ -1,4 +1,4 @@
-package rdf.validation;
+package core.rdf.validation;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

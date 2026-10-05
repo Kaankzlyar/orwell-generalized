@@ -1,4 +1,4 @@
-package utils;
+package usecase.arparliament.util;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
