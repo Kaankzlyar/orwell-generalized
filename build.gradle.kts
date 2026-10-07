@@ -19,6 +19,7 @@ dependencies {
     implementation("org.apache.jena:jena-rdfconnection:5.2.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
     implementation("org.apache.pdfbox:pdfbox:3.0.4")
+    implementation("org.apache.commons:commons-text:1.10.0")
     implementation("org.yaml:snakeyaml:2.2")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
