@@ -1,0 +1,29 @@
+
+useCase : unesco-whs
+domain: whs
+partitionKey: none
+
+
+source: 
+   kind: local-file
+   format: csv
+   sourcesFile: sources/whs.json
+
+partitions:
+   - code: all
+     enabled: true
+
+preprocessing: []
+
+mappingDir: mappings
+functionsDir: functions
+ontologyDir: ontology
+shaclDir: shacl
+
+reconciliation:
+   provider: wikidata
+   enabled: false
+
+output: 
+   namingTemplate: "graph-{partition}.ttl"
+   format: turtle

@@ -14,7 +14,7 @@
   @prefix whs-sh:  <https://w3id.org/whs/shape/> .
 
 
-wsh-sh:SiteShape a sh:NodeShape ;
+whs-sh:SiteShape a sh:NodeShape ;
     sh:targetClass crm:E18_Physical_Thing ;
     
     sh:property [
