@@ -1,0 +1,41 @@
+@prefix fno:  <https://w3id.org/function/ontology#> .
+  @prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+  @prefix fnoi: <https://w3id.org/function/vocabulary/implementation#> .
+  @prefix doap: <http://usefulinc.com/ns/doap#> .
+  @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+  @prefix :     <http://www.semanticweb.org/tonevanda/ontologies/2026/1/PoliOntology/Functions#> .
+
+  :toVersion a fno:Function ;
+      fno:name "toVersion" ;
+      fno:expects ( :revBisParam :versionIdNoParam ) ;
+      fno:returns ( :versionOutputParam ) .
+
+  :revBisParam a fno:Parameter ;
+      fno:predicate :revBis ;
+      fno:name "revBis" ;
+      fno:description "rev_bis suffix (Rev, Bis, Ter, ...)." ;
+      fno:type xsd:string ;
+      fno:required "false"^^xsd:boolean .
+
+  :versionIdNoParam a fno:Parameter ;
+      fno:predicate :idNo ;
+      fno:name "idNo" ;
+      fno:description "Site id_no, used for manual overrides." ;
+      fno:type xsd:string ;
+      fno:required "true"^^xsd:boolean .
+
+  :versionOutputParam a fno:Output ;
+      fno:predicate :output ;
+      fno:name "output" ;
+      fno:description "Version integer (rev=1 ... quinquies=5), or null." ;
+      fno:type xsd:integer .
+
+  :toVersionImpl a fnoi:JavaClass ;
+      doap:download-page "build/libs/orwell-1.0-SNAPSHOT.jar" ;
+      fnoi:class-name "usecase.unescowhs.functions.ToVersion" .
+
+  :toVersionMapping a fno:Mapping ;
+      fno:function :toVersion ;
+      fno:implementation :toVersionImpl ;
+      fno:methodMapping [ a fnom:StringMethodMapping ; fnom:method-name "toVersion" ]
+  .
