@@ -18,7 +18,7 @@ import core.config.Config;
 
 public class MappingPairPlanner {
 
-    private static final String XML_EXTENSION = ".xml";
+    private static final Set<String> DATA_EXTENSIONS = Set.of(".xml", ".json", ".csv");
     private static final Pattern SOURCE_PATTERN = Pattern.compile(
         "rml:source\\s+\"([^\"]+)\"\\s*;"
     );
@@ -129,7 +129,7 @@ public class MappingPairPlanner {
             return mappingGroups;
         }
 
-        List<String> commonNames = commonXmlBaseNames(
+        List<String> commonNames = commonBaseNames(
             sourceNames,
             filesBySource
         );
@@ -211,7 +211,7 @@ public class MappingPairPlanner {
                 System.out.println(
                     "Skipping mapping " +
                         mappingId +
-                        ": no XML files in " +
+                        ": no data files in " +
                         dataDir
                 );
                 return Map.of();
@@ -223,16 +223,18 @@ public class MappingPairPlanner {
 
     private Map<String, Path> filesByBaseName(Path dataDir) throws IOException {
         Map<String, Path> filesByName = new LinkedHashMap<>();
-        for (Path file : listFilesWithExtension(dataDir, XML_EXTENSION)) {
+        for (String extension : DATA_EXTENSIONS) {
+        for (Path file : listFilesWithExtension(dataDir, extension)) {
             filesByName.put(
                 stripExtension(file.getFileName().toString()),
                 file
             );
         }
+    }
         return filesByName;
     }
 
-    private List<String> commonXmlBaseNames(
+    private List<String> commonBaseNames(
         List<String> sourceNames,
         Map<String, Map<String, Path>> filesBySource
     ) {

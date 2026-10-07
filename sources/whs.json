@@ -1,0 +1,5 @@
+  {
+    "sites": {
+      "all": "sources/whs/whs-sites.csv"
+    }
+  }

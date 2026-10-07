@@ -6,6 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import static core.config.Config.*;
 
@@ -58,6 +59,10 @@ public abstract class DataExtractor {
                 for (DownloadTask task : tasks) {
                     futures.add(executor.submit(() -> {
                         try {
+                            if ("file".equals(task.uri().getScheme())) {
+                                copyLocalFile(task);
+                                return;
+                            }
                             System.out.println('[' + getName() + " Extractor] Downloading: " + task.target() + task.key());
                             HttpResponse<byte[]> response = fetchData(httpClient, task.uri());
                             String format = inferFormat(response);
@@ -96,6 +101,22 @@ public abstract class DataExtractor {
             }
         }
         return tasks;
+    }
+
+    /**
+     * Copies a local source file into the data directory, keeping its extension
+     * since there is no Content-Type header to infer the format from.
+     */
+    private void copyLocalFile(DownloadTask task) throws IOException {
+        Path source = Path.of(task.uri());
+        if (!Files.isRegularFile(source)) {
+            throw new IllegalStateException("Source file does not exist: " + source);
+        }
+        String fileName = source.getFileName().toString();
+        int dot = fileName.lastIndexOf('.');
+        String format = dot == -1 ? "" : fileName.substring(dot);
+        System.out.println('[' + getName() + " Extractor] Copying: " + source);
+        Files.copy(source, task.target().resolve(task.key() + format), StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
