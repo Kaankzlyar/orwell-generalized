@@ -11,7 +11,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 import core.config.Config;
 import core.preprocessing.ProcessingContext;
-import core.preprocessing.hooks.CommissionInformation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

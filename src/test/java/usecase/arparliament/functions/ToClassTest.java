@@ -2,7 +2,6 @@ package usecase.arparliament.functions;
 
 import org.junit.jupiter.api.Test;
 
-import core.rdf.mapping.functions.ToClass;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -17,7 +17,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ARExtractorTest {
+class HttpFileSourceAdapterTest {
 
     @TempDir
     Path tempDir;
@@ -47,7 +47,7 @@ class ARExtractorTest {
             """;
         Files.writeString(sourceFile, json);
 
-        TestableARExtractor extractor = new TestableARExtractor(sourceFile);
+        HttpFileSourceAdapter extractor = new HttpFileSourceAdapter(sourceFile, "ar");
         List<SourceNode> result = extractor.parseSources(sourceFile);
 
         assertEquals(1, result.size());
@@ -75,7 +75,7 @@ class ARExtractorTest {
             """;
         Files.writeString(sourceFile, json);
 
-        TestableARExtractor extractor = new TestableARExtractor(sourceFile);
+        HttpFileSourceAdapter extractor = new HttpFileSourceAdapter(sourceFile, "ar");
         List<SourceNode> result = extractor.parseSources(sourceFile);
 
         assertEquals(2, result.size());
@@ -89,7 +89,7 @@ class ARExtractorTest {
 
     @Test
     void parseSourcesThrowsWhenFileMissing() {
-        TestableARExtractor extractor = new TestableARExtractor(Path.of("nonexistent.json"));
+        HttpFileSourceAdapter extractor = new HttpFileSourceAdapter(Path.of("nonexistent.json"), "ar");
         assertThrows(IllegalStateException.class, () -> extractor.parseSources(Path.of("nonexistent.json")));
     }
 
@@ -105,7 +105,7 @@ class ARExtractorTest {
             """;
         Files.writeString(sourceFile, json);
 
-        TestableARExtractor extractor = new TestableARExtractor(sourceFile);
+        HttpFileSourceAdapter extractor = new HttpFileSourceAdapter(sourceFile, "ar");
         assertThrows(IllegalStateException.class, () -> extractor.parseSources(sourceFile));
     }
 
@@ -121,20 +121,8 @@ class ARExtractorTest {
             """;
         Files.writeString(sourceFile, json);
 
-        TestableARExtractor extractor = new TestableARExtractor(sourceFile);
+        HttpFileSourceAdapter extractor = new HttpFileSourceAdapter(sourceFile, "ar");
         assertThrows(IllegalStateException.class, () -> extractor.parseSources(sourceFile));
     }
 
-    private static class TestableARExtractor extends ARExtractor {
-        private final Path testSourcePath;
-
-        TestableARExtractor(Path testSourcePath) {
-            this.testSourcePath = testSourcePath;
-        }
-
-        @Override
-        protected Path SOURCE_PATH() {
-            return testSourcePath;
-        }
-    }
 }

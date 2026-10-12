@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import core.config.Config;
 import core.preprocessing.ProcessingContext;
-import core.preprocessing.hooks.ExtractVoting;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
