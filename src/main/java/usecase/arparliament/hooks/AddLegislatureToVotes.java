@@ -36,7 +36,7 @@ public class AddLegislatureToVotes extends Hook {
             return;
         }
 
-        try (Stream<Path> paths = streamDocuments("ar/iniciativas")) {
+        try (Stream<Path> paths = streamDocuments(context, "ar/iniciativas")) {
             paths.forEach(path -> processDocument(path, legislatureTable));
         }
     }

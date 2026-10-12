@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,7 +68,7 @@ class ExtractVotingTest {
 
         ExtractVoting hook = new ExtractVoting();
 
-        hook.execute(new ProcessingContext());
+        hook.execute(new ProcessingContext(Config.DATA_DIR, Set.of()));
 
         String content = Files.readString(document);
 
@@ -92,7 +93,7 @@ class ExtractVotingTest {
 
         ExtractVoting hook = new ExtractVoting();
 
-        hook.execute(new ProcessingContext());
+        hook.execute(new ProcessingContext(Config.DATA_DIR, Set.of()));
 
         String content = Files.readString(document);
 

@@ -3,9 +3,11 @@ package core.preprocessing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.preprocessing.ProcessingContext;
 
+import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +17,7 @@ class ProcessingContextTest {
 
     @BeforeEach
     void setUp() {
-        context = new ProcessingContext();
+        context = new ProcessingContext(Path.of("data"), Set.of());
     }
 
     @Test
@@ -59,5 +61,14 @@ class ProcessingContextTest {
         Map<String, String> table = context.getLookupTable("hook1").orElseThrow();
         
         assertThrows(UnsupportedOperationException.class, () -> table.put("key2", "value2"));
+    }
+
+    @Test
+    void disabledPartitionsAreCopied() {
+        Set<String> disabled = new HashSet<>(Set.of("xvi"));
+        ProcessingContext contextWithDisabled = new ProcessingContext(Path.of("data"), disabled);
+        disabled.add("xvii");
+        
+        assertEquals(Set.of("xvi"), contextWithDisabled.getDisabledPartitions());
     }
 }

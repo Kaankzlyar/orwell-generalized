@@ -3,6 +3,8 @@ package usecase.arparliament.hooks;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +67,7 @@ class AddLegislatureToVotesTest {
     @Test
     void executeAddsLegislaturaToVotes() throws Exception {
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
@@ -95,7 +97,7 @@ class AddLegislatureToVotesTest {
         );
 
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
@@ -122,7 +124,7 @@ class AddLegislatureToVotesTest {
         );
 
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
@@ -136,7 +138,7 @@ class AddLegislatureToVotesTest {
 
     @Test
     void executeSkipsWhenLegislatureInformationIsEmpty() throws Exception {
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
         voteHook.execute(context);
@@ -165,7 +167,7 @@ class AddLegislatureToVotesTest {
         );
 
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();

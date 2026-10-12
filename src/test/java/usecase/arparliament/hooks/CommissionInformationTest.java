@@ -3,6 +3,7 @@ package usecase.arparliament.hooks;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +79,7 @@ class CommissionInformationTest {
     @Test
     void executeRegistersCommissionLookupEntries() {
         CommissionInformation hook = new CommissionInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
@@ -107,7 +108,7 @@ class CommissionInformationTest {
             """);
 
         CommissionInformation hook = new CommissionInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
@@ -148,7 +149,7 @@ class CommissionInformationTest {
             """);
 
         CommissionInformation hook = new CommissionInformation();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
