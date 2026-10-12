@@ -8,6 +8,7 @@ import core.preprocessing.ProcessingContext;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,7 +71,7 @@ class ParliamentarianIdentificationTest {
     void executePopulatesLookupTable() {
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
@@ -83,7 +84,7 @@ class ParliamentarianIdentificationTest {
     void executeRegistersDeputiesWithCorrectFormat() {
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
@@ -121,7 +122,7 @@ class ParliamentarianIdentificationTest {
 
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
@@ -137,7 +138,7 @@ class ParliamentarianIdentificationTest {
     void executeTrimsWhitespace() {
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         hook.execute(context);
 
@@ -166,7 +167,7 @@ class ParliamentarianIdentificationTest {
 
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext();
+        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
 
         assertDoesNotThrow(() -> hook.execute(context));
     }

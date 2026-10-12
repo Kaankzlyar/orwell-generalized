@@ -32,8 +32,8 @@ public class Registry {
     /**
      * Executes all registered hooks in the order they were registered. Each hook will have access to the shared ProcessingContext, incrementally building up the necessary data for the mapping and reconciliation process.
      */
-    public static void run(){
-        context = new ProcessingContext();
+    public static void run(ProcessingContext processingContext) {
+        context = processingContext;
         for (Hook hook : hooks) {
             System.out.println("[Registry] Running hook: " + hook.getName());
             hook.execute(context);

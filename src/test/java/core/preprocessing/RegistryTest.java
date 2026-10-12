@@ -5,13 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import core.config.Config;
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
-import core.preprocessing.Registry;
+
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,7 +61,7 @@ class RegistryTest {
         TestHook hook2 = new TestHook();
         Registry.register(hook1, hook2);
         
-        Registry.run();
+        Registry.run(new ProcessingContext(Config.DATA_DIR, Set.of()));
         
         assertTrue(hook1.executed);
         assertTrue(hook2.executed);
@@ -74,14 +73,14 @@ class RegistryTest {
         TestHook hook2 = new TestHook();
         Registry.register(hook1, hook2);
         
-        Registry.run();
+        Registry.run(new ProcessingContext(Config.DATA_DIR, Set.of()));
         
         assertSame(hook1.context, hook2.context);
     }
 
     @Test
     void runDoesNothingWithNoHooks() {
-        Registry.run();
+        Registry.run(new ProcessingContext(Config.DATA_DIR, Set.of()));
         
         assertNotNull(Registry.getContext());
         assertTrue(Registry.getLookupTable().isEmpty());
@@ -91,7 +90,7 @@ class RegistryTest {
     void getLookupTableReturnsContextLookupTable() {
         TestHook hook = new TestHook();
         Registry.register(hook);
-        Registry.run();
+        Registry.run(new ProcessingContext(Config.DATA_DIR, Set.of()));
         
         Map<String, Map<String, String>> lookupTable = Registry.getLookupTable();
         assertNotNull(lookupTable);

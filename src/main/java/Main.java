@@ -9,6 +9,7 @@ import core.extraction.DataExtractor;
 import core.extraction.HttpFileSourceAdapter;
 import core.extraction.LocalFileSourceAdapter;
 import core.preprocessing.Hook;
+import core.preprocessing.ProcessingContext;
 import core.preprocessing.Registry;
 import core.rdf.GraphLoader;
 import core.rdf.mapping.MappingPairPlanner;
@@ -126,7 +127,7 @@ public class Main {
     private static void preprocess(UseCaseManifest manifest) {
         List<Hook> hooks = UseCaseHookFactory.resolve(manifest.preprocessing());
         Registry.register(hooks.toArray(new Hook[0]));
-        Registry.run();
+        Registry.run(new ProcessingContext(Config.DATA_DIR, Config.DISABLED_PARTITIONS));
     }
 
     private static Map<String, List<Path>> planMapping() throws IOException {

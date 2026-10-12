@@ -21,7 +21,7 @@ public class RemoveEmptyXmlElements extends Hook {
 
     @Override
     public void execute(ProcessingContext context) {
-        try (Stream<Path> paths = streamDocuments("ar/atividadedeputado")) {
+        try (Stream<Path> paths = streamDocuments(context, "ar/atividadedeputado")) {
             paths.forEach(this::processDocument);
         }
     }

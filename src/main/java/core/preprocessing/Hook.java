@@ -5,10 +5,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
 import javax.xml.stream.XMLStreamReader;
-
-import core.config.Config;
 
 public abstract class Hook {
 
@@ -52,8 +49,8 @@ public abstract class Hook {
         return name.substring(0, name.length() - XML_EXTENSION.length());
     }
 
-    protected Stream<Path> streamDocuments(String resourceName) {
-        Path resourceDir = Config.DATA_DIR.resolve(resourceName);
+    protected Stream<Path> streamDocuments(ProcessingContext context, String resourceName) {
+        Path resourceDir = context.getDataDir().resolve(resourceName);
         if (!Files.isDirectory(resourceDir)) {
             throw new IllegalStateException("Resource directory not found: " + resourceDir);
         }
@@ -63,7 +60,7 @@ public abstract class Hook {
             return Files.list(resourceDir)
                 .filter(Files::isRegularFile)
                 .filter(path -> path.getFileName().toString().endsWith(XML_EXTENSION))
-                .filter(path -> !Config.DISABLED_PARTITIONS.contains(partitionOf(path)));
+                .filter(path -> !context.getDisabledPartitions().contains(partitionOf(path)));
         } catch (Exception e) {
             throw new IllegalStateException("Failed to list XML files from: " + resourceDir + ": " + e.getMessage(), e);
         }
