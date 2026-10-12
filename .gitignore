@@ -64,3 +64,4 @@ benchmarks/results/
 .env
 CLAUDE.md
 docs/
+.vibe-wise/
