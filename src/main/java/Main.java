@@ -9,6 +9,7 @@ import core.extraction.DataExtractor;
 import core.extraction.HttpFileSourceAdapter;
 import core.extraction.LocalFileSourceAdapter;
 import core.preprocessing.Hook;
+import core.preprocessing.HookCatalog;
 import core.preprocessing.ProcessingContext;
 import core.preprocessing.Registry;
 import core.rdf.GraphLoader;
@@ -17,8 +18,6 @@ import core.rdf.mapping.MappingRunner;
 import core.reconciliation.WikidataReconciliationService;
 import core.utils.Benchmark;
 import core.utils.FileUtils;
-import usecase.arparliament.hooks.UseCaseHookFactory;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -26,12 +25,11 @@ import java.util.Map;
 import org.apache.jena.rdf.model.Model;
 
 /**
- * Entry point for the generalized pipeline. The only use-case-specific code
- * left here is the switch in {@link #extract(UseCaseManifest)} — hook
- * resolution is delegated to the active use case's own factory, and
- * everything else is generic and driven entirely by the active use case's
- * {@code dataset.yml}.
- */
+   * Entry point for the generalized pipeline. The only use-case-specific code
+   * left here is the switch in {@link #extract(UseCaseManifest)} — hooks are
+   * discovered through {@link HookCatalog}, and everything else is generic and
+   * driven entirely by the active use case's {@code dataset.yml}.
+   */
 public class Main {
 
     public static void main(String[] args)
@@ -42,6 +40,9 @@ public class Main {
         Path useCaseRoot = Path.of("usecases", useCaseId);
         UseCaseManifest manifest = ManifestLoader.load(useCaseRoot);
         ManifestLoader.applyTo(useCaseRoot, manifest);
+
+        List<Hook> hooks = HookCatalog.fromServiceLoader()
+              .resolve(manifest.preprocessing(), useCaseRoot.resolve("dataset.yml"));
 
         Benchmark benchmark = new Benchmark();
 
@@ -58,7 +59,7 @@ public class Main {
         if (Options.mappingEnabled()){
             // Preprocess data
             benchmark.startTiming("Preprocessing");
-            preprocess(manifest);
+            preprocess(hooks);
             benchmark.endTiming();
 
 			try {
@@ -124,8 +125,7 @@ public class Main {
         extractor.extract();
     }
 
-    private static void preprocess(UseCaseManifest manifest) {
-        List<Hook> hooks = UseCaseHookFactory.resolve(manifest.preprocessing());
+    private static void preprocess(List<Hook> hooks) {
         Registry.register(hooks.toArray(new Hook[0]));
         Registry.run(new ProcessingContext(Config.DATA_DIR, Config.DISABLED_PARTITIONS));
     }

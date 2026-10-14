@@ -33,7 +33,7 @@ public class ExtractVoting extends Hook {
 
     @Override
     public String getName() {
-        return "Voting Extractor";
+        return "ExtractVoting";
     }
 
     @Override

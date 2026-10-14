@@ -16,7 +16,7 @@ public class RemoveEmptyXmlElements extends Hook {
 
     @Override
     public String getName() {
-        return "Remove Empty XML Elements";
+        return "RemoveEmptyXmlElements";
     }
 
     @Override
