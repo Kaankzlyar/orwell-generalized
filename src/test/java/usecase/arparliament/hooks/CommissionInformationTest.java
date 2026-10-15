@@ -5,12 +5,10 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import core.config.Config;
 import core.preprocessing.ProcessingContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,13 +19,11 @@ class CommissionInformationTest {
     @TempDir
     Path tempDir;
 
-    private Path originalDataDir;
+    private Path dataDir;
 
     @BeforeEach
     void setUp() throws Exception {
-        originalDataDir = Config.DATA_DIR;
-
-        Path dataDir = tempDir.resolve("data");
+        dataDir = tempDir.resolve("data");
         Path resourceDir = dataDir.resolve("ar").resolve("composicaodeorgaos");
         Files.createDirectories(resourceDir);
 
@@ -60,13 +56,6 @@ class CommissionInformationTest {
                 </Comissoes>
             </OrganizacaoAR>
             """);
-
-        Config.DATA_DIR = dataDir;
-    }
-
-    @AfterEach
-    void tearDown() {
-        Config.DATA_DIR = originalDataDir;
     }
 
     @Test
@@ -79,7 +68,7 @@ class CommissionInformationTest {
     @Test
     void executeRegistersCommissionLookupEntries() {
         CommissionInformation hook = new CommissionInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 
@@ -91,7 +80,7 @@ class CommissionInformationTest {
 
     @Test
     void executeTrimsCommissionNameWhitespace() throws Exception {
-        Path resourceDir = Config.DATA_DIR.resolve("ar").resolve("composicaodeorgaos");
+        Path resourceDir = dataDir.resolve("ar").resolve("composicaodeorgaos");
         Files.writeString(resourceDir.resolve("trim.xml"), """
             <?xml version="1.0" encoding="UTF-8"?>
             <OrganizacaoAR>
@@ -108,7 +97,7 @@ class CommissionInformationTest {
             """);
 
         CommissionInformation hook = new CommissionInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 
@@ -120,7 +109,7 @@ class CommissionInformationTest {
 
     @Test
     void executeRegistersMultipleCommissionsFromSingleFile() throws Exception {
-        Path resourceDir = Config.DATA_DIR.resolve("ar").resolve("composicaodeorgaos");
+        Path resourceDir = dataDir.resolve("ar").resolve("composicaodeorgaos");
         Files.writeString(resourceDir.resolve("multi.xml"), """
             <?xml version="1.0" encoding="UTF-8"?>
             <OrganizacaoAR>
@@ -149,7 +138,7 @@ class CommissionInformationTest {
             """);
 
         CommissionInformation hook = new CommissionInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 

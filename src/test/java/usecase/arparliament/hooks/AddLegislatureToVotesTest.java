@@ -5,12 +5,10 @@ import java.nio.file.Path;
 
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import core.config.Config;
 import core.preprocessing.ProcessingContext;
 
 
@@ -22,13 +20,11 @@ class AddLegislatureToVotesTest {
     @TempDir
     Path tempDir;
 
-    private Path originalDataDir;
+    private Path dataDir;
 
     @BeforeEach
     void setUp() throws Exception {
-        originalDataDir = Config.DATA_DIR;
-
-        Path dataDir = tempDir.resolve("data");
+        dataDir = tempDir.resolve("data");
 
         Path infoDir = dataDir.resolve("ar").resolve("informacaobase");
         Files.createDirectories(infoDir);
@@ -55,19 +51,12 @@ class AddLegislatureToVotesTest {
             + "</Pt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut>"
             + "</ArrayOfPt_gov_ar_objectos_iniciativas_DetalhePesquisaIniciativasOut>"
         );
-
-        Config.DATA_DIR = dataDir;
-    }
-
-    @AfterEach
-    void tearDown() {
-        Config.DATA_DIR = originalDataDir;
     }
 
     @Test
     void executeAddsLegislaturaToVotes() throws Exception {
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
@@ -97,7 +86,7 @@ class AddLegislatureToVotesTest {
         );
 
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
@@ -124,7 +113,7 @@ class AddLegislatureToVotesTest {
         );
 
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
@@ -138,7 +127,7 @@ class AddLegislatureToVotesTest {
 
     @Test
     void executeSkipsWhenLegislatureInformationIsEmpty() throws Exception {
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
         voteHook.execute(context);
@@ -167,7 +156,7 @@ class AddLegislatureToVotesTest {
         );
 
         LegislatureInformation legHook = new LegislatureInformation();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
         legHook.execute(context);
 
         AddLegislatureToVotes voteHook = new AddLegislatureToVotes();
