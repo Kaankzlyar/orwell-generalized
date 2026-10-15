@@ -1,0 +1,7 @@
+ 
+ usecase.arparliament.hooks.RemoveEmptyXmlElements
+ usecase.arparliament.hooks.ParliamentarianIdentification
+ usecase.arparliament.hooks.CommissionInformation
+ usecase.arparliament.hooks.LegislatureInformation
+ usecase.arparliament.hooks.ExtractVoting
+ usecase.arparliament.hooks.AddLegislatureToVotes
