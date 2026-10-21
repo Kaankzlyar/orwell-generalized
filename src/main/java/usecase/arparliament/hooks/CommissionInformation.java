@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
-import core.utils.StringUtils;
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
+import org.morfo.lib.utils.StringUtils;
 
 // This class was created because the "atividadedeputado" dataset does not contain the commission ID, but only the name and legislature.
 public class CommissionInformation extends Hook {

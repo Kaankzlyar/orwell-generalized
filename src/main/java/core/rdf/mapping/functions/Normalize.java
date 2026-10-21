@@ -1,6 +1,6 @@
 package core.rdf.mapping.functions;
 
-import core.utils.StringUtils;
+import org.morfo.lib.utils.StringUtils;
 
 public class Normalize {
 

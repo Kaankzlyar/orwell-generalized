@@ -1,4 +1,4 @@
-package core.preprocessing;
+package org.morfo.lib.preprocessing;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import org.morfo.lib.preprocessing.Hook;
+
 public final class HookCatalog {
 
     private final Map<String, Hook> hooksByName = new LinkedHashMap<>();

@@ -1,6 +1,6 @@
 package usecase.arparliament.functions;
 
-import core.rdf.mapping.functions.RomanNumeralConverter;
+import org.morfo.lib.utils.RomanNumeralConverter;
 
 public class GovernmentNumber {
 

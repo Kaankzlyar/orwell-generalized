@@ -8,6 +8,8 @@ package core.preprocessing;
   import java.util.List;
 
   import org.junit.jupiter.api.Test;
+  import org.morfo.lib.preprocessing.Hook;
+  import org.morfo.lib.preprocessing.ProcessingContext;
 
   class HookCatalogTest {
 

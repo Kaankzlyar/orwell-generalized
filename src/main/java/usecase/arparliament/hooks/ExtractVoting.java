@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.regex.*;
 import java.util.stream.Stream;
 
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
 
 public class ExtractVoting extends Hook {
 

@@ -1,4 +1,4 @@
-package core.rdf.mapping.functions;
+package org.morfo.lib.utils;
 
 import java.util.Map;
 

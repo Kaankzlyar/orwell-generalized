@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import core.preprocessing.ProcessingContext;
+import org.morfo.lib.preprocessing.ProcessingContext;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

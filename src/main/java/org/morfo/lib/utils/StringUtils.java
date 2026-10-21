@@ -1,4 +1,4 @@
-package core.utils;
+package org.morfo.lib.utils;
 
 import java.text.Normalizer;
 import java.util.Locale;

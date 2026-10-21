@@ -8,8 +8,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
 
 public class LegislatureInformation extends Hook {
 
