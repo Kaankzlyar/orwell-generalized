@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import core.config.Config;
 import core.preprocessing.ProcessingContext;
 
 import java.nio.file.Files;
@@ -12,7 +11,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -22,23 +20,14 @@ class ExtractVotingTest {
     @TempDir
     Path tempDir;
 
-    private Path originalDataDir;
+    private Path dataDir;
     private Path resourceDir;
 
     @BeforeEach
     void setUp() throws Exception {
-        originalDataDir = Config.DATA_DIR;
-
-        Path dataDir = tempDir.resolve("data");
+        dataDir = tempDir.resolve("data");
         resourceDir = dataDir.resolve("ar").resolve("iniciativas");
         Files.createDirectories(resourceDir);
-
-        Config.DATA_DIR = dataDir;
-    }
-
-    @AfterEach
-    void tearDown() {
-        Config.DATA_DIR = originalDataDir;
     }
 
     @Test
@@ -68,7 +57,7 @@ class ExtractVotingTest {
 
         ExtractVoting hook = new ExtractVoting();
 
-        hook.execute(new ProcessingContext(Config.DATA_DIR, Set.of()));
+        hook.execute(new ProcessingContext(dataDir, Set.of()));
 
         String content = Files.readString(document);
 
@@ -93,7 +82,7 @@ class ExtractVotingTest {
 
         ExtractVoting hook = new ExtractVoting();
 
-        hook.execute(new ProcessingContext(Config.DATA_DIR, Set.of()));
+        hook.execute(new ProcessingContext(dataDir, Set.of()));
 
         String content = Files.readString(document);
 

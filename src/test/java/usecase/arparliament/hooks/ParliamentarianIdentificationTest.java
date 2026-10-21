@@ -2,14 +2,12 @@ package usecase.arparliament.hooks;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import core.config.Config;
 import core.preprocessing.ProcessingContext;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -19,12 +17,11 @@ class ParliamentarianIdentificationTest {
     @TempDir
     Path tempDir;
 
-    private Path originalDataDir;
+    private Path dataDir;
 
     @BeforeEach
     void setUp() throws Exception {
-        originalDataDir = Config.DATA_DIR;
-        Path dataDir = tempDir.resolve("data");
+        dataDir = tempDir.resolve("data");
         Files.createDirectories(dataDir);
         Path resourceDir = dataDir.resolve("ar").resolve("informacaobase");
         Files.createDirectories(resourceDir);
@@ -51,13 +48,6 @@ class ParliamentarianIdentificationTest {
             </Legislatura>
             """;
         Files.writeString(resourceDir.resolve("XVII.xml"), xmlContent);
-
-        Config.DATA_DIR = dataDir;
-    }
-
-    @AfterEach
-    void tearDown() {
-        Config.DATA_DIR = originalDataDir;
     }
 
     @Test
@@ -71,7 +61,7 @@ class ParliamentarianIdentificationTest {
     void executePopulatesLookupTable() {
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 
@@ -84,7 +74,7 @@ class ParliamentarianIdentificationTest {
     void executeRegistersDeputiesWithCorrectFormat() {
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 
@@ -98,7 +88,7 @@ class ParliamentarianIdentificationTest {
 
     @Test
     void executeHandlesMultipleDocuments() throws Exception {
-        Path resourceDir = Config.DATA_DIR.resolve("ar").resolve(
+        Path resourceDir = dataDir.resolve("ar").resolve(
             "informacaobase"
         );
         String xmlContent = """
@@ -122,7 +112,7 @@ class ParliamentarianIdentificationTest {
 
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 
@@ -138,7 +128,7 @@ class ParliamentarianIdentificationTest {
     void executeTrimsWhitespace() {
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         hook.execute(context);
 
@@ -152,7 +142,7 @@ class ParliamentarianIdentificationTest {
 
     @Test
     void executeHandlesEmptyDocument() throws Exception {
-        Path resourceDir = Config.DATA_DIR.resolve("ar").resolve(
+        Path resourceDir = dataDir.resolve("ar").resolve(
             "informacaobase"
         );
         String xmlContent = """
@@ -167,7 +157,7 @@ class ParliamentarianIdentificationTest {
 
         ParliamentarianIdentification hook =
             new ParliamentarianIdentification();
-        ProcessingContext context = new ProcessingContext(Config.DATA_DIR, Set.of());
+        ProcessingContext context = new ProcessingContext(dataDir, Set.of());
 
         assertDoesNotThrow(() -> hook.execute(context));
     }
