@@ -2,7 +2,7 @@ package usecase.arparliament.hooks;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import core.preprocessing.ProcessingContext;
+import org.morfo.lib.preprocessing.ProcessingContext;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

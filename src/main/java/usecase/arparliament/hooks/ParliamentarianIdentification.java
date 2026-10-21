@@ -8,9 +8,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
-import core.utils.StringUtils;
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
+import org.morfo.lib.utils.StringUtils;
 
 public class ParliamentarianIdentification extends Hook {
 

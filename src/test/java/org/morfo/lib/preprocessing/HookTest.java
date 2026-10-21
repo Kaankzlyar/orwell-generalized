@@ -1,4 +1,4 @@
-package core.preprocessing;
+package org.morfo.lib.preprocessing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

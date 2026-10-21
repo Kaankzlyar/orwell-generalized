@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
+
 public class Registry {
     private static List<Hook> hooks = new ArrayList<>();
     private static ProcessingContext context;

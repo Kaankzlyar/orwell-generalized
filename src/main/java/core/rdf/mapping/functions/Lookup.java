@@ -3,7 +3,7 @@ package core.rdf.mapping.functions;
 import java.util.Map;
 
 import core.preprocessing.Registry;
-import core.utils.StringUtils;
+import org.morfo.lib.utils.StringUtils;
 
 public class Lookup {
 

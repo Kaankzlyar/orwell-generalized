@@ -1,6 +1,6 @@
 package usecase.arparliament.functions;
 
-import core.utils.StringUtils;
+import org.morfo.lib.utils.StringUtils;
 
 public class RegionalAssemblyLocation {
     public static String getRegionalAssemblyLocation(String input) {

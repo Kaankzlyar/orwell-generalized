@@ -5,8 +5,8 @@ import java.nio.file.Path;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
 
 public class RemoveEmptyXmlElements extends Hook {
 

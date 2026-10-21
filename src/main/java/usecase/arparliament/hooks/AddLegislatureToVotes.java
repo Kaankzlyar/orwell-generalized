@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import core.preprocessing.Hook;
-import core.preprocessing.ProcessingContext;
+import org.morfo.lib.preprocessing.Hook;
+import org.morfo.lib.preprocessing.ProcessingContext;
 import usecase.arparliament.util.LegislatureUtils;
 
 public class AddLegislatureToVotes extends Hook {

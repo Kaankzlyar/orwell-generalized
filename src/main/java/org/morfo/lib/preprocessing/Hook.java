@@ -1,4 +1,4 @@
-package core.preprocessing;
+package org.morfo.lib.preprocessing;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
